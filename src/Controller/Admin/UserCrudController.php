@@ -14,10 +14,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -48,10 +50,16 @@ class UserCrudController extends AbstractCrudController
             'Female' => 'Female',
         ]);
         yield FormField::addPanel('Roles');
-        yield ChoiceField::new('roles')->allowMultipleChoices()->setChoices([
-            'User' => 'ROLE_USER',
-            'Admin' => 'ROLE_ADMIN',
-        ]);
+        // yield ChoiceField::new('roles')->allowMultipleChoices()->setChoices([
+        //     'User' => 'ROLE_USER',
+        //     'Admin' => 'ROLE_ADMIN',
+        // ]);
+        $roles = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN', ];
+        yield ChoiceField::new('roles')
+            ->setChoices(array_combine($roles, $roles))
+            ->allowMultipleChoices()
+            ->renderExpanded()
+            ->renderAsBadges();
         yield FormField::addPanel('Mot de passe');
         yield Field::new('password')->onlyOnForms()->hideWhenUpdating()->setFormType( RepeatedType::class )->setFormTypeOptions( [
             'type'            => PasswordType::class,
