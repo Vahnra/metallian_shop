@@ -30,7 +30,7 @@ class UserCrudController extends AbstractCrudController
         yield DateField::new('updatedAt')->hideOnForm();
     }
 
-    public function setDate(EntityManagerInterface $entityManager, $entityInstance): void
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if(!$entityInstance instanceof User) return;
         // DateTimeImmutable - creat the date in the createdAt 
