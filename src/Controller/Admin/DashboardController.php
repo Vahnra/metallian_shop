@@ -43,11 +43,15 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        
+
         yield MenuItem::section('Utilisateur');
         yield MenuItem::subMenu('Action')->setSubItems([
             MenuItem::linkToCrud('Voir l\'utilisateur', 'fas fa-eye' ,User::class),
             MenuItem::linkToCrud('Créer l\'utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
         ]);
      
+        yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
     }
 }
