@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Controller\Admin\UserCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -38,14 +39,14 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Metallian Shop');
-            
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::section('utilisator');
         yield MenuItem::subMenu('action')->setSubItems([
-            MenuItem::linkToCrud('voir le utilisator', 'fas fa-eye' ,User::class)
+            MenuItem::linkToCrud('voir l\'utilisator', 'fas fa-eye' ,User::class),
+            MenuItem::linkToCrud('créer l\'utilisator', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
         ]);
         // yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
