@@ -63,7 +63,7 @@ class UserCrudController extends AbstractCrudController
         yield FormField::addPanel('Mot de passe');
         yield Field::new('password')->onlyOnForms()->hideWhenUpdating()->setFormType( RepeatedType::class )->setFormTypeOptions( [
             'type'            => PasswordType::class,
-            'first_options'   => [ 'label' => 'Nouveau mot de passe' ],
+            'first_options'   => [ 'label' => 'Le mot de passe' ],
             'second_options'  => [ 'label' => 'Répétez le mot de passe' ],
             'error_bubbling'  => true,
             'invalid_message' => 'Le mot de passe n\'est pas identique',
