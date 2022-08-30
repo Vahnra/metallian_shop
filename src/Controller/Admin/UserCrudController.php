@@ -46,8 +46,8 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('firstname', 'Prénom');
         yield EmailField::new('email', 'E-mail');
         yield ChoiceField::new('gender', 'Sexe')->renderExpanded()->setChoices([
-            'Male' => 'Male',
-            'Female' => 'Female',
+            'Homme' => 'homme',
+            'Femme' => 'femme',
         ]);
         yield FormField::addPanel('Roles');
         // yield ChoiceField::new('roles')->allowMultipleChoices()->setChoices([
@@ -82,14 +82,17 @@ class UserCrudController extends AbstractCrudController
         parent::persistEntity($entityManager, $entityInstance);
     }
     
-    public function createNewFormBuilder( EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context ): FormBuilderInterface {
+    public function createNewFormBuilder( EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context ): FormBuilderInterface 
+    {
         $formBuilder = parent::createNewFormBuilder( $entityDto, $formOptions, $context );
         $this->addEncodePasswordEventListener( $formBuilder );
 
         return $formBuilder;
     }
     
-    protected function addEncodePasswordEventListener( FormBuilderInterface $formBuilder, $plainPassword = null ): void {
+    // fonction pour encoder le mot de passe
+    protected function addEncodePasswordEventListener( FormBuilderInterface $formBuilder, $plainPassword = null ): void 
+    {
         $formBuilder->addEventListener( FormEvents::SUBMIT, function ( FormEvent $event ) use ( $plainPassword ) {
 
             /** @var User $user */
