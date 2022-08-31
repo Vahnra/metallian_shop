@@ -24,9 +24,13 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
     private Collection $sousCategories;
 
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Vetement::class)]
+    private Collection $vetements;
+
     public function __construct()
     {
         $this->sousCategories = new ArrayCollection();
+        $this->vetements = new ArrayCollection();
     }
 
     public function __toString()
@@ -87,6 +91,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($sousCategory->getCategorie() === $this) {
                 $sousCategory->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vetement>
+     */
+    public function getVetements(): Collection
+    {
+        return $this->vetements;
+    }
+
+    public function addVetement(Vetement $vetement): self
+    {
+        if (!$this->vetements->contains($vetement)) {
+            $this->vetements->add($vetement);
+            $vetement->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetement(Vetement $vetement): self
+    {
+        if ($this->vetements->removeElement($vetement)) {
+            // set the owning side to null (unless already changed)
+            if ($vetement->getCategorie() === $this) {
+                $vetement->setCategorie(null);
             }
         }
 
