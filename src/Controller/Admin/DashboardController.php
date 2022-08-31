@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Entity\Categorie;
+use App\Entity\SousCategorie;
 use App\Controller\Admin\UserCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,7 +53,19 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Utilisateur');
         yield MenuItem::subMenu('Action')->setSubItems([
             MenuItem::linkToCrud('Voir l\'utilisateur', 'fas fa-eye' ,User::class),
-            MenuItem::linkToCrud('Créer l\'utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::section('Catégorie');
+        yield MenuItem::subMenu('Action')->setSubItems([
+            MenuItem::linkToCrud('Voir les catégories', 'fas fa-eye', Categorie::class),
+            MenuItem::linkToCrud('Créer une catégorie', 'fas fa-plus', Categorie::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::section('Sous Catégorie');
+        yield MenuItem::subMenu('Action')->setSubItems([
+            MenuItem::linkToCrud('Voir les sous-catégories', 'fas fa-eye', SousCategorie::class),
+            MenuItem::linkToCrud('Créer une sous-catégorie', 'fas fa-plus', SousCategorie::class)->setAction(Crud::PAGE_NEW)
         ]);
      
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
