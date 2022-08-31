@@ -19,9 +19,6 @@ class Categorie
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $keywords = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $merchandising = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
@@ -50,18 +47,6 @@ class Categorie
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getKeywords(): ?string
-    {
-        return $this->keywords;
-    }
-
-    public function setKeywords(string $keywords): self
-    {
-        $this->keywords = $keywords;
 
         return $this;
     }
