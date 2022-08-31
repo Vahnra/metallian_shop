@@ -57,25 +57,23 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        yield MenuItem::section('Catégorie');
-        yield MenuItem::subMenu('Action')->setSubItems([
+        yield MenuItem::section('Catégorie normaux');
+        yield MenuItem::subMenu('Catégorie')->setSubItems([
             MenuItem::linkToCrud('Voir les catégories', 'fas fa-eye', Categorie::class),
             MenuItem::linkToCrud('Créer une catégorie', 'fas fa-plus', Categorie::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        yield MenuItem::section('Sous Catégorie');
-        yield MenuItem::subMenu('Action')->setSubItems([
+        yield MenuItem::subMenu('Sous catégories')->setSubItems([
             MenuItem::linkToCrud('Voir les sous-catégories', 'fas fa-eye', SousCategorie::class),
             MenuItem::linkToCrud('Créer une sous-catégorie', 'fas fa-plus', SousCategorie::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        yield MenuItem::section('Vetements');
-        yield MenuItem::subMenu('Action')->setSubItems([
+        yield MenuItem::subMenu('Vetements')->setSubItems([
             MenuItem::linkToCrud('Voir les vetements', 'fas fa-eye', Vetement::class),
             MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', Vetement::class)->setAction(Crud::PAGE_NEW)
         ]);
      
-        yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
+        yield MenuItem::section('Merchandising');
     }
 
     public function configureActions(): Actions
