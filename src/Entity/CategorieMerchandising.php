@@ -21,9 +21,13 @@ class CategorieMerchandising
     #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: SousCategorieMerchandising::class)]
     private Collection $sousCategorieMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: VetementMerchandising::class)]
+    private Collection $vetementMerchandisings;
+
     public function __construct()
     {
         $this->sousCategorieMerchandisings = new ArrayCollection();
+        $this->vetementMerchandisings = new ArrayCollection();
     }
 
     public function __toString()
@@ -72,6 +76,36 @@ class CategorieMerchandising
             // set the owning side to null (unless already changed)
             if ($sousCategorieMerchandising->getCategorieMerchandising() === $this) {
                 $sousCategorieMerchandising->setCategorieMerchandising(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VetementMerchandising>
+     */
+    public function getVetementMerchandisings(): Collection
+    {
+        return $this->vetementMerchandisings;
+    }
+
+    public function addVetementMerchandising(VetementMerchandising $vetementMerchandising): self
+    {
+        if (!$this->vetementMerchandisings->contains($vetementMerchandising)) {
+            $this->vetementMerchandisings->add($vetementMerchandising);
+            $vetementMerchandising->setCategorieMerchandising($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetementMerchandising(VetementMerchandising $vetementMerchandising): self
+    {
+        if ($this->vetementMerchandisings->removeElement($vetementMerchandising)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementMerchandising->getCategorieMerchandising() === $this) {
+                $vetementMerchandising->setCategorieMerchandising(null);
             }
         }
 
