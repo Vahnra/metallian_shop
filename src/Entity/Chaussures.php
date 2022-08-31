@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\AccessoiresRepository;
+use App\Repository\ChaussuresRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AccessoiresRepository::class)]
-class Accessoires
+#[ORM\Entity(repositoryClass: ChaussuresRepository::class)]
+class Chaussures
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,7 +15,7 @@ class Accessoires
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
@@ -24,15 +24,18 @@ class Accessoires
     private ?string $price = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $color = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\Column]
-    private array $taille = [];
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $size = [];
 
-    #[ORM\ManyToOne(inversedBy: 'accessoires')]
+    #[ORM\ManyToOne(inversedBy: 'chaussures')]
     private ?Categorie $categorie = null;
 
-    #[ORM\ManyToOne(inversedBy: 'accessoires')]
+    #[ORM\ManyToOne(inversedBy: 'chaussures')]
     private ?SousCategorie $sousCategorie = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -49,14 +52,14 @@ class Accessoires
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitre(): ?string
     {
-        return $this->title;
+        return $this->titre;
     }
 
-    public function setTitle(string $title): self
+    public function setTitre(string $titre): self
     {
-        $this->title = $title;
+        $this->titre = $titre;
 
         return $this;
     }
@@ -85,6 +88,18 @@ class Accessoires
         return $this;
     }
 
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
     public function getPhoto(): ?string
     {
         return $this->photo;
@@ -97,16 +112,14 @@ class Accessoires
         return $this;
     }
 
-    public function getTaille(): array
+    public function getSize(): array
     {
-        $taille = $this->taille;
-
-        return array_unique($taille);
+        return $this->size;
     }
 
-    public function setTaille(array $taille): self
+    public function setSize(array $size): self
     {
-        $this->taille = $taille;
+        $this->size = $size;
 
         return $this;
     }
