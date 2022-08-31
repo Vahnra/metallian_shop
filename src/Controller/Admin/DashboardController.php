@@ -3,11 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Entity\Categorie;
-use App\Entity\SousCategorie;
-use App\Controller\Admin\UserCrudController;
 use App\Entity\Media;
 use App\Entity\Vetement;
+use App\Entity\Categorie;
+use App\Entity\SousCategorie;
+use App\Entity\CategorieMerchandising;
+use App\Entity\SousCategorieMerchandising;
+use App\Controller\Admin\UserCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -59,6 +61,7 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::section('Catégorie normaux');
+
         yield MenuItem::subMenu('Catégorie')->setSubItems([
             MenuItem::linkToCrud('Voir les catégories', 'fas fa-eye', Categorie::class),
             MenuItem::linkToCrud('Créer une catégorie', 'fas fa-plus', Categorie::class)->setAction(Crud::PAGE_NEW)
@@ -80,6 +83,16 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::section('Merchandising');
+
+        yield MenuItem::subMenu('Catégorie')->setSubItems([
+            MenuItem::linkToCrud('Voir les catégories', 'fas fa-eye', CategorieMerchandising::class),
+            MenuItem::linkToCrud('Ajouter une catégorie', 'fas fa-plus', CategorieMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Sous catégorie')->setSubItems([
+            MenuItem::linkToCrud('Voir les sous catégories', 'fas fa-eye', SousCategorieMerchandising::class),
+            MenuItem::linkToCrud('Ajouter une sous catégorie', 'fas fa-plus', SousCategorieMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
 
         yield MenuItem::section('Marques');
 
