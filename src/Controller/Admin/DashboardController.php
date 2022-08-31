@@ -7,10 +7,12 @@ use App\Entity\Media;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
+use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
+use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
-use App\Entity\VetementMerchandising;
+use App\Entity\Marques;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -100,7 +102,17 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', VetementMerchandising::class)->setAction(Crud::PAGE_NEW)
         ]);
 
+        yield MenuItem::subMenu('Accesoires')->setSubItems([
+            MenuItem::linkToCrud('Voir les accesoires', 'fas fa-eye', AccessoiresMerchandising::class),
+            MenuItem::linkToCrud('Ajouter un accesoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
         yield MenuItem::section('Marques');
+
+        yield MenuItem::subMenu('Les marques')->setSubItems([
+            MenuItem::linkToCrud('Voir les marques', 'fas fa-eye', Marques::class),
+            MenuItem::linkToCrud('Ajouter une marque', 'fas fa-plus', Marques::class)->setAction(Crud::PAGE_NEW)
+        ]);
 
         yield MenuItem::section('Soldes');
     }

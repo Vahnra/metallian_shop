@@ -24,10 +24,14 @@ class CategorieMerchandising
     #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: VetementMerchandising::class)]
     private Collection $vetementMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: AccessoiresMerchandising::class)]
+    private Collection $accessoiresMerchandisings;
+
     public function __construct()
     {
         $this->sousCategorieMerchandisings = new ArrayCollection();
         $this->vetementMerchandisings = new ArrayCollection();
+        $this->accessoiresMerchandisings = new ArrayCollection();
     }
 
     public function __toString()
@@ -106,6 +110,36 @@ class CategorieMerchandising
             // set the owning side to null (unless already changed)
             if ($vetementMerchandising->getCategorieMerchandising() === $this) {
                 $vetementMerchandising->setCategorieMerchandising(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccessoiresMerchandising>
+     */
+    public function getAccessoiresMerchandisings(): Collection
+    {
+        return $this->accessoiresMerchandisings;
+    }
+
+    public function addAccessoiresMerchandising(AccessoiresMerchandising $accessoiresMerchandising): self
+    {
+        if (!$this->accessoiresMerchandisings->contains($accessoiresMerchandising)) {
+            $this->accessoiresMerchandisings->add($accessoiresMerchandising);
+            $accessoiresMerchandising->setCategorieMerchandising($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresMerchandising(AccessoiresMerchandising $accessoiresMerchandising): self
+    {
+        if ($this->accessoiresMerchandisings->removeElement($accessoiresMerchandising)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresMerchandising->getCategorieMerchandising() === $this) {
+                $accessoiresMerchandising->setCategorieMerchandising(null);
             }
         }
 
