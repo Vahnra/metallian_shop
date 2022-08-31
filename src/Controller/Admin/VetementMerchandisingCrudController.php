@@ -38,6 +38,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images');
         yield AssociationField::new('categorieMerchandising');
         yield AssociationField::new('sousCategorieMerchandising');
+        yield AssociationField::new('marques');
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
     }

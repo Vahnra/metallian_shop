@@ -44,6 +44,9 @@ class VetementMerchandising
     #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
     private ?SousCategorieMerchandising $sousCategorieMerchandising = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
+    private ?Marques $marques = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +168,18 @@ class VetementMerchandising
     public function setSousCategorieMerchandising(?SousCategorieMerchandising $sousCategorieMerchandising): self
     {
         $this->sousCategorieMerchandising = $sousCategorieMerchandising;
+
+        return $this;
+    }
+
+    public function getMarques(): ?Marques
+    {
+        return $this->marques;
+    }
+
+    public function setMarques(?Marques $marques): self
+    {
+        $this->marques = $marques;
 
         return $this;
     }
