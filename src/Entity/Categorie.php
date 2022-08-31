@@ -18,9 +18,6 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $merchandising = null;
-
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
     private Collection $sousCategories;
 
@@ -51,18 +48,6 @@ class Categorie
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getMerchandising(): ?string
-    {
-        return $this->merchandising;
-    }
-
-    public function setMerchandising(string $merchandising): self
-    {
-        $this->merchandising = $merchandising;
 
         return $this;
     }

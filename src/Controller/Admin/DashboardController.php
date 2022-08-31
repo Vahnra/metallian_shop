@@ -74,6 +74,10 @@ class DashboardController extends AbstractDashboardController
         ]);
      
         yield MenuItem::section('Merchandising');
+
+        yield MenuItem::section('Marques');
+
+        yield MenuItem::section('Soldes');
     }
 
     public function configureActions(): Actions

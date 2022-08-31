@@ -19,10 +19,6 @@ class CategorieCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Titre');
-        yield ChoiceField::new('merchandising', 'Merchandising')->renderExpanded()->setChoices([
-            'Oui' => 'oui',
-            'Non' => 'non',
-        ]);
     }
     
 }
