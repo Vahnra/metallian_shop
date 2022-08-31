@@ -21,9 +21,13 @@ class Marques
     #[ORM\OneToMany(mappedBy: 'marques', targetEntity: VetementMerchandising::class)]
     private Collection $vetementMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'marques', targetEntity: Vetement::class)]
+    private Collection $vetements;
+
     public function __construct()
     {
         $this->vetementMerchandisings = new ArrayCollection();
+        $this->vetements = new ArrayCollection();
     }
 
     public function __toString()
@@ -72,6 +76,36 @@ class Marques
             // set the owning side to null (unless already changed)
             if ($vetementMerchandising->getMarques() === $this) {
                 $vetementMerchandising->setMarques(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vetement>
+     */
+    public function getVetements(): Collection
+    {
+        return $this->vetements;
+    }
+
+    public function addVetement(Vetement $vetement): self
+    {
+        if (!$this->vetements->contains($vetement)) {
+            $this->vetements->add($vetement);
+            $vetement->setMarques($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetement(Vetement $vetement): self
+    {
+        if ($this->vetements->removeElement($vetement)) {
+            // set the owning side to null (unless already changed)
+            if ($vetement->getMarques() === $this) {
+                $vetement->setMarques(null);
             }
         }
 

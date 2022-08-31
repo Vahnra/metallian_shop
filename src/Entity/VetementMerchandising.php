@@ -47,6 +47,9 @@ class VetementMerchandising
     #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
     private ?Marques $marques = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $price = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +183,18 @@ class VetementMerchandising
     public function setMarques(?Marques $marques): self
     {
         $this->marques = $marques;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

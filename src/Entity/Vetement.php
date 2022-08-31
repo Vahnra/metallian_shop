@@ -45,6 +45,12 @@ class Vetement
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vetements')]
+    private ?Marques $marques = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $price = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,6 +176,30 @@ class Vetement
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getMarques(): ?Marques
+    {
+        return $this->marques;
+    }
+
+    public function setMarques(?Marques $marques): self
+    {
+        $this->marques = $marques;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

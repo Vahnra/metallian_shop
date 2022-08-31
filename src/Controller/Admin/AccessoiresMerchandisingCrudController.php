@@ -38,8 +38,8 @@ class AccessoiresMerchandisingCrudController extends AbstractCrudController
             'rouge' => 'rouge',
         ]);
         yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images');
-        yield AssociationField::new('categorieMerchandising');
-        yield AssociationField::new('sousCategorieMerchandising');
+        yield AssociationField::new('categorieMerchandising', 'Catégorie');
+        yield AssociationField::new('sousCategorieMerchandising', 'Sous catégorie');
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
