@@ -24,9 +24,13 @@ class SousCategorie
     #[ORM\OneToMany(mappedBy: 'sousCategorie', targetEntity: Vetement::class)]
     private Collection $vetements;
 
+    #[ORM\OneToMany(mappedBy: 'sousCategorie', targetEntity: Media::class)]
+    private Collection $media;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function __toString()
@@ -87,6 +91,36 @@ class SousCategorie
             // set the owning side to null (unless already changed)
             if ($vetement->getSousCategorie() === $this) {
                 $vetement->setSousCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media->add($medium);
+            $medium->setSousCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->removeElement($medium)) {
+            // set the owning side to null (unless already changed)
+            if ($medium->getSousCategorie() === $this) {
+                $medium->setSousCategorie(null);
             }
         }
 
