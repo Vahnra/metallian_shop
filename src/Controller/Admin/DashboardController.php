@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
 use App\Controller\Admin\UserCrudController;
+use App\Entity\Accessoires;
 use App\Entity\Media;
 use App\Entity\Vetement;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,6 +78,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Media')->setSubItems([
             MenuItem::linkToCrud('Voir les Media', 'fas fa-eye', Media::class),
             MenuItem::linkToCrud('Ajouter un media', 'fas fa-plus', Media::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Accessoires')->setSubItems([
+            MenuItem::linkToCrud('Voir les vetements', 'fas fa-eye', Accessoires::class),
+            MenuItem::linkToCrud('Ajouter un media', 'fas fa-plus', Accessoires::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Merchandising');
