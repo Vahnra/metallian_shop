@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
 use App\Controller\Admin\UserCrudController;
+use App\Entity\Vetement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -66,6 +67,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Action')->setSubItems([
             MenuItem::linkToCrud('Voir les sous-catégories', 'fas fa-eye', SousCategorie::class),
             MenuItem::linkToCrud('Créer une sous-catégorie', 'fas fa-plus', SousCategorie::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::section('Vetements');
+        yield MenuItem::subMenu('Action')->setSubItems([
+            MenuItem::linkToCrud('Voir les vetements', 'fas fa-eye', Vetement::class),
+            MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', Vetement::class)->setAction(Crud::PAGE_NEW)
         ]);
      
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
