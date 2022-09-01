@@ -3,6 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+
+use App\Entity\Accessoires;
+use App\Entity\Bijoux;
+use App\Entity\Chaussures;
 use App\Entity\Media;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
@@ -83,6 +87,21 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Media')->setSubItems([
             MenuItem::linkToCrud('Voir les Media', 'fas fa-eye', Media::class),
             MenuItem::linkToCrud('Ajouter un media', 'fas fa-plus', Media::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Accessoires')->setSubItems([
+            MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', Accessoires::class),
+            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Accessoires::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Chaussures')->setSubItems([
+            MenuItem::linkToCrud('Voir les Chaussures', 'fas fa-eye', Chaussures::class),
+            MenuItem::linkToCrud('Ajouter des chaussures', 'fas fa-plus', Chaussures::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Bijoux')->setSubItems([
+            MenuItem::linkToCrud('Voir les Bijoux', 'fas fa-eye', Bijoux::class),
+            MenuItem::linkToCrud('Ajouter des Bijoux', 'fas fa-plus', Bijoux::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Merchandising');
