@@ -16,8 +16,10 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-12 bg-dark text-white">
-                    <img src="{{ asset('images/logo.png') }}" title="Metallian logo"/>
+                <div class="col-12 bg-dark text-white g-0">
+                    <a href="{{ path('default_home') }}" >
+                        <img src="{{ asset('images/logo.png') }}" title="Metallian logo"/>
+                    </a>
                 </div>
                 <div class="col-12 bg-light">
                     {% include "include/_nav.html.twig" %}
