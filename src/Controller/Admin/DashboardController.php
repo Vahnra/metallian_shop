@@ -7,6 +7,7 @@ use App\Entity\Categorie;
 use App\Entity\SousCategorie;
 use App\Controller\Admin\UserCrudController;
 use App\Entity\Accessoires;
+use App\Entity\Bijoux;
 use App\Entity\Chaussures;
 use App\Entity\Media;
 use App\Entity\Vetement;
@@ -89,6 +90,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Chaussures')->setSubItems([
             MenuItem::linkToCrud('Voir les Chaussures', 'fas fa-eye', Chaussures::class),
             MenuItem::linkToCrud('Ajouter des chaussures', 'fas fa-plus', Chaussures::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Bijoux')->setSubItems([
+            MenuItem::linkToCrud('Voir les Bijoux', 'fas fa-eye', Bijoux::class),
+            MenuItem::linkToCrud('Ajouter des Bijoux', 'fas fa-plus', Bijoux::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Merchandising');

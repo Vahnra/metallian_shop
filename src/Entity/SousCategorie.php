@@ -33,12 +33,16 @@ class SousCategorie
     #[ORM\OneToMany(mappedBy: 'sousCategorie', targetEntity: Chaussures::class)]
     private Collection $chaussures;
 
+    #[ORM\OneToMany(mappedBy: 'sousCategorie', targetEntity: Bijoux::class)]
+    private Collection $bijouxes;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
         $this->media = new ArrayCollection();
         $this->accessoires = new ArrayCollection();
         $this->chaussures = new ArrayCollection();
+        $this->bijouxes = new ArrayCollection();
     }
 
     public function __toString()
@@ -189,6 +193,36 @@ class SousCategorie
             // set the owning side to null (unless already changed)
             if ($chaussure->getSousCategorie() === $this) {
                 $chaussure->setSousCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bijoux>
+     */
+    public function getBijouxes(): Collection
+    {
+        return $this->bijouxes;
+    }
+
+    public function addBijoux(Bijoux $bijoux): self
+    {
+        if (!$this->bijouxes->contains($bijoux)) {
+            $this->bijouxes->add($bijoux);
+            $bijoux->setSousCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijoux(Bijoux $bijoux): self
+    {
+        if ($this->bijouxes->removeElement($bijoux)) {
+            // set the owning side to null (unless already changed)
+            if ($bijoux->getSousCategorie() === $this) {
+                $bijoux->setSousCategorie(null);
             }
         }
 
