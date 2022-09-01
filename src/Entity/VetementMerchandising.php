@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Categorie;
+use App\Repository\VetementMerchandisingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\VetementRepository;
 
-#[ORM\Entity(repositoryClass: VetementRepository::class)]
-class Vetement
+#[ORM\Entity(repositoryClass: VetementMerchandisingRepository::class)]
+class VetementMerchandising
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,20 +20,14 @@ class Vetement
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::ARRAY)]
     private array $size = [];
 
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::ARRAY)]
     private array $color = [];
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?Categorie $categorie = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?SousCategorie $sousCategorie = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -45,7 +38,13 @@ class Vetement
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
+    private ?CategorieMerchandising $categorieMerchandising = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
+    private ?SousCategorieMerchandising $sousCategorieMerchandising = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
     private ?Marques $marques = null;
 
     #[ORM\Column(length: 255)]
@@ -82,9 +81,7 @@ class Vetement
 
     public function getSize(): array
     {
-        $size = $this->size;
-
-        return array_unique($size);
+        return $this->size;
     }
 
     public function setSize(array $size): self
@@ -108,38 +105,12 @@ class Vetement
 
     public function getColor(): array
     {
-        $color = $this->color;
-
-        return array_unique($color);
+        return $this->color;
     }
 
     public function setColor(array $color): self
     {
         $this->color = $color;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?Categorie $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    public function getSousCategorie(): ?SousCategorie
-    {
-        return $this->sousCategorie;
-    }
-
-    public function setSousCategorie(?SousCategorie $sousCategorie): self
-    {
-        $this->sousCategorie = $sousCategorie;
 
         return $this;
     }
@@ -176,6 +147,30 @@ class Vetement
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getCategorieMerchandising(): ?CategorieMerchandising
+    {
+        return $this->categorieMerchandising;
+    }
+
+    public function setCategorieMerchandising(?CategorieMerchandising $categorieMerchandising): self
+    {
+        $this->categorieMerchandising = $categorieMerchandising;
+
+        return $this;
+    }
+
+    public function getSousCategorieMerchandising(): ?SousCategorieMerchandising
+    {
+        return $this->sousCategorieMerchandising;
+    }
+
+    public function setSousCategorieMerchandising(?SousCategorieMerchandising $sousCategorieMerchandising): self
+    {
+        $this->sousCategorieMerchandising = $sousCategorieMerchandising;
 
         return $this;
     }

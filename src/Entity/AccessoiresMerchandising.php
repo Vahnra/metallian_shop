@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Categorie;
+use App\Repository\AccessoiresMerchandisingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\VetementRepository;
 
-#[ORM\Entity(repositoryClass: VetementRepository::class)]
-class Vetement
+#[ORM\Entity(repositoryClass: AccessoiresMerchandisingRepository::class)]
+class AccessoiresMerchandising
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,20 +20,23 @@ class Vetement
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private array $size = [];
+    #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
+    private ?CategorieMerchandising $categorieMerchandising = null;
+
+    #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
+    private ?SousCategorieMerchandising $sousCategorieMerchandising = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $price = null;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $color = [];
 
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\Column]
-    private array $color = [];
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?Categorie $categorie = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?SousCategorie $sousCategorie = null;
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $taille = [];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -44,12 +46,6 @@ class Vetement
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?Marques $marques = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
 
     public function getId(): ?int
     {
@@ -80,16 +76,50 @@ class Vetement
         return $this;
     }
 
-    public function getSize(): array
+    public function getCategorieMerchandising(): ?CategorieMerchandising
     {
-        $size = $this->size;
-
-        return array_unique($size);
+        return $this->categorieMerchandising;
     }
 
-    public function setSize(array $size): self
+    public function setCategorieMerchandising(?CategorieMerchandising $categorieMerchandising): self
     {
-        $this->size = $size;
+        $this->categorieMerchandising = $categorieMerchandising;
+
+        return $this;
+    }
+
+    public function getSousCategorieMerchandising(): ?SousCategorieMerchandising
+    {
+        return $this->sousCategorieMerchandising;
+    }
+
+    public function setSousCategorieMerchandising(?SousCategorieMerchandising $sousCategorieMerchandising): self
+    {
+        $this->sousCategorieMerchandising = $sousCategorieMerchandising;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getColor(): array
+    {
+        return $this->color;
+    }
+
+    public function setColor(array $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
@@ -106,40 +136,14 @@ class Vetement
         return $this;
     }
 
-    public function getColor(): array
+    public function getTaille(): array
     {
-        $color = $this->color;
-
-        return array_unique($color);
+        return $this->taille;
     }
 
-    public function setColor(array $color): self
+    public function setTaille(array $taille): self
     {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?Categorie $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    public function getSousCategorie(): ?SousCategorie
-    {
-        return $this->sousCategorie;
-    }
-
-    public function setSousCategorie(?SousCategorie $sousCategorie): self
-    {
-        $this->sousCategorie = $sousCategorie;
+        $this->taille = $taille;
 
         return $this;
     }
@@ -176,30 +180,6 @@ class Vetement
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    public function getMarques(): ?Marques
-    {
-        return $this->marques;
-    }
-
-    public function setMarques(?Marques $marques): self
-    {
-        $this->marques = $marques;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
