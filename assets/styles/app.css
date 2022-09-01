@@ -171,3 +171,14 @@ body {
 }
 
 /* Fin CSS pour le footer */
+
+/* Début CSS pour le hover des dropdown */
+
+.dropdown:hover .dropdown-menu{
+  display: block;
+}
+.dropdown-menu{
+  margin-top: 0;
+}
+
+/* Fin CSS pour le hover des dopdown */

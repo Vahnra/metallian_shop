@@ -1,7 +1,7 @@
 {% for category in categories %}
 
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="{{ path('show_vetements_from_category', {"title": category.title}) }}" id="navbarDropdown" role="button"  aria-expanded="false">
             {{ category.title }}
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
