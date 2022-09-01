@@ -18,13 +18,13 @@ class CategorieMerchandising
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: SousCategorieMerchandising::class)]
+    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: SousCategorieMerchandising::class, cascade: ['remove'])]
     private Collection $sousCategorieMerchandisings;
 
-    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: VetementMerchandising::class)]
+    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: VetementMerchandising::class, cascade: ['remove'])]
     private Collection $vetementMerchandisings;
 
-    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: AccessoiresMerchandising::class)]
+    #[ORM\OneToMany(mappedBy: 'categorieMerchandising', targetEntity: AccessoiresMerchandising::class, cascade: ['remove'])]
     private Collection $accessoiresMerchandisings;
 
     public function __construct()

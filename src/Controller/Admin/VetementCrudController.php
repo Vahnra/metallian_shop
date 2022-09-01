@@ -41,9 +41,10 @@ class VetementCrudController extends AbstractCrudController
         yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images');
         yield AssociationField::new('categorie');
         yield AssociationField::new('sousCategorie');
+        yield AssociationField::new('marques', 'Marque de l\'article');
+        yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
-        yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
     }
     
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
