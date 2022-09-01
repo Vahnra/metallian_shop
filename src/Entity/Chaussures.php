@@ -23,8 +23,6 @@ class Chaussures
     #[ORM\Column(length: 255)]
     private ?string $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $color = null;
 
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
@@ -46,6 +44,9 @@ class Chaussures
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $color = [];
 
     public function getId(): ?int
     {
@@ -84,18 +85,6 @@ class Chaussures
     public function setPrice(string $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(string $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }
@@ -180,6 +169,18 @@ class Chaussures
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getColor(): array
+    {
+        return $this->color;
+    }
+
+    public function setColor(array $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

@@ -27,7 +27,11 @@ class ChaussuresCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('titre');
         yield TextField::new('description');
-        yield TextField::new('color');
+        yield ChoiceField::new('color', 'Couleur')->renderExpanded()->allowMultipleChoices()->setChoices([
+            'green' => 'vert',
+            'pink' => 'rose',
+            'black' => 'noir',
+        ]);
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
         yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images');
         yield ChoiceField::new('size' ,'taille')->renderExpanded()->allowMultipleChoices()->setChoices([
