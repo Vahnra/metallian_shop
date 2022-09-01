@@ -3,14 +3,20 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Entity\Categorie;
-use App\Entity\SousCategorie;
-use App\Controller\Admin\UserCrudController;
+
 use App\Entity\Accessoires;
 use App\Entity\Bijoux;
 use App\Entity\Chaussures;
 use App\Entity\Media;
 use App\Entity\Vetement;
+use App\Entity\Categorie;
+use App\Entity\SousCategorie;
+use App\Entity\VetementMerchandising;
+use App\Entity\CategorieMerchandising;
+use App\Entity\AccessoiresMerchandising;
+use App\Entity\SousCategorieMerchandising;
+use App\Controller\Admin\UserCrudController;
+use App\Entity\Marques;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -62,6 +68,7 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::section('Catégorie normaux');
+
         yield MenuItem::subMenu('Catégorie')->setSubItems([
             MenuItem::linkToCrud('Voir les catégories', 'fas fa-eye', Categorie::class),
             MenuItem::linkToCrud('Créer une catégorie', 'fas fa-plus', Categorie::class)->setAction(Crud::PAGE_NEW)
@@ -99,7 +106,32 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Merchandising');
 
+        yield MenuItem::subMenu('Catégorie')->setSubItems([
+            MenuItem::linkToCrud('Voir les catégories', 'fas fa-eye', CategorieMerchandising::class),
+            MenuItem::linkToCrud('Ajouter une catégorie', 'fas fa-plus', CategorieMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Sous catégorie')->setSubItems([
+            MenuItem::linkToCrud('Voir les sous catégories', 'fas fa-eye', SousCategorieMerchandising::class),
+            MenuItem::linkToCrud('Ajouter une sous catégorie', 'fas fa-plus', SousCategorieMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Vetements')->setSubItems([
+            MenuItem::linkToCrud('Voir les vetements', 'fas fa-eye', VetementMerchandising::class),
+            MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', VetementMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Accesoires')->setSubItems([
+            MenuItem::linkToCrud('Voir les accesoires', 'fas fa-eye', AccessoiresMerchandising::class),
+            MenuItem::linkToCrud('Ajouter un accesoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
         yield MenuItem::section('Marques');
+
+        yield MenuItem::subMenu('Les marques')->setSubItems([
+            MenuItem::linkToCrud('Voir les marques', 'fas fa-eye', Marques::class),
+            MenuItem::linkToCrud('Ajouter une marque', 'fas fa-plus', Marques::class)->setAction(Crud::PAGE_NEW)
+        ]);
 
         yield MenuItem::section('Soldes');
     }
