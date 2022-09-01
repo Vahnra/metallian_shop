@@ -37,7 +37,7 @@
     <div class="row">
 
         <div class="col-12 p-3 bg-white text-dark">
-            <h2>Femme</h2>     
+            <h2>Nouveautées pour les femmes</h2>     
             <div class="row text-center">
 
                 {% for vetement in nouveautesFemme | slice(0, 4) %}
@@ -46,9 +46,13 @@
 
                         <div class="col-3 mx-auto">
 
-                            <img src="{{ asset('images/' ~ vetement.photo) }}" style="max-width: 17rem" class="p-4" alt="text text" title="text">
+                            <a href="#" class="text-decoration-none text-dark">
 
-                            <p>{{ vetement.price }} €</p>
+                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="max-width: 17rem" class="p-4" alt="text text" title="text">
+
+                                <p>{{ vetement.price/100 }} €</p>
+
+                            </a>
 
                         </div>
 
@@ -61,7 +65,7 @@
     </div>
     <div class="row">
         <div class="col-12 p-3 bg-dark text-white">
-            <h2>Homme</h2>     
+            <h2>Nouveautées pour les hommes</h2>     
             <div class="row text-center">
 
                 {% for vetement in nouveautesHomme %}
@@ -70,9 +74,13 @@
 
                         <div class="col-3 mx-auto">
 
-                            <img src="{{ asset('images/' ~ vetement.photo) }}" style="max-width: 17rem" class="p-4" alt="text text" title="text">
+                            <a href="#" class="text-decoration-none text-white">
 
-                            <p>{{ vetement.price }} €</p>
+                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="max-width: 17rem" class="p-4" alt="text text" title="text">
+
+                                <p>{{ vetement.price/100 }} €</p>
+
+                            </a>
 
                         </div>
 

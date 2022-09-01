@@ -6,7 +6,7 @@
 
     <div class="container">
 
-        <h1 class="my-3">Les {{ souscategories.title }}</h1>
+        <h1 class="my-5">Les {{ souscategories.title }}</h1>
 
         <div class="container-fluid">
         
@@ -16,15 +16,15 @@
 
                     <p>Catégories</p>
 
-                    <h3>{{ categories.0.title }}</h3>
+                    <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></h3>
 
-                        <ul class="">
+                        <ul class="" style="list-style-type: none">
 
                             {% for subcategory in allsouscategories %}
 
                             {% if subcategory.categorie.title == categories.0.title %}
                       
-                                <li><a href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.0.title}) }}">{{ subcategory.title }}</a></li>
+                                <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.0.title}) }}">{{ subcategory.title }}</a></li>
 
                             {% endif %}
 
@@ -36,23 +36,29 @@
 
                  <div class="col-10">
 
-                    <h3>{{ souscategories.title }}</h3>
+                    <h3 class="mb-4">{{ souscategories.title }}</h3>
 
                     <div class="row">
 
                         {% for vetement in vetements %}
                     
                         <div class="card g-0 mx-auto my-2" style="width: 15rem;">
-                            <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: cover;" class="card-img-top" alt="...">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
-                            </ul>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ vetement.title }}</h5>
-                                <p class="card-text">{{ vetement.description }}</p>
-                                <a href="#" class="card-link">Ajouter au panier</a>
-                            </div>                
-                  
+
+                            <a href="#" class="text-decoration-none text-black">
+
+                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: cover;" class="card-img-top" alt="...">
+
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                    </ul>
+                                    <h5 class="card-title">{{ vetement.title }}</h5>
+                                    <p class="card-text">{{ vetement.description }}</p>
+                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                </div>                
+
+                            </a>
+
                         </div>
                     
                         {% endfor %}
