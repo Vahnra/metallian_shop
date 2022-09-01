@@ -39,20 +39,20 @@ class VetementRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Vetement[] Returns an array of Vetement objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('v.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Vetement[] Returns an array of Vetement objects
+    */
+   public function findByFourVetements($value): array
+   {
+       return $this->createQueryBuilder('v')
+           ->andWhere('v.categorie = :val')
+           ->setParameter('val', $value)
+           ->orderBy('v.id', 'DESC')
+           ->setMaxResults(4)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Vetement
 //    {
