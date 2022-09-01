@@ -18,6 +18,8 @@
                     <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.title}) }}">{{ categories.title }}</a></h3>
                     <ul class="" style="list-style-type: none">
 
+                        {# For pour afficher les sous catégories en question #}
+
                         {% for subcategory in souscategories %}
 
                             {% if subcategory.categorie.title == categories.title %}
@@ -38,7 +40,10 @@
 
                     <h3 class="mb-4">{{ categories.title }}</h3>
 
+
                     <div class="row">
+
+                        {# For pour afficher les vetements en forme de cartes #}
 
                         {% for vetement in vetements %}
                     
@@ -60,6 +65,22 @@
                         </div>
                     
                         {% endfor %}
+
+                        {# Pagination #}
+
+                        <div class="container mt-3">
+                    
+                            <div class="row">
+                        
+                                <div class="col-12 ms-auto">
+                            
+                                {{ knp_pagination_render(vetements) }}
+                            
+                                </div>
+                        
+                            </div>
+
+                        </div>
 
                     </div>
                 

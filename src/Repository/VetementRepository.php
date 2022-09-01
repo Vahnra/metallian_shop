@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Vetement;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Categorie;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<Vetement>
@@ -52,6 +54,28 @@ class VetementRepository extends ServiceEntityRepository
            ->getQuery()
            ->getResult()
        ;
+   }
+
+//    Fonction pour la pagination
+
+   public function findForPagination($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
+
+   public function findForPaginationSousCategorie($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
    }
 
 //    public function findOneBySomeField($value): ?Vetement
