@@ -7,8 +7,12 @@
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
                 {% for subcategory in souscategories %}
+
+                    {% if subcategory.categorie.title == category.title %}
                     
                     <a class="dropdown-item" href="#">{{ subcategory.title }}</a>
+
+                    {% endif %}
 
                 {% endfor %}
             </li>

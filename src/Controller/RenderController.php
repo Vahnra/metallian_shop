@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +15,7 @@ class RenderController extends AbstractController
     public function renderCategoriesInNav(EntityManagerInterface $entityManager): Response
     {
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
-        
+
         $souscategories = $entityManager->getRepository(SousCategorie::class)->findAll();
 
         return $this->render('rendered/categories_in_nav.html.twig', [
