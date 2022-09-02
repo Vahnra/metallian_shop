@@ -35,6 +35,10 @@ class BijouxCrudController extends AbstractCrudController
             'black' => 'noir',
         ]);
         yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo2')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo3')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo4')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo5')->setBasePath('images')->setUploadDir('public/images');
         yield AssociationField::new('categorie');
         yield AssociationField::new('sousCategorie');
         yield DateField::new('createdAt')->hideOnForm();
