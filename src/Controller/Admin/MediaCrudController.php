@@ -6,9 +6,13 @@ use App\Entity\Media;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -46,5 +50,16 @@ class MediaCrudController extends AbstractCrudController
         
         // creat the date
         parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return parent::configureFilters($filters)
+            ->add(TextFilter::new('artist'))
+            ->add(TextFilter::new('genre'))
+            ->add(EntityFilter::new('categorie'))
+            ->add(EntityFilter::new('sousCategorie'))
+            ->add(DateTimeFilter::new('createdAt'))
+            ->add(DateTimeFilter::new('dateDeSortie'));
     }
 }

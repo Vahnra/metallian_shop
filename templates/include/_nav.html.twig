@@ -12,13 +12,13 @@
 					{% if is_granted("ROLE_ADMIN") %}
 
 						<li class="nav-item">
-							<a class="nav-link text-white" href="{{ path('admin') }}">Menu Admin</a>
+							<a class="nav-link text-white" href="{{ path('admin') }}"><i class="fa-solid fa-screwdriver-wrench mx-2"></i>Menu Admin</a>
 						</li>
 
 					{% endif %}
 
 					<li class="nav-item">
-						<a class="nav-link text-white" href="{{ path('app_logout') }}">Se Déconnecter</a>
+						<a class="nav-link text-white" href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket mx-2"></i>Se Déconnecter</a>
 					</li>
 
 				{% else %}
