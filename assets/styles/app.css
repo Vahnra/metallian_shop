@@ -193,6 +193,16 @@ body {
   text-decoration: underline;
 }
 
+.text-underline-hover2 {
+  text-decoration: underline;
+}
+
+.text-underline-hover2:hover {
+  text-decoration: none;
+}
+
+
+
 /* Change color hover dropdown */
 
 .dropdown:hover{
@@ -220,3 +230,29 @@ body {
   background-color: white;
 }
 
+/* CSS bannieres */
+
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.image1 {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.image2 {
+  position: absolute;
+  top: 70px;
+  left: 35px;
+  z-index: 1;
+}
+
+.image3 {
+  position: relative;
+  top: 80px;
+  left: 200px;
+}
