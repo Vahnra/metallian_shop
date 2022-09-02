@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir des Bijoux{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 bg-dark text-white">
+            <h1>Bijoux</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 bg-light">
+            <img src={{ asset('images/'~bijou.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~bijou.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~bijou.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
+        </div>
+
+        <div class="col-5 bg-light">
+            <img src={{ asset('images/'~bijou.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+
+        </div>
+
+        <div class="col-5 bg-light">
+        {{ dump(bijou) }}
+            <h3>{{ bijou.0.title }}
+                
+            </h3>
+            <p>description {{ bijou.0.description }}</p>
+            <p> {{ bijou.0.color.0 }}</p>
+            <p> {{ bijou.0.color.1 }}</p>
+            <p>{{ bijou.0.price/100 }}€</p>
+
+            <button type="button" class="btn btn-success">Ajouter au panier</button>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
