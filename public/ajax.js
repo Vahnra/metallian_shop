@@ -1,4 +1,3 @@
-
 $( document ).ready(function() {
   let deviceBrande = $('#Vetement_categorie');
   // console.log(deviceBrande)
@@ -24,6 +23,35 @@ $( document ).ready(function() {
           );
 
           // Position field now displays the appropriate positions.
+          }
+      });
+      
+  });
+
+});
+
+$( document ).ready(function() {
+  let deviceBrande = $('#Media_categorie');
+
+  deviceBrande.change(function() {
+    
+      var form = $(this).closest('form');
+       
+      var data = {};
+      
+      data[deviceBrande.attr('name')] = deviceBrande.val();
+   
+      $.ajax({
+          url : form.attr('action'),
+          type: form.attr('method'),
+          data : data,
+          complete: function(html) {
+       
+          $('#Media_sousCategorie').replaceWith(
+      
+              $(html.responseText).find('#Media_sousCategorie')
+          );
+
           }
       });
       

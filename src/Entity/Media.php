@@ -32,7 +32,7 @@ class Media
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?SousCategorie $sousCategorie = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateDeSortie = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
