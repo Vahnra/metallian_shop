@@ -4,23 +4,24 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 
-use App\Entity\Accessoires;
-use App\Entity\Bijoux;
-use App\Entity\Chaussures;
 use App\Entity\Media;
+use App\Entity\Bijoux;
+use App\Entity\Marques;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\Chaussures;
+use App\Entity\Accessoires;
 use App\Entity\SousCategorie;
 use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
-use App\Entity\Marques;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -142,4 +143,10 @@ class DashboardController extends AbstractDashboardController
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
     
+    public function configureAssets(): Assets
+    {
+        return parent::configureAssets()
+        ->addJsFile('jquery-3.6.1.js')
+        ->addJsFile('ajax.js');
+    }
 }
