@@ -45,12 +45,12 @@ class VetementCrudController extends AbstractCrudController
             'medium' => 'medium',
             'large' => 'large',
         ]);
+        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield ChoiceField::new('color', 'Couleur')->allowMultipleChoices()->setChoices([
             'blanc' => 'blanc',
             'noir' => 'noir',
             'rouge' => 'rouge',
         ]);
-        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield AssociationField::new('marques', 'Marque de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
         yield AssociationField::new('categorie');
