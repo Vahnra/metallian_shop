@@ -1,4 +1,4 @@
-{% for category in categories %}
+{% for category in categoriesMerchandising %}
 
     <li class="nav-item dropdown">
         <div class="navigation-color">
@@ -10,9 +10,9 @@
         </div>
         <ul class="dropdown-menu border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
             <li>
-                {% for subcategory in souscategories %}
+                {% for subcategory in souscategoriesMerchandising %}
 
-                    {% if subcategory.categorie.title == category.title %}
+                    {% if subcategory.categorieMerchandising.title == category.title %}
                     
                         <a class="dropdown-item text-underline-hover" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
 

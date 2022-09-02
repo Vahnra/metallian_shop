@@ -21,14 +21,22 @@ class RenderController extends AbstractController
 
         $souscategories = $entityManager->getRepository(SousCategorie::class)->findAll();
 
+        return $this->render('rendered/categories_in_nav.html.twig', [
+            'categories' => $categories,
+            'souscategories' => $souscategories
+        ]);
+    }
+
+    #[Route('/categories2', name: 'render_categories_merchandising_in_nav')]
+    public function renderCategoriesMerchandisingInNav(EntityManagerInterface $entityManager): Response
+    {
+    
         // On récupre toutes les categoriesMerchandising et sousCategoriesMerchandising
         $categoriesMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findAll();
 
         $souscategoriesMerchandising = $entityManager->getRepository(SousCategorieMerchandising::class)->findAll();
 
-        return $this->render('rendered/categories_in_nav.html.twig', [
-            'categories' => $categories,
-            'souscategories' => $souscategories,
+        return $this->render('rendered/categories_merchandising_in_nav.html.twig', [
             'categoriesMerchandising' => $categoriesMerchandising,
             'souscategoriesMerchandising' => $souscategoriesMerchandising
         ]);
