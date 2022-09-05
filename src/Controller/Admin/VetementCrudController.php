@@ -54,7 +54,7 @@ class VetementCrudController extends AbstractCrudController
         yield AssociationField::new('marques', 'Marque de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
         yield AssociationField::new('categorie');
-        yield AssociationField::new('sousCategorie')->hideOnForm();
+        // yield AssociationField::new('sousCategorie')->hideOnForm();
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
     }

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Bijoux;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Bijoux>
@@ -38,6 +39,28 @@ class BijouxRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    // Fonction pour la pagination
+
+    public function findForPagination($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
+
+   public function findForPaginationSousCategorie($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
 
 //    /**
 //     * @return Bijoux[] Returns an array of Bijoux objects

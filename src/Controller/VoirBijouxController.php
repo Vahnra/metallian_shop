@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VoirBijouxController extends AbstractController
 {
-    #[Route('/voir/bijoux{id}', name: 'voir_bijoux', methods: ['GET'])]
+    #[Route('/voir/bijoux-{id}', name: 'voir_bijoux', methods: ['GET'])]
     public function voirBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager): Response
     {
         $bijou = $entityManager->getRepository(Bijoux::class)->findBy(['id'=>$bijoux->getId()]);
