@@ -157,32 +157,32 @@
 
                         {# For pour afficher les vetements en forme de cartes #}
 
-                        {% if categories.title == 'Femme' %}
+                        {# {% if categories.title == 'Femme' %} #}
                         
 
-                        {% for vetement in vetements %}
-                    
-                        <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+                            {% for vetement in vetements %}
+                        
+                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-                            <a href="#" class="text-decoration-none text-black">
+                                <a href="#" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
-                                    </ul>
-                                    <h5 class="card-title">{{ vetement.title }}</h5>
-                                    <p class="card-text">{{ vetement.description }}</p>
-                                    <a href="#" class="card-link">Ajouter au panier</a>
-                                </div>      
+                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                        </ul>
+                                        <h5 class="card-title">{{ vetement.title }}</h5>
+                                        <p class="card-text">{{ vetement.description }}</p>
+                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                    </div>      
 
-                            </a>
+                                </a>
 
-                        </div>
+                            </div>
 
-                        {% endfor %}
+                            {% endfor %}
 
-                        {% endif %}
+                        {# {% endif %} #}
 
                         {% for bijou in bijoux %}
                     
@@ -197,6 +197,72 @@
                                     </ul>
                                     <h5 class="card-title">{{ bijou.title }}</h5>
                                     <p class="card-text">{{ bijou.description }}</p>
+                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                </div>      
+
+                            </a>
+
+                        </div>
+                    
+                        {% endfor %}
+
+                        {% for media in medias %}
+                    
+                        <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                            <a href="#" class="text-decoration-none text-black">
+
+                                <img src="{{ asset('images/' ~ media.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">{{ (media.price)/100 }} €</li>
+                                    </ul>
+                                    <h5 class="card-title">{{ media.title }}</h5>
+                                    <p class="card-text">{{ media.description }}</p>
+                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                </div>      
+
+                            </a>
+
+                        </div>
+                    
+                        {% endfor %}
+
+                        {% for chaussure in chaussures %}
+                    
+                        <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                            <a href="#" class="text-decoration-none text-black">
+
+                                <img src="{{ asset('images/' ~ chaussure.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">{{ (chaussure.price)/100 }} €</li>
+                                    </ul>
+                                    <h5 class="card-title">{{ chaussure.title }}</h5>
+                                    <p class="card-text">{{ chaussure.description }}</p>
+                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                </div>      
+
+                            </a>
+
+                        </div>
+                    
+                        {% endfor %}
+
+                        {% for accessoire in accessoires %}
+                    
+                        <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                            <a href="#" class="text-decoration-none text-black">
+
+                                <img src="{{ asset('images/' ~ accessoire.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">{{ (accessoire.price)/100 }} €</li>
+                                    </ul>
+                                    <h5 class="card-title">{{ accessoire.title }}</h5>
+                                    <p class="card-text">{{ accessoire.description }}</p>
                                     <a href="#" class="card-link">Ajouter au panier</a>
                                 </div>      
 

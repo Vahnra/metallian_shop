@@ -75,7 +75,6 @@ class AccessoiresCrudController extends AbstractCrudController
         return parent::configureFilters($filters)
             ->add(TextFilter::new('title'))
             ->add(NumericFilter::new('price'))
-            ->add(TextFilter::new('taille'))
             ->add(EntityFilter::new('categorie'));
     }
 

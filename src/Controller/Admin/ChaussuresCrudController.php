@@ -37,7 +37,7 @@ class ChaussuresCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Détail de l\'article');
-        yield TextField::new('titre');
+        yield TextField::new('title');
         yield TextField::new('description');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
         yield AssociationField::new('color');

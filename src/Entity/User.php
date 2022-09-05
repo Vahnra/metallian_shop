@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -46,6 +48,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ReviewVetement::class)]
+    private Collection $reviewVetements;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ReviewMedia::class)]
+    private Collection $reviewMedia;
+
+    public function __construct()
+    {
+        $this->reviewVetements = new ArrayCollection();
+        $this->reviewMedia = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -185,6 +199,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReviewVetement>
+     */
+    public function getReviewVetements(): Collection
+    {
+        return $this->reviewVetements;
+    }
+
+    public function addReviewVetement(ReviewVetement $reviewVetement): self
+    {
+        if (!$this->reviewVetements->contains($reviewVetement)) {
+            $this->reviewVetements->add($reviewVetement);
+            $reviewVetement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewVetement(ReviewVetement $reviewVetement): self
+    {
+        if ($this->reviewVetements->removeElement($reviewVetement)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewVetement->getUser() === $this) {
+                $reviewVetement->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReviewMedia>
+     */
+    public function getReviewMedia(): Collection
+    {
+        return $this->reviewMedia;
+    }
+
+    public function addReviewMedium(ReviewMedia $reviewMedium): self
+    {
+        if (!$this->reviewMedia->contains($reviewMedium)) {
+            $this->reviewMedia->add($reviewMedium);
+            $reviewMedium->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewMedium(ReviewMedia $reviewMedium): self
+    {
+        if ($this->reviewMedia->removeElement($reviewMedium)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewMedium->getUser() === $this) {
+                $reviewMedium->setUser(null);
+            }
+        }
 
         return $this;
     }

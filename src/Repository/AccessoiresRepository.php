@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Accessoires;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Accessoires>
@@ -38,6 +39,28 @@ class AccessoiresRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    //    Fonction pour la pagination
+
+   public function findForPagination($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
+
+   public function findForPaginationSousCategorie($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
 
 //    /**
 //     * @return Accessoires[] Returns an array of Accessoires objects

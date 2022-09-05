@@ -15,7 +15,7 @@ class Chaussures
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titre = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
@@ -58,14 +58,14 @@ class Chaussures
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function gettitle(): ?string
     {
-        return $this->titre;
+        return $this->title;
     }
 
-    public function setTitre(string $titre): self
+    public function settitle(string $title): self
     {
-        $this->titre = $titre;
+        $this->title = $title;
 
         return $this;
     }

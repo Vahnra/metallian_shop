@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Categorie;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VetementRepository;
@@ -59,6 +61,14 @@ class Vetement
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
+
+    #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: ReviewVetement::class)]
+    private Collection $reviewVetements;
+
+    public function __construct()
+    {
+        $this->reviewVetements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -241,6 +251,36 @@ class Vetement
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReviewVetement>
+     */
+    public function getReviewVetements(): Collection
+    {
+        return $this->reviewVetements;
+    }
+
+    public function addReviewVetement(ReviewVetement $reviewVetement): self
+    {
+        if (!$this->reviewVetements->contains($reviewVetement)) {
+            $this->reviewVetements->add($reviewVetement);
+            $reviewVetement->setVetement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewVetement(ReviewVetement $reviewVetement): self
+    {
+        if ($this->reviewVetements->removeElement($reviewVetement)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewVetement->getVetement() === $this) {
+                $reviewVetement->setVetement(null);
+            }
+        }
 
         return $this;
     }

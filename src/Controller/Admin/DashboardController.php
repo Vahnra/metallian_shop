@@ -20,6 +20,8 @@ use App\Controller\Admin\UserCrudController;
 use App\Entity\Artist;
 use App\Entity\Color;
 use App\Entity\Material;
+use App\Entity\ReviewMedia;
+use App\Entity\ReviewVetement;
 use App\Entity\Size;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -158,6 +160,16 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Les artistes')->setSubItems([
             MenuItem::linkToCrud('Voir les artistes', 'fas fa-eye', Artist::class),
             MenuItem::linkToCrud('Ajouter un artiste', 'fas fa-plus', Artist::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::section('Les commentaires');
+
+        yield MenuItem::subMenu('Les commentaires sur les vêtements')->setSubItems([
+            MenuItem::linkToCrud('Voir les commentaires', 'fas fa-eye', ReviewVetement::class),
+        ]);
+
+        yield MenuItem::subMenu('Les commentaires sur les médias')->setSubItems([
+            MenuItem::linkToCrud('Voir les commentaires', 'fas fa-eye', ReviewMedia::class),
         ]);
 
         yield MenuItem::section('Soldes');

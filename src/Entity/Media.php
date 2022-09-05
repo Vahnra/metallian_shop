@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -49,6 +51,14 @@ class Media
 
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?MusicType $genre = null;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: ReviewMedia::class)]
+    private Collection $reviewMedia;
+
+    public function __construct()
+    {
+        $this->reviewMedia = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -196,6 +206,36 @@ class Media
     public function setGenre(?MusicType $genre): self
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReviewMedia>
+     */
+    public function getReviewMedia(): Collection
+    {
+        return $this->reviewMedia;
+    }
+
+    public function addReviewMedium(ReviewMedia $reviewMedium): self
+    {
+        if (!$this->reviewMedia->contains($reviewMedium)) {
+            $this->reviewMedia->add($reviewMedium);
+            $reviewMedium->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewMedium(ReviewMedia $reviewMedium): self
+    {
+        if ($this->reviewMedia->removeElement($reviewMedium)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewMedium->getMedia() === $this) {
+                $reviewMedium->setMedia(null);
+            }
+        }
 
         return $this;
     }
