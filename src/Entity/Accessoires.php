@@ -26,9 +26,6 @@ class Accessoires
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\Column]
-    private array $taille = [];
-
     #[ORM\ManyToOne(inversedBy: 'accessoires')]
     private ?Categorie $categorie = null;
 
@@ -43,6 +40,12 @@ class Accessoires
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
+
+    #[ORM\Column(length: 2550)]
+    private ?string $textLong = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $taille = null;
 
     public function getId(): ?int
     {
@@ -93,20 +96,6 @@ class Accessoires
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getTaille(): array
-    {
-        $taille = $this->taille;
-
-        return array_unique($taille);
-    }
-
-    public function setTaille(array $taille): self
-    {
-        $this->taille = $taille;
 
         return $this;
     }
@@ -167,6 +156,30 @@ class Accessoires
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getTextLong(): ?string
+    {
+        return $this->textLong;
+    }
+
+    public function setTextLong(string $textLong): self
+    {
+        $this->textLong = $textLong;
+
+        return $this;
+    }
+
+    public function getTaille(): ?string
+    {
+        return $this->taille;
+    }
+
+    public function setTaille(string $taille): self
+    {
+        $this->taille = $taille;
 
         return $this;
     }

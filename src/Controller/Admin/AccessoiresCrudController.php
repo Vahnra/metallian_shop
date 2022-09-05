@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class AccessoiresCrudController extends AbstractCrudController
 {
@@ -28,9 +29,10 @@ class AccessoiresCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Titre');
         yield TextField::new('description');
+        yield TextareaField::new('textLong', 'Description compléte')->setMaxLength(250)->setNumOfRows(7);
         yield MoneyField::new('price')->setCurrency('EUR');
         yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images');
-        yield ChoiceField::new('taille')->renderExpanded()->allowMultipleChoices()->setChoices([
+        yield ChoiceField::new('taille')->renderExpanded()->setChoices([
             'small' => 'S',
             'medium' => 'M',
             'large' => 'L',
