@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SizeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SizeRepository::class)]
@@ -16,8 +18,13 @@ class Size
     #[ORM\Column(length: 255)]
     private ?string $size = null;
 
-    #[ORM\ManyToOne(inversedBy: 'size')]
-    private ?ProductType $productType = null;
+    #[ORM\ManyToMany(targetEntity: ProductType::class, mappedBy: 'size')]
+    private Collection $productTypes;
+
+    public function __construct()
+    {
+        $this->productTypes = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -41,15 +48,31 @@ class Size
         return $this;
     }
 
-    public function getProductType(): ?ProductType
+    /**
+     * @return Collection<int, ProductType>
+     */
+    public function getProductTypes(): Collection
     {
-        return $this->productType;
+        return $this->productTypes;
     }
 
-    public function setProductType(?ProductType $productType): self
+    public function addProductType(ProductType $productType): self
     {
-        $this->productType = $productType;
+        if (!$this->productTypes->contains($productType)) {
+            $this->productTypes->add($productType);
+            $productType->addSize($this);
+        }
 
         return $this;
     }
+
+    public function removeProductType(ProductType $productType): self
+    {
+        if ($this->productTypes->removeElement($productType)) {
+            $productType->removeSize($this);
+        }
+
+        return $this;
+    }
+
 }

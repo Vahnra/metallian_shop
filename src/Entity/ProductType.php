@@ -16,17 +16,17 @@ class ProductType
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'productType', targetEntity: Size::class)]
-    private Collection $size;
-
-    #[ORM\OneToMany(mappedBy: 'productType', targetEntity: Color::class)]
-    private Collection $color;
-
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'productType')]
     private Collection $products;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+
+    #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'productTypes')]
+    private Collection $size;
+
+    #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'productTypes')]
+    private Collection $color;
 
     public function __construct()
     {
@@ -43,66 +43,6 @@ class ProductType
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Size>
-     */
-    public function getSize(): Collection
-    {
-        return $this->size;
-    }
-
-    public function addSize(Size $size): self
-    {
-        if (!$this->size->contains($size)) {
-            $this->size->add($size);
-            $size->setProductType($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSize(Size $size): self
-    {
-        if ($this->size->removeElement($size)) {
-            // set the owning side to null (unless already changed)
-            if ($size->getProductType() === $this) {
-                $size->setProductType(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Color>
-     */
-    public function getColor(): Collection
-    {
-        return $this->color;
-    }
-
-    public function addColor(Color $color): self
-    {
-        if (!$this->color->contains($color)) {
-            $this->color->add($color);
-            $color->setProductType($this);
-        }
-
-        return $this;
-    }
-
-    public function removeColor(Color $color): self
-    {
-        if ($this->color->removeElement($color)) {
-            // set the owning side to null (unless already changed)
-            if ($color->getProductType() === $this) {
-                $color->setProductType(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -140,6 +80,54 @@ class ProductType
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Size>
+     */
+    public function getSize(): Collection
+    {
+        return $this->size;
+    }
+
+    public function addSize(Size $size): self
+    {
+        if (!$this->size->contains($size)) {
+            $this->size->add($size);
+        }
+
+        return $this;
+    }
+
+    public function removeSize(Size $size): self
+    {
+        $this->size->removeElement($size);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Color>
+     */
+    public function getColor(): Collection
+    {
+        return $this->color;
+    }
+
+    public function addColor(Color $color): self
+    {
+        if (!$this->color->contains($color)) {
+            $this->color->add($color);
+        }
+
+        return $this;
+    }
+
+    public function removeColor(Color $color): self
+    {
+        $this->color->removeElement($color);
 
         return $this;
     }

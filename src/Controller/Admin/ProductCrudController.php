@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
@@ -33,6 +34,8 @@ class ProductCrudController extends AbstractCrudController
         yield TextField::new('title', 'Nom');
         yield TextField::new('description', 'Description de l\'article');
         yield TextField::new('descriptionLong', 'Description longue de l\'article');
+        yield TextField::new('stock', 'Nombres d\'article en stock');
+        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]');
         // yield AssociationField::new('sousCategorie');
         yield AssociationField::new('productType');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
