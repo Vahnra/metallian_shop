@@ -24,11 +24,19 @@ class ProductType
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'productType')]
     private Collection $products;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
     public function __construct()
     {
         $this->size = new ArrayCollection();
         $this->color = new ArrayCollection();
         $this->products = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
     }
 
     public function getId(): ?int
@@ -119,6 +127,18 @@ class ProductType
         if ($this->products->removeElement($product)) {
             $product->removeProductType($this);
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

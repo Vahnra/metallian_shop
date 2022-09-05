@@ -2,21 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
+use App\Entity\Size;
 
-use App\Entity\Accessoires;
-use App\Entity\Bijoux;
-use App\Entity\Chaussures;
+use App\Entity\User;
+use App\Entity\Color;
 use App\Entity\Media;
+use App\Entity\Bijoux;
+use App\Entity\Marques;
+use App\Entity\Product;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\Chaussures;
+use App\Entity\Accessoires;
+use App\Entity\ProductType;
 use App\Entity\SousCategorie;
 use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
-use App\Entity\Marques;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -131,6 +135,28 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Les marques')->setSubItems([
             MenuItem::linkToCrud('Voir les marques', 'fas fa-eye', Marques::class),
             MenuItem::linkToCrud('Ajouter une marque', 'fas fa-plus', Marques::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::section('Test');
+
+        yield MenuItem::subMenu('Les produits')->setSubItems([
+            MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', Product::class),
+            MenuItem::linkToCrud('Ajouter un article', 'fas fa-plus', Product::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Les types de produits')->setSubItems([
+            MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', ProductType::class),
+            MenuItem::linkToCrud('Ajouter un article', 'fas fa-plus', ProductType::class)->setAction(Crud::PAGE_NEW)
+        ]);
+        
+        yield MenuItem::subMenu('Les tailles')->setSubItems([
+            MenuItem::linkToCrud('Voir les tailles', 'fas fa-eye', Size::class),
+            MenuItem::linkToCrud('Ajouter une tailles', 'fas fa-plus', Size::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Les couleurs')->setSubItems([
+            MenuItem::linkToCrud('Voir les couleurs', 'fas fa-eye', Color::class),
+            MenuItem::linkToCrud('Ajouter une couleurs', 'fas fa-plus', Color::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Soldes');

@@ -19,6 +19,11 @@ class Size
     #[ORM\ManyToOne(inversedBy: 'size')]
     private ?ProductType $productType = null;
 
+    public function __toString()
+    {
+        return $this->size; 
+    }
+
     public function getId(): ?int
     {
         return $this->id;

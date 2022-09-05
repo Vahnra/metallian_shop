@@ -46,6 +46,12 @@ class Product
     #[ORM\ManyToMany(targetEntity: ProductType::class, inversedBy: 'products')]
     private Collection $productType;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Categorie $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?SousCategorie $sousCategorie = null;
+
     public function __construct()
     {
         $this->productType = new ArrayCollection();
@@ -184,6 +190,30 @@ class Product
     public function removeProductType(ProductType $productType): self
     {
         $this->productType->removeElement($productType);
+
+        return $this;
+    }
+
+    public function getCategory(): ?Categorie
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Categorie $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSousCategorie(): ?SousCategorie
+    {
+        return $this->sousCategorie;
+    }
+
+    public function setSousCategorie(?SousCategorie $sousCategorie): self
+    {
+        $this->sousCategorie = $sousCategorie;
 
         return $this;
     }

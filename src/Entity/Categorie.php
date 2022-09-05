@@ -36,6 +36,9 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Bijoux::class)]
     private Collection $bijouxes;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->sousCategories = new ArrayCollection();
@@ -44,6 +47,7 @@ class Categorie
         $this->accessoires = new ArrayCollection();
         $this->chaussures = new ArrayCollection();
         $this->bijouxes = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -242,6 +246,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($bijoux->getCategorie() === $this) {
                 $bijoux->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
             }
         }
 
