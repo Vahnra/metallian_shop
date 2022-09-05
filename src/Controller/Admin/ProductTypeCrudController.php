@@ -20,6 +20,7 @@ class ProductTypeCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Nom');
         yield AssociationField::new('size');
+        yield AssociationField::new('color');
     }
     
 }

@@ -18,6 +18,11 @@ class Color
 
     #[ORM\ManyToOne(inversedBy: 'color')]
     private ?ProductType $productType = null;
+    
+    public function __toString()
+    {
+        return $this->color; 
+    }
 
     public function getId(): ?int
     {

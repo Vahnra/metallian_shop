@@ -4,11 +4,19 @@ namespace App\Controller\Admin;
 
 use DateTimeImmutable;
 use App\Entity\Product;
+use App\Entity\SousCategorie;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -25,10 +33,10 @@ class ProductCrudController extends AbstractCrudController
         yield TextField::new('title', 'Nom');
         yield TextField::new('description', 'Description de l\'article');
         yield TextField::new('descriptionLong', 'Description longue de l\'article');
-        yield AssociationField::new('category');
-        yield AssociationField::new('sousCategorie');
+        // yield AssociationField::new('sousCategorie');
         yield AssociationField::new('productType');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
+        yield AssociationField::new('category');
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
     }
@@ -41,5 +49,36 @@ class ProductCrudController extends AbstractCrudController
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         // creat the date
         parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
+        $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
+
+        $formBuilder->get('category')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $brande = $event->getForm()->getData();
+                $form = $event->getForm();
+                $form->getParent()->add('sousCategorie', EntityType::class, [
+                    'class' => SousCategorie::class,
+                    'placeholder' => '',
+                    'choices' => $brande ? $brande->getSousCategories() : [],
+                ]);
+            }
+        );
+
+        $formBuilder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $form->add('sousCategorie', EntityType::class, [
+                    'class' => SousCategorie::class,
+                    'placeholder' => '',
+                    'choices' => [],
+                ]);
+            }
+        );
+
+        return $formBuilder;
     }
 }

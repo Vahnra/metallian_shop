@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -137,16 +138,16 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter une marque', 'fas fa-plus', Marques::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        yield MenuItem::section('Test');
+        yield MenuItem::section('Les produits');
 
-        yield MenuItem::subMenu('Les produits')->setSubItems([
+        yield MenuItem::subMenu('Les articles')->setSubItems([
             MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', Product::class),
             MenuItem::linkToCrud('Ajouter un article', 'fas fa-plus', Product::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::subMenu('Les types de produits')->setSubItems([
-            MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', ProductType::class),
-            MenuItem::linkToCrud('Ajouter un article', 'fas fa-plus', ProductType::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voir les types de produits', 'fas fa-eye', ProductType::class),
+            MenuItem::linkToCrud('Ajouter un type de produit', 'fas fa-plus', ProductType::class)->setAction(Crud::PAGE_NEW)
         ]);
         
         yield MenuItem::subMenu('Les tailles')->setSubItems([
@@ -168,4 +169,10 @@ class DashboardController extends AbstractDashboardController
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
     
+    public function configureAssets(): Assets
+    {
+        return parent::configureAssets()
+        ->addJsFile('jquery-3.6.1.js')
+        ->addJsFile('ajax.js');
+    }
 }
