@@ -4,7 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Media;
 use DateTimeImmutable;
+use App\Entity\SousCategorie;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -12,6 +18,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -32,13 +40,13 @@ class MediaCrudController extends AbstractCrudController
         yield TextField::new('description');
         yield TextField::new('artist');
         yield TextField::new('genre');
+        yield DateField::new('dateDeSortie')->setRequired(false);
+        yield MoneyField::new('price')->setCurrency('EUR');
         yield AssociationField::new('categorie');
-        yield AssociationField::new('sousCategorie');
-        yield DateField::new('dateDeSortie');
+        yield AssociationField::new('sousCategorie')->hideOnForm();
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->hideOnForm();
-        yield MoneyField::new('price')->setCurrency('EUR');
-
+        
     }
     
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -59,7 +67,38 @@ class MediaCrudController extends AbstractCrudController
             ->add(TextFilter::new('genre'))
             ->add(EntityFilter::new('categorie'))
             ->add(EntityFilter::new('sousCategorie'))
-            ->add(DateTimeFilter::new('createdAt'))
-            ->add(DateTimeFilter::new('dateDeSortie'));
+            ->add(DateTimeFilter::new('createdAt'));
+    }
+
+    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface 
+    {
+        $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
+
+        $formBuilder->get('categorie')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $brande = $event->getForm()->getData();
+                $form = $event->getForm();
+                $form->getParent()->add('sousCategorie', EntityType::class, [
+                    'class' => SousCategorie::class,
+                    'placeholder' => '',
+                    'choices' => $brande ? $brande->getSousCategories() : [],
+                ]);
+            }
+        );
+
+        $formBuilder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $form->add('sousCategorie', EntityType::class, [
+                    'class' => SousCategorie::class,
+                    'placeholder' => '',
+                    'choices' => [],
+                ]);
+            }
+        );
+
+        return $formBuilder;
     }
 }

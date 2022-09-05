@@ -1,0 +1,27 @@
+{% for category in categoriesMerchandising %}
+
+    <li class="nav-item dropdown">
+        <div class="navigation-color">
+            <a class="nav-link dropdown-toggle" href="{{ path('show_vetements_from_category', {"title": category.title}) }}" style="color: white" id="navbarDropdown" role="button"  aria-expanded="false">
+            
+                {{ category.title }}
+            
+            </a>
+        </div>
+        <ul class="dropdown-menu border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
+            <li>
+                {% for subcategory in souscategoriesMerchandising %}
+
+                    {% if subcategory.categorieMerchandising.title == category.title %}
+                    
+                        <a class="dropdown-item text-underline-hover" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
+
+                    {% endif %}
+
+                {% endfor %}
+                
+            </li>
+        </ul>
+    </li>
+
+{% endfor %}
