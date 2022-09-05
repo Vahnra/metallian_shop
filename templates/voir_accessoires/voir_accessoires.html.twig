@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir une accessoire{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+            <div class="col-12 bg-dark text-white">
+             <h1>{{ accessoire.0.title }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1 text-center bg-dark ">
+                
+                <img src={{ asset('images/'~accessoire.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
+        
+            </div>
+
+            <div class="col-7 bg-light">
+                <img src={{ asset('images/'~accessoire.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+
+            </div>
+
+            <div class="col-4 bg-light">
+            
+                <h3>{{ accessoire.0.title }}
+                    
+                </h3>
+                <p>{{ accessoire.0.description }}</p>
+            
+                
+                <p>{{ accessoire.0.price/100 }}€</p>
+
+                <button type="button" class="btn btn-success">Ajouter au panier</button>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+             <div class="col-12 bg-light">
+                <hr>
+                <h2>Description</h2>
+                {{ accessoire.0.textLong }}
+            </div>
+            <div class="col-12 bg-light">
+                <hr>
+                <h2>Produits similaires</h2>
+            </div>
+        </div>
+</div>
+
+
+{% endblock %}
