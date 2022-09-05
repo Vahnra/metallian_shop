@@ -14,9 +14,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
@@ -36,12 +38,21 @@ class MediaCrudController extends AbstractCrudController
     {
         
         yield IdField::new('id')->hideOnForm();
+
+        yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('title', 'Titre de album');
         yield TextField::new('description');
+        yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
         yield TextField::new('artist');
         yield TextField::new('genre');
         yield DateField::new('dateDeSortie')->setRequired(false);
         yield MoneyField::new('price')->setCurrency('EUR');
+
+        yield FormField::addPanel('Photos de l\'article');
+
+        yield FormField::addPanel('Stock');
+
+        yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');
         yield AssociationField::new('sousCategorie')->hideOnForm();
         yield DateField::new('createdAt')->hideOnForm();

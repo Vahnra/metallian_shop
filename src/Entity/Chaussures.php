@@ -23,12 +23,8 @@ class Chaussures
     #[ORM\Column(length: 255)]
     private ?string $price = null;
 
-
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
-
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $size = [];
 
     #[ORM\ManyToOne(inversedBy: 'chaussures')]
     private ?Categorie $categorie = null;
@@ -45,8 +41,17 @@ class Chaussures
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $color = [];
+    #[ORM\ManyToOne(inversedBy: 'chaussures')]
+    private ?Color $color = null;
+
+    #[ORM\ManyToOne(inversedBy: 'chaussures')]
+    private ?Size $size = null;
+
+    #[ORM\ManyToOne(inversedBy: 'chaussures')]
+    private ?Material $material = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $longDescription = null;
 
     public function getId(): ?int
     {
@@ -97,18 +102,6 @@ class Chaussures
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getSize(): array
-    {
-        return $this->size;
-    }
-
-    public function setSize(array $size): self
-    {
-        $this->size = $size;
 
         return $this;
     }
@@ -173,15 +166,52 @@ class Chaussures
         return $this;
     }
 
-    public function getColor(): array
+    public function getColor(): ?Color
     {
         return $this->color;
     }
 
-    public function setColor(array $color): self
+    public function setColor(?Color $color): self
     {
         $this->color = $color;
 
         return $this;
     }
+
+    public function getSize(): ?Size
+    {
+        return $this->size;
+    }
+
+    public function setSize(?Size $size): self
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
 }

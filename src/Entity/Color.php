@@ -21,9 +21,21 @@ class Color
     #[ORM\OneToMany(mappedBy: 'color', targetEntity: Vetement::class)]
     private Collection $vetements;
 
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: Chaussures::class)]
+    private Collection $chaussures;
+
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: Bijoux::class)]
+    private Collection $bijouxes;
+
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: Accessoires::class)]
+    private Collection $accessoires;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
+        $this->chaussures = new ArrayCollection();
+        $this->bijouxes = new ArrayCollection();
+        $this->accessoires = new ArrayCollection();
     }
 
     public function __toString()
@@ -72,6 +84,96 @@ class Color
             // set the owning side to null (unless already changed)
             if ($vetement->getColor() === $this) {
                 $vetement->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chaussures>
+     */
+    public function getChaussures(): Collection
+    {
+        return $this->chaussures;
+    }
+
+    public function addChaussure(Chaussures $chaussure): self
+    {
+        if (!$this->chaussures->contains($chaussure)) {
+            $this->chaussures->add($chaussure);
+            $chaussure->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChaussure(Chaussures $chaussure): self
+    {
+        if ($this->chaussures->removeElement($chaussure)) {
+            // set the owning side to null (unless already changed)
+            if ($chaussure->getColor() === $this) {
+                $chaussure->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bijoux>
+     */
+    public function getBijouxes(): Collection
+    {
+        return $this->bijouxes;
+    }
+
+    public function addBijoux(Bijoux $bijoux): self
+    {
+        if (!$this->bijouxes->contains($bijoux)) {
+            $this->bijouxes->add($bijoux);
+            $bijoux->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijoux(Bijoux $bijoux): self
+    {
+        if ($this->bijouxes->removeElement($bijoux)) {
+            // set the owning side to null (unless already changed)
+            if ($bijoux->getColor() === $this) {
+                $bijoux->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accessoires>
+     */
+    public function getAccessoires(): Collection
+    {
+        return $this->accessoires;
+    }
+
+    public function addAccessoire(Accessoires $accessoire): self
+    {
+        if (!$this->accessoires->contains($accessoire)) {
+            $this->accessoires->add($accessoire);
+            $accessoire->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoire(Accessoires $accessoire): self
+    {
+        if ($this->accessoires->removeElement($accessoire)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoire->getColor() === $this) {
+                $accessoire->setColor(null);
             }
         }
 

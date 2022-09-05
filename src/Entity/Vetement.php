@@ -54,6 +54,12 @@ class Vetement
     #[ORM\Column(length: 255)]
     private ?string $stock = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vetements')]
+    private ?Material $material = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $longDescription = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -211,6 +217,30 @@ class Vetement
     public function setStock(string $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
 
         return $this;
     }

@@ -59,3 +59,90 @@ $( document ).ready(function() {
 
 });
 
+$( document ).ready(function() {
+  let deviceBrande = $('#Bijoux_categorie');
+
+  deviceBrande.change(function() {
+    
+      var form = $(this).closest('form');
+       
+      var data = {};
+      
+      data[deviceBrande.attr('name')] = deviceBrande.val();
+   
+      $.ajax({
+          url : form.attr('action'),
+          type: form.attr('method'),
+          data : data,
+          complete: function(html) {
+       
+          $('#Bijoux_sousCategorie').replaceWith(
+      
+              $(html.responseText).find('#Bijoux_sousCategorie')
+          );
+
+          }
+      });
+      
+  });
+
+});
+
+$( document ).ready(function() {
+  let deviceBrande = $('#Chaussures_categorie');
+
+  deviceBrande.change(function() {
+    
+      var form = $(this).closest('form');
+       
+      var data = {};
+      
+      data[deviceBrande.attr('name')] = deviceBrande.val();
+   
+      $.ajax({
+          url : form.attr('action'),
+          type: form.attr('method'),
+          data : data,
+          complete: function(html) {
+       
+          $('#Chaussures_sousCategorie').replaceWith(
+      
+              $(html.responseText).find('#Chaussures_sousCategorie')
+          );
+
+          }
+      });
+      
+  });
+
+});
+
+$( document ).ready(function() {
+  let deviceBrande = $('#Accessoires_categorie');
+
+  deviceBrande.change(function() {
+    
+      var form = $(this).closest('form');
+       
+      var data = {};
+      
+      data[deviceBrande.attr('name')] = deviceBrande.val();
+   
+      $.ajax({
+          url : form.attr('action'),
+          type: form.attr('method'),
+          data : data,
+          complete: function(html) {
+       
+          $('#Accessoires_sousCategorie').replaceWith(
+      
+              $(html.responseText).find('#Accessoires_sousCategorie')
+          );
+
+          }
+      });
+      
+  });
+
+});
+

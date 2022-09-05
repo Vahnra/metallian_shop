@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use DateTimeImmutable;
+use App\Entity\Marques;
 use App\Entity\Vetement;
 use App\Entity\SousCategorie;
 use Symfony\Component\Form\FormEvent;
@@ -23,9 +24,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -44,9 +47,11 @@ class VetementCrudController extends AbstractCrudController
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('title', 'Nom de l\'article');
         yield TextField::new('description', 'Description de l\'article');
+        yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
         yield AssociationField::new('color', 'La couleur de l\'article');
         yield AssociationField::new('size', 'La taille de l\'article');
         yield AssociationField::new('marques', 'Marque de l\'article');
+        yield AssociationField::new('material', 'Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');

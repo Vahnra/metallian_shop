@@ -41,8 +41,14 @@ class Accessoires
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deletedAt = null;
 
-    #[ORM\Column(length: 2550)]
-    private ?string $textLong = null;
+    #[ORM\ManyToOne(inversedBy: 'accessoires')]
+    private ?Color $color = null;
+
+    #[ORM\ManyToOne(inversedBy: 'accessoires')]
+    private ?Material $material = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $longDescription = null;
 
     public function getId(): ?int
     {
@@ -157,14 +163,38 @@ class Accessoires
         return $this;
     }
 
-    public function getTextLong(): ?string
+    public function getColor(): ?Color
     {
-        return $this->textLong;
+        return $this->color;
     }
 
-    public function setTextLong(string $textLong): self
+    public function setColor(?Color $color): self
     {
-        $this->textLong = $textLong;
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
 
         return $this;
     }

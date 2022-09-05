@@ -47,6 +47,9 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $longDescription = null;
+
 
     public function getId(): ?int
     {
@@ -181,6 +184,18 @@ class Media
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
 
         return $this;
     }

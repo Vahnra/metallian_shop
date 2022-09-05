@@ -53,8 +53,11 @@ class Bijoux
     #[ORM\Column(length: 255)]
     private ?string $photo5 = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $color = null;
+    #[ORM\ManyToOne(inversedBy: 'bijouxes')]
+    private ?Color $color = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $longDescription = null;
 
     public function getId(): ?int
     {
@@ -217,14 +220,26 @@ class Bijoux
         return $this;
     }
 
-    public function getColor(): ?string
+    public function getColor(): ?Color
     {
         return $this->color;
     }
 
-    public function setColor(string $color): self
+    public function setColor(?Color $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
 
         return $this;
     }

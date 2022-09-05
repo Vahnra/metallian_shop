@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\SizeRepository;
+use App\Repository\MaterialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SizeRepository::class)]
-class Size
+#[ORM\Entity(repositoryClass: MaterialRepository::class)]
+class Material
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,23 +16,27 @@ class Size
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $size = null;
+    private ?string $material = null;
 
-    #[ORM\OneToMany(mappedBy: 'size', targetEntity: Vetement::class)]
+    #[ORM\OneToMany(mappedBy: 'material', targetEntity: Vetement::class)]
     private Collection $vetements;
 
-    #[ORM\OneToMany(mappedBy: 'size', targetEntity: Chaussures::class)]
+    #[ORM\OneToMany(mappedBy: 'material', targetEntity: Accessoires::class)]
+    private Collection $accessoires;
+
+    #[ORM\OneToMany(mappedBy: 'material', targetEntity: Chaussures::class)]
     private Collection $chaussures;
 
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
+        $this->accessoires = new ArrayCollection();
         $this->chaussures = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return $this->size; 
+        return $this->material; 
     }
 
     public function getId(): ?int
@@ -40,14 +44,14 @@ class Size
         return $this->id;
     }
 
-    public function getSize(): ?string
+    public function getMaterial(): ?string
     {
-        return $this->size;
+        return $this->material;
     }
 
-    public function setSize(string $size): self
+    public function setMaterial(string $material): self
     {
-        $this->size = $size;
+        $this->material = $material;
 
         return $this;
     }
@@ -64,7 +68,7 @@ class Size
     {
         if (!$this->vetements->contains($vetement)) {
             $this->vetements->add($vetement);
-            $vetement->setSize($this);
+            $vetement->setMaterial($this);
         }
 
         return $this;
@@ -74,8 +78,38 @@ class Size
     {
         if ($this->vetements->removeElement($vetement)) {
             // set the owning side to null (unless already changed)
-            if ($vetement->getSize() === $this) {
-                $vetement->setSize(null);
+            if ($vetement->getMaterial() === $this) {
+                $vetement->setMaterial(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accessoires>
+     */
+    public function getAccessoires(): Collection
+    {
+        return $this->accessoires;
+    }
+
+    public function addAccessoire(Accessoires $accessoire): self
+    {
+        if (!$this->accessoires->contains($accessoire)) {
+            $this->accessoires->add($accessoire);
+            $accessoire->setMaterial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoire(Accessoires $accessoire): self
+    {
+        if ($this->accessoires->removeElement($accessoire)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoire->getMaterial() === $this) {
+                $accessoire->setMaterial(null);
             }
         }
 
@@ -94,7 +128,7 @@ class Size
     {
         if (!$this->chaussures->contains($chaussure)) {
             $this->chaussures->add($chaussure);
-            $chaussure->setSize($this);
+            $chaussure->setMaterial($this);
         }
 
         return $this;
@@ -104,8 +138,8 @@ class Size
     {
         if ($this->chaussures->removeElement($chaussure)) {
             // set the owning side to null (unless already changed)
-            if ($chaussure->getSize() === $this) {
-                $chaussure->setSize(null);
+            if ($chaussure->getMaterial() === $this) {
+                $chaussure->setMaterial(null);
             }
         }
 
