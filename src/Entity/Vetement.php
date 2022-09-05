@@ -21,8 +21,8 @@ class Vetement
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private array $size = [];
+    #[ORM\Column(length: 255)]
+    private ?string $size = null;
 
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
@@ -80,14 +80,12 @@ class Vetement
         return $this;
     }
 
-    public function getSize(): array
+    public function getSize(): ?string
     {
-        $size = $this->size;
-
-        return array_unique($size);
+        return $this->size;
     }
 
-    public function setSize(array $size): self
+    public function setSize(string $size): self
     {
         $this->size = $size;
 

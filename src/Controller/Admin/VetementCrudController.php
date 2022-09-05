@@ -40,7 +40,7 @@ class VetementCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Nom');
         yield TextField::new('description', 'Description de l\'article');
-        yield ChoiceField::new('size', 'Taille')->renderExpanded()->allowMultipleChoices()->setChoices([
+        yield ChoiceField::new('size', 'Taille')->renderExpanded()->setChoices([
             'small' => 'small',
             'medium' => 'medium',
             'large' => 'large',
