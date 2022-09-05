@@ -17,6 +17,7 @@ use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
+use App\Entity\Artist;
 use App\Entity\Color;
 use App\Entity\Material;
 use App\Entity\Size;
@@ -141,17 +142,22 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Les tailles')->setSubItems([
             MenuItem::linkToCrud('Voir les tailles', 'fas fa-eye', Size::class),
-            MenuItem::linkToCrud('Ajouter une tailles', 'fas fa-plus', Size::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Ajouter une taille', 'fas fa-plus', Size::class)->setAction(Crud::PAGE_NEW),
         ]);
 
         yield MenuItem::subMenu('Les couleurs')->setSubItems([
             MenuItem::linkToCrud('Voir les couleurs', 'fas fa-eye', Color::class),
-            MenuItem::linkToCrud('Ajouter une couleurs', 'fas fa-plus', Color::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter une couleur', 'fas fa-plus', Color::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::subMenu('Les matières')->setSubItems([
             MenuItem::linkToCrud('Voir les matières', 'fas fa-eye', Material::class),
-            MenuItem::linkToCrud('Ajouter une matières', 'fas fa-plus', Material::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter une matière', 'fas fa-plus', Material::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Les artistes')->setSubItems([
+            MenuItem::linkToCrud('Voir les artistes', 'fas fa-eye', Artist::class),
+            MenuItem::linkToCrud('Ajouter un artiste', 'fas fa-plus', Artist::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Soldes');

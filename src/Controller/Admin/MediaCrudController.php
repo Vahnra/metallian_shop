@@ -43,8 +43,8 @@ class MediaCrudController extends AbstractCrudController
         yield TextField::new('title', 'Titre de album');
         yield TextField::new('description');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
-        yield TextField::new('artist');
-        yield TextField::new('genre');
+        yield AssociationField::new('artist', 'Nom de l\'artiste');
+        yield AssociationField::new('genre', 'Genre musical');
         yield DateField::new('dateDeSortie')->setRequired(false);
         yield MoneyField::new('price')->setCurrency('EUR');
 

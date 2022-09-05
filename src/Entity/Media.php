@@ -20,12 +20,6 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $artist = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $genre = null;
-
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?Categorie $categorie = null;
 
@@ -49,6 +43,12 @@ class Media
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
+
+    #[ORM\ManyToOne(inversedBy: 'media')]
+    private ?Artist $artist = null;
+
+    #[ORM\ManyToOne(inversedBy: 'media')]
+    private ?MusicType $genre = null;
 
 
     public function getId(): ?int
@@ -76,30 +76,6 @@ class Media
     public function setPrice(string $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getArtist(): ?string
-    {
-        return $this->artist;
-    }
-
-    public function setArtist(string $artist): self
-    {
-        $this->artist = $artist;
-
-        return $this;
-    }
-
-    public function getGenre(): ?string
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(string $genre): self
-    {
-        $this->genre = $genre;
 
         return $this;
     }
@@ -196,6 +172,30 @@ class Media
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    public function getArtist(): ?Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?Artist $artist): self
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    public function getGenre(): ?MusicType
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?MusicType $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }
