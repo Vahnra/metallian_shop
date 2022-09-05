@@ -18,17 +18,14 @@ class Color
     #[ORM\Column(length: 255)]
     private ?string $color = null;
 
-    #[ORM\ManyToOne(inversedBy: 'color')]
-    private ?ProductType $productType = null;
-
-    #[ORM\ManyToMany(targetEntity: ProductType::class, mappedBy: 'color')]
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: ProductType::class)]
     private Collection $productTypes;
 
     public function __construct()
     {
         $this->productTypes = new ArrayCollection();
     }
-    
+
     public function __toString()
     {
         return $this->color; 
@@ -51,18 +48,6 @@ class Color
         return $this;
     }
 
-    public function getProductType(): ?ProductType
-    {
-        return $this->productType;
-    }
-
-    public function setProductType(?ProductType $productType): self
-    {
-        $this->productType = $productType;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, ProductType>
      */
@@ -75,7 +60,7 @@ class Color
     {
         if (!$this->productTypes->contains($productType)) {
             $this->productTypes->add($productType);
-            $productType->addColor($this);
+            $productType->setColor($this);
         }
 
         return $this;
@@ -84,9 +69,13 @@ class Color
     public function removeProductType(ProductType $productType): self
     {
         if ($this->productTypes->removeElement($productType)) {
-            $productType->removeColor($this);
+            // set the owning side to null (unless already changed)
+            if ($productType->getColor() === $this) {
+                $productType->setColor(null);
+            }
         }
 
         return $this;
     }
+   
 }

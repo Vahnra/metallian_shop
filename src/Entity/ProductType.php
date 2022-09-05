@@ -22,16 +22,14 @@ class ProductType
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'productTypes')]
-    private Collection $size;
+    #[ORM\ManyToOne(inversedBy: 'productTypes')]
+    private ?Size $size = null;
 
-    #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'productTypes')]
-    private Collection $color;
+    #[ORM\ManyToOne(inversedBy: 'productTypes')]
+    private ?Color $color = null;
 
     public function __construct()
     {
-        $this->size = new ArrayCollection();
-        $this->color = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -84,51 +82,28 @@ class ProductType
         return $this;
     }
 
-    /**
-     * @return Collection<int, Size>
-     */
-    public function getSize(): Collection
+    public function getSize(): ?Size
     {
         return $this->size;
     }
 
-    public function addSize(Size $size): self
+    public function setSize(?Size $size): self
     {
-        if (!$this->size->contains($size)) {
-            $this->size->add($size);
-        }
+        $this->size = $size;
 
         return $this;
     }
 
-    public function removeSize(Size $size): self
-    {
-        $this->size->removeElement($size);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Color>
-     */
-    public function getColor(): Collection
+    public function getColor(): ?Color
     {
         return $this->color;
     }
 
-    public function addColor(Color $color): self
+    public function setColor(?Color $color): self
     {
-        if (!$this->color->contains($color)) {
-            $this->color->add($color);
-        }
+        $this->color = $color;
 
         return $this;
     }
 
-    public function removeColor(Color $color): self
-    {
-        $this->color->removeElement($color);
-
-        return $this;
-    }
 }

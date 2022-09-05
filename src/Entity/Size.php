@@ -18,7 +18,7 @@ class Size
     #[ORM\Column(length: 255)]
     private ?string $size = null;
 
-    #[ORM\ManyToMany(targetEntity: ProductType::class, mappedBy: 'size')]
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: ProductType::class)]
     private Collection $productTypes;
 
     public function __construct()
@@ -60,7 +60,7 @@ class Size
     {
         if (!$this->productTypes->contains($productType)) {
             $this->productTypes->add($productType);
-            $productType->addSize($this);
+            $productType->setSize($this);
         }
 
         return $this;
@@ -69,7 +69,10 @@ class Size
     public function removeProductType(ProductType $productType): self
     {
         if ($this->productTypes->removeElement($productType)) {
-            $productType->removeSize($this);
+            // set the owning side to null (unless already changed)
+            if ($productType->getSize() === $this) {
+                $productType->setSize(null);
+            }
         }
 
         return $this;

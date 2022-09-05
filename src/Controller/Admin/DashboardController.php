@@ -145,9 +145,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un article', 'fas fa-plus', Product::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        yield MenuItem::subMenu('Les types de produits')->setSubItems([
-            MenuItem::linkToCrud('Voir les types de produits', 'fas fa-eye', ProductType::class),
-            MenuItem::linkToCrud('Ajouter un type de produit', 'fas fa-plus', ProductType::class)->setAction(Crud::PAGE_NEW)
+        yield MenuItem::subMenu('Les modèles')->setSubItems([
+            MenuItem::linkToCrud('Voir les produits', 'fas fa-eye', ProductType::class),
+            MenuItem::linkToCrud('Ajouter un produit', 'fas fa-plus', ProductType::class)->setAction(Crud::PAGE_NEW)
         ]);
         
         yield MenuItem::subMenu('Les tailles')->setSubItems([
