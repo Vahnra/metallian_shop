@@ -44,9 +44,6 @@ class Accessoires
     #[ORM\Column(length: 2550)]
     private ?string $textLong = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $taille = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -172,15 +169,4 @@ class Accessoires
         return $this;
     }
 
-    public function getTaille(): ?string
-    {
-        return $this->taille;
-    }
-
-    public function setTaille(string $taille): self
-    {
-        $this->taille = $taille;
-
-        return $this;
-    }
 }

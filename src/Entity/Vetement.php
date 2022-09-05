@@ -22,13 +22,7 @@ class Vetement
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $size = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $photo = null;
-
-    #[ORM\Column]
-    private array $color = [];
 
     #[ORM\ManyToOne(inversedBy: 'vetements')]
     private ?Categorie $categorie = null;
@@ -50,6 +44,15 @@ class Vetement
 
     #[ORM\Column(length: 255)]
     private ?string $price = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetements')]
+    private ?Color $color = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetements')]
+    private ?Size $size = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $stock = null;
 
     public function getId(): ?int
     {
@@ -80,18 +83,6 @@ class Vetement
         return $this;
     }
 
-    public function getSize(): ?string
-    {
-        return $this->size;
-    }
-
-    public function setSize(string $size): self
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
     public function getPhoto(): ?string
     {
         return $this->photo;
@@ -100,20 +91,6 @@ class Vetement
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getColor(): array
-    {
-        $color = $this->color;
-
-        return array_unique($color);
-    }
-
-    public function setColor(array $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }
@@ -198,6 +175,42 @@ class Vetement
     public function setPrice(string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getSize(): ?Size
+    {
+        return $this->size;
+    }
+
+    public function setSize(?Size $size): self
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getStock(): ?string
+    {
+        return $this->stock;
+    }
+
+    public function setStock(string $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }

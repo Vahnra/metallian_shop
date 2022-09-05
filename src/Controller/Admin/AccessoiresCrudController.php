@@ -36,12 +36,6 @@ class AccessoiresCrudController extends AbstractCrudController
         yield TextareaField::new('textLong', 'Description compléte')->setMaxLength(250)->setNumOfRows(7);
         yield MoneyField::new('price')->setCurrency('EUR');
         yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images');
-        yield ChoiceField::new('taille')->renderExpanded()->setChoices([
-            'small' => 'S',
-            'medium' => 'M',
-            'large' => 'L',
-            'onesize' => 'taille unique',
-        ]);
         yield AssociationField::new('categorie');
         yield AssociationField::new('sousCategorie');
         yield DateField::new('createdAt')->hideOnForm();

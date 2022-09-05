@@ -8,12 +8,14 @@ use App\Entity\SousCategorie;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -38,25 +40,35 @@ class VetementCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
-        yield TextField::new('title', 'Nom');
+
+        yield FormField::addPanel('Détail de l\'article');
+        yield TextField::new('title', 'Nom de l\'article');
         yield TextField::new('description', 'Description de l\'article');
-        yield ChoiceField::new('size', 'Taille')->renderExpanded()->setChoices([
-            'small' => 'small',
-            'medium' => 'medium',
-            'large' => 'large',
-        ]);
-        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ChoiceField::new('color', 'Couleur')->allowMultipleChoices()->setChoices([
-            'blanc' => 'blanc',
-            'noir' => 'noir',
-            'rouge' => 'rouge',
-        ]);
+        yield AssociationField::new('color', 'La couleur de l\'article');
+        yield AssociationField::new('size', 'La taille de l\'article');
         yield AssociationField::new('marques', 'Marque de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
+
+        yield FormField::addPanel('Photos de l\'article');
+        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+
+        yield FormField::addPanel('Stock');
+        yield NumberField::new('stock', 'Nombre en stock');
+
+        yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');
-        // yield AssociationField::new('sousCategorie')->hideOnForm();
+        yield AssociationField::new('sousCategorie')->hideOnForm();
+
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Vêtement')
+            ->setEntityLabelInPlural('Vêtements')
+        ;
     }
     
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
