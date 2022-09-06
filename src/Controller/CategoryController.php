@@ -114,6 +114,14 @@ class CategoryController extends AbstractController
         // Par défaut la pagination renvoit tout
         $vetements = $vetementService->getPaginatedVetements($categories);
 
+        $bijoux = $bijouxService->getPaginatedBijoux($categories);
+
+        $medias = $mediaService->getPaginatedMedias($categories);
+
+        $chaussures = $chaussuresService->getPaginatedChaussures($categories);
+
+        $accessoires = $accessoiresService->getPaginatedAccessoires($categories);
+
         // Si le formulair de filtre est soumit, il filtre
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             // on prend les valeurs du formulaire
@@ -139,18 +147,9 @@ class CategoryController extends AbstractController
                 $marque, 
                 $priceMax, 
                 $priceMini
-            );      
+            );        
 
-        }
-        
-
-        $bijoux = $bijouxService->getPaginatedBijoux($categories);
-
-        $medias = $mediaService->getPaginatedMedias($categories);
-
-        $chaussures = $chaussuresService->getPaginatedChaussures($categories);
-
-        $accessoires = $accessoiresService->getPaginatedAccessoires($categories);
+        }    
 
         // On récupère les sous catégories de la catégories en question
         $souscategories = $entityManager->getRepository(SousCategorie::class)->findAll();
