@@ -2,23 +2,32 @@
 
 namespace App\Controller;
 
+use App\Entity\Size;
+use App\Entity\Color;
+use App\Entity\Marques;
+use App\Entity\Material;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
 use App\Service\MediaService;
 use App\Service\BijouxService;
 use App\Service\VetementService;
-use App\Repository\VetementRepository;
-use App\Service\AccessoiresService;
 use App\Service\ChaussuresService;
+use App\Service\AccessoiresService;
+use App\Repository\VetementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/produits-{title}', name: 'show_vetements_from_category', methods:['GET'])]
+    #[Route('/produits-{title}', name: 'show_vetements_from_category', methods:['GET', 'POST'])]
     public function showVetementsFromCategorie(
         Categorie $categories, 
         EntityManagerInterface $entityManager, 
@@ -27,11 +36,113 @@ class CategoryController extends AbstractController
         MediaService $mediaService,
         ChaussuresService $chaussuresService,
         AccessoiresService $accessoiresService,
+        Request $request
 
         ): Response
     {
-        // Fonction repo pour pagination
+        // On récupère les info a mettre dans le filtre form
+        $marques = $entityManager->getRepository(Marques::class)->findAll();
+
+        $colors = $entityManager->getRepository(Color::class)->findAll();
+
+        $materials = $entityManager->getRepository(Material::class)->findAll();
+
+        $sizes = $entityManager->getRepository(Size::class)->findAll();
+
+        // Form pour le filtre
+        $filterForm = $this->createFormBuilder()
+            ->add('Couleur', ChoiceType::class, [
+                'placeholder' => 'Choisir une couleur',
+                'choices' => $colors,
+                'choice_value' => 'id',
+                'choice_label' => function(?Color $category) {
+                    return $category ? $category->getColor() : '';
+                },
+                'required' => false,
+            ])
+            ->add('Size', ChoiceType::class, [
+                'label' => 'Taille',
+                'placeholder' => 'Choisir une taille',
+                'choices'  => $sizes,
+                'choice_value' => 'id',
+                'choice_label' => function(?Size $category) {
+                    return $category ? $category->getSize() : '';
+                },
+                'required' => false,
+            ])
+            ->add('material', ChoiceType::class, [
+                'label' => 'Matière',
+                'placeholder' => 'Choisir une matière',
+                'choices'  => $materials,
+                'choice_value' => 'id',
+                'choice_label' => function(?Material $category) {
+                    return $category ? $category->getMaterial() : '';
+                },
+                'required' => false,
+            ])
+            ->add('marque', ChoiceType::class, [
+                'label' => 'Marques',
+                'placeholder' => 'Choisir une marque',
+                'choices'  => $marques,
+                'choice_value' => 'id',
+                'choice_label' => function(?Marques $category) {
+                    return $category ? $category->getTitle() : '';
+                },
+                'required' => false,
+            ])
+            ->add('priceMax', MoneyType::class, [
+                'label' => 'Prix max',
+                'divisor' => 100,
+                'required' => false,
+            ])
+            ->add('priceMini', MoneyType::class, [
+                'label' => 'Prix mini',
+                'divisor' => 100,
+                'required' => false,
+            ])
+            ->add('Filtrer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                ]
+            ])
+            ->getForm();
+
+            
+
+        $filterForm -> handleRequest($request);
+
+        // Par défaut la pagination renvoit tout
         $vetements = $vetementService->getPaginatedVetements($categories);
+
+        // Si le formulair de filtre est soumit, il filtre
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            // on prend les valeurs du formulaire
+            $color = $filterForm->get('Couleur')->getData();
+
+            $size = $filterForm->get('Size')->getData();
+
+            $material = $filterForm->get('material')->getData();
+
+            $marque = $filterForm->get('marque')->getData();
+
+            $priceMini = $filterForm->get('priceMini')->getData();
+
+            $priceMax = $filterForm->get('priceMax')->getData();
+
+            // on insert et utilise le qb de filtre
+    
+            $vetements = $vetementService->getPaginatedVetementsFilteredByColor(
+                $categories, 
+                $color, 
+                $size, 
+                $material, 
+                $marque, 
+                $priceMax, 
+                $priceMini
+            );      
+
+        }
+        
 
         $bijoux = $bijouxService->getPaginatedBijoux($categories);
 
@@ -52,6 +163,7 @@ class CategoryController extends AbstractController
             'categories' => $categories,
             'souscategories' => $souscategories,
             'accessoires' => $accessoires,
+            'filterForm' => $filterForm->createView(),
         ]);
     }
 }

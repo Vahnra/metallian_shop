@@ -141,6 +141,8 @@
                         {% endfor %}
 
                     </ul>
+
+                    {{ form(filterForm) }}
                 
                 </div>
 
@@ -150,6 +152,7 @@
 
                     {# Select pour trier #}
                     <div class="col-3 ms-auto mb-4">
+
 
                         <select class="form-select" onChange="window.location=this.value;">
                             <option selected>Trier par</option>
