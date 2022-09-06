@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
+use App\Form\SearchArticleType;
 use App\Entity\CategorieMerchandising;
-use App\Entity\SousCategorieMerchandising;
+use App\Repository\VetementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\SousCategorieMerchandising;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class RenderController extends AbstractController
 {
@@ -42,6 +46,31 @@ class RenderController extends AbstractController
         ]);
     }
 
-  
+    #[Route('/search', name: 'render_search_article', methods:['GET', 'POST'])]
+    public function renderSearchArticle(VetementRepository $vetementRepository, RequestStack $requestStack)
+    {
+        $request = $requestStack->getMainRequest() ?? $requestStack->getCurrentRequest();;
+
+        $form = $this->createForm(SearchArticleType::class)->handleRequest($request);
+
+        $articles = '';
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $annonces = $form->get('mots')->getData();
+
+            $articles = $vetementRepository->search($annonces);
+
+            return $this->redirectToRoute('search_result', [
+                'articles' => $articles,
+                'recherche' => $annonces
+            ]);
+        }
+
+        return $this->render('rendered/search_article.html.twig', [
+            'form' => $form->createView(),
+            'articles' => $articles
+        ]);
+    }
 
 }

@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'default_home', methods:['GET'])]
+    #[Route('/', name: 'default_home', methods:['GET', 'POST'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $femme = $entityManager->getRepository(Categorie::class)->findBy([
