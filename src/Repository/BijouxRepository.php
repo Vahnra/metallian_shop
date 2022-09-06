@@ -62,28 +62,39 @@ class BijouxRepository extends ServiceEntityRepository
         return $qb->getQuery();
    }
 
-//    /**
-//     * @return Bijoux[] Returns an array of Bijoux objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   public function findForPaginationFiltered($value, $color, $priceMini, $priceMax): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
 
-//    public function findOneBySomeField($value): ?Bijoux
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (isset($color)) {
+            $qb
+                ->andWhere('v.color = :color')
+                ->setParameter('color', $color);
+        }   
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery();
+    }
+
 }

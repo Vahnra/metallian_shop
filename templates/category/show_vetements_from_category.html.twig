@@ -142,8 +142,41 @@
 
                     </ul>
 
-                    {{ form(filterForm) }}
+                    {% if categories.title == 'Femme' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Enfant' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Homme' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Bijoux' %}
                 
+                        {{ form(filterBijouxForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Chaussures' %}
+                
+                        {{ form(filterChaussuresForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Accessoires' %}
+                
+                        {{ form(filterAccessoiresForm) }}
+
+                    {% endif %}
                 </div>
 
                 <div class="col-10">
