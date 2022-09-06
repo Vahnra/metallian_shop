@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SousCategoryController extends AbstractController
 {
-    #[Route('/vetements-{title1}/{title}', name: 'show_souscategorie_from_category', methods:['GET'])]
+    #[Route('/produits-{title1}/{title}', name: 'show_souscategorie_from_category', methods:['GET'])]
     public function showSousCategorie(
         SousCategorie $souscategories, 
         EntityManagerInterface $entityManager, 
@@ -38,8 +38,8 @@ class SousCategoryController extends AbstractController
         $chaussures = $chaussuresService->getPaginatedChaussuresSousCategorie($souscategories);
 
         $accessoires = $accessoiresService->getPaginatedAccessoiresSousCategorie($souscategories);
-    
 
+        // Conditions pour remplir les catégories
         if (!empty($bijoux[0])) {
             $categories = $entityManager->getRepository(Categorie::class)
                 ->findBy([

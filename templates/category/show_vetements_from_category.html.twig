@@ -146,15 +146,23 @@
 
                 <div class="col-10">
 
-                <pre>
-                    {{ dump(vetements) }}
-                </pre>
+                    <h3 class="mb-4">{{ categories.title }}</h3>  
 
-                    <h3 class="mb-4">{{ categories.title }}</h3>
+                    {# Select pour trier #}
+                    <div class="col-3 ms-auto mb-4">
 
+                        <select class="form-select" onChange="window.location=this.value;">
+                            <option selected>Trier par</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
+                        </select>
+                        
+                    </div>      
 
                     <div class="row">
 
+                        
                         {# For pour afficher les vetements en forme de cartes #}
 
                         {# {% if categories.title == 'Femme' %} #}
@@ -172,8 +180,7 @@
                                             <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
                                         </ul>
                                         <h5 class="card-title">{{ vetement.title }}</h5>
-                                        <p class="card-text">{{ vetement.description }}</p>
-                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                        {# <p class="card-text">{{ vetement.description }}</p> #}
                                     </div>      
 
                                 </a>
@@ -190,14 +197,14 @@
 
                             <a href="{{ path('voir_bijoux', {"id": bijou.id} ) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ bijou.title }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">{{ (bijou.price)/100 }} €</li>
                                     </ul>
                                     <h5 class="card-title">{{ bijou.title }}</h5>
-                                    <p class="card-text">{{ bijou.description }}</p>
-                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                    {# <p class="card-text">{{ bijou.description }}</p>
+                                    <a href="#" class="card-link">Ajouter au panier</a> #}
                                 </div>      
 
                             </a>
@@ -212,7 +219,7 @@
 
                             <a href="#" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ media.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                <img src="{{ asset('images/' ~ media.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ media.title }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">{{ (media.price)/100 }} €</li>
