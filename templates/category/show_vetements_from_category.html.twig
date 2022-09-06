@@ -177,6 +177,13 @@
                         {{ form(filterAccessoiresForm) }}
 
                     {% endif %}
+
+                    {% if categories.title == 'Musique' %}
+                
+                        {{ form(filterMediaForm) }}
+
+                    {% endif %}
+                    
                 </div>
 
                 <div class="col-10">

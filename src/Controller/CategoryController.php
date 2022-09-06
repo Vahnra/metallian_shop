@@ -8,6 +8,7 @@ use App\Entity\Marques;
 use App\Entity\Material;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\MusicType;
 use App\Entity\SousCategorie;
 use App\Service\MediaService;
 use App\Service\BijouxService;
@@ -48,6 +49,8 @@ class CategoryController extends AbstractController
         $materials = $entityManager->getRepository(Material::class)->findAll();
 
         $sizes = $entityManager->getRepository(Size::class)->findAll();
+
+        $musicType = $entityManager->getRepository(MusicType::class)->findAll();
 
         // Form pour le filtre
         $filterForm = $this->createFormBuilder()
@@ -230,6 +233,37 @@ class CategoryController extends AbstractController
 
         $filterAccessoiresForm -> handleRequest($request);
 
+        // Form pour le filter media
+        $filterMediaForm = $this->createFormBuilder()
+            ->add('musicType', ChoiceType::class, [
+                'label' => 'Genre musical',
+                'placeholder' => 'Choisir un genre',
+                'choices' => $musicType,
+                'choice_value' => 'id',
+                'choice_label' => function(?MusicType $category) {
+                    return $category ? $category->getGenre() : '';
+                },
+                'required' => false,
+            ])
+            ->add('priceMax', MoneyType::class, [
+                'label' => 'Prix max',
+                'divisor' => 100,
+                'required' => false,
+            ])
+            ->add('priceMini', MoneyType::class, [
+                'label' => 'Prix mini',
+                'divisor' => 100,
+                'required' => false,
+            ])
+            ->add('Filtrer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                ]
+            ])
+            ->getForm();
+
+        $filterMediaForm -> handleRequest($request);
+
         // Par défaut la pagination renvoit tout
         $vetements = $vetementService->getPaginatedVetements($categories);
 
@@ -336,6 +370,25 @@ class CategoryController extends AbstractController
 
         }  
 
+        if ($filterMediaForm->isSubmitted() && $filterMediaForm->isValid()) {
+            // on prend les valeurs du formulaire
+            $musicType = $filterMediaForm->get('musicType')->getData();
+
+            $priceMini = $filterMediaForm->get('priceMini')->getData();
+
+            $priceMax = $filterMediaForm->get('priceMax')->getData();
+
+            // on insert et utilise le qb de filtre
+    
+            $medias = $mediaService->getPaginatedMediaFiltered(
+                $categories, 
+                $musicType,
+                $priceMax, 
+                $priceMini
+            );        
+
+        }  
+
         // On récupère les sous catégories de la catégories en question
         $souscategories = $entityManager->getRepository(SousCategorie::class)->findAll();
 
@@ -351,6 +404,7 @@ class CategoryController extends AbstractController
             'filterBijouxForm' => $filterBijouxForm->createView(),
             'filterChaussuresForm' => $filterChaussuresForm->createView(),
             'filterAccessoiresForm' => $filterAccessoiresForm->createView(),
+            'filterMediaForm' => $filterMediaForm->createView(),
         ]);
     }
 }

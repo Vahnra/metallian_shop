@@ -62,28 +62,39 @@ class MediaRepository extends ServiceEntityRepository
         return $qb->getQuery();
    }
 
-//    /**
-//     * @return Media[] Returns an array of Media objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+     //    Query pour le filtre
+    public function findForPaginationFiltered($value, $musicType, $priceMini, $priceMax): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
 
-//    public function findOneBySomeField($value): ?Media
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (isset($musicType)) {
+            $qb
+                ->andWhere('v.genre = :genre')
+                ->setParameter('genre', $musicType);
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery();
+    }
 }
