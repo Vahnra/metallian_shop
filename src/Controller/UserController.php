@@ -46,8 +46,10 @@ class UserController extends AbstractController
     #[Route('/profile/mon-espace-perso-{id}', name: 'show_profile', methods:['GET', 'POST'])]
     public function showProfile(User $user, EntityManagerInterface $entityManager): Response
     {
+        // $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $this->getUser()]);
+        
         return $this->render('user/show_profile.html.twig', [
-            
+            'user' => $user
         ]);
     }
 

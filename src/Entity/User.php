@@ -58,6 +58,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPostalAdress::class)]
     private Collection $postalAdress;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $phoneNumber = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $birthdayDate = null;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
@@ -293,6 +299,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $postalAdress->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?int
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?int $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getBirthdayDate(): ?\DateTimeInterface
+    {
+        return $this->birthdayDate;
+    }
+
+    public function setBirthdayDate(?\DateTimeInterface $birthdayDate): self
+    {
+        $this->birthdayDate = $birthdayDate;
 
         return $this;
     }
