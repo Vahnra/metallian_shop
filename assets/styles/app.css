@@ -256,3 +256,54 @@ body {
   top: 80px;
   left: 200px;
 }
+
+/* Barre de recherche dans la nav */
+
+.searchBar {
+	background: none;
+	border-bottom: 1px solid white;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	width: 200px;
+	height: 30px;
+}
+
+.searchBar:focus {
+  outline: none;
+	border-bottom: 2px solid white;
+	color: white;
+}
+
+::-webkit-input-placeholder {
+	color: white;
+	font-weight: bold;
+}
+
+:-moz-placeholder {
+	/* Firefox 18- */
+	color: white;
+	font-weight: bold;
+}
+
+::-moz-placeholder {
+	/* Firefox 19+ */
+	color: white;
+	font-weight: bold;
+}
+
+:-ms-input-placeholder {
+	color: white;
+	font-weight: bold;
+}
+
+#searchBar-icon {
+	background: none;
+	border: none;
+  color: white;
+	font-size: 1.5em;
+}
+
+#searchBar-icon:focus {
+  outline: none;
+}

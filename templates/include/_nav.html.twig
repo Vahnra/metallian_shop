@@ -9,8 +9,10 @@
 
 		{# {{ render(controller('App\\Controller\\RenderController::renderSearchArticle')) }} #}
 			<form action="{{ path('render_search_article')}}" class="d-flex" method="GET">
-				<input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
+				<div>
+				<input class="me-2 searchBar align-middle" type="search" placeholder="Entrez votre recherche" id="searchBar" name="search" aria-label="Search">
+				<i id="searchBar-icon" class=" align-middle fa-solid fa-magnifying-glass"></i>
+				</div>
 			</form>
 			<ul class="d-flex navbar-nav">
 				{% if app.user %}
