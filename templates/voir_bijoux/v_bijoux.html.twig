@@ -7,7 +7,10 @@
 <div class="container">
     <div class="row">
         <div class="col-12 bg-dark text-white">
-            <h1>Bijoux : {{ bijou.0.title }}</h1>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-11"><h1>Bijoux : {{ bijou.0.title }}</h1></div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -31,18 +34,16 @@
         {# {{ dump(bijou) }} #}
             <h2>{{ bijou.0.description }}</h2>
             <p>{{ color.0.color }}</p>
-            
-            
             <p>{{ bijou.0.price/100 }}€</p>
             <div class="col mb-3 text-center">
                 <button type="button" class="btn btn-success">Ajouter au panier</button>
             </div>
-              <div class="col-12 border-top border-dark bg-light">
+            <div class="col-12 p-2 border-top border-dark bg-light">
                 <h3>description</h3>
                 <p>
                  {{ bijou.0.longDescription }}
                 </p>
-        </div>
+            </div>
         </div>
 
     </div>
@@ -50,7 +51,7 @@
 <div class="container">
     <div class="row">
       
-        <div class="col-12 bg-light border border-dark">
+        <div class="col-12 bg-light border-end border-start border-dark">
             
             <h2>Produits similaires</h2>
         </div>

@@ -50,6 +50,9 @@ class Accessoires
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
 
+    #[ORM\ManyToOne(inversedBy: 'accessoires')]
+    private ?Size $size = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -195,6 +198,18 @@ class Accessoires
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    public function getSize(): ?Size
+    {
+        return $this->size;
+    }
+
+    public function setSize(?Size $size): self
+    {
+        $this->size = $size;
 
         return $this;
     }

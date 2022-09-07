@@ -19,6 +19,7 @@ use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
 use App\Entity\Artist;
 use App\Entity\Color;
+use App\Entity\Expedition;
 use App\Entity\Material;
 use App\Entity\ReviewMedia;
 use App\Entity\ReviewVetement;
@@ -66,13 +67,12 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToRoute('Retourner sur le site', 'fa fa-home', 'default_home');
-        
 
         yield MenuItem::section('Utilisateur');
         yield MenuItem::subMenu('Action')->setSubItems([
             MenuItem::linkToCrud('Voir l\'utilisateur', 'fas fa-eye' ,User::class),
             MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
-        ]);
+        ]); 
 
         yield MenuItem::section('Catégorie normaux');
 
@@ -171,9 +171,18 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Les commentaires sur les médias')->setSubItems([
             MenuItem::linkToCrud('Voir les commentaires', 'fas fa-eye', ReviewMedia::class),
         ]);
+        
 
         yield MenuItem::section('Soldes');
+
+        yield MenuItem::section('Politique d\'expédition');
+        yield MenuItem::subMenu('Expedition')->setSubItems([
+            MenuItem::linkToCrud('Voir le Politique d\'expédition', 'fas fa-eye', Expedition::class),
+            MenuItem::linkToCrud('Ajouter un Politique d\'expédition', 'fas fa-plus', Expedition::class)->setAction(Crud::PAGE_NEW)
+        ]); 
     }
+
+    
 
     public function configureActions(): Actions
     {
