@@ -12,8 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'contact_email', methods:['GET', 'POST'])]
-    public function email(Request $request, MailerInterface $mailer): Response
+    #[Route('/contact', name: 'email_contact', methods:['GET', 'POST'])]
+    public function emailContact(Request $request, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ContactFormType::class)->handleRequest($request);
 
