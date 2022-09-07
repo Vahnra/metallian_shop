@@ -33,7 +33,8 @@ class VoirAccessoiresController extends AbstractController
             'accessoire' => $accessoire,
             'color' => $color,
             'size' => $size,
-            'material' => $material,
+            'material' => $material
+            
         ]);
     }
 }
