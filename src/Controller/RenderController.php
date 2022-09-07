@@ -4,11 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Entity\SousCategorie;
+use App\Form\SearchArticleType;
+use App\Repository\MediaRepository;
+use App\Repository\BijouxRepository;
 use App\Entity\CategorieMerchandising;
-use App\Entity\SousCategorieMerchandising;
+use App\Repository\VetementRepository;
+use App\Repository\ChaussuresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AccessoiresRepository;
+use App\Entity\SousCategorieMerchandising;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RenderController extends AbstractController
@@ -42,6 +51,50 @@ class RenderController extends AbstractController
         ]);
     }
 
-  
+    #[Route('/search', name: 'render_search_article', methods:['GET'])]
+    public function renderSearchArticle(
+        VetementRepository $vetementRepository, 
+        ChaussuresRepository $chaussuresRepository, 
+        MediaRepository $mediaRepository,
+        AccessoiresRepository $accessoiresRepository,
+        BijouxRepository $bijouxRepository,
+        EntityManagerInterface $entityManager,
+        RequestStack $requestStack,
+        PaginatorInterface $paginator,
+        Request $request)
+    {
 
+        // On query toutes les catégories pour la side bar
+        $categories = $entityManager->getRepository(Categorie::class)->findAll();
+
+        // query de filtre pour chaque tables
+        $search = $request->get('search');
+
+        $vetements = $vetementRepository->search($search);
+
+        $chaussures = $chaussuresRepository->search($search);
+
+        $medias = $mediaRepository->search($search);
+
+        $accessoires = $accessoiresRepository->search($search);
+
+        $bijoux = $bijouxRepository->search($search);
+
+        // On merge les resultats dans un meme tableau
+        $searchResult = array_merge($chaussures, $vetements, $medias, $accessoires, $bijoux);
+
+        // Partie pour la pagination 
+        $requestStack = $requestStack->getMainRequest();        
+
+        $page = $requestStack->query->getInt('page', 1);
+
+        $searchResults = $paginator->paginate($searchResult, $page, 5);
+
+        return $this->render('search_result/index.html.twig', [
+            'searchResults' => $searchResults,
+            'search' => $search,
+            'categories' => $categories
+        ]);
+    }
+    
 }

@@ -141,7 +141,49 @@
                         {% endfor %}
 
                     </ul>
+
+                    {% if categories.title == 'Femme' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Enfant' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Homme' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Bijoux' %}
                 
+                        {{ form(filterBijouxForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Chaussures' %}
+                
+                        {{ form(filterChaussuresForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Accessoires' %}
+                
+                        {{ form(filterAccessoiresForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Musique' %}
+                
+                        {{ form(filterMediaForm) }}
+
+                    {% endif %}
+                    
                 </div>
 
                 <div class="col-10">
@@ -150,6 +192,7 @@
 
                     {# Select pour trier #}
                     <div class="col-3 ms-auto mb-4">
+
 
                         <select class="form-select" onChange="window.location=this.value;">
                             <option selected>Trier par</option>

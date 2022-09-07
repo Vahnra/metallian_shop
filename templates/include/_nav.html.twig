@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{ path('default_home') }}">
@@ -6,6 +7,11 @@
 
 		</a>
 
+		{# {{ render(controller('App\\Controller\\RenderController::renderSearchArticle')) }} #}
+			<form action="{{ path('render_search_article')}}" class="d-flex" method="GET">
+				<input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
 			<ul class="d-flex navbar-nav">
 				{% if app.user %}
 

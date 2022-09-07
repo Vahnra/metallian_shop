@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VetementRepository;
+use ORM\Index;
 
 #[ORM\Entity(repositoryClass: VetementRepository::class)]
+#[ORM\Index(name: 'vetement', columns: ['title'], flags: ['fulltext'])]
 class Vetement
 {
     #[ORM\Id]

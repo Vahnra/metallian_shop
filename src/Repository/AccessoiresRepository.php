@@ -62,28 +62,59 @@ class AccessoiresRepository extends ServiceEntityRepository
         return $qb->getQuery();
    }
 
-//    /**
-//     * @return Accessoires[] Returns an array of Accessoires objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    Query pour le filtre
+    public function findForPaginationFiltered($value, $color, $material, $priceMini, $priceMax): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
 
-//    public function findOneBySomeField($value): ?Accessoires
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (isset($color)) {
+            $qb
+                ->andWhere('v.color = :color')
+                ->setParameter('color', $color);
+        }
+
+        if (isset($material)) {
+            $qb
+                ->andWhere('v.material = :material')
+                ->setParameter('material', $material);
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery();
+    }
+
+    // Query pour la barre de recherche
+    public function search($mots)
+    {
+        $query = $this->createQueryBuilder('a');
+        if($mots != null)
+        {
+            $query
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

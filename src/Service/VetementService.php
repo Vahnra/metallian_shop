@@ -17,6 +17,7 @@ class VetementService
         
     }
 
+    // default pagination
     public function getPaginatedVetements($value)
     {
         $request = $this->requestStack->getMainRequest();
@@ -37,6 +38,19 @@ class VetementService
         $limit = 8;
 
         $vetementQuery = $this->vetementRepository->findForPaginationSousCategorie($value);
+
+        return $this->paginator->paginate($vetementQuery, $page, $limit);
+    }
+
+    // Filtered pagination
+    public function getPaginatedVetementsFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 8;
+
+        $vetementQuery = $this->vetementRepository->findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax);
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }

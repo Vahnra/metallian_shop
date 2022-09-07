@@ -20,6 +20,7 @@ use App\Controller\Admin\UserCrudController;
 use App\Entity\Artist;
 use App\Entity\Color;
 use App\Entity\Material;
+use App\Entity\MusicType;
 use App\Entity\ReviewMedia;
 use App\Entity\ReviewVetement;
 use App\Entity\Size;
@@ -160,6 +161,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Les artistes')->setSubItems([
             MenuItem::linkToCrud('Voir les artistes', 'fas fa-eye', Artist::class),
             MenuItem::linkToCrud('Ajouter un artiste', 'fas fa-plus', Artist::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::subMenu('Les genres musicaux')->setSubItems([
+            MenuItem::linkToCrud('Voir les genres', 'fas fa-eye', MusicType::class),
+            MenuItem::linkToCrud('Ajouter un genres', 'fas fa-plus', MusicType::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Les commentaires');
