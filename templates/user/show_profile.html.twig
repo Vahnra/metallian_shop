@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mon espace perso{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="row my-5">
+
+            {# <div class="col-1"></div> #}
+
+            <h1 class="col-10">Mon espace Personnel</h1>
+
+        </div>
+
+        <div class="row">
+    
+        {# <div class="col-1" style="height: 300px"></div> #}
+
+        <div class="col-3" style="height: 300px">
+        
+            <div class="col-9 mx-auto" style="height: 100px">
+            
+                <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile', {"id": app.user.id}) }}" class="text-reset text-decoration-none"> Détails</a></h3>
+
+            </div>
+
+            <div class="col-9 mx-auto" style="height: 100px">
+            
+                <h3 class="align-middle" style="padding-top: 2rem"><a href="" class="text-reset text-decoration-none" >Commandes</a></h3>
+
+            </div>
+        
+        </div>
+
+        <div class="col-8 mb-5" style="height: 1000px; background-color:white; border-radius: 5px;">
+
+            <div class="col-12">
+            
+                <h2 style="padding-top: 3rem; padding-left: 3rem">Mes détails</h2>
+            
+            </div>
+
+            <div class="row">
+            
+                <h4 class="col-11 mt-4" style="padding-left: 4rem">Informations personnelles <hr></h4>
+                
+                <div class="col-11" style="padding-left: 4rem">
+                
+                    
+                   
+                
+                </div>
+            
+            
+            </div>
+        
+            
+        
+        </div>
+
+
+    </div>
+
+    </div>
+
+{% endblock %}

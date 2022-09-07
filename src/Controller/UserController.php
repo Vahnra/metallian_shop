@@ -42,4 +42,12 @@ class UserController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/profile/mon-espace-perso-{id}', name: 'show_profile', methods:['GET', 'POST'])]
+    public function showProfile(User $user, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('user/show_profile.html.twig', [
+            
+        ]);
+    }
 }
