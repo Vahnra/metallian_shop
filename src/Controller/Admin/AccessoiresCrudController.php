@@ -46,6 +46,7 @@ class AccessoiresCrudController extends AbstractCrudController
         yield TextField::new('description');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
         yield AssociationField::new('color');
+        yield AssociationField::new('size', 'Taille');
         yield AssociationField::new('material');
         yield MoneyField::new('price')->setCurrency('EUR');
 

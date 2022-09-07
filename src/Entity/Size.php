@@ -24,10 +24,14 @@ class Size
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: Chaussures::class)]
     private Collection $chaussures;
 
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: Accessoires::class)]
+    private Collection $accessoires;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
         $this->chaussures = new ArrayCollection();
+        $this->accessoires = new ArrayCollection();
     }
 
     public function __toString()
@@ -106,6 +110,36 @@ class Size
             // set the owning side to null (unless already changed)
             if ($chaussure->getSize() === $this) {
                 $chaussure->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accessoires>
+     */
+    public function getAccessoires(): Collection
+    {
+        return $this->accessoires;
+    }
+
+    public function addAccessoire(Accessoires $accessoire): self
+    {
+        if (!$this->accessoires->contains($accessoire)) {
+            $this->accessoires->add($accessoire);
+            $accessoire->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoire(Accessoires $accessoire): self
+    {
+        if ($this->accessoires->removeElement($accessoire)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoire->getSize() === $this) {
+                $accessoire->setSize(null);
             }
         }
 
