@@ -135,7 +135,6 @@ class VetementRepository extends ServiceEntityRepository
     public function search($mots)
     {
         $query = $this->createQueryBuilder('a');
-
         if($mots != null)
         {
             $query

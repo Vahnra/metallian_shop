@@ -1,20 +1,107 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SearchResultController!{% endblock %}
+{% block title %}Recherche{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {# Titre dynamique #}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Vahnra/Documents/Stage/metallian_shop/src/Controller/SearchResultController.php'|file_link(0) }}">src/Controller/SearchResultController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Vahnra/Documents/Stage/metallian_shop/templates/search_result/index.html.twig'|file_link(0) }}">templates/search_result/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container bg-white">
+
+        <h1 class="py-2 ms-4">
+
+            Résultat de votre recherche
+
+        </h1>
+
+
+        <div class="container-fluid ">
+        
+            <div class="row">
+            
+                <div class="col-2">
+                
+                    <p>Catégories</p>
+
+                    {% for categorie in categories %}
+
+                        <h5><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a></h5>
+
+                    {% endfor %}
+                    
+                    
+                </div>
+
+                <div class="col-10">
+
+                    <h3 class="mb-4">Résultat</h3>
+
+                    {# Select pour trier #}
+                    <div class="col-3 ms-auto mb-4">
+                
+                        <select class="form-select" onChange="window.location=this.value;">
+                            <option selected>Trier par</option>
+                            {{ knp_pagination_sortable(searchResults, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }} 
+                            {{ knp_pagination_sortable(searchResults, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }} 
+                            {{ knp_pagination_sortable(searchResults, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }} 
+        
+                        </select>
+                        
+                    </div>      
+
+                    <div class="row">
+
+                        
+                        {# For pour afficher les vetements en forme de cartes #}
+
+                        {# {% if categories.title == 'Femme' %} #}
+                        
+
+                            {% for searchResult in searchResults %}
+                        
+                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                                <a href="#" class="text-decoration-none text-black">
+
+                                    <img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ (searchResult.price)/100 }} €</li>
+                                        </ul>
+                                        <h5 class="card-title">{{ searchResult.title }}</h5>
+                                        {# <p class="card-text">{{ vetement.description }}</p> #}
+                                    </div>      
+
+                                </a>
+
+                            </div>
+
+                            {% endfor %}
+
+                        {# Pagination #}
+
+                        <div class="container mt-3">
+                    
+                            <div class="row">
+                        
+                                <div class="col-12 ms-auto">
+                            
+                                {{ knp_pagination_render(searchResults) }}
+                            
+                                </div>
+                        
+                            </div>
+
+                        </div> 
+
+                    </div>
+                
+                
+                </div>
+            
+            </div>
+        
+        
+        </div>
+    </div>
 {% endblock %}

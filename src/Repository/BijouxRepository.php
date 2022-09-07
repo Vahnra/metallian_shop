@@ -97,4 +97,17 @@ class BijouxRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    // Query pour la barre de recherche
+    public function search($mots)
+    {
+        $query = $this->createQueryBuilder('a');
+        if($mots != null)
+        {
+            $query
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

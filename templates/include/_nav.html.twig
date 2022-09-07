@@ -8,10 +8,10 @@
 		</a>
 
 		{# {{ render(controller('App\\Controller\\RenderController::renderSearchArticle')) }} #}
-
-		
-		{{ render(url('render_search_article')) }}
-
+			<form action="{{ path('render_search_article')}}" class="d-flex" method="GET">
+				<input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
 			<ul class="d-flex navbar-nav">
 				{% if app.user %}
 
