@@ -1,0 +1,91 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mon espace perso{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="row my-5">
+
+            {# <div class="col-1"></div> #}
+
+            <h1 class="col-10 ms-5">Mon espace Personnel</h1>
+
+        </div>
+
+        <div class="row">
+    
+        {# <div class="col-1" style="height: 300px"></div> #}
+
+        <div class="col-3 g-0" style="height: 300px">
+        
+            <div class="col-9 ms-auto ps-5"  style="height: 100px">
+            
+                <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile', {"id": app.user.id}) }}" class="text-reset text-decoration-none"> Détails</a></h3>
+
+            </div>
+
+            <div class="col-9 ms-auto ps-5" style="height: 100px">
+            
+                <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile_orders', {"id": app.user.id}) }}" class="text-reset text-decoration-none" >Commandes</a></h3>
+
+            </div>
+
+            <div class="col-9 ms-auto ps-5" style="height: 100px; background-color:white;">
+            
+                <h3 class="align-middle" style="padding-top: 2rem"><a href="" class="text-reset text-decoration-none" >Adresses</a></h3>
+
+            </div>
+        
+        </div>
+
+        <div class="col-8 mb-5" style="height: 1000px; background-color:white;">
+
+            <div class="col-12">
+            
+                <h2 style="padding-top: 3rem; padding-left: 4rem"> Adresses</h2>
+            
+            </div>
+
+            <div class="row">
+            
+                <h4 class="col-11 mt-4" style="padding-left: 4rem">Ajouter ou modifier vos adresses ici<hr></h4>
+                
+                <div class="col-11" style="padding-left: 4rem">
+
+                    <div class="card" style="width: 16rem;">
+                        <div class="card-body mx-auto">
+                            <h6 class="card-subtitle mb-2 text-muted">Adresse du domicile</h6>
+                            <h5 class="card-title">Chanarong Orn</h5>
+                            <p class="card-text">6 rue Maurice Brouard</p>
+                            <p class="card-text">2eme étage a droite</p>
+                            <p class="card-text">92160</p>
+                            <p class="card-text">Antony</p>
+                            <p class="card-text">France</p>
+                            <div class="row">
+                                <div class="col-3 mx-auto border border-3 border-dark p-2 d-flex justify-content-center">
+                                    <a href="#" ><i class="fa-regular fa-trash-can align-middle" style="color: black; font-size: 1.5em"></i></a>
+                                </div>
+                                <div class="col-7 mx-auto border border-3 border-dark p-2 text-center">
+                                    <a href="#" class="card-link text-reset text-decoration-none">Modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            
+            
+            </div>
+        
+            
+        
+        </div>
+
+
+    </div>
+
+    </div>
+
+{% endblock %}

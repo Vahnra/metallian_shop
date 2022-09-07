@@ -55,10 +55,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ReviewMedia::class)]
     private Collection $reviewMedia;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPostalAdress::class)]
+    private Collection $postalAdress;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
         $this->reviewMedia = new ArrayCollection();
+        $this->postalAdress = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -257,6 +261,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($reviewMedium->getUser() === $this) {
                 $reviewMedium->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserPostalAdress>
+     */
+    public function getPostalAdress(): Collection
+    {
+        return $this->postalAdress;
+    }
+
+    public function addPostalAdress(UserPostalAdress $postalAdress): self
+    {
+        if (!$this->postalAdress->contains($postalAdress)) {
+            $this->postalAdress->add($postalAdress);
+            $postalAdress->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostalAdress(UserPostalAdress $postalAdress): self
+    {
+        if ($this->postalAdress->removeElement($postalAdress)) {
+            // set the owning side to null (unless already changed)
+            if ($postalAdress->getUser() === $this) {
+                $postalAdress->setUser(null);
             }
         }
 

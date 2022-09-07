@@ -50,4 +50,20 @@ class UserController extends AbstractController
             
         ]);
     }
+
+    #[Route('/profile/mon-espace-perso-{id}/adress', name: 'show_profile_adress', methods:['GET', 'POST'])]
+    public function showProfileAdress(User $user, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('user/show_profile_adress.html.twig', [
+            
+        ]);
+    }
+
+    #[Route('/profile/mon-espace-perso-{id}/orders', name: 'show_profile_orders', methods:['GET', 'POST'])]
+    public function showProfileOrders(User $user, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('user/show_profile_orders.html.twig', [
+            
+        ]);
+    }
 }
