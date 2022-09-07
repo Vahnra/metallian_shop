@@ -25,16 +25,32 @@
 					</li>
 
 				{% endif %}
+				<div class="dropdown">
+					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fa-solid fa-user"></i>
+					</a>
 
-				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ path('show_profile', {"id": app.user.id}) }}">
-						<i class="fa-solid fa-user mx-2"></i>Espace perso</a>
-				</li>
+					<ul class="dropdown-menu rounded-0">
+						<li><a class="dropdown-item text-underline-hover " href="{{ path('show_profile', {"id": app.user.id}) }}">Espace perso</a></li>
+						<li><a class="dropdown-item text-underline-hover" href="{{ path('app_logout') }}">Se Déconnecter</a></li>
+					</ul>
+				</div>
 
-				<li class="nav-item">
+				<div class="dropdown">
+					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fa-solid fa-basket-shopping"></i>
+					</a>
+
+					<ul class="dropdown-menu rounded-0">
+						<li><a class="dropdown-item" href="#">Placeholder</a></li>
+					
+					</ul>
+				</div>
+
+				{# <li class="nav-item">
 					<a class="nav-link text-white" href="{{ path('app_logout') }}">
 						<i class="fa-solid fa-right-from-bracket mx-2"></i>Se Déconnecter</a>
-				</li>
+				</li> #}
 
 			{% else %}
 
@@ -59,7 +75,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-	<div class="container-fluid" style="background-color: rgb(210, 0, 25)">
+	<div class="container-fluid" style="background-color: rgb(205, 0, 25)">
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 			<span class="navbar-toggler-icon"></span>
