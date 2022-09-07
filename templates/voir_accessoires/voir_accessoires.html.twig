@@ -3,7 +3,8 @@
 {% block title %}Voir une accessoire{% endblock %}
 
 {% block body %}
-{# {{ dump(expedition) }} #}
+{# {{ dump(accessoire) }} #}
+
 <div class="container">
     <div class="row">
             <div class="col-12 bg-dark text-white">
@@ -44,8 +45,11 @@
                     </p>  
                 </div>
                     <div class="col-12 p-2 border-top border-dark bg-light">
-                    <h3>Politique d'expédition</h3>
-                   <p><i class="fa-solid fa-truck-fast"></i>  </p>
+                   <h3><i class="fa-solid fa-truck-fast"></i>  {{ expedition.0.title }}</h3> 
+                   <p>{{ expedition.0.description }}</p> 
+                   <p>{{ expedition.0.longDescription }}</p> 
+
+                   <p></p>
 
                    
                     
