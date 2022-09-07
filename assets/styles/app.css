@@ -205,11 +205,11 @@ body {
 
 /* Change color hover dropdown */
 
-.dropdown:hover{
+/* .dropdown:hover{
   background-image: none;
   background-color: rgb(0, 0, 0);
   color: black;
-}
+} */
 
 /* remove padding for dropdown */
 

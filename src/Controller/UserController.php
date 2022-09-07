@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Form\UserInfoFormType;
 use App\Form\UserMailFormType;
+use App\Entity\UserPostalAdress;
+use App\Form\UserAdressFormType;
 use App\Form\UserPasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -116,18 +118,55 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/mon-espace-perso-{id}/adress', name: 'show_profile_adress', methods:['GET', 'POST'])]
-    public function showProfileAdress(User $user, EntityManagerInterface $entityManager): Response
+    public function showProfileAdress(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $adress = new UserPostalAdress();
+
+        $userPostAdresses = $entityManager->getRepository(UserPostalAdress::class)->findBy(['user' => $user->getId()]);
+
+        $formAdd = $this->createForm(UserAdressFormType::class, $adress)->handleRequest($request);
+
+        if($formAdd->isSubmitted() && $formAdd->isValid()) {
+
+            $adress->setCreatedAt(new DateTime());
+            $adress->setUpdatedAt(new DateTime());
+            $adress->setUser($user);
+
+            $entityManager->persist($adress);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_profile_adress', [
+                'id' => $user->getId()
+            ]);
+        }
+
         return $this->render('user/show_profile_adress.html.twig', [
-            
+            'userPostAdresses' => $userPostAdresses,
+            'formAdd' => $formAdd->createView(),
         ]);
     }
 
     #[Route('/profile/mon-espace-perso-{id}/orders', name: 'show_profile_orders', methods:['GET', 'POST'])]
-    public function showProfileOrders(User $user, EntityManagerInterface $entityManager): Response
+    public function showProfileOrders(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
+        
         return $this->render('user/show_profile_orders.html.twig', [
             
+        ]);
+    }
+
+    #[Route('/profile/mon-espace-perso-{id}/delete-adress-{id2}', name: 'hard_delete_adress', methods:['GET', 'POST'])]
+    public function hardDeleteAdress(User $user, EntityManagerInterface $entityManager, Request $request)
+    {
+        $userPostAdressesId = $request->get('id2');
+
+        $userPostAdresses = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['id' => $userPostAdressesId]);
+
+        $entityManager->remove($userPostAdresses);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_profile_adress', [
+            'id' => $user->getId()
         ]);
     }
 }

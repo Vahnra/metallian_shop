@@ -8,48 +8,49 @@
 		</a>
 
 		{# {{ render(controller('App\\Controller\\RenderController::renderSearchArticle')) }} #}
-			<form action="{{ path('render_search_article')}}" class="d-flex" method="GET">
+			<form action="{{ path('render_search_article')}}" class="d-flex me-4" method="GET">
 				<div>
 				<input class="me-2 searchBar align-middle" type="search" placeholder="Entrez votre recherche" id="searchBar" name="search" aria-label="Search">
 				<i id="searchBar-icon" class=" align-middle fa-solid fa-magnifying-glass"></i>
 				</div>
 			</form>
-			<ul class="d-flex navbar-nav">
-				{% if app.user %}
+			{# <div class="collapse navbar-collapse" id="navbarSupportedContent"> #}
+				<ul class="d-flex navbar-nav">
+					{% if app.user %}
 
-					{% if is_granted("ROLE_ADMIN") %}
+						{% if is_granted("ROLE_ADMIN") %}
+
+							<li class="nav-item">
+								<a class="nav-link text-white" href="{{ path('admin') }}"><i class="fa-solid fa-screwdriver-wrench mx-2"></i>Menu Admin</a>
+							</li>
+
+						{% endif %}
 
 						<li class="nav-item">
-							<a class="nav-link text-white" href="{{ path('admin') }}"><i class="fa-solid fa-screwdriver-wrench mx-2"></i>Menu Admin</a>
+							<a class="nav-link text-white" href="{{ path('show_profile', {"id": app.user.id}) }}"><i class="fa-solid fa-user mx-2"></i>Espace perso</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-white" href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket mx-2"></i>Se Déconnecter</a>
+						</li>
+
+					{% else %}
+
+						<li class="nav-item">
+							<a class="nav-link text-white" href="{{ path('app_login') }}"><i class="fa-regular fa-user mx-2"></i>Se connecter</a>
 						</li>
 
 					{% endif %}
 
-					<li class="nav-item">
-						<a class="nav-link text-white" href="{{ path('show_profile', {"id": app.user.id}) }}"><i class="fa-solid fa-user mx-2"></i>Espace perso</a>
-					</li>
+					{% if not app.user %}
 
-					<li class="nav-item">
-						<a class="nav-link text-white" href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket mx-2"></i>Se Déconnecter</a>
-					</li>
+						<li class="nav-item">
+							<a class="nav-link text-white" href="{{ path('user_register') }}">S'inscrire</a>
+						</li>
 
-				{% else %}
-
-					<li class="nav-item">
-						<a class="nav-link text-white" href="{{ path('app_login') }}"><i class="fa-regular fa-user mx-2"></i>Se connecter</a>
-					</li>
-
-				{% endif %}
-
-				{% if not app.user %}
-
-					<li class="nav-item">
-						<a class="nav-link text-white" href="{{ path('user_register') }}">S'inscrire</a>
-					</li>
-
-				{% endif %}
-			</ul>
-		
+					{% endif %}
+				</ul>
+			{# </div> #}
 	</div>
 </nav>
 

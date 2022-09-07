@@ -18,21 +18,21 @@
     
         {# <div class="col-1" style="height: 300px"></div> #}
 
-        <div class="col-3 g-0" style="height: 300px">
+        <div class="col-xl-3 g-0" style="height: 300px">
         
-            <div class="col-9 ms-auto ps-5"  style="height: 100px">
+            <div class="col-xl-9 ms-auto ps-5"  style="height: 100px">
             
                 <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile', {"id": app.user.id}) }}" class="text-reset text-decoration-none"> Détails</a></h3>
 
             </div>
 
-            <div class="col-9 ms-auto ps-5" style="height: 100px">
+            <div class="col-xl-9 ms-auto ps-5" style="height: 100px">
             
                 <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile_orders', {"id": app.user.id}) }}" class="text-reset text-decoration-none" >Commandes</a></h3>
 
             </div>
 
-            <div class="col-9 ms-auto ps-5" style="height: 100px; background-color:white;">
+            <div class="col-xl-9 ms-auto ps-5" style="height: 100px; background-color:white;">
             
                 <h3 class="align-middle" style="padding-top: 2rem"><a href="" class="text-reset text-decoration-none" >Adresses</a></h3>
 
@@ -40,7 +40,7 @@
         
         </div>
 
-        <div class="col-8 mb-5" style="height: 1000px; background-color:white;">
+        <div class="col-xl-8 mb-5" style="height: 1000px; background-color:white;">
 
             <div class="col-12">
             
@@ -54,24 +54,38 @@
                 
                 <div class="col-11" style="padding-left: 4rem">
 
-                    <div class="card" style="width: 16rem;">
-                        <div class="card-body mx-auto">
-                            <h6 class="card-subtitle mb-2 text-muted">Adresse du domicile</h6>
-                            <h5 class="card-title">Chanarong Orn</h5>
-                            <p class="card-text">6 rue Maurice Brouard</p>
-                            <p class="card-text">2eme étage a droite</p>
-                            <p class="card-text">92160</p>
-                            <p class="card-text">Antony</p>
-                            <p class="card-text">France</p>
-                            <div class="row">
-                                <div class="col-3 mx-auto border border-3 border-dark p-2 d-flex justify-content-center">
-                                    <a href="#" ><i class="fa-regular fa-trash-can align-middle" style="color: black; font-size: 1.5em"></i></a>
-                                </div>
-                                <div class="col-7 mx-auto border border-3 border-dark p-2 text-center">
-                                    <a href="#" class="card-link text-reset text-decoration-none">Modifier</a>
+                <div class="mb-4">
+                    <i class="fa-solid fa-plus mx-1"></i>
+                    <!-- Button trigger modal -->
+					<button type="button" style="background-color: rgba(0,0,0,0);" class="border-0 card-link text-reset" data-bs-toggle="modal" data-bs-target="#modalAdd">Ajouter une adresse</button>
+                </div>
+
+                    <div class="row">
+
+                    {% for userPostAdress in userPostAdresses %}                    
+                    
+                        <div class="card mx-auto my-2" style="width: 16rem;">
+                            <div class="card-body mx-auto" style="width: 13rem;">
+                                <h6 class="card-subtitle mb-2 text-muted">{{ userPostAdress.title }}</h6>
+                                <h5 class="card-title">{{ userPostAdress.firstName }} {{ userPostAdress.lastName }}</h5>
+                                <p class="card-text">{{ userPostAdress.adress }}</p>
+                                <p class="card-text">{{ userPostAdress.additionalAdress }}</p>
+                                <p class="card-text">{{ userPostAdress.postCode }}</p>
+                                <p class="card-text">{{ userPostAdress.city }}</p>
+                                <p class="card-text">{{ userPostAdress.country }}</p>
+                                <div class="row">
+                                    <div class="col-3 mx-auto border border-3 border-dark p-2 d-flex justify-content-center">
+                                        <a href="{{ path('hard_delete_adress', {"id": app.user.id, "id2": userPostAdress.id }) }}" ><i class="fa-regular fa-trash-can align-middle" style="color: black; font-size: 1.5em"></i></a>
+                                    </div>
+                                    <div class="col-7 mx-auto border border-3 border-dark p-2 text-center">
+                                        <a href="#" class="card-link text-reset text-decoration-none">Modifier</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                    {% endfor %}
+
                     </div>
                     
                 </div>
@@ -88,4 +102,21 @@
 
     </div>
 
+    <!-- Modal ajout adresse-->
+    <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajout d'une adresse</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {{ form(formAdd) }}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}
