@@ -46,7 +46,10 @@ class ChaussuresCrudController extends AbstractCrudController
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
-        yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo', 'photo')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images');
+        yield ImageField::new('photo4', 'photo')->setBasePath('images')->setUploadDir('public/images');
 
         yield FormField::addPanel('Stock');
 
