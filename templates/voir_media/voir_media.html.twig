@@ -54,12 +54,29 @@
 <div class="container">
     <div class="row">
       
-        <div class="col-12 bg-light border-end border-start border-dark">
-            
+        <div class="col-12 bg-light border-end border-start border-dark">   
             <h2>Produits similaires</h2>
         </div>
+
+        <div class="col-3">
+           <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-success">Ajouter au panier</a>
+                    <a href="#" class="btn btn-warning">Plus de détails</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-3">{{ medium.0.title }}</div>
+        <div class="col-3">{{ medium.0.title }}</div>
+        <div class="col-3">{{ medium.0.title }}</div>
     </div>
 </div> 
+
+
 <script>
     function myFunction(smallImg){
         var fullImg = document.getElementById("imageBox");

@@ -16,7 +16,7 @@ class VoirBijouxController extends AbstractController
     public function voirBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager): Response
     {
         $bijou = $entityManager->getRepository(Bijoux::class)->findBy(['id'=>$bijoux->getId()]);
-        $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$bijou[0]->getId()]);
+        $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$bijou[0]->getColor()]);
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
         return $this->render('voir_bijoux/v_bijoux.html.twig', [

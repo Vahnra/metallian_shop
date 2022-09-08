@@ -21,9 +21,9 @@ class VoirVetementController extends AbstractController
 
         $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$vetement[0]->getColor()]);
 
-        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$vetement[0]->getId()]);
+        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$vetement[0]->getSize()]);
         
-        $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$vetement[0]->getId()]);
+        $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$vetement[0]->getMaterial()]);
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
