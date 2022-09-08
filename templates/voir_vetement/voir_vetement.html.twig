@@ -16,15 +16,16 @@
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~vetement.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
-            {# <img src={{ asset('images/'~chaussure.0.photo2) }} class="img-fluid p-2" title="t-shirt small front"/>
-            <img src={{ asset('images/'~chaussure.0.photo3) }} class="img-fluid p-2" title="t-shirt small front"/>
-            <img src={{ asset('images/'~chaussure.0.photo4) }} class="img-fluid p-2" title="t-shirt small front"/>
-            <img src={{ asset('images/'~chaussure.0.photo5) }} class="img-fluid p-2" title="t-shirt small front"/>            #}
+            <img src={{ asset('images/'~vetement.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~vetement.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~vetement.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~vetement.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~vetement.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+
         </div>
 
         <div class="col-7 pt-3 bg-light border-bottom border-dark">
-            <img src={{ asset('images/'~vetement.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+            <img id="imageBox" src={{ asset('images/'~vetement.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
 
         </div>
 
@@ -61,4 +62,10 @@
         </div>
     </div>
 </div> 
+<script>
+    function myFunction(smallImg){
+        var fullImg = document.getElementById("imageBox");
+        fullImg.src = smallImg.src;
+    }
+</script>
 {% endblock %}
