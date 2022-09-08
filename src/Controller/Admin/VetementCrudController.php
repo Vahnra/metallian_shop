@@ -52,6 +52,9 @@ class VetementCrudController extends AbstractCrudController
         yield AssociationField::new('color', 'La couleur de l\'article');
         yield AssociationField::new('size', 'La taille de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
+        yield AssociationField::new('material', 'Matière de l\'article');
+        // yield AssociationField::new('material', '1 Matière de l\'article');
+        // yield AssociationField::new('material', '2 Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');

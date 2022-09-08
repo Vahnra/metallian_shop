@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voir des Bijoux{% endblock %}
+{% block title %}Vetement{% endblock %}
 
 {% block body %}
 
@@ -9,39 +9,38 @@
         <div class="col-12 bg-dark text-white">
             <div class="row">
                 <div class="col-1"></div>
-                <div class="col-11"><h1>Bijoux : {{ bijou.0.title }}</h1></div>
+                <div class="col-11"><h1>Vêtements : {{ vetement.0.title }}</h1></div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~bijou.0.photo) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo2) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo3) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo4) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo5) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            
-            
+            <img src={{ asset('images/'~vetement.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
+            {# <img src={{ asset('images/'~chaussure.0.photo2) }} class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~chaussure.0.photo3) }} class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~chaussure.0.photo4) }} class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~chaussure.0.photo5) }} class="img-fluid p-2" title="t-shirt small front"/>            #}
         </div>
 
         <div class="col-7 pt-3 bg-light border-bottom border-dark">
-            <img id="imageBox" src={{ asset('images/'~bijou.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+            <img src={{ asset('images/'~vetement.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
 
         </div>
 
         <div class="col-4 pt-3 bg-light border-bottom border-end border-dark">
-        {# {{ dump(bijou) }} #}
-            <h2>{{ bijou.0.description }}</h2>
+        
+            <h2>{{ vetement.0.description }}</h2>
             <p>{{ color.0.color }}</p>
-            <p>{{ bijou.0.price/100 }}€</p>
+            <p>{{ material.0.material }}</p>
+            <p>{{ vetement.0.price/100 }}€</p>
             <div class="col mb-3 text-center">
                 <button type="button" class="btn btn-success">Ajouter au panier</button>
             </div>
             <div class="col-12 p-2 border-top border-dark bg-light">
                 <h3>description</h3>
                 <p>
-                 {{ bijou.0.longDescription }}
+                 {{ vetement.0.longDescription }}
                 </p>
             </div>
             <div class="col-12 p-2 border-top border-dark bg-light">
@@ -61,13 +60,5 @@
             <h2>Produits similaires</h2>
         </div>
     </div>
-</div>
-
-
-<script>
-    function myFunction(smallImg) {
-        var fullImg = document.getElementById("imageBox");
-        fullImg.src = smallImg.src;
-    }
-</script>
+</div> 
 {% endblock %}
