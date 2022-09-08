@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Media;
+use App\Entity\Artist;
+use App\Entity\MusicType;
+use App\Entity\Expedition;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirMediaController extends AbstractController
 {
@@ -14,8 +17,18 @@ class VoirMediaController extends AbstractController
     public function index(Media $media ,EntityManagerInterface $entityManager): Response
     {
         $medium = $entityManager->getRepository(Media::class)->findBy(['id'=>$media->getId()]);
+
+        $artist = $entityManager->getRepository(Artist::class)->findBy(['id'=>$medium[0]->getId()]);
+        
+        $musicType = $entityManager->getRepository(MusicType::class)->findBy(['id'=>$medium[0]->getId()]);
+
+        $expedition = $entityManager->getRepository(Expedition::class)->findAll();
+
         return $this->render('voir_media/voir_media.html.twig', [
             'medium' => $medium,
+            'artist' => $artist,
+            'musicType' => $musicType,
+            'expedition' => $expedition
         ]);
     }
 }

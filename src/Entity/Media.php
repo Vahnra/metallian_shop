@@ -56,6 +56,15 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $releaseDate = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo1 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $photo2 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $photo3 = null;
+
     public function __construct()
     {
         $this->reviewMedia = new ArrayCollection();
@@ -237,6 +246,42 @@ class Media
     public function setReleaseDate(string $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    public function getPhoto1(): ?string
+    {
+        return $this->photo1;
+    }
+
+    public function setPhoto1(string $photo1): self
+    {
+        $this->photo1 = $photo1;
+
+        return $this;
+    }
+
+    public function getPhoto2(): ?string
+    {
+        return $this->photo2;
+    }
+
+    public function setPhoto2(string $photo2): self
+    {
+        $this->photo2 = $photo2;
+
+        return $this;
+    }
+
+    public function getPhoto3(): ?string
+    {
+        return $this->photo3;
+    }
+
+    public function setPhoto3(string $photo3): self
+    {
+        $this->photo3 = $photo3;
 
         return $this;
     }
