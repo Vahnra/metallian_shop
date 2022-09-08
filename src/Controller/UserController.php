@@ -99,7 +99,6 @@ class UserController extends AbstractController
                 )
             );
 
-
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -126,6 +125,8 @@ class UserController extends AbstractController
 
         $formAdd = $this->createForm(UserAdressFormType::class, $adress)->handleRequest($request);
 
+        $formUpdate = $this->createForm(UserAdressFormType::class, $adress)->handleRequest($request);
+
         if($formAdd->isSubmitted() && $formAdd->isValid()) {
 
             $adress->setCreatedAt(new DateTime());
@@ -140,9 +141,22 @@ class UserController extends AbstractController
             ]);
         }
 
+        if($formUpdate->isSubmitted() && $formUpdate->isValid()) {
+
+            $adress->setUpdatedAt(new DateTime());
+
+            $entityManager->persist($adress);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_profile_adress', [
+                'id' => $user->getId()
+            ]);
+        }
+
         return $this->render('user/show_profile_adress.html.twig', [
             'userPostAdresses' => $userPostAdresses,
             'formAdd' => $formAdd->createView(),
+            'formUpdate' => $formUpdate->createView(),
         ]);
     }
 

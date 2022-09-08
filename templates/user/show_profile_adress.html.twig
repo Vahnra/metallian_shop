@@ -78,7 +78,7 @@
                                         <a href="{{ path('hard_delete_adress', {"id": app.user.id, "id2": userPostAdress.id }) }}" ><i class="fa-regular fa-trash-can align-middle" style="color: black; font-size: 1.5em"></i></a>
                                     </div>
                                     <div class="col-7 mx-auto border border-3 border-dark p-2 text-center">
-                                        <a href="#" class="card-link text-reset text-decoration-none">Modifier</a>
+                                        <button type="button" class="card-link text-reset text-decoration-none border-0" style="background-color: rgba(0,0,0,0);" data-bs-toggle="modal" data-bs-target="#modalUpdate">Modifier</button>
                                     </div>
                                 </div>
                             </div>
@@ -104,19 +104,36 @@
 
     <!-- Modal ajout adresse-->
     <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ajout d'une adresse</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {{ form(formAdd) }}
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ajout d'une adresse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form(formAdd) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+            </div>
         </div>
     </div>
+
+    <!-- Modal update adresse-->
+    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier l'adresse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form(formUpdate) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
     </div>
 {% endblock %}
