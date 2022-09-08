@@ -1,107 +1,110 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recherche{% endblock %}
+{% block title %}Recherche
+{% endblock %}
 
 {% block body %}
 
-    {# Titre dynamique #}
+	{# Titre dynamique #}
 
-    <div class="container-xl bg-white">
+	<div class="container-xl bg-white">
 
-        <h1 class="py-2 ms-4">
+		<h1 class="py-2 ms-4">
 
-            Résultat de votre recherche
+			Résultat de votre recherche
 
-        </h1>
+		</h1>
 
 
-        <div class="container-fluid ">
-        
-            <div class="row">
-            
-                <div class="col-xl-2">
-                
-                    <p>Catégories</p>
+		<div class="container-fluid ">
 
-                    {% for categorie in categories %}
+			<div class="row">
 
-                        <h5><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a></h5>
+				<div class="col-xl-2">
 
-                    {% endfor %}
-                    
-                    
-                </div>
+					<p>Catégories</p>
 
-                <div class="col-xl-10">
+					{% for categorie in categories %}
 
-                    <h3 class="mb-4">Résultat</h3>
+						<h5>
+							<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+						</h5>
 
-                    {# Select pour trier #}
-                    <div class="col-3 ms-auto mb-4">
-                
-                        <select class="form-select" onChange="window.location=this.value;">
-                            <option selected>Trier par</option>
-                            {{ knp_pagination_sortable(searchResults, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }} 
-                            {{ knp_pagination_sortable(searchResults, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }} 
-                            {{ knp_pagination_sortable(searchResults, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }} 
-        
-                        </select>
-                        
-                    </div>      
+					{% endfor %}
 
-                    <div class="row">
 
-                        
-                        {# For pour afficher les vetements en forme de cartes #}
+				</div>
 
-                        {# {% if categories.title == 'Femme' %} #}
-                        
+				<div class="col-xl-10">
 
-                            {% for searchResult in searchResults %}
-                        
-                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+					<h3 class="mb-4">Résultat</h3>
 
-                                <a href="#" class="text-decoration-none text-black">
+					{# Select pour trier #}
+					<div class="col-3 ms-auto mb-4">
 
-                                    <img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">{{ (searchResult.price)/100 }} €</li>
-                                        </ul>
-                                        <h5 class="card-title">{{ searchResult.title }}</h5>
-                                        {# <p class="card-text">{{ vetement.description }}</p> #}
-                                    </div>      
+						<select class="form-select" onchange="window.location=this.value;">
+							<option selected>Trier par</option>
+							{{ knp_pagination_sortable(searchResults, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
+							{{ knp_pagination_sortable(searchResults, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
+							{{ knp_pagination_sortable(searchResults, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}
 
-                                </a>
+						</select>
 
-                            </div>
+					</div>
 
-                            {% endfor %}
+					<div class="row">
 
-                        {# Pagination #}
 
-                        <div class="container mt-3">
-                    
-                            <div class="row">
-                        
-                                <div class="col-12 ms-auto">
-                            
-                                {{ knp_pagination_render(searchResults) }}
-                            
-                                </div>
-                        
-                            </div>
+						{# For pour afficher les vetements en forme de cartes #}
 
-                        </div> 
+						{# {% if categories.title == 'Femme' %} #}
 
-                    </div>
-                
-                
-                </div>
-            
-            </div>
-        
-        
-        </div>
-    </div>
+
+							{% for searchResult in searchResults %}
+
+								<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;"> <a href="#" class="text-decoration-none text-black">
+
+									<img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+									<div class="card-body">
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item">{{ (searchResult.price)/100 }}
+												€</li>
+										</ul>
+										<h5 class="card-title">{{ searchResult.title }}</h5>
+										{# <p class="card-text">{{ vetement.description }}</p> #}
+									</div>
+
+								</a>
+
+							</div>
+
+						{% endfor %}
+
+						{# Pagination #}
+
+
+					</div>
+
+					<div class="container mt-3">
+
+						<div class="row">
+
+							<div class="col-12 ms-auto">
+
+								{{ knp_pagination_render(searchResults) }}
+
+							</div>
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+			</div>
+
+
+		</div>
+	</div>
 {% endblock %}

@@ -20,7 +20,7 @@ class VoirChaussuresController extends AbstractController
 
         $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$chaussure[0]->getColor()]);
 
-        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$chaussure[0]->getId()]);
+        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$chaussure[0]->getSize()]);
       
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
     

@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VoirMediaController extends AbstractController
 {
-    #[Route('/voir/media-{id}', name: 'app_voir_media', methods:['GET', 'POST'])]
+    #[Route('/voir/media-{id}', name: 'voir_media', methods:['GET', 'POST'])]
     public function index(Media $media ,EntityManagerInterface $entityManager): Response
     {
         $medium = $entityManager->getRepository(Media::class)->findBy(['id'=>$media->getId()]);
