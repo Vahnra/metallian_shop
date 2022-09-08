@@ -29,9 +29,6 @@ class Media
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?SousCategorie $sousCategorie = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateDeSortie = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
@@ -55,6 +52,9 @@ class Media
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: ReviewMedia::class)]
     private Collection $reviewMedia;
+
+    #[ORM\Column(length: 255)]
+    private ?string $releaseDate = null;
 
     public function __construct()
     {
@@ -111,18 +111,6 @@ class Media
     public function setSousCategorie(?SousCategorie $sousCategorie): self
     {
         $this->sousCategorie = $sousCategorie;
-
-        return $this;
-    }
-
-    public function getDateDeSortie(): ?\DateTimeInterface
-    {
-        return $this->dateDeSortie;
-    }
-
-    public function setDateDeSortie(\DateTimeInterface $dateDeSortie): self
-    {
-        $this->dateDeSortie = $dateDeSortie;
 
         return $this;
     }
@@ -237,6 +225,18 @@ class Media
                 $reviewMedium->setMedia(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReleaseDate(): ?string
+    {
+        return $this->releaseDate;
+    }
+
+    public function setReleaseDate(string $releaseDate): self
+    {
+        $this->releaseDate = $releaseDate;
 
         return $this;
     }

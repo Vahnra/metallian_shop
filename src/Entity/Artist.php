@@ -26,6 +26,11 @@ class Artist
         $this->media = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->artist; 
+    }
+
     public function getId(): ?int
     {
         return $this->id;

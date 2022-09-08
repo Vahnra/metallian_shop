@@ -26,6 +26,11 @@ class MusicType
         $this->media = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->genre; 
+    }
+
     public function getId(): ?int
     {
         return $this->id;
