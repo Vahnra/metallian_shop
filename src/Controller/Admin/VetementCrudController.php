@@ -52,10 +52,17 @@ class VetementCrudController extends AbstractCrudController
         yield AssociationField::new('color', 'La couleur de l\'article');
         yield AssociationField::new('size', 'La taille de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
+        yield AssociationField::new('material', 'Matière de l\'article');
+        // yield AssociationField::new('material', '1 Matière de l\'article');
+        // yield AssociationField::new('material', '2 Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
         yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo2', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo3', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo4', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo5', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
 
         yield FormField::addPanel('Stock');
         yield NumberField::new('stock', 'Nombre en stock');

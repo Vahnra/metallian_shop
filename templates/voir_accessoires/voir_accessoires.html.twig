@@ -3,6 +3,8 @@
 {% block title %}Voir une accessoire{% endblock %}
 
 {% block body %}
+{# {{ dump(accessoire) }} #}
+
 <div class="container">
     <div class="row">
             <div class="col-12 bg-dark text-white">
@@ -18,12 +20,16 @@
         <div class="row">
             <div class="col-1 text-center bg-dark ">
                 
-                <img src={{ asset('images/'~accessoire.0.photo) }} class="img-fluid p-2" title="t-shirt small front"/>
+                <img src={{ asset('images/'~accessoire.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+                <img src={{ asset('images/'~accessoire.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+                <img src={{ asset('images/'~accessoire.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+                <img src={{ asset('images/'~accessoire.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+                <img src={{ asset('images/'~accessoire.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
         
             </div>
 
             <div class="col-7 pt-3 bg-light border-bottom border-dark">
-                <img src={{ asset('images/'~accessoire.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+                <img id="imageBox" src={{ asset('images/'~accessoire.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
 
             </div>
 
@@ -42,13 +48,12 @@
                     {{ accessoire.0.longDescription }}
                     </p>  
                 </div>
-                    <div class="col-12 p-2 border-top border-dark bg-light">
-                    <h3>Politique d'expédition</h3>
-                   <p><i class="fa-solid fa-truck-fast"></i>  </p>
-                     {# {{ dump(expedition) }} #}
-                   
-                    
-                     
+               
+                <div class="col-12 p-2 border-top border-dark bg-light">
+                   <h3><i class="fa-solid fa-truck-fast"></i>  {{ expedition.0.title }}</h3> 
+                   <p>{{ expedition.0.description }}</p> 
+                   <p>{{ expedition.0.longDescription }}</p> 
+
                 </div>      
             </div>
 
@@ -65,5 +70,11 @@
         </div>
 </div>
 
+<script>
+    function myFunction(smallImg){
+        var fullImg = document.getElementById("imageBox");
+        fullImg.src = smallImg.src;
+    }
+</script>
 
 {% endblock %}

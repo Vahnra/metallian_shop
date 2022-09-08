@@ -34,6 +34,8 @@ class VoirAccessoiresController extends AbstractController
             'color' => $color,
             'size' => $size,
             'material' => $material,
+            'expedition' => $expedition
+            
         ]);
     }
 }

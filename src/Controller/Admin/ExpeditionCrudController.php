@@ -6,10 +6,11 @@ use DateTimeImmutable;
 use App\Entity\Expedition;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class ExpeditionCrudController extends AbstractCrudController
 {
@@ -24,8 +25,10 @@ class ExpeditionCrudController extends AbstractCrudController
         
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'titre');
-        yield TextEditorField::new('description');
-        yield TextEditorField::new('LongDescription', 'Description complète');
+        yield TextareaField::new('description');
+        yield TextareaField::new('LongDescription', 'Description complète');
+        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('updatedAt')->hideOnForm();
         
     }
 
