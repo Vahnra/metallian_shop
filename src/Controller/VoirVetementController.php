@@ -54,9 +54,10 @@ class VoirVetementController extends AbstractController
             $cartProduct->setVetement($vetement[0]);
             $quantity = $form->get('quantity')->getData();
             $cartProduct->setQuantity($quantity);
-            $cartProduct->setPrice($vetement[0]->getPrice()*$quantity);
+            $cartProduct->setPrice($vetement[0]->getPrice());
             $cartProduct->setTitle($vetement[0]->getTitle());
             $cartProduct->setPhoto($vetement[0]->getPhoto());
+            $cartProduct->setSubCategory($vetement[0]->getSousCategorie());
             
             $entityManager->persist($cartProduct);
             

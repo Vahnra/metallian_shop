@@ -45,9 +45,10 @@ class VoirBijouxController extends AbstractController
             $cartProduct->setBijoux($bijou[0]);
             $quantity = $form->get('quantity')->getData();
             $cartProduct->setQuantity($quantity);
-            $cartProduct->setPrice($bijou[0]->getPrice()*$quantity);
+            $cartProduct->setPrice($bijou[0]->getPrice());
             $cartProduct->setTitle($bijou[0]->getTitle());
             $cartProduct->setPhoto($bijou[0]->getPhoto());
+            $cartProduct->setSubCategory($bijou[0]->getSousCategorie());
 
             $entityManager->persist($cartProduct);
             

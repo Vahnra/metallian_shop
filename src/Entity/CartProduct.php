@@ -44,6 +44,9 @@ class CartProduct
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $subCategory = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -158,6 +161,18 @@ class CartProduct
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getSubCategory(): ?string
+    {
+        return $this->subCategory;
+    }
+
+    public function setSubCategory(string $subCategory): self
+    {
+        $this->subCategory = $subCategory;
 
         return $this;
     }
