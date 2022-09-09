@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SliderCrudController extends AbstractCrudController
 {
@@ -28,12 +29,17 @@ class SliderCrudController extends AbstractCrudController
         yield FormField::addPanel('Première bannière');
         yield ImageField::new('photo1', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield UrlField::new('link', 'Lien');
+        yield TextField::new('title1', 'Titre');
+        
         yield FormField::addPanel('Deuxième bannière');
         yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield UrlField::new('link2', 'Lien');
+        yield TextField::new('title2', 'Titre');
+
         yield FormField::addPanel('Troisième  bannière');
         yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield UrlField::new('link3', 'Lien');
+        yield TextField::new('title3', 'Titre');
         
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->hideOnForm();

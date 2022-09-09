@@ -41,6 +41,15 @@ class Slider
     #[ORM\Column(length: 255)]
     private ?string $link3 = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title1 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title2 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title3 = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,6 +159,42 @@ class Slider
     public function setLink3(string $link3): self
     {
         $this->link3 = $link3;
+
+        return $this;
+    }
+
+    public function getTitle1(): ?string
+    {
+        return $this->title1;
+    }
+
+    public function setTitle1(string $title1): self
+    {
+        $this->title1 = $title1;
+
+        return $this;
+    }
+
+    public function getTitle2(): ?string
+    {
+        return $this->title2;
+    }
+
+    public function setTitle2(string $title2): self
+    {
+        $this->title2 = $title2;
+
+        return $this;
+    }
+
+    public function getTitle3(): ?string
+    {
+        return $this->title3;
+    }
+
+    public function setTitle3(string $title3): self
+    {
+        $this->title3 = $title3;
 
         return $this;
     }
