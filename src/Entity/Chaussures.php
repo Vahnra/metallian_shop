@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChaussuresRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,6 +55,14 @@ class Chaussures
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
+
+    #[ORM\OneToMany(mappedBy: 'chaussures', targetEntity: CartProduct::class)]
+    private Collection $cartProducts;
+
+    public function __construct()
+    {
+        $this->cartProducts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -211,6 +221,36 @@ class Chaussures
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartProduct>
+     */
+    public function getCartProducts(): Collection
+    {
+        return $this->cartProducts;
+    }
+
+    public function addCartProduct(CartProduct $cartProduct): self
+    {
+        if (!$this->cartProducts->contains($cartProduct)) {
+            $this->cartProducts->add($cartProduct);
+            $cartProduct->setChaussures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartProduct(CartProduct $cartProduct): self
+    {
+        if ($this->cartProducts->removeElement($cartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($cartProduct->getChaussures() === $this) {
+                $cartProduct->setChaussures(null);
+            }
+        }
 
         return $this;
     }
