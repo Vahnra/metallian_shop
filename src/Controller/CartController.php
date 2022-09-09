@@ -22,10 +22,25 @@ class CartController extends AbstractController
 
         $cartProducts = $cart->getCartProduct()->toArray();
 
-        dd($cartProducts);
+      
+        // dd($cartProducts);
+
+      
         return $this->render('cart/show_cart.html.twig', [
            'cartProducts' => $cartProducts
         ]);
+    }
+
+    #[Route('/cart-details', name: 'show_cart_details', methods:['GET', 'POST'])]
+    public function showCartDetails(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+        
+        return $this->render('cart/show_cart_details.html.twig', [
+         
+         ]);
     }
 
 }

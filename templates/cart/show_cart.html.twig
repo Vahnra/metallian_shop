@@ -1,13 +1,15 @@
-{% extends "base.html.twig" %}
 
-{% block title %}Panier{% endblock %}
+    <div class="mb-3">Votre panier:</div>
 
-{% block body %}
+    {% for cartProduct in cartProducts %}
+        <div class="row pb-1">
+            <div class="col-4"><img src="{{ asset('images/' ~ cartProduct.photo) }}" alt="" style="max-width: 4rem"></div>
+            <div class="col-8">
+                <div class="col-12" class="fw-bold"><strong>{{cartProduct.title}}</strong></div>
+                <div class="col-12">Quantité: {{cartProduct.quantity}}</div>
+                <div class="col-12">{{cartProduct.price}} €</div>
+            
+            </div>
+        </div>
+    {% endfor %}
 
-<pre>
-    {{ dump(cartProducts) }}
-</pre>
-
-
-
-{% endblock %}
