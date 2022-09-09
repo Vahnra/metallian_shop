@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Artist;
+use App\Entity\Categorie;
 use App\Entity\MusicType;
 use App\Entity\Expedition;
 use App\Entity\SousCategorie;
@@ -25,7 +26,7 @@ class VoirMediaController extends AbstractController
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
-        
+
 
         return $this->render('voir_media/voir_media.html.twig', [
             'medium' => $medium,
@@ -34,4 +35,8 @@ class VoirMediaController extends AbstractController
             'expedition' => $expedition
         ]);
     }
+
+       
+        
+   
 }
