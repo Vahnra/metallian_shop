@@ -20,11 +20,11 @@ class CartController extends AbstractController
         $user = $this->getUser();
 
         $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
-
-        if ($cart == null) {
+        
+        if ($user !== null  && $cart == null) {
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
         }
-
+        
         $cartProducts = null;
 
         if ($cart != null) {
@@ -43,7 +43,9 @@ class CartController extends AbstractController
 
         $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
-        if ($cart == null) {
+        // dd($request->getSession()->get('id'));
+        
+        if ($user !== null && $cart == null) {
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
         }
 

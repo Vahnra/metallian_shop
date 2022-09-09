@@ -34,7 +34,9 @@ class VoirBijouxController extends AbstractController
         {              
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
-            if ($cart == null) {
+            
+
+            if ($user !== null) {
                 $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
             }
             
@@ -60,8 +62,18 @@ class VoirBijouxController extends AbstractController
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
             $cart->addCartProduct($cartProduct);
-            $cart->setToken($request->getSession()->get('id'));
-          
+
+            $token = $cart->getToken();
+
+           
+            
+            if ($token == null) {
+                $cart->setToken($request->getSession()->get('id'));
+            } else {
+                $cart->setToken($cart->getToken());
+            }
+            
+        //   dd($cart);
             $entityManager->persist($cart);
             $entityManager->flush();
 
