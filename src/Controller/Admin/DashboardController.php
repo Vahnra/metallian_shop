@@ -25,6 +25,7 @@ use App\Entity\MusicType;
 use App\Entity\ReviewMedia;
 use App\Entity\ReviewVetement;
 use App\Entity\Size;
+use App\Entity\Slider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -186,6 +187,12 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir le Politique d\'expédition', 'fas fa-eye', Expedition::class),
             MenuItem::linkToCrud('Ajouter un Politique d\'expédition', 'fas fa-plus', Expedition::class)->setAction(Crud::PAGE_NEW)
         ]); 
+
+        yield MenuItem::section('Banners');
+        yield MenuItem::subMenu('Des banners')->setSubItems([
+            MenuItem::linkToCrud('Voir les banners', 'fas fa-eye', Slider::class),
+            MenuItem::linkToCrud('Ajouter un banner', 'fas fa-plus', Slider::class)->setAction(Crud::PAGE_NEW)
+        ]);
     }
 
     
