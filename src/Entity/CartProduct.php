@@ -47,6 +47,9 @@ class CartProduct
     #[ORM\Column(length: 255)]
     private ?string $subCategory = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
+    private ?Accessoires $accessoires = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -173,6 +176,18 @@ class CartProduct
     public function setSubCategory(string $subCategory): self
     {
         $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    public function getAccessoires(): ?Accessoires
+    {
+        return $this->accessoires;
+    }
+
+    public function setAccessoires(?Accessoires $accessoires): self
+    {
+        $this->accessoires = $accessoires;
 
         return $this;
     }

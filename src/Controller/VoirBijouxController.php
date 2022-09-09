@@ -21,7 +21,9 @@ class VoirBijouxController extends AbstractController
     public function voirBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager, Request $request): Response
     {
         $bijou = $entityManager->getRepository(Bijoux::class)->findBy(['id'=>$bijoux->getId()]);
+
         $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$bijou[0]->getColor()]);
+
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
         $cartProduct= new CartProduct();
@@ -33,8 +35,6 @@ class VoirBijouxController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) 
         {              
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
-
-            
 
             if ($user !== null) {
                 $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
