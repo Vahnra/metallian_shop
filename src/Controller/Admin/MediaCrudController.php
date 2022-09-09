@@ -50,7 +50,10 @@ class MediaCrudController extends AbstractCrudController
         yield MoneyField::new('price')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
-        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo1', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+
 
         yield FormField::addPanel('Stock');
 
