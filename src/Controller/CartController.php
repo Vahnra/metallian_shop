@@ -15,11 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'show_cart')]
-    public function showCart(EntityManagerInterface $entityManager): Response
+    public function showCart(EntityManagerInterface $entityManager, Request $request): Response
     {
         $user = $this->getUser();
 
-        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+
+        if ($cart == null) {
+            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+        }
 
         $cartProducts = null;
 
@@ -37,7 +41,11 @@ class CartController extends AbstractController
     {
         $user = $this->getUser();
 
-        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+
+        if ($cart == null) {
+            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+        }
 
         $cartProducts = null;
 

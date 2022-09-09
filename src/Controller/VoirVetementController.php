@@ -41,12 +41,17 @@ class VoirVetementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {              
-            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+
+            if ($cart == null) {
+                $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+            }
             
             if ($cart == null) {
                $cart = new Cart();
                $cart->setCreatedAt(new DateTime());
                $cart->setStatus('active');
+               $request->getSession()->set('id', uniqid(rand(), true));
             }
             
             $cartProduct->setCreatedAt(new DateTime());
@@ -57,13 +62,16 @@ class VoirVetementController extends AbstractController
             $cartProduct->setPrice($vetement[0]->getPrice());
             $cartProduct->setTitle($vetement[0]->getTitle());
             $cartProduct->setPhoto($vetement[0]->getPhoto());
-            $cartProduct->setSubCategory($vetement[0]->getSousCategorie());
+            $cartProduct->setSubCategory($vetement[0]->getSousCategorie());         
             
             $entityManager->persist($cartProduct);
+
+            
             
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
             $cart->addCartProduct($cartProduct);
+            $cart->setToken($request->getSession()->get('id'));
           
             $entityManager->persist($cart);
             $entityManager->flush();

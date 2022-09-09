@@ -32,12 +32,17 @@ class VoirBijouxController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {              
-            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+
+            if ($cart == null) {
+                $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+            }
             
             if ($cart == null) {
                $cart = new Cart();
                $cart->setCreatedAt(new DateTime());
                $cart->setStatus('active');
+               $request->getSession()->set('id', uniqid(rand(), true));
             }
      
             $cartProduct->setCreatedAt(new DateTime());
@@ -55,6 +60,7 @@ class VoirBijouxController extends AbstractController
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
             $cart->addCartProduct($cartProduct);
+            $cart->setToken($request->getSession()->get('id'));
           
             $entityManager->persist($cart);
             $entityManager->flush();
