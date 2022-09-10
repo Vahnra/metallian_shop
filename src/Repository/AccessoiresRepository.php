@@ -104,6 +104,48 @@ class AccessoiresRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    //    Query pour le filtre
+    public function findForPaginationAccessoiresFiltered($value, $color, $material, $priceMini, $priceMax): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        if (isset($color)) {
+            $qb
+                ->andWhere('v.color = :color')
+                ->setParameter('color', $color);
+        }
+
+        if (isset($material)) {
+            $qb
+                ->andWhere('v.material = :material')
+                ->setParameter('material', $material);
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery();
+    }
+
     // Query pour la barre de recherche
     public function search($mots)
     {
