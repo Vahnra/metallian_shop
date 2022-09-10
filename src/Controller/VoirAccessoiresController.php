@@ -44,8 +44,8 @@ class VoirAccessoiresController extends AbstractController
         {              
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
-            if ($user !== null) {
-                $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active']);
+            if ($user !== null && $cart == null) {
+                $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
             }
             
             if ($cart == null) {
