@@ -17,6 +17,7 @@ class CartDetailsFormType extends AbstractType
         $builder
             ->add('quantity', NumberType::class, [
                 'label' => ' ',
+                'attr' => ['min' => '1'],
             ])
         ;
     }

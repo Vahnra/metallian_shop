@@ -16,7 +16,9 @@ class CartProductFormType extends AbstractType
     {
         $builder
             ->add('quantity', IntegerType::class, [
-                'label' => 'Quantité'
+                'label' => 'Quantité',
+                'data' => '1',
+                'attr' => ['min' => '1'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter au panier',

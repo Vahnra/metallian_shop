@@ -80,6 +80,9 @@ class VoirVetementController extends AbstractController
                 $cart->setToken($cart->getToken());
             }
 
+            $entityManager->persist($cart);
+            $entityManager->flush();
+
         }
 
 
