@@ -52,4 +52,17 @@ class ChaussuresService
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }
+
+    // Filtered pagination
+    public function getPaginatedChaussuresSousCategoriesFiltered($value, $color, $size, $material, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 8;
+
+        $vetementQuery = $this->chaussuresRepository->findForPaginationSousCategoriesFiltered($value, $color, $size, $material, $priceMini, $priceMax);
+
+        return $this->paginator->paginate($vetementQuery, $page, $limit);
+    }
 }

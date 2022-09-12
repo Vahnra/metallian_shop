@@ -320,7 +320,6 @@ class CategoryController extends AbstractController
                 $priceMax, 
                 $priceMini
             );        
-
         }    
 
         if ($filterAccessoiresForm->isSubmitted() && $filterAccessoiresForm->isValid()) {
@@ -342,7 +341,6 @@ class CategoryController extends AbstractController
                 $priceMax, 
                 $priceMini
             );        
-
         }  
 
         if ($filterAccessoiresForm->isSubmitted() && $filterChaussuresForm->isValid()) {
@@ -367,7 +365,6 @@ class CategoryController extends AbstractController
                 $priceMax, 
                 $priceMini
             );        
-
         }  
 
         if ($filterMediaForm->isSubmitted() && $filterMediaForm->isValid()) {
@@ -386,7 +383,6 @@ class CategoryController extends AbstractController
                 $priceMax, 
                 $priceMini
             );        
-
         }  
 
         // On récupère les sous catégories de la catégories en question

@@ -97,6 +97,41 @@ class BijouxRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+   public function findForPaginationSousCategoriesFiltered($value, $color, $priceMini, $priceMax): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorie = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        if (isset($color)) {
+            $qb
+                ->andWhere('v.color = :color')
+                ->setParameter('color', $color);
+        }   
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery();
+    }
+
     // Query pour la barre de recherche
     public function search($mots)
     {

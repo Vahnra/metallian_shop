@@ -65,9 +65,13 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $photo3 = null;
 
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: CartProduct::class)]
+    private Collection $cartProducts;
+
     public function __construct()
     {
         $this->reviewMedia = new ArrayCollection();
+        $this->cartProducts = new ArrayCollection();
     }
 
 
@@ -282,6 +286,36 @@ class Media
     public function setPhoto3(string $photo3): self
     {
         $this->photo3 = $photo3;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartProduct>
+     */
+    public function getCartProducts(): Collection
+    {
+        return $this->cartProducts;
+    }
+
+    public function addCartProduct(CartProduct $cartProduct): self
+    {
+        if (!$this->cartProducts->contains($cartProduct)) {
+            $this->cartProducts->add($cartProduct);
+            $cartProduct->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartProduct(CartProduct $cartProduct): self
+    {
+        if ($this->cartProducts->removeElement($cartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($cartProduct->getMedia() === $this) {
+                $cartProduct->setMedia(null);
+            }
+        }
 
         return $this;
     }

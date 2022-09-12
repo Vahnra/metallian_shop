@@ -54,4 +54,17 @@ class MediaService
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }
+
+    // Filtered pagination
+    public function getPaginatedMediaSousCategoriesFiltered($value, $musicType, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 8;
+
+        $vetementQuery = $this->vetementRepository->findForPaginationSousCategoriesFiltered($value, $musicType, $priceMini, $priceMax);
+
+        return $this->paginator->paginate($vetementQuery, $page, $limit);
+    }
 }

@@ -54,4 +54,17 @@ class VetementService
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }
+
+    // Filtered pagination
+    public function getPaginatedVetementsSousCategoriesFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 8;
+
+        $vetementQuery = $this->vetementRepository->findForPaginationSousCategoriesFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax);
+
+        return $this->paginator->paginate($vetementQuery, $page, $limit);
+    }
 }

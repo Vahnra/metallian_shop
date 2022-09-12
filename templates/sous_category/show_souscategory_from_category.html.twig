@@ -33,6 +33,48 @@
                         {% endfor %}
 
                         </ul>
+
+                        {% if categories.0.title == 'Femme' %}
+                    
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Enfant' %}
+                    
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Homme' %}
+                        
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Bijoux' %}
+                    
+                            {{ form(filterBijouxForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Chaussures' %}
+                
+                            {{ form(filterChaussuresForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Accessoires' %}
+                
+                            {{ form(filterAccessoiresForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Musique' %}
+                
+                            {{ form(filterMediaForm) }}
+
+                        {% endif %}
                 
                 </div>
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BijouxRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -59,6 +61,14 @@ class Bijoux
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
+
+    #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: CartProduct::class)]
+    private Collection $cartProducts;
+
+    public function __construct()
+    {
+        $this->cartProducts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -241,6 +251,36 @@ class Bijoux
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartProduct>
+     */
+    public function getCartProducts(): Collection
+    {
+        return $this->cartProducts;
+    }
+
+    public function addCartProduct(CartProduct $cartProduct): self
+    {
+        if (!$this->cartProducts->contains($cartProduct)) {
+            $this->cartProducts->add($cartProduct);
+            $cartProduct->setBijoux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartProduct(CartProduct $cartProduct): self
+    {
+        if ($this->cartProducts->removeElement($cartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($cartProduct->getBijoux() === $this) {
+                $cartProduct->setBijoux(null);
+            }
+        }
 
         return $this;
     }

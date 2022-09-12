@@ -50,16 +50,22 @@
 					</ul>
 				</div>
 
+				
+			
 				<div class="dropdown">
-					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="{{ path('show_cart_details') }}"   aria-expanded="false">
 						<i class="fa-solid fa-basket-shopping"></i>
 					</a>
 
-					<ul class="dropdown-menu rounded-0">
-						<li><a class="dropdown-item" href="#">Placeholder</a></li>
-					
-					</ul>
+						<ul class="dropdown-menu rounded-0" >
+							
+							<li><a class="dropdown-item " style="white-space: normal; min-width: 15rem" href="#">{{ render(url('show_cart')) }}</a></li>
+							
+							
+						</ul>
+						
 				</div>
+				
 
 				{# <li class="nav-item">
 					<a class="nav-link text-white" href="{{ path('app_logout') }}">
