@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\Slider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,9 +28,12 @@ class DefaultController extends AbstractController
 
         $nouveautesHomme = $entityManager->getRepository(Vetement::class)->findByFourVetements($homme);
 
+        $slider = $entityManager->getRepository(Slider::class)->findAll();
+
         return $this->render('default/home.html.twig', [
             'nouveautesFemme' => $nouveautesFemme,
             'nouveautesHomme' => $nouveautesHomme,
+            'slider' => $slider,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 {% block title %}Metallian Shop{% endblock %}
 
 {% block body %}
+    
 <div class="container-xl">
     <div class="row">
         <div class="col-12 g-0">
@@ -14,13 +15,19 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                <img src="{{ asset('images/img1.jpg') }}" class="d-block w-100" alt="...">
+                <a href={{ slider.0.link }}>
+                <img src={{ asset('images/'~slider.0.photo1) }} class="d-block w-100" title={{ slider.0.title1 }}/>
+                </a>
                 </div>
                 <div class="carousel-item">
-                <img src="{{ asset('images/img1.jpg') }}" class="d-block w-100" alt="...">
+                <a href={{ slider.0.link2 }}>
+                <img src={{ asset('images/'~slider.0.photo2) }} class="d-block w-100" title={{ slider.0.title2 }}/>
+                </a>
                 </div>
                 <div class="carousel-item">
-                <img src="{{ asset('images/img1.jpg') }}" class="d-block w-100" alt="...">
+                <a href={{ slider.0.link3 }}>
+                <img src={{ asset('images/'~slider.0.photo2) }} class="d-block w-100" title={{ slider.0.title3 }}/>
+                </a>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
