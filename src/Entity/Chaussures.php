@@ -241,9 +241,11 @@ class Chaussures
     public function setPhoto2(string $photo2): self
     {
         $this->photo2 = $photo2;
-    /**
-     * @return Collection<int, CartProduct>
-     */
+        
+        return $this;
+
+    }
+    
     public function getCartProducts(): Collection
     {
         return $this->cartProducts;
@@ -279,6 +281,11 @@ class Chaussures
     public function setPhoto4(string $photo4): self
     {
         $this->photo4 = $photo4;
+
+        return $this;
+
+    }
+
     public function removeCartProduct(CartProduct $cartProduct): self
     {
         if ($this->cartProducts->removeElement($cartProduct)) {
