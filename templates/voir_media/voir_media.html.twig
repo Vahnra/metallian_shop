@@ -54,12 +54,52 @@
 <div class="container">
     <div class="row">
       
-        <div class="col-12 bg-light border-end border-start border-dark">   
+        <div class="col-12 bg-light ">   
             <h2>Produits similaires</h2>
         </div>
+
+        {% for medium in similarItm %} 
+        <div class="col-3 bg-light "> 
+            <div class="card" style="width: 18rem;">
+                <img src={{ asset('images/'~medium.photo1) }} class="card-img-top">
+                <div class="card-body">
+                     <h5 class="card-title">{{ medium.title }}</h5> 
+                     <h6>{{ medium.artist }}</h6>
+                      <p>{{ medium.sousCategorie }}</p>
+                    <p class="card-text">{{ medium.description }}</p>
+                    <p>{{ medium.price/100 }}€</p>
+                    <a href={{ path('voir_media', {'id':medium.id})}} class="btn btn-warning">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+            
+        
+
+        {% for medium in similaeGnr %} 
+        <div class="col-3 bg-light ">  
+            <div class="card" style="width: 18rem;">
+                <img src={{ asset('images/'~medium.photo1) }} class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ medium.title }}</h5> 
+                    <h6>{{ medium.artist }}</h6>
+                    <p>{{ medium.sousCategorie }}</p>
+                    <p class="card-text">{{ medium.description }}</p>
+                    <p>{{ medium.price/100 }}€</p>
+                    <a href={{ path('voir_media', {'id':medium.id})}} class="btn btn-warning">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %} 
+
+    </div>
+
+ 
+
 </div> 
 
-
+{# ------------------------------------------------------- #}
 <script>
     function myFunction(smallImg){
         var fullImg = document.getElementById("imageBox");

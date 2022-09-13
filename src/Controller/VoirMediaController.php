@@ -26,13 +26,27 @@ class VoirMediaController extends AbstractController
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
+        $similarCategory = $entityManager->getRepository(SousCategorie::class)->findBy([
+            'id' => $medium[0]->getSousCategorie()  
+        ]);
 
+        $similarItm = $entityManager->getRepository(Media::class)->findBy([
+            'sousCategorie' => $medium[0]->getSousCategorie(),
+            // 'artist'=>$medium[0]->getArtist()
+        ]);
+        $similaeGnr = $entityManager->getRepository(Media::class)->findBy([
+            'genre' => $medium[0]->getGenre(),
+            // 'artist'=>$medium[0]->getArtist()
+        ]);
+    // dd($medium[0]->getArtist());
 
         return $this->render('voir_media/voir_media.html.twig', [
             'medium' => $medium,
             'artist' => $artist,
             'musicType' => $musicType,
-            'expedition' => $expedition
+            'expedition' => $expedition,
+            'similarItm' => $similarItm,
+            'similaeGnr' => $similaeGnr,
         ]);
     }
 
