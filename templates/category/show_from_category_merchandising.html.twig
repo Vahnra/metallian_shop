@@ -1,0 +1,147 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Merchandising{% endblock %}
+
+{% block body %}
+
+    {# Titre dynamique #}
+
+    <div class="container-xl bg-white">
+
+        <h1 class="py-2 ms-4">
+
+            {% if categories.title == 'Femme' %}
+            
+                Vêtements pour Femme 
+
+            {% elseif categories.title == 'Homme' %}
+
+                Les vêtements pour Homme
+
+            {% endif %}
+
+        </h1>
+
+        <div class="container-fluid ">
+        
+            <div class="row">
+            
+                <div class="col-xl-2">
+                
+                    <p>Catégories</p>
+                    <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.title}) }}">{{ categories.title }}</a></h3>
+                    <ul class="" style="list-style-type: none">
+
+                        {# For pour afficher les sous catégories en question #}
+
+                        {% for subcategory in souscategories %}
+
+                            {% if subcategory.categorieMerchandising.title == categories.title %}
+                            
+
+                                <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.title}) }}">{{ subcategory.title }}</a></li>
+
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </ul>
+
+                    {% if categories.title == 'Merchandising Femme' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}
+
+                    {% if categories.title == 'Merchandising Homme' %}
+                    
+                        {{ form(filterForm) }}
+
+                    {% endif %}  
+
+                    {% if categories.title == 'Accessoires Merchandising' %}
+                    
+                        {{ form(filterAccessoiresForm) }}
+
+                    {% endif %}        
+                    
+                </div>
+
+                <div class="col-xl-10">
+
+                    <h3 class="mb-4">{{ categories.title }}</h3>
+
+                    {# Select pour trier #}
+                    <div class="col-3 ms-auto mb-4">
+
+
+                        <select class="form-select" onChange="window.location=this.value;">
+                            <option selected>Trier par</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
+                        </select>
+                        
+                    </div>      
+
+                    <div class="row mx-auto">
+
+                        
+                        {# For pour afficher les vetements en forme de cartes #}
+
+                        {# {% if categories.title == 'Femme' %} #}
+                        
+
+                            {% for vetement in vetements %}
+                        
+                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                                <a href="{{ path('voir_vetement', {'id': vetement.id}) }}" class="text-decoration-none text-black">
+
+                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                        </ul>
+                                        <h5 class="card-title">{{ vetement.title }}</h5>
+                                        {# <p class="card-text">{{ vetement.description }}</p> #}
+                                    </div>      
+
+                                </a>
+
+                            </div>
+
+                            {% endfor %}
+
+                        {# {% endif %} #}
+
+                        
+                        {# Pagination #}
+
+                        <div class="container mt-3">
+                    
+                            <div class="row">
+                        
+                                <div class="col-12 ms-auto">
+                            
+                                {{ knp_pagination_render(vetements) }}
+                            
+                                </div>
+                        
+                            </div>
+
+                        </div>
+
+                    </div>
+                
+                
+                </div>
+            
+            </div>
+        
+        
+        </div>
+    </div>
+
+{% endblock %}

@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\VetementMerchandising;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<VetementMerchandising>
@@ -63,4 +64,146 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    //    Fonction pour la pagination
+
+   public function findForPagination($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorieMerchandising = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
+
+   public function findForPaginationSousCategorie($value): Query
+   {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorieMerchandising = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+   }
+
+   //    Query pour le filtre categorie
+   public function findForPaginationFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax): Query
+   {
+       $qb = $this->createQueryBuilder('v')
+           ->andWhere('v.categorieMerchandising = :val')
+           ->setParameter('val', $value)
+           ->orderBy('v.createdAt', 'DESC');
+
+       if (isset($color)) {
+           $qb
+               ->andWhere('v.color = :color')
+               ->setParameter('color', $color);
+       }
+
+       if (isset($size)) {
+           $qb
+               ->andWhere('v.size = :size')
+               ->setParameter('size', $size);
+       }
+
+       if (isset($material)) {
+           $qb
+               ->andWhere('v.material = :material')
+               ->setParameter('material', $material);
+       }
+
+       if (isset($marque)) {
+           $qb
+               ->andWhere('v.marques = :marques')
+               ->setParameter('marques', $marque);
+       }
+
+       if (isset($priceMini)) {
+           $qb
+               ->andWhere('v.price < :priceMini')
+               ->setParameter('priceMini', $priceMini);
+       }
+
+       if (isset($priceMax)) {
+           $qb
+               ->andWhere('v.price > :priceMax')
+               ->setParameter('priceMax', $priceMax);
+       }
+
+       if (isset($priceMini) && isset($priceMax)) {
+           $qb
+               ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+               ->setParameter('priceMax', $priceMax)
+               ->setParameter('priceMini', $priceMini);
+       }
+               
+       return $qb->getQuery();
+   }
+
+   public function findForPaginationSousCategoriesFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.sousCategorieMerchandising = :val')
+            ->setParameter('val', $value)
+            ->orderBy('v.createdAt', 'DESC');
+
+        if (isset($color)) {
+            $qb
+                ->andWhere('v.color = :color')
+                ->setParameter('color', $color);
+        }
+
+        if (isset($size)) {
+            $qb
+                ->andWhere('v.size = :size')
+                ->setParameter('size', $size);
+        }
+
+        if (isset($material)) {
+            $qb
+                ->andWhere('v.material = :material')
+                ->setParameter('material', $material);
+        }
+
+        if (isset($marque)) {
+            $qb
+                ->andWhere('v.marques = :marques')
+                ->setParameter('marques', $marque);
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery();
+    }
+
+    public function search($mots)
+    {
+        $query = $this->createQueryBuilder('a');
+        if($mots != null)
+        {
+            $query
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

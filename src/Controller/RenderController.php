@@ -39,7 +39,6 @@ class RenderController extends AbstractController
     #[Route('/categories2', name: 'render_categories_merchandising_in_nav')]
     public function renderCategoriesMerchandisingInNav(EntityManagerInterface $entityManager): Response
     {
-    
         // On récupre toutes les categoriesMerchandising et sousCategoriesMerchandising
         $categoriesMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findAll();
 

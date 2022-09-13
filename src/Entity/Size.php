@@ -27,11 +27,19 @@ class Size
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: Accessoires::class)]
     private Collection $accessoires;
 
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: VetementMerchandising::class)]
+    private Collection $vetementMerchandisings;
+
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: AccessoiresMerchandising::class)]
+    private Collection $accessoiresMerchandisings;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
         $this->chaussures = new ArrayCollection();
         $this->accessoires = new ArrayCollection();
+        $this->vetementMerchandisings = new ArrayCollection();
+        $this->accessoiresMerchandisings = new ArrayCollection();
     }
 
     public function __toString()
@@ -140,6 +148,66 @@ class Size
             // set the owning side to null (unless already changed)
             if ($accessoire->getSize() === $this) {
                 $accessoire->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VetementMerchandising>
+     */
+    public function getVetementMerchandisings(): Collection
+    {
+        return $this->vetementMerchandisings;
+    }
+
+    public function addVetementMerchandising(VetementMerchandising $vetementMerchandising): self
+    {
+        if (!$this->vetementMerchandisings->contains($vetementMerchandising)) {
+            $this->vetementMerchandisings->add($vetementMerchandising);
+            $vetementMerchandising->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetementMerchandising(VetementMerchandising $vetementMerchandising): self
+    {
+        if ($this->vetementMerchandisings->removeElement($vetementMerchandising)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementMerchandising->getSize() === $this) {
+                $vetementMerchandising->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccessoiresMerchandising>
+     */
+    public function getAccessoiresMerchandisings(): Collection
+    {
+        return $this->accessoiresMerchandisings;
+    }
+
+    public function addAccessoiresMerchandising(AccessoiresMerchandising $accessoiresMerchandising): self
+    {
+        if (!$this->accessoiresMerchandisings->contains($accessoiresMerchandising)) {
+            $this->accessoiresMerchandisings->add($accessoiresMerchandising);
+            $accessoiresMerchandising->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresMerchandising(AccessoiresMerchandising $accessoiresMerchandising): self
+    {
+        if ($this->accessoiresMerchandisings->removeElement($accessoiresMerchandising)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresMerchandising->getSize() === $this) {
+                $accessoiresMerchandising->setSize(null);
             }
         }
 

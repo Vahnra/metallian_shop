@@ -20,14 +20,8 @@ class VetementMerchandising
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $size = [];
-
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
-
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $color = [];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -49,6 +43,21 @@ class VetementMerchandising
 
     #[ORM\Column(length: 255)]
     private ?string $price = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
+    private ?Color $color = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
+    private ?Size $size = null;
+
+    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
+    private ?Material $material = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $longDescription = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $stock = null;
 
     public function getId(): ?int
     {
@@ -79,18 +88,6 @@ class VetementMerchandising
         return $this;
     }
 
-    public function getSize(): array
-    {
-        return $this->size;
-    }
-
-    public function setSize(array $size): self
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
     public function getPhoto(): ?string
     {
         return $this->photo;
@@ -99,18 +96,6 @@ class VetementMerchandising
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getColor(): array
-    {
-        return $this->color;
-    }
-
-    public function setColor(array $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }
@@ -195,6 +180,66 @@ class VetementMerchandising
     public function setPrice(string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getSize(): ?Size
+    {
+        return $this->size;
+    }
+
+    public function setSize(?Size $size): self
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    public function getStock(): ?string
+    {
+        return $this->stock;
+    }
+
+    public function setStock(string $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }
