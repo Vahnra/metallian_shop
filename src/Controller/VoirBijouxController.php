@@ -19,10 +19,16 @@ class VoirBijouxController extends AbstractController
         $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$bijou[0]->getColor()]);
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
+        $similarItm = $entityManager->getRepository(Bijoux::class)->findBy([
+            'sousCategorie' => $bijou[0]->getSousCategorie(),
+            'categorie' => $bijou[0]->getCategorie(),
+        ]);
+
         return $this->render('voir_bijoux/v_bijoux.html.twig', [
             'bijou' => $bijou,
             'color' => $color,
-            'expedition' => $expedition
+            'expedition' => $expedition,
+            'similarItm' => $similarItm
             
         ]);
     }

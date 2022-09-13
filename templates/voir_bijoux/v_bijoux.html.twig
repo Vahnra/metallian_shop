@@ -53,17 +53,36 @@
 
     </div>
 </div>
+
+{# -----------------------------------Produits similaires--------------- #}
 <div class="container">
     <div class="row">
       
-        <div class="col-12 bg-light border-end border-start border-dark">
-            
+        <div class="col-12 bg-light">
             <h2>Produits similaires</h2>
         </div>
+
+        {% for bijou in similarItm %} 
+        <div class="col-3 bg-light "> 
+            <div class="card" style="width: 18rem;">
+                <img src={{ asset('images/'~bijou.photo) }} class="card-img-top">
+                <div class="card-body">
+                     <h5 class="card-title">{{ bijou.title }}</h5> 
+                      <p>{{ bijou.sousCategorie }}</p>
+                    <p class="card-text">{{ bijou.description }}</p>
+                    <p>{{ bijou.price/100 }}€</p>
+                    <a href={{ path('voir_bijoux', {'id':bijou.id})}} class="btn btn-warning">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
+    {# end row #}
 </div>
+{# end container #}
 
-
+{# --------------------------Galery Script---------------------------------- #}
 <script>
     function myFunction(smallImg) {
         var fullImg = document.getElementById("imageBox");
