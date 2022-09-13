@@ -31,14 +31,14 @@ class VoirMediaController extends AbstractController
         ]);
 
         $similarItm = $entityManager->getRepository(Media::class)->findBy([
-            'sousCategorie' => $medium[0]->getSousCategorie(),
-            // 'artist'=>$medium[0]->getArtist()
+            'sousCategorie' => $medium[0]->getSousCategorie()
+           
         ]);
         $similaeGnr = $entityManager->getRepository(Media::class)->findBy([
-            'genre' => $medium[0]->getGenre(),
-            // 'artist'=>$medium[0]->getArtist()
+            'genre' => $medium[0]->getGenre()
+            
         ]);
-    // dd($medium[0]->getArtist());
+    
 
         return $this->render('voir_media/voir_media.html.twig', [
             'medium' => $medium,

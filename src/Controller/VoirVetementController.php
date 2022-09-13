@@ -24,16 +24,22 @@ class VoirVetementController extends AbstractController
         $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$vetement[0]->getSize()]);
         
         $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$vetement[0]->getMaterial()]);
-    
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
+
+        $similarItm = $entityManager->getRepository(Vetement::class)->findBy([
+            'sousCategorie' => $vetement[0]->getSousCategorie(),
+            'categorie' => $vetement[0]->getCategorie(),
+        ]);
 
         return $this->render('voir_vetement/voir_vetement.html.twig', [
             'vetement' => $vetement,
             'color' => $color,
             'size' => $size,
             'material' => $material,
-            'expedition' => $expedition
+            'expedition' => $expedition,
+            'similarItm' => $similarItm
+
         ]);
     }
 }
