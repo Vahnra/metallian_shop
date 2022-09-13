@@ -53,12 +53,36 @@
 <div class="container">
     <div class="row">
       
-        <div class="col-12 bg-light border-end border-start border-dark">
+        <div class="col-12 bg-light">
             
             <h2>Produits similaires</h2>
         </div>
+
+         {% for chaussure in similarItm %} 
+        <div class="col-3 bg-light "> 
+            <div class="card" style="width: 18rem;">
+                <img src={{ asset('images/'~chaussure.photo) }} class="card-img-top">
+                <div class="card-body">
+                     <h5 class="card-title">{{ chaussure.title }}</h5> 
+                      <p>{{ chaussure.sousCategorie }}</p>
+                    <p class="card-text">{{ chaussure.description }}</p>
+                    <p>{{ chaussure.price/100 }}€</p>
+                    <a href={{ path('voir_chaussures', {'id':chaussure.id})}} class="btn btn-warning">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
     </div>
+    {# end row #}
 </div> 
+{# end container #}
+
+
+
+{# ------------------------------------GALLERY SCRIPT--------------------- #}
 <script>
     function myFunction(smallImg) {
         var fullImg = document.getElementById("imsgeBox");
