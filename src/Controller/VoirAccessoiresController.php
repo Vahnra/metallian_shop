@@ -84,13 +84,20 @@ class VoirAccessoiresController extends AbstractController
 
         }
 
+        $similarItm = $entityManager->getRepository(Accessoires::class)->findBy([
+            'sousCategorie' => $accessoire[0]->getSousCategorie(),
+            'categorie' => $accessoire[0]->getCategorie(),
+        ]);
+
+
         return $this->render('voir_accessoires/voir_accessoires.html.twig', [
             'accessoire' => $accessoire,
             'color' => $color,
             'size' => $size,
             'material' => $material,
             'expedition' => $expedition,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'similarItm' => $similarItm
             
         ]);
     }

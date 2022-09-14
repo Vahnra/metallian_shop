@@ -81,14 +81,19 @@ class VoirChaussuresController extends AbstractController
             $entityManager->flush();
 
         }
+        $similarItm = $entityManager->getRepository(Chaussures::class)->findBy([
+            'sousCategorie' => $chaussure[0]->getSousCategorie(),
+            'categorie' => $chaussure[0]->getCategorie(),
+        ]);
     
         return $this->render('voir_chaussures/voir_chaussures.html.twig', [
             'chaussure' => $chaussure,
             'color' => $color,
             'size' => $size,
             'expedition' => $expedition,
-            'form' => $form->createView()
-
+            'form' => $form->createView(),
+            'similarItm' => $similarItm
+            
         ]);
     }
 }

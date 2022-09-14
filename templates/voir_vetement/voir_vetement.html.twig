@@ -33,6 +33,7 @@
         
             <h2>{{ vetement.0.description }}</h2>
             <p>{{ color.0.color }}</p>
+            <p>{{ vetement.0.sousCategorie }}</p>
             <p>{{ material.0.material }}</p>
             <p>{{ vetement.0.price/100 }}€</p>
             <div class="col mb-3 text-center">
@@ -54,15 +55,43 @@
 
     </div>
 </div>
+{# ------------------------------------------------------------------------------------ #}
 <div class="container">
     <div class="row">
-      
-        <div class="col-12 bg-light border-end border-start border-dark">
+        <div class="col-12 bg-light">
             
             <h2>Produits similaires</h2>
         </div>
+
+         {% for vetement in similarItm %} 
+        <div class="col-3 bg-light "> 
+            <div class="card" style="width: 18rem;">
+                <img src={{ asset('images/'~vetement.photo) }} class="card-img-top">
+                <div class="card-body">
+                     <h5 class="card-title">{{ vetement.title }}</h5> 
+                      <p>{{ vetement.sousCategorie }}</p>
+                    <p class="card-text">{{ vetement.description }}</p>
+                    <p>{{ vetement.price/100 }}€</p>
+                    <a href={{ path('voir_vetement', {'id':vetement.id})}} class="btn btn-warning">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+
     </div>
+    {# end row #}
+    
+
+
 </div> 
+{# end Container #}
+
+
+
+{# ----------------------------------------------------------------------------------- #}
 <script>
     function myFunction(smallImg){
         var fullImg = document.getElementById("imageBox");
