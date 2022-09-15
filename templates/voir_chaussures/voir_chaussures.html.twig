@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~chaussure.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
-            <img src={{ asset('images/'~chaussure.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
-            <img src={{ asset('images/'~chaussure.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
-            <img src={{ asset('images/'~chaussure.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="t-shirt small front"/>
+            <img src={{ asset('images/'~chaussure.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~chaussure.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~chaussure.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~chaussure.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
         </div>
 
         <div class="col-7 pt-3 bg-light border-bottom border-dark">
-            <img id="imsgeBox" src={{ asset('images/'~chaussure.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+            <img id="imsgeBox" src={{ asset('images/'~chaussure.0.photo) }} class="rounded mx-auto d-block p-2" title="Grande image du produit"/>
 
         </div>
 
@@ -58,8 +58,8 @@
             <h2>Produits similaires</h2>
         </div>
 
-         {% for chaussure in similarItm %} 
-        <div class="col-3 bg-light "> 
+         {% for chaussure in similarItm | slice(0,4) %} 
+        <div class="col-3 bg-light mb-3"> 
             <div class="card" style="width: 18rem;">
                 <img src={{ asset('images/'~chaussure.photo) }} class="card-img-top">
                 <div class="card-body">
@@ -67,7 +67,9 @@
                       <p>{{ chaussure.sousCategorie }}</p>
                     <p class="card-text">{{ chaussure.description }}</p>
                     <p>{{ chaussure.price/100 }}€</p>
-                    <a href={{ path('voir_chaussures', {'id':chaussure.id})}} class="btn btn-warning">Plus d'informations</a>
+                    <div class="text-center">
+                        <a href={{ path('voir_chaussures', {'id':chaussure.id})}} class="btn btn-warning">Plus d'informations</a>
+                    </div>
                 </div>
             </div>
         </div>
