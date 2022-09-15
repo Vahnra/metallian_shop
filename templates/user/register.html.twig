@@ -3,17 +3,41 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+    <div class="container bg-white text-dark">
+    <div class="row">
+            <div class="col-6 mx-auto">
+                {{ form_start(form) }}
+                <div class="col-12">
+                    <h2 class="text-start mt-5 fw-normal">Inscription</h2>
+                </div>
+                <div class="row">
+                    <div class="col-6">{{ form_row(form.firstname) }}</div>
+                    <div class="col-6">{{ form_row(form.lastname) }}</div>
+                    <div class="col-6">{{ form_row(form.email) }}</div>
+                    <div class="col-6">{{ form_row(form.gender) }}</div>
+                    <div class="col-12">{{ form_row(form.password) }}</div>
+                     
+                </div>
 
-    <h2 class="text-center mt-5">Inscription</h2>
+               
+                <div class="col-12 text-end">{{ form_row(form.submit) }}</div>
+                {{ form_end(form) }}
+            </div>
+        </div>
 
-    <div class="container-fluid">
 
-        <div class="row">
+
+
+
+
+
+        {# <div class="row">
 
             <div class="col-5 mx-auto">
                 {{ form(form) }}
             </div>
-        </div>
+            <div class="col-6">{{ form_row(form.firstname) }}</div>
+        </div> #}
     </div>
     
 {% endblock %}
