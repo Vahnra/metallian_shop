@@ -71,6 +71,9 @@ class Media
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo4 = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $stock = null;
+
     public function __construct()
     {
         $this->reviewMedia = new ArrayCollection();
@@ -331,6 +334,18 @@ class Media
     public function setPhoto4(?string $photo4): self
     {
         $this->photo4 = $photo4;
+
+        return $this;
+    }
+
+    public function getStock(): ?string
+    {
+        return $this->stock;
+    }
+
+    public function setStock(string $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }

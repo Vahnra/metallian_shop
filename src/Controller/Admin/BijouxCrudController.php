@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
@@ -52,6 +53,8 @@ class BijouxCrudController extends AbstractCrudController
         yield ImageField::new('photo5')->setBasePath('images')->setUploadDir('public/images');
 
         yield FormField::addPanel('Stock');
+        yield NumberField::new('stock', 'Nombre en stock');
+
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');
