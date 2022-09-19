@@ -55,7 +55,6 @@
 																	<script>
 																	function minusOne() {
 																		var tmp = document.getElementById('form' + {{cartProduct.id}} + '_quantity');
-																		console.log(tmp);
 																		tmp.value = tmp.value - 1;
 																	}
 
@@ -63,7 +62,6 @@
 																		var tmp = document.getElementById('form' + {{cartProduct.id}} + '_quantity');
 																		tmp.value = parseInt(tmp.value) + 1;
 																		document.getElementById('form-quantity' + {{cartProduct.id}}).submit();
-																		console.log(tmp.value);
 																	}
 
 																	document.getElementById('minusOne' + {{cartProduct.id}}).addEventListener("click", minusOne);
