@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ChaussuresRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChaussuresRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ChaussuresRepository::class)]
 #[ORM\Index(name: 'chaussures', columns: ['title'], flags: ['fulltext'])]
@@ -298,4 +299,8 @@ class Chaussures
         return $this;
     }
 
+    public function getClassName()
+    {
+        return (new ReflectionClass($this))->getShortName();
+    }
 }

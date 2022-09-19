@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\VetementMerchandisingRepository;
+use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VetementMerchandisingRepository;
 
 #[ORM\Entity(repositoryClass: VetementMerchandisingRepository::class)]
+#[ORM\Index(name: 'vetement_merchandising', columns: ['title'], flags: ['fulltext'])]
 class VetementMerchandising
 {
     #[ORM\Id]
@@ -242,5 +244,10 @@ class VetementMerchandising
         $this->stock = $stock;
 
         return $this;
+    }
+
+    public function getClassName()
+    {
+        return (new ReflectionClass($this))->getShortName();
     }
 }

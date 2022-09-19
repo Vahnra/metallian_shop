@@ -52,8 +52,7 @@
 
 					</div>
 
-					<div class="row">
-
+					<div class="row">		
 
 						{# For pour afficher les vetements en forme de cartes #}
 
@@ -62,7 +61,37 @@
 
 							{% for searchResult in searchResults %}
 
-								<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;"> <a href="#" class="text-decoration-none text-black">
+								<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;"> 
+
+									{% if searchResult.className == 'Chaussures' %}
+
+										<a href="{{ path('voir_chaussures', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+
+									{% endif %}
+
+									{% if searchResult.className == 'Vetement' %}
+
+										<a href="{{ path('voir_vetement', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+
+									{% endif %}
+
+									{% if searchResult.className == 'Media' %}
+
+										<a href="{{ path('voir_media', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+
+									{% endif %}
+
+									{% if searchResult.className == 'Bijoux' %}
+
+										<a href="{{ path('voir_bijoux', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+
+									{% endif %}
+
+									{% if searchResult.className == 'Accessoires' %}
+
+										<a href="{{ path('voir_accessoires', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+
+									{% endif %}
 
 									<img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 									<div class="card-body">
