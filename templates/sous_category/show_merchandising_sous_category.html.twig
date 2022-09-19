@@ -1,0 +1,179 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="container bg-white">
+
+        <h1 class="py-5 ms-4">Les {{ souscategories.title }}</h1>
+
+        <div class="container-fluid">
+        
+            <div class="row">
+            
+                <div class="col-2">
+
+                    <p>Catégories</p>
+
+                    <h3><a class="text-underline-hover text-black" href="{{ path('show_from_category_merchandising', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></h3>
+
+                        <ul class="" style="list-style-type: none">
+
+                            {# For pour afficher la bare de navigation a gauche #}
+
+                            {% for subcategory in allsouscategories %}
+
+                            {% if subcategory.categorieMerchandising.title == categories.0.title %}
+                      
+                                <li><a class="text-underline-hover text-black" href="{{ path('show_merchandising_sous_categorie', {"title": subcategory.title, "title1": categories.0.title}) }}">{{ subcategory.title }}</a></li>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        </ul>
+
+                        {% if categories.0.title == 'Merchandising Femme' %}
+                        
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.0.title == 'Merchandising Homme' %}
+                        
+                            {{ form(filterForm) }}
+
+                        {% endif %}  
+
+                        {% if categories.0.title == 'Accessoires Merchandising' %}
+                        
+                            {{ form(filterAccessoiresForm) }}
+
+                        {% endif %} 
+                
+                </div>
+
+                 <div class="col-10">
+
+                    <h3 class="mb-4"><a class="text-underline-hover text-black" href="{{ path('show_from_category_merchandising', {"title": categories.0.title}) }}">{{ categories.0.title }}</a> / {{ souscategories.title }}</h3>
+
+                    {# Select pour trier #}
+                    <div class="col-3 ms-auto mb-4">
+
+                        <select class="form-select" onChange="window.location=this.value;">
+                            <option selected>Trier par</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
+                            <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
+                        </select>
+                            
+                    </div>  
+
+                    <div class="row">
+
+
+                        {# For pour afficher tout les vetements en forme de carte #}
+
+                        {# {% if categories.0.title == 'Femme' %} #}
+
+                            {% for vetement in vetements %}
+                        
+                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                                <a href="#" class="text-decoration-none text-black">
+
+                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                        </ul>
+                                        <h5 class="card-title">{{ vetement.title }}</h5>
+                                        <p class="card-text">{{ vetement.description }}</p>
+                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                    </div>                
+
+                                </a>
+
+                            </div>
+                        
+                            {% endfor %}
+
+                        {# {% endif %} #}
+
+                        {% if categories.0.title == 'Bijoux' %}
+
+                            {% for bijou in bijoux %}
+                        
+                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                                <a href="{{ path('voir_bijoux', {"id": bijou.id} ) }}" class="text-decoration-none text-black">
+
+                                    <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ (bijou.price)/100 }} €</li>
+                                        </ul>
+                                        <h5 class="card-title">{{ bijou.title }}</h5>
+                                        <p class="card-text">{{ bijou.description }}</p>
+                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                    </div>      
+
+                                </a>
+
+                            </div>
+                        
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {% for accessoire in accessoires %}
+                        
+                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+                                <a href="#" class="text-decoration-none text-black">
+
+                                    <img src="{{ asset('images/' ~ accessoire.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ (accessoire.price)/100 }} €</li>
+                                        </ul>
+                                        <h5 class="card-title">{{ accessoire.title }}</h5>
+                                        <p class="card-text">{{ accessoire.description }}</p>
+                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                    </div>      
+
+                                </a>
+
+                            </div>
+                        
+                        {% endfor %}
+
+                        {# Pagination #}
+
+                        <div class="container mt-3">
+                    
+                            <div class="row">
+                        
+                                <div class="col-12 ms-auto">
+                            
+                                    {{ knp_pagination_render(vetements) }}
+                            
+                                </div>
+                        
+                            </div>
+
+                        </div>
+
+                    </div>
+        
+                </div>
+            
+            </div>
+        
+        </div>
+
+    </div>
+
+{% endblock %}

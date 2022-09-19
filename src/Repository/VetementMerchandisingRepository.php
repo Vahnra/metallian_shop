@@ -40,33 +40,7 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return VetementMerchandising[] Returns an array of VetementMerchandising objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('v.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?VetementMerchandising
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
     //    Fonction pour la pagination
-
    public function findForPagination($value): Query
    {
         $qb = $this->createQueryBuilder('v')

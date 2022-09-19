@@ -14,7 +14,7 @@
 
                     {% if subcategory.categorieMerchandising.title == category.title %}
                     
-                        <a class="dropdown-item text-underline-hover" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
+                        <a class="dropdown-item text-underline-hover" href="{{ path('show_merchandising_sous_categorie', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
 
                     {% endif %}
 
