@@ -39,7 +39,7 @@
                             {% if subcategory.categorieMerchandising.title == categories.title %}
                             
 
-                                <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.title}) }}">{{ subcategory.title }}</a></li>
+                                <li><a class="text-underline-hover text-black" href="{{ path('show_merchandising_sous_categorie', {"title": subcategory.title, "title1": categories.title}) }}">{{ subcategory.title }}</a></li>
 
 
                             {% endif %}

@@ -13,6 +13,8 @@ use App\Repository\ChaussuresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AccessoiresRepository;
 use App\Entity\SousCategorieMerchandising;
+use App\Repository\AccessoiresMerchandisingRepository;
+use App\Repository\VetementMerchandisingRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +59,8 @@ class RenderController extends AbstractController
         MediaRepository $mediaRepository,
         AccessoiresRepository $accessoiresRepository,
         BijouxRepository $bijouxRepository,
+        VetementMerchandisingRepository $vetementMerchandisingRepository,
+        AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository,
         EntityManagerInterface $entityManager,
         RequestStack $requestStack,
         PaginatorInterface $paginator,
@@ -79,8 +83,12 @@ class RenderController extends AbstractController
 
         $bijoux = $bijouxRepository->search($search);
 
+        $vetementMerchandising = $vetementMerchandisingRepository->search($search);
+
+        $accessoiresMerchandising = $accessoiresMerchandisingRepository->search($search);
+
         // On merge les resultats dans un meme tableau
-        $searchResult = array_merge($chaussures, $vetements, $medias, $accessoires, $bijoux);
+        $searchResult = array_merge($chaussures, $vetements, $medias, $accessoires, $bijoux, $vetementMerchandising, $accessoiresMerchandising);
 
         // Partie pour la pagination 
         $requestStack = $requestStack->getMainRequest();        
