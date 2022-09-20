@@ -90,20 +90,12 @@
 
 											<h5 class=" mb-3">Livraison</h5>
 
+											<form action="{{ path('payment', {'user': app.user.id, 'cart': cart}) }}" method="post">
 											<div class="mb-4 pb-2">
-												<select class="select" id="postFee">
-													<option value="500">Livraison standard - €5.00</option>
-													<option value="2">Two</option>
+												<select class="form-select" name="postFee" id="postFee">
+													<option value="500">Livraison standard - 5.00€</option>
+													<option value="5000">Livrason premium - 50.00€</option>
 												</select>
-											</div>
-
-											<h5 class=" mb-3">Code coupon</h5>
-
-											<div class="mb-5">
-												<div class="form-outline">
-													<input type="text" id="form3Examplea2" class="form-control form-control-lg"/>
-													<label class="form-label" for="form3Examplea2">Entrez votre code</label>
-												</div>
 											</div>
 
 											<hr class="my-4">
@@ -113,7 +105,9 @@
 												<h5>{{ totalPrice/100 }} €</h5>
 											</div>
 
-												<a href="" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Paiement</a>
+											<input type="submit" value="Continuer" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark"></input>
+
+											</form>
 
 										</div>
 									</div>

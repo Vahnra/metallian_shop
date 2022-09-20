@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdressController extends AbstractController
 {
-    #[Route('/cheackout/adress-{user}-{cart}', name: 'choose_adress', methods:['GET', 'POST'])]
+    #[Route('/checkout/adress-{user}-{cart}', name: 'choose_adress', methods:['GET', 'POST'])]
     public function chooseAdress(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
         $cart = $entityManager->getRepository(Cart::class)->findBy([
@@ -66,6 +66,7 @@ class AdressController extends AbstractController
             'numberOfItem' => $numberOfItem,
             'totalPrice' => $totalPrice,
             'cartProducts' => $cartProducts,
+            'cart' => $request->get('cart')
         ]);
     }
 

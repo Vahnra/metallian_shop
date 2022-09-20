@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-xl">
+
+		<h2 class="text-center mt-5 mb-4">Panier > Adresse >
+			<strong>Paiement</strong>
+			> Confirmation</h2>
+
+		<section class="">
+			<div class="container py-5 h-50">
+				<div class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-12">
+						<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+							<div class="card-body p-0">
+								<div class="row g-0">
+									<div class="col-lg-8">
+										<div class="p-5">
+											<div class="d-flex justify-content-between align-items-center mb-2">
+												<h4 class="fw-bold mb-0 text-black">Récapitulatif de votre commande</h4>
+											</div>
+
+											<hr class="my-4">
+
+											<div class="row">
+
+												<div class="col-4 fw-bold">Adresse de livraison :</div>
+												<div class="col-8">
+													<div>{{userPostAdress.title}}</div>
+													<div>{{userPostAdress.lastName}}
+														{{userPostAdress.firstName}}</div>
+													<div>{{userPostAdress.adress}}</div>
+													<div>{{userPostAdress.additionalAdress}}</div>
+													<div>{{userPostAdress.postCode}}</div>
+													<div>{{userPostAdress.city}}</div>
+												</div>
+
+											</div>
+
+											<div class="row my-2">
+
+												<div class="col-4 fw-bold">Articles:
+												</div>
+												<div class="col-6 ">{{ totalPrice/100 }}€</div>
+
+											</div>
+
+											<div class="row">
+
+												<div class="col-4 fw-bold">Livraison:
+												</div>
+												<div class="col-6 ">{{ livraison/100 }}€</div>
+
+											</div>
+
+											<hr class="mt-2">
+
+											<div class="row">
+
+												<div class="fw-bold col-4" style="color: rgb(177, 39, 4)">Montant Total :
+												</div>
+												<div class="col-6 fw-bold" style="color: rgb(177, 39, 4)">{{ totalPriceFinal/100 }}
+													€</div>
+
+											</div>
+
+
+											<div class="pt-5">
+												<h6 class="mb-0">
+													<a href="{{ path('default_home') }}" class="text-body">
+														<i class="fas fa-long-arrow-alt-left me-2"></i>Continuer mes achats</a>
+												</h6>
+											</div>
+
+										</div>
+									</div>
+
+
+									<div class="col-lg-4 bg-grey">
+
+										<div class="p-5">
+
+                                            <h3 class="fw-bold mb-5 mt-2 pt-1">Paiement</h3>
+											<hr class="mt-4 mb-5">
+
+											<!-- Replace "test" with your own sandbox Business account app client ID -->
+
+											<script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR"></script>
+
+											<!-- Set up a container element for the button -->
+
+											<div id="paypal-button-container" class="col-12 mt-4"></div>
+
+											<script>
+
+												paypal.Buttons({ // Sets up the transaction when a payment button is clicked
+
+                                                createOrder: (data, actions) => {
+
+                                                return actions.order.create({
+
+                                                purchase_units: [
+                                                {
+
+                                                    amount: {
+
+                                                    value: '{{ totalPriceFinal/100 }}' // Can also reference a variable or function
+
+                                                    }
+
+                                                }]
+
+                                                });
+
+                                                },
+
+                                                // Finalize the transaction after payer approval
+
+                                                onApprove: (data, actions) => {
+
+                                                return actions.order.capture().then(function (orderData) { // Successful capture! For dev/demo purposes:
+
+                                                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                                                const transaction = orderData.purchase_units[0].payments.captures[0];
+
+                                                alert(`Transaction ${
+                                                transaction.status
+                                                }: ${
+                                                transaction.id
+                                                }\n\nSee console for all available details`);
+
+                                                // When ready to go live, remove the alert and show a success message within this page. For example:
+
+                                                // const element = document.getElementById('paypal-button-container');
+
+                                                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                                                // Or go to another URL:  actions.redirect('thank_you.html');
+
+                                                });
+
+                                                }
+
+                                                }).render('#paypal-button-container');
+											</script>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+
+{% endblock %}
