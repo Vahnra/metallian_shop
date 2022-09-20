@@ -72,6 +72,9 @@ class Accessoires
     #[ORM\OneToMany(mappedBy: 'accessoires', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
+    #[ORM\Column(length: 255)]
+    private ?string $stock = null;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
@@ -320,4 +323,16 @@ class Accessoires
     {
         return (new ReflectionClass($this))->getShortName();
     }
+    public function getStock(): ?string
+    {
+        return $this->stock;
+    }
+
+    public function setStock(string $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
 }

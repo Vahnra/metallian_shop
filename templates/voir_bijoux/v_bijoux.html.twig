@@ -16,17 +16,17 @@
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~bijou.0.photo) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo2) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo3) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo4) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
-            <img src={{ asset('images/'~bijou.0.photo5) }} class="img-fluid p-2" onclick="myFunction(this)" title="t-shirt small front"/>
+            <img src={{ asset('images/'~bijou.0.photo) }} class="img-fluid p-2" onclick="myFunction(this)" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~bijou.0.photo2) }} class="img-fluid p-2" onclick="myFunction(this)" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~bijou.0.photo3) }} class="img-fluid p-2" onclick="myFunction(this)" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~bijou.0.photo4) }} class="img-fluid p-2" onclick="myFunction(this)" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~bijou.0.photo5) }} class="img-fluid p-2" onclick="myFunction(this)" title="Petite photo du produit"/>
             
             
         </div>
 
         <div class="col-7 pt-3 bg-light border-bottom border-dark">
-            <img id="imageBox" src={{ asset('images/'~bijou.0.photo) }} class="rounded mx-auto d-block p-2" title="t-shirt big photo"/>
+            <img id="imageBox" src={{ asset('images/'~bijou.0.photo) }} class="rounded mx-auto d-block p-2" title="Grande image du produit"/>
 
         </div>
 
@@ -62,8 +62,8 @@
             <h2>Produits similaires</h2>
         </div>
 
-        {% for bijou in similarItm %} 
-        <div class="col-3 bg-light "> 
+        {% for bijou in similarItm | slice(0,4) %} 
+        <div class="col-3 bg-light mb-3"> 
             <div class="card" style="width: 18rem;">
                 <img src={{ asset('images/'~bijou.photo) }} class="card-img-top">
                 <div class="card-body">
@@ -71,7 +71,9 @@
                       <p>{{ bijou.sousCategorie }}</p>
                     <p class="card-text">{{ bijou.description }}</p>
                     <p>{{ bijou.price/100 }}€</p>
-                    <a href={{ path('voir_bijoux', {'id':bijou.id})}} class="btn btn-warning">Plus d'informations</a>
+                    <div class="text-center">
+                        <a href={{ path('voir_bijoux', {'id':bijou.id})}} class="btn btn-warning">Plus d'informations</a>
+                    </div>
                 </div>
             </div>
         </div>

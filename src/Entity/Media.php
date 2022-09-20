@@ -60,14 +60,20 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $photo1 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo2 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo3 = null;
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo4 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $stock = null;
 
     public function __construct()
     {
@@ -325,4 +331,29 @@ class Media
     {
         return (new ReflectionClass($this))->getShortName();
     }
+    public function getPhoto4(): ?string
+    {
+        return $this->photo4;
+    }
+
+    public function setPhoto4(?string $photo4): self
+    {
+        $this->photo4 = $photo4;
+
+        return $this;
+    }
+
+    public function getStock(): ?string
+    {
+        return $this->stock;
+    }
+
+    public function setStock(string $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    
 }

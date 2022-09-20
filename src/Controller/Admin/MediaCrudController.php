@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -53,9 +54,11 @@ class MediaCrudController extends AbstractCrudController
         yield ImageField::new('photo1', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo4', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
 
 
         yield FormField::addPanel('Stock');
+        yield NumberField::new('stock', 'Nombre en stock');
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');
