@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisissez votre adresse{% endblock %}
+
+{% block body %}
+
+    <div class="container-xl">
+
+		<h2 class="text-center mt-5 mb-4">Panier > <strong>Adresse</strong> > Paiement > Confirmation</h2>
+
+		<section class="">
+			<div class="container py-5 h-50">
+				<div class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-12">
+						<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+							<div class="card-body p-0">
+								<div class="row g-0">
+									<div class="col-lg-12">
+										<div class="p-5">
+											<div class="d-flex justify-content-between align-items-center mb-2">
+												<h4 class="fw-bold mb-0 text-black">Votre adresse de livraison</h4>
+											</div>
+
+											<hr class="my-4">
+
+                                            <div class="col-lg-8 mx-auto">         
+                                                
+                                                {{ form(formAdd) }}    
+                                            
+                                            </div>
+
+                                            {# <div class="d-flex justify-content-between align-items-center mb-2 mt-4">
+												<h4 class="fw-bold mb-0 text-black">Votre adresse de facturation</h4>
+											</div>
+
+											<hr class="my-4">
+
+                                            {% if userPostAdress is not empty %}
+                                            
+                                                <div>{{userPostAdress.title}}</div>
+                                                <div>{{userPostAdress.lastName}} {{userPostAdress.firstName}}</div>
+                                                <div>{{userPostAdress.adress}}</div>
+                                                <div>{{userPostAdress.additionalAdress}}</div>
+                                                <div>{{userPostAdress.postCode}}</div>
+                                                <div>{{userPostAdress.city}}</div>
+
+                                            {% else %}
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Identique a l'adresse de livraison
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Ajouter une adresse de facturation
+                                                </label>
+                                            </div>
+
+                                            {% endif %} #}
+                                            
+                                            
+
+											<div class="pt-5">
+												<h6 class="mb-0">
+													<a href="{{ path('default_home') }}" class="text-body">
+														<i class="fas fa-long-arrow-alt-left me-2"></i>Continuer mes achats</a>
+												</h6>
+											</div>
+										</div>
+									</div>
+					
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+
+{% endblock %}

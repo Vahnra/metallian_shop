@@ -26,9 +26,15 @@
 
 				{% endif %}
 				<div class="dropdown">
-					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fa-solid fa-user"></i>
+					{% if app.user %}
+					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="{{ path('show_profile', {"id": app.user.id}) }}"   aria-expanded="false">	
+							<i class="fa-solid fa-user"></i>
 					</a>
+					{% else %}
+						<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="{{ path('app_login') }}"   aria-expanded="false">	
+							<i class="fa-solid fa-user"></i>
+						</a>
+					{% endif %}
 
 					<ul class="dropdown-menu rounded-0">
 						{% if app.user %}
