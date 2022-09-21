@@ -118,7 +118,12 @@ class CartController extends AbstractController
 
         }
 
-        $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $user->getId()]);
+        $userPostAdress = null;
+
+        if ($user != null) {
+            $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $user->getId()]);
+        }
+        
 
         return $this->render('cart/show_cart_details.html.twig', [
             'numberOfItem' => $numberOfItem,
