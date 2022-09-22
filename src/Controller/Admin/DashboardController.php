@@ -17,6 +17,7 @@ use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
+use App\Entity\AccessoiresQuantity;
 use App\Entity\Artist;
 use App\Entity\Color;
 use App\Entity\Expedition;
@@ -100,7 +101,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Accessoires')->setSubItems([
             MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', Accessoires::class),
-            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Accessoires::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Accessoires::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voire les accessoires en vente', 'fas fa-eye', AccessoiresQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente un accessoire', 'fas fa-plus', AccessoiresQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::subMenu('Chaussures')->setSubItems([

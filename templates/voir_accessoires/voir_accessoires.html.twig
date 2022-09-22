@@ -10,9 +10,12 @@
             <div class="col-12 bg-dark text-white">
                 <div class="row">
                     <div class="col-1"></div>
-                     <div class="col-11">             
-                    <h1>Accessoire : {{ accessoire.0.title }}</h1>
-                </div>
+                    <div class="col-11">             
+                        <h1>Accessoire : {{ accessoire.0.title }}</h1>
+                        <pre>
+                            {{ dump(couleurs) }}
+                        </pre>
+                    </div>
                 </div>
 
             </div>
@@ -36,8 +39,69 @@
             <div class="col-4 pt-3 bg-light border-bottom border-end border-dark">
             
                 <h3>{{ accessoire.0.description }}</h3>
-                <p>{{ color.0.color }}</p>
-                <p>{{ size.0.size}}</p>
+
+                <div class="col-6 py-4">
+
+                    <p><span>Couleur :</span></p>
+                
+                    <select class="form-select" id="test" aria-label="Default select example">
+                        <option selected>Couleur</option>
+
+                        {% for accessoiresVariation in couleurs %}
+
+                            <option value="{{ accessoiresVariation.id }}">{{ accessoiresVariation.color }}</option>
+
+                        {% endfor %}
+                        
+                    </select>
+                </div>
+
+                <div class="col-6 py-4">
+                    <select class="form-select" id="test2" aria-label="Default select example">
+                        <option selected>Taille</option>
+
+                            {% for size in sizes %}
+
+                                <option value="{{ size.id }}">{{ size.size }}</option>
+
+                            {% endfor %}
+                     
+                    
+                    </select>
+                </div>
+
+                <script>
+
+                var test = {{ couleurs|json_encode(constant('JSON_HEX_TAG'))|raw }};
+
+                console.log(test);
+    
+                var options=""; //store the dynamic options
+                $("#test").on('change',function(){ //add a change event handler to gender select
+                    var value=$(this).val(); //get its selected value
+                    options="<option>Couleur</option>"
+                    if(value=="{{ couleurs[0].id }}") //value ==Male then set male required options
+                    {
+                        options+="<option value='{{ accessoiresVariations[0].size.id }}'>{{ accessoiresVariations[0].size }}</option>"
+                                +"<option value='{{ accessoiresVariations[1].size.id }}'>{{ accessoiresVariations[1].size }}</option>";
+                                +"<option value='{{ accessoiresVariations[2].size.id }}'>{{ accessoiresVariations[2].size }}</option>";
+      
+                        $("#test2").html(options);
+                    }
+                    else if(value=="{{ couleurs[1].id }}") //else set female required options
+                    {
+                        options+='<option value="female1">Female 1</option>'
+                                +'<option value="female2">Female 2</option>';
+                        $("#test2").html(options);
+                    }
+                    else
+                        $("#test2").find('option').remove() //if first default text option is selected empty the select
+                });
+                
+                </script>
+
+                {# <p>{{ color.0.color }}</p>
+                <p>{{ size.0.size}}</p> #}
                 <p>{{ accessoire.0.price/100 }}€</p> 
                 <div class="col mb-3 text-center">
                     {{form(form)}}

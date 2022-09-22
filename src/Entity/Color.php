@@ -36,6 +36,9 @@ class Color
     #[ORM\OneToMany(mappedBy: 'color', targetEntity: AccessoiresMerchandising::class)]
     private Collection $accessoiresMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: AccessoiresQuantity::class)]
+    private Collection $accessoiresQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -44,6 +47,7 @@ class Color
         $this->accessoires = new ArrayCollection();
         $this->vetementMerchandisings = new ArrayCollection();
         $this->accessoiresMerchandisings = new ArrayCollection();
+        $this->accessoiresQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -242,6 +246,36 @@ class Color
             // set the owning side to null (unless already changed)
             if ($accessoiresMerchandising->getColor() === $this) {
                 $accessoiresMerchandising->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccessoiresQuantity>
+     */
+    public function getAccessoiresQuantities(): Collection
+    {
+        return $this->accessoiresQuantities;
+    }
+
+    public function addAccessoiresQuantity(AccessoiresQuantity $accessoiresQuantity): self
+    {
+        if (!$this->accessoiresQuantities->contains($accessoiresQuantity)) {
+            $this->accessoiresQuantities->add($accessoiresQuantity);
+            $accessoiresQuantity->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresQuantity(AccessoiresQuantity $accessoiresQuantity): self
+    {
+        if ($this->accessoiresQuantities->removeElement($accessoiresQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresQuantity->getColor() === $this) {
+                $accessoiresQuantity->setColor(null);
             }
         }
 

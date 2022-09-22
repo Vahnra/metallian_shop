@@ -33,6 +33,9 @@ class Size
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: AccessoiresMerchandising::class)]
     private Collection $accessoiresMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: AccessoiresQuantity::class)]
+    private Collection $accessoiresQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -40,6 +43,7 @@ class Size
         $this->accessoires = new ArrayCollection();
         $this->vetementMerchandisings = new ArrayCollection();
         $this->accessoiresMerchandisings = new ArrayCollection();
+        $this->accessoiresQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -208,6 +212,36 @@ class Size
             // set the owning side to null (unless already changed)
             if ($accessoiresMerchandising->getSize() === $this) {
                 $accessoiresMerchandising->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccessoiresQuantity>
+     */
+    public function getAccessoiresQuantities(): Collection
+    {
+        return $this->accessoiresQuantities;
+    }
+
+    public function addAccessoiresQuantity(AccessoiresQuantity $accessoiresQuantity): self
+    {
+        if (!$this->accessoiresQuantities->contains($accessoiresQuantity)) {
+            $this->accessoiresQuantities->add($accessoiresQuantity);
+            $accessoiresQuantity->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresQuantity(AccessoiresQuantity $accessoiresQuantity): self
+    {
+        if ($this->accessoiresQuantities->removeElement($accessoiresQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresQuantity->getSize() === $this) {
+                $accessoiresQuantity->setSize(null);
             }
         }
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AccessoiresQuantity;
 use App\Repository\AccessoiresRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,9 +26,6 @@ class Accessoires
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'accessoires')]
@@ -46,16 +44,10 @@ class Accessoires
     private ?\DateTimeInterface $deletedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'accessoires')]
-    private ?Color $color = null;
-
-    #[ORM\ManyToOne(inversedBy: 'accessoires')]
     private ?Material $material = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
-
-    #[ORM\ManyToOne(inversedBy: 'accessoires')]
-    private ?Size $size = null;
 
     #[ORM\Column(length: 255)]
     private ?string $photo2 = null;
@@ -72,12 +64,21 @@ class Accessoires
     #[ORM\OneToMany(mappedBy: 'accessoires', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
+    #[ORM\OneToMany(mappedBy: 'accessoires', targetEntity: AccessoiresQuantity::class)]
+    private Collection $accessoiresQuantities;
+
     #[ORM\Column(length: 255)]
-    private ?string $stock = null;
+    private ?string $price = null;
 
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
+        $this->accessoiresQuantities = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
     }
 
     public function getId(): ?int
@@ -105,18 +106,6 @@ class Accessoires
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -193,18 +182,6 @@ class Accessoires
         return $this;
     }
 
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
     public function getMaterial(): ?Material
     {
         return $this->material;
@@ -225,18 +202,6 @@ class Accessoires
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
-
-        return $this;
-    }
-
-    public function getSize(): ?Size
-    {
-        return $this->size;
-    }
-
-    public function setSize(?Size $size): self
-    {
-        $this->size = $size;
 
         return $this;
     }
@@ -323,14 +288,45 @@ class Accessoires
     {
         return (new ReflectionClass($this))->getShortName();
     }
-    public function getStock(): ?string
+
+    /**
+     * @return Collection<int, AccessoiresQuantity>
+     */
+    public function getAccessoiresQuantities(): Collection
     {
-        return $this->stock;
+        return $this->accessoiresQuantities;
     }
 
-    public function setStock(string $stock): self
+    public function addAccessoiresQuantity(AccessoiresQuantity $accessoiresQuantity): self
     {
-        $this->stock = $stock;
+        if (!$this->accessoiresQuantities->contains($accessoiresQuantity)) {
+            $this->accessoiresQuantities->add($accessoiresQuantity);
+            $accessoiresQuantity->setAccessoires($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresQuantity(AccessoiresQuantity $accessoiresQuantity): self
+    {
+        if ($this->accessoiresQuantities->removeElement($accessoiresQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresQuantity->getAccessoires() === $this) {
+                $accessoiresQuantity->setAccessoires(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

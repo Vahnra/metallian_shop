@@ -9,6 +9,7 @@ use App\Entity\Color;
 use App\Entity\Material;
 use App\Entity\Expedition;
 use App\Entity\Accessoires;
+use App\Entity\AccessoiresQuantity;
 use App\Entity\CartProduct;
 use App\Form\CartProductFormType;
 use App\Repository\VetementRepository;
@@ -25,10 +26,24 @@ class VoirAccessoiresController extends AbstractController
     public function voirAccessoires(Accessoires $accessoires, EntityManagerInterface $entityManager, Request $request): Response
     {
         $accessoire = $entityManager->getRepository(Accessoires::class)->findBy(['id'=>$accessoires->getId()]);
-        
-        $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$accessoire[0]->getColor()]);
 
-        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$accessoire[0]->getSize()]);
+        $accessoiresVariations = $entityManager->getRepository(AccessoiresQuantity::class)->findBy(['accessoires' => $accessoires->getId()]);
+
+        $couleurs = [];
+
+        $sizes = [];
+
+        foreach ($accessoiresVariations as $acc) {
+            if (!in_array($acc->getColor(), $couleurs, true)) {
+                array_push($couleurs, $acc->getColor());
+            }
+        }
+
+        foreach ($accessoiresVariations as $acc) {
+            if (!in_array($acc->getSize(), $sizes, true)) {
+                array_push($sizes, $acc->getSize());
+            }
+        }
       
         $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$accessoire[0]->getMaterial()]);
 
@@ -92,12 +107,14 @@ class VoirAccessoiresController extends AbstractController
 
         return $this->render('voir_accessoires/voir_accessoires.html.twig', [
             'accessoire' => $accessoire,
-            'color' => $color,
-            'size' => $size,
+            'accessoiresVariations' => $accessoiresVariations,
+            'accessoiresVariationsJs' => json_encode($accessoiresVariations),
             'material' => $material,
             'expedition' => $expedition,
             'form' => $form->createView(),
-            'similarItm' => $similarItm
+            'similarItm' => $similarItm,
+            'couleurs' => $couleurs,
+            'sizes' => $sizes
             
         ]);
     }

@@ -23,7 +23,7 @@ class VetementService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 4;
 
         $vetementQuery = $this->vetementRepository->findForPagination($value);
 
