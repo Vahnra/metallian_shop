@@ -6,7 +6,7 @@ use App\Repository\AccessoiresQuantityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AccessoiresQuantityRepository::class)]
-class AccessoiresQuantity
+class AccessoiresQuantity implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -76,5 +76,12 @@ class AccessoiresQuantity
         $this->stock = $stock;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+
+        return $vars;
     }
 }
