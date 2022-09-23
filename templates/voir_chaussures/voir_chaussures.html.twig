@@ -22,16 +22,25 @@
             <img src={{ asset('images/'~chaussure.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
         </div>
 
-        <div class="col-7 pt-3 bg-light border-bottom border-dark">
-            <img id="imsgeBox" src={{ asset('images/'~chaussure.0.photo) }} class="rounded mx-auto d-block p-2" title="Grande image du produit"/>
+        <div class="col-7 text-center pt-3 bg-light border-bottom border-dark">
+            <img id="imsgeBox" src={{ asset('images/'~chaussure.0.photo) }} class="img-fluid p-2" title="Grande image du produit"/>
 
         </div>
 
         <div class="col-4 pt-3 bg-light border-bottom border-end border-dark">
-        
+         <div class="row">
+        <div class="col-8">
             <h2>{{ chaussure.0.description }}</h2>
-            <p>{{ color.0.color }}</p>
+        </div>
+        <div class="col-4 pt-2">
             <p>{{ chaussure.0.price/100 }}€</p>
+        </div>
+        </div>
+
+
+            
+            <p>{{ color.0.color }}</p>
+            
             <div class="col mb-3 text-center">
                 {{form(form)}}
             </div>
