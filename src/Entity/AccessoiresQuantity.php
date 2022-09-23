@@ -25,6 +25,9 @@ class AccessoiresQuantity implements \JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $stock = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $sku = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,5 +86,17 @@ class AccessoiresQuantity implements \JsonSerializable
         $vars = get_object_vars($this);
 
         return $vars;
+    }
+
+    public function getSku(): ?string
+    {
+        return $this->sku;
+    }
+
+    public function setSku(string $sku): self
+    {
+        $this->sku = $sku;
+
+        return $this;
     }
 }
