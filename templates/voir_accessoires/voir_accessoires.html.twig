@@ -39,106 +39,66 @@
 
                 <form method="post">
 
-                <div class="col-6 py-4">
+                    <div class="col-6 py-4">
 
-                    <p><span>Choisissez une couleur :</span></p>
+                        <p><span>Choisissez une couleur :</span></p>
+                    
+                        <select class="form-select" id="test" name="color" aria-label="Default select example">
+                            <option selected>Couleur</option>
 
-                    {# <div class="row my-4">
+                            {% for couleur in couleurs %}
 
-                        <div class="col-1"></div>
+                                <option value="{{ couleur.id }}">{{ couleur.color }}</option>
 
-                        <ul class="list-group list-group-horizontal">
+                            {% endfor %}
+                            
+                        </select>
+                    </div>
 
-                        {% for couleur in couleurs %}
-                            <a  href="javascript:void(0)">
-                                <li class="col-1 px-3 py-3 mx-2 list-group-item" id="test" value="{{ couleur.id }}" style="background: {{ couleur.color }}; border-radius: 66px;"></li>
-                            </a>
+                    <div class="col-6 pt-3 pb-4">
 
-                        {% endfor %}
+                        <p><span>Choisissez une taille :</span></p>
 
-                        </ul>
-
-                    </div> #}
-                
-                    <select class="form-select" id="test" name="color" aria-label="Default select example">
-                        <option selected>Couleur</option>
-
-                        {% for couleur in couleurs %}
-
-                            <option value="{{ couleur.id }}">{{ couleur.color }}</option>
-
-                        {% endfor %}
+                        <select class="form-select" id="test2" name="size" aria-label="Default select example">
+                            <option selected>Taille</option>              
                         
-                    </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="col-6 pt-3 pb-4">
+                    <script>
 
-                    <p><span>Choisissez une taille :</span></p>
+                    var test = {{ accessoiresVariations|json_encode(constant('JSON_HEX_TAG'))|raw }};
 
-                    <select class="form-select" id="test2" name="size" aria-label="Default select example">
-                        <option selected>Taille</option>
-
-                            {# {% for size in sizes %}
-
-                                <option value="{{ size.id }}">{{ size.size }}</option>
-
-                            {% endfor %} #}
-                     
+                    console.log(test);
+        
+                    var options=""; 
                     
-                    </select>
-                </div>
+                    $("#test").on('click',function(){ 
+                        var value=$(this).val(); 
+                        options="<option>Taille</option>"
+                        
+                        for(let i = 0 ; i < test.length; i++) {
+                            if(value == test[i].color.id)
+                            {
+                                options+="<option value='" + test[i].size.id + "'>" + test[i].size.size + "</option>"
 
-                <script>
+                                $("#test2").html(options);
 
-                var test = {{ accessoiresVariations|json_encode(constant('JSON_HEX_TAG'))|raw }};
-
-                console.log(test);
-    
-                var options=""; 
-                
-                $("#test").on('click',function(){ 
-                    var value=$(this).val(); 
-                    options="<option>Taille</option>"
-                    
-                    for(let i = 0 ; i < test.length; i++) {
-                        if(value == test[i].color.id)
-                        {
-                            options+="<option value='" + test[i].size.id + "'>" + test[i].size.size + "</option>"
-
-                            $("#test2").html(options);
-
+                            }
                         }
-                    }
-                });
-
-                // var options2=""; 
-
-                // $("#test2").on('change',function(){ 
-                //     var value=$(this).val(); 
-                //     options2="<option>Couleur</option>"
-                    
-                //     for(let i = 0 ; i < test.length; i++) {
-                //         if(value == test[i].size.id)
-                //         {
-                //             options2+="<option value='" + test[i].color.id + "'>" + test[i].color.color + "</option>"
-
-                //             $("#test").html(options2);
-
-                //         }
-                //     }
-                // });
+                    });
                 
-                </script>
+                    </script>
 
-                <p>Prix : {{ accessoire.0.price/100 }}€</p> 
+                    <p>Prix : {{ accessoire.0.price/100 }}€</p> 
 
-                <div class="col-6 mb-4">
-                    {{form(form)}}
-                </div>
+                    <div class="col-6 mb-4">
+                        {{form(form)}}
+                    </div>
 
                 
                 </form>
+                
                 <div class="col-12 p-2 border-top border-dark bg-light">
                     <h3>description</h3>
                     <p>

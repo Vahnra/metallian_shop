@@ -49,8 +49,6 @@ class VetementCrudController extends AbstractCrudController
         yield TextField::new('description', 'Description de l\'article');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
         yield AssociationField::new('marques', 'Marque de l\'article');
-        yield AssociationField::new('color', 'La couleur de l\'article');
-        yield AssociationField::new('size', 'La taille de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
         // yield AssociationField::new('material', '1 Matière de l\'article');
@@ -63,9 +61,6 @@ class VetementCrudController extends AbstractCrudController
         yield ImageField::new('photo3', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield ImageField::new('photo4', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield ImageField::new('photo5', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-
-        yield FormField::addPanel('Stock');
-        yield NumberField::new('stock', 'Nombre en stock');
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');
@@ -96,8 +91,6 @@ class VetementCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(TextFilter::new('color'))
-            ->add(TextFilter::new('size'))
             ->add(EntityFilter::new('marques'))
             ->add(EntityFilter::new('categorie'))
             ->add(EntityFilter::new('sousCategorie'))

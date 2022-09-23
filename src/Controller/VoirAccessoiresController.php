@@ -29,8 +29,6 @@ class VoirAccessoiresController extends AbstractController
 
         $size = $request->get('size');
 
-        // dd($color);
-
         $accessoire = $entityManager->getRepository(Accessoires::class)->findBy(['id'=>$accessoires->getId()]);
 
         $accessoiresVariations = $entityManager->getRepository(AccessoiresQuantity::class)->findBy(['accessoires' => $accessoires->getId()]);
@@ -84,8 +82,8 @@ class VoirAccessoiresController extends AbstractController
             $cartProduct->setPrice($accessoire[0]->getPrice());
             $cartProduct->setTitle($accessoire[0]->getTitle());
             $cartProduct->setPhoto($accessoire[0]->getPhoto());
-            $cartProduct->setColor($color);
-            $cartProduct->setSize($size);
+            $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
+            $cartProduct->setSize($entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]));
             $cartProduct->setSubCategory($accessoire[0]->getSousCategorie());
             
             $sku = $entityManager->getRepository(AccessoiresQuantity::class)->findOneBy([

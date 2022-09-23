@@ -2,31 +2,32 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
+use App\Entity\Size;
 
+use App\Entity\User;
+use App\Entity\Color;
 use App\Entity\Media;
+use App\Entity\Artist;
 use App\Entity\Bijoux;
+use App\Entity\Slider;
 use App\Entity\Marques;
+use App\Entity\Material;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\MusicType;
 use App\Entity\Chaussures;
+use App\Entity\Expedition;
 use App\Entity\Accessoires;
+use App\Entity\ReviewMedia;
 use App\Entity\SousCategorie;
+use App\Entity\ReviewVetement;
+use App\Entity\VetementQuantity;
+use App\Entity\AccessoiresQuantity;
 use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
-use App\Entity\AccessoiresQuantity;
-use App\Entity\Artist;
-use App\Entity\Color;
-use App\Entity\Expedition;
-use App\Entity\Material;
-use App\Entity\MusicType;
-use App\Entity\ReviewMedia;
-use App\Entity\ReviewVetement;
-use App\Entity\Size;
-use App\Entity\Slider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -91,7 +92,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Vetements')->setSubItems([
             MenuItem::linkToCrud('Voir les vetements', 'fas fa-eye', Vetement::class),
-            MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', Vetement::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', Vetement::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voire les vetements en vente', 'fas fa-eye', VetementQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente un vetement', 'fas fa-plus', VetementQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
         
         yield MenuItem::subMenu('Media')->setSubItems([

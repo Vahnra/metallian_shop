@@ -10,6 +10,7 @@ use App\Entity\Material;
 use App\Entity\Vetement;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
+use App\Entity\VetementQuantity;
 use App\Form\CartProductFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +23,29 @@ class VoirVetementController extends AbstractController
     #[Route('/voir/vetement-{id}', name: 'voir_vetement', methods:['GET', 'POST'])]
     public function voirVetement(Vetement $vetements, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $color = $request->get('color');
+
+        $size = $request->get('size');
+
         $vetement = $entityManager->getRepository(Vetement::class)->findBy(['id'=>$vetements->getId()]);
 
-        $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$vetement[0]->getColor()]);
+        $vetementVariations = $entityManager->getRepository(VetementQuantity::class)->findBy(['vetement' => $vetements->getId()]);
 
-        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$vetement[0]->getSize()]);
+        $couleurs = [];
+
+        $sizes = [];
+
+        foreach ($vetementVariations as $acc) {
+            if (!in_array($acc->getColor(), $couleurs, true)) {
+                array_push($couleurs, $acc->getColor());
+            }
+        }
+
+        foreach ($vetementVariations as $acc) {
+            if (!in_array($acc->getSize(), $sizes, true)) {
+                array_push($sizes, $acc->getSize());
+            }
+        }
         
         $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$vetement[0]->getMaterial()]);
 
@@ -61,11 +80,19 @@ class VoirVetementController extends AbstractController
             $cartProduct->setPrice($vetement[0]->getPrice());
             $cartProduct->setTitle($vetement[0]->getTitle());
             $cartProduct->setPhoto($vetement[0]->getPhoto());
+            $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
+            $cartProduct->setSize($entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]));
             $cartProduct->setSubCategory($vetement[0]->getSousCategorie());         
-            
-            $entityManager->persist($cartProduct);
 
-            
+            $sku = $entityManager->getRepository(VetementQuantity::class)->findOneBy([
+                'vetement' => $vetement[0]->getId(), 
+                'color' => $color,
+                'size' => $size
+            ])->getSku();
+
+            $cartProduct->setSku($sku);
+
+            $entityManager->persist($cartProduct);
             
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
@@ -92,8 +119,10 @@ class VoirVetementController extends AbstractController
 
         return $this->render('voir_vetement/voir_vetement.html.twig', [
             'vetement' => $vetement,
-            'color' => $color,
-            'size' => $size,
+            'vetementVariations' => $vetementVariations,
+            'vetementVariationsJs' => json_encode($vetementVariations),
+            'couleurs' => $couleurs,
+            'sizes' => $sizes,
             'material' => $material,
             'expedition' => $expedition,
             'form' => $form->createView(),

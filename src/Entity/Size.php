@@ -36,6 +36,9 @@ class Size implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: AccessoiresQuantity::class)]
     private Collection $accessoiresQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: VetementQuantity::class, orphanRemoval: true)]
+    private Collection $vetementQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -44,6 +47,7 @@ class Size implements \JsonSerializable
         $this->vetementMerchandisings = new ArrayCollection();
         $this->accessoiresMerchandisings = new ArrayCollection();
         $this->accessoiresQuantities = new ArrayCollection();
+        $this->vetementQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -253,5 +257,35 @@ class Size implements \JsonSerializable
         $vars = get_object_vars($this);
 
         return $vars;
+    }
+
+    /**
+     * @return Collection<int, VetementQuantity>
+     */
+    public function getVetementQuantities(): Collection
+    {
+        return $this->vetementQuantities;
+    }
+
+    public function addVetementQuantity(VetementQuantity $vetementQuantity): self
+    {
+        if (!$this->vetementQuantities->contains($vetementQuantity)) {
+            $this->vetementQuantities->add($vetementQuantity);
+            $vetementQuantity->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetementQuantity(VetementQuantity $vetementQuantity): self
+    {
+        if ($this->vetementQuantities->removeElement($vetementQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementQuantity->getSize() === $this) {
+                $vetementQuantity->setSize(null);
+            }
+        }
+
+        return $this;
     }
 }

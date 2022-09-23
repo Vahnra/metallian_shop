@@ -51,15 +51,6 @@ class Vetement
     private ?string $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?Color $color = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
-    private ?Size $size = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $stock = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetements')]
     private ?Material $material = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -83,10 +74,19 @@ class Vetement
     #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
+    #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: VetementQuantity::class)]
+    private Collection $vetementQuantities;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
         $this->cartProducts = new ArrayCollection();
+        $this->vetementQuantities = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
     }
 
     public function getId(): ?int
@@ -210,42 +210,6 @@ class Vetement
     public function setPrice(string $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getSize(): ?Size
-    {
-        return $this->size;
-    }
-
-    public function setSize(?Size $size): self
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function getStock(): ?string
-    {
-        return $this->stock;
-    }
-
-    public function setStock(string $stock): self
-    {
-        $this->stock = $stock;
 
         return $this;
     }
@@ -385,5 +349,35 @@ class Vetement
     public function getClassName()
     {
         return (new ReflectionClass($this))->getShortName();
+    }
+
+    /**
+     * @return Collection<int, VetementQuantity>
+     */
+    public function getVetementQuantities(): Collection
+    {
+        return $this->vetementQuantities;
+    }
+
+    public function addVetementQuantity(VetementQuantity $vetementQuantity): self
+    {
+        if (!$this->vetementQuantities->contains($vetementQuantity)) {
+            $this->vetementQuantities->add($vetementQuantity);
+            $vetementQuantity->setVetement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetementQuantity(VetementQuantity $vetementQuantity): self
+    {
+        if ($this->vetementQuantities->removeElement($vetementQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementQuantity->getVetement() === $this) {
+                $vetementQuantity->setVetement(null);
+            }
+        }
+
+        return $this;
     }
 }
