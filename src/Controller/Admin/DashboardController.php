@@ -20,6 +20,7 @@ use App\Entity\Expedition;
 use App\Entity\Accessoires;
 use App\Entity\ReviewMedia;
 use App\Entity\SousCategorie;
+use App\Entity\BijouxQuantity;
 use App\Entity\ReviewVetement;
 use App\Entity\VetementQuantity;
 use App\Entity\AccessoiresQuantity;
@@ -116,7 +117,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Bijoux')->setSubItems([
             MenuItem::linkToCrud('Voir les Bijoux', 'fas fa-eye', Bijoux::class),
-            MenuItem::linkToCrud('Ajouter des Bijoux', 'fas fa-plus', Bijoux::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter des Bijoux', 'fas fa-plus', Bijoux::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voire les bijoux en vente', 'fas fa-eye', BijouxQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente un bijoux', 'fas fa-plus', BijouxQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Merchandising');

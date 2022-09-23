@@ -42,6 +42,9 @@ class Color implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'color', targetEntity: VetementQuantity::class, orphanRemoval: true)]
     private Collection $vetementQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: BijouxQuantity::class, orphanRemoval: true)]
+    private Collection $bijouxQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -52,6 +55,7 @@ class Color implements \JsonSerializable
         $this->accessoiresMerchandisings = new ArrayCollection();
         $this->accessoiresQuantities = new ArrayCollection();
         $this->vetementQuantities = new ArrayCollection();
+        $this->bijouxQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -317,6 +321,36 @@ class Color implements \JsonSerializable
             // set the owning side to null (unless already changed)
             if ($vetementQuantity->getColor() === $this) {
                 $vetementQuantity->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BijouxQuantity>
+     */
+    public function getBijouxQuantities(): Collection
+    {
+        return $this->bijouxQuantities;
+    }
+
+    public function addBijouxQuantity(BijouxQuantity $bijouxQuantity): self
+    {
+        if (!$this->bijouxQuantities->contains($bijouxQuantity)) {
+            $this->bijouxQuantities->add($bijouxQuantity);
+            $bijouxQuantity->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijouxQuantity(BijouxQuantity $bijouxQuantity): self
+    {
+        if ($this->bijouxQuantities->removeElement($bijouxQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($bijouxQuantity->getColor() === $this) {
+                $bijouxQuantity->setColor(null);
             }
         }
 

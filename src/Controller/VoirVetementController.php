@@ -127,7 +127,6 @@ class VoirVetementController extends AbstractController
             'expedition' => $expedition,
             'form' => $form->createView(),
             'similarItm' => $similarItm
-
         ]);
     }
 }

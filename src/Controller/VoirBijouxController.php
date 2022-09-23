@@ -8,6 +8,7 @@ use App\Entity\Color;
 use App\Entity\Bijoux;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
+use App\Entity\BijouxQuantity;
 use App\Form\CartProductFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,29 @@ class VoirBijouxController extends AbstractController
     #[Route('/voir/bijoux-{id}', name: 'voir_bijoux', methods: ['GET', 'POST'])]
     public function voirBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager, Request $request): Response
     {
+        $color = $request->get('color');
+
+        $size = $request->get('size');
+
         $bijou = $entityManager->getRepository(Bijoux::class)->findBy(['id'=>$bijoux->getId()]);
 
-        $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$bijou[0]->getColor()]);
+        $bijouxVariations = $entityManager->getRepository(BijouxQuantity::class)->findBy(['bijoux' => $bijoux->getId()]);
+
+        $couleurs = [];
+
+        $sizes = [];
+
+        foreach ($bijouxVariations as $acc) {
+            if (!in_array($acc->getColor(), $couleurs, true)) {
+                array_push($couleurs, $acc->getColor());
+            }
+        }
+
+        // foreach ($bijouxVariations as $acc) {
+        //     if (!in_array($acc->getSize(), $sizes, true)) {
+        //         array_push($sizes, $acc->getSize());
+        //     }
+        // }
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
@@ -55,7 +76,15 @@ class VoirBijouxController extends AbstractController
             $cartProduct->setPrice($bijou[0]->getPrice());
             $cartProduct->setTitle($bijou[0]->getTitle());
             $cartProduct->setPhoto($bijou[0]->getPhoto());
+            $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
             $cartProduct->setSubCategory($bijou[0]->getSousCategorie());
+
+            $sku = $entityManager->getRepository(BijouxQuantity::class)->findOneBy([
+                'bijoux' => $bijou[0]->getId(), 
+                'color' => $color,
+            ])->getSku();
+
+            $cartProduct->setSku($sku);
 
             $entityManager->persist($cartProduct);
             
@@ -83,11 +112,12 @@ class VoirBijouxController extends AbstractController
 
         return $this->render('voir_bijoux/v_bijoux.html.twig', [
             'bijou' => $bijou,
-            'color' => $color,
+            'bijouxVariations' => $bijouxVariations,
+            'bijouxVariationsJs' => json_encode($bijouxVariations),
+            'couleurs' => $couleurs,
             'expedition' => $expedition,
             'form' => $form->createView(),
             'similarItm' => $similarItm
-            
         ]);
     }
 }

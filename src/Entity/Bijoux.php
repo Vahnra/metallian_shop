@@ -57,21 +57,24 @@ class Bijoux
     #[ORM\Column(length: 255)]
     private ?string $photo5 = null;
 
-    #[ORM\ManyToOne(inversedBy: 'bijouxes')]
-    private ?Color $color = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
 
     #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
-    #[ORM\Column(length: 255)]
-    private ?string $stock = null;
+    #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: BijouxQuantity::class, orphanRemoval: true)]
+    private Collection $bijouxQuantities;
 
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
+        $this->bijouxQuantities = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
     }
 
     public function getId(): ?int
@@ -235,18 +238,6 @@ class Bijoux
         return $this;
     }
 
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
     public function getLongDescription(): ?string
     {
         return $this->longDescription;
@@ -293,14 +284,33 @@ class Bijoux
     {
         return (new ReflectionClass($this))->getShortName();
     }
-    public function getStock(): ?string
+
+    /**
+     * @return Collection<int, BijouxQuantity>
+     */
+    public function getBijouxQuantities(): Collection
     {
-        return $this->stock;
+        return $this->bijouxQuantities;
     }
 
-    public function setStock(string $stock): self
+    public function addBijouxQuantity(BijouxQuantity $bijouxQuantity): self
     {
-        $this->stock = $stock;
+        if (!$this->bijouxQuantities->contains($bijouxQuantity)) {
+            $this->bijouxQuantities->add($bijouxQuantity);
+            $bijouxQuantity->setBijoux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijouxQuantity(BijouxQuantity $bijouxQuantity): self
+    {
+        if ($this->bijouxQuantities->removeElement($bijouxQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($bijouxQuantity->getBijoux() === $this) {
+                $bijouxQuantity->setBijoux(null);
+            }
+        }
 
         return $this;
     }
