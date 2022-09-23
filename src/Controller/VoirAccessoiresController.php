@@ -84,8 +84,17 @@ class VoirAccessoiresController extends AbstractController
             $cartProduct->setPrice($accessoire[0]->getPrice());
             $cartProduct->setTitle($accessoire[0]->getTitle());
             $cartProduct->setPhoto($accessoire[0]->getPhoto());
+            $cartProduct->setColor($color);
+            $cartProduct->setSize($size);
             $cartProduct->setSubCategory($accessoire[0]->getSousCategorie());
-        
+            
+            $sku = $entityManager->getRepository(AccessoiresQuantity::class)->findOneBy([
+                'accessoires' => $accessoire[0]->getId(), 
+                'color' => $color,
+                'size' => $size
+            ])->getSku();
+
+            $cartProduct->setSku($sku);      
 
             $entityManager->persist($cartProduct);
             

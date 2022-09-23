@@ -56,6 +56,15 @@ class CartProduct
     #[ORM\ManyToOne(inversedBy: 'cartProducts')]
     private ?Media $media = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $sku = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $color = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $size = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -218,6 +227,42 @@ class CartProduct
     public function setMedia(?Media $media): self
     {
         $this->media = $media;
+
+        return $this;
+    }
+
+    public function getSku(): ?string
+    {
+        return $this->sku;
+    }
+
+    public function setSku(string $sku): self
+    {
+        $this->sku = $sku;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getSize(): ?string
+    {
+        return $this->size;
+    }
+
+    public function setSize(string $size): self
+    {
+        $this->size = $size;
 
         return $this;
     }
