@@ -79,6 +79,7 @@ class VoirAccessoiresController extends AbstractController
             $cartProduct->setTitle($accessoire[0]->getTitle());
             $cartProduct->setPhoto($accessoire[0]->getPhoto());
             $cartProduct->setSubCategory($accessoire[0]->getSousCategorie());
+        
 
             $entityManager->persist($cartProduct);
             
