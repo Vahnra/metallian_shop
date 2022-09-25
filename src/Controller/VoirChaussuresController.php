@@ -10,6 +10,7 @@ use App\Entity\Chaussures;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
 use App\Form\CartProductFormType;
+use App\Entity\ChaussuresQuantity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +22,29 @@ class VoirChaussuresController extends AbstractController
     #[Route('/voir/chaussures-{id}', name: 'voir_chaussures', methods: ['GET', 'POST'])]
     public function index(Chaussures $chaussures, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $color = $request->get('color');
+
+        $size = $request->get('size');
+
         $chaussure = $entityManager->getRepository(Chaussures::class)->findBy(['id'=>$chaussures->getId()]);
 
-        $color = $entityManager->getRepository(Color::class)->findBy(['id'=>$chaussure[0]->getColor()]);
+        $chaussuresVariations = $entityManager->getRepository(ChaussuresQuantity::class)->findBy(['chaussures' => $chaussures->getId()]);
 
-        $size = $entityManager->getRepository(Size::class)->findBy(['id'=>$chaussure[0]->getSize()]);
+        $couleurs = [];
+
+        $sizes = [];
+
+        foreach ($chaussuresVariations as $acc) {
+            if (!in_array($acc->getColor(), $couleurs, true)) {
+                array_push($couleurs, $acc->getColor());
+            }
+        }
+
+        foreach ($chaussuresVariations as $acc) {
+            if (!in_array($acc->getSize(), $sizes, true)) {
+                array_push($sizes, $acc->getSize());
+            }
+        }
       
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
@@ -58,7 +77,17 @@ class VoirChaussuresController extends AbstractController
             $cartProduct->setPrice($chaussure[0]->getPrice());
             $cartProduct->setTitle($chaussure[0]->getTitle());
             $cartProduct->setPhoto($chaussure[0]->getPhoto());
+            $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
+            $cartProduct->setSize($entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]));
             $cartProduct->setSubCategory($chaussure[0]->getSousCategorie());
+
+            $sku = $entityManager->getRepository(ChaussuresQuantity::class)->findOneBy([
+                'chaussures' => $chaussure[0]->getId(), 
+                'color' => $color,
+                'size' => $size
+            ])->getSku();
+
+            $cartProduct->setSku($sku); 
 
             $entityManager->persist($cartProduct);
             
@@ -67,9 +96,7 @@ class VoirChaussuresController extends AbstractController
             $cart->addCartProduct($cartProduct);
 
             $token = $cart->getToken();
-
-           
-            
+   
             if ($token == null) {
                 $cart->setToken($request->getSession()->get('id'));
             } else {
@@ -88,8 +115,10 @@ class VoirChaussuresController extends AbstractController
     
         return $this->render('voir_chaussures/voir_chaussures.html.twig', [
             'chaussure' => $chaussure,
-            'color' => $color,
-            'size' => $size,
+            'chaussuresVariations' => $chaussuresVariations,
+            'chaussuresVariationsJs' => json_encode($chaussuresVariations),
+            'couleurs' => $couleurs,
+            'sizes' => $sizes,
             'expedition' => $expedition,
             'form' => $form->createView(),
             'similarItm' => $similarItm

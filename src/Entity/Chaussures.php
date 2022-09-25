@@ -46,12 +46,6 @@ class Chaussures
     private ?\DateTimeInterface $deletedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'chaussures')]
-    private ?Color $color = null;
-
-    #[ORM\ManyToOne(inversedBy: 'chaussures')]
-    private ?Size $size = null;
-
-    #[ORM\ManyToOne(inversedBy: 'chaussures')]
     private ?Material $material = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -68,9 +62,18 @@ class Chaussures
     #[ORM\OneToMany(mappedBy: 'chaussures', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
+    #[ORM\OneToMany(mappedBy: 'chaussures', targetEntity: ChaussuresQuantity::class, orphanRemoval: true)]
+    private Collection $chaussuresQuantities;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
+        $this->chaussuresQuantities = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
     }
 
     public function getId(): ?int
@@ -186,30 +189,6 @@ class Chaussures
         return $this;
     }
 
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getSize(): ?Size
-    {
-        return $this->size;
-    }
-
-    public function setSize(?Size $size): self
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
     public function getMaterial(): ?Material
     {
         return $this->material;
@@ -302,5 +281,35 @@ class Chaussures
     public function getClassName()
     {
         return (new ReflectionClass($this))->getShortName();
+    }
+
+    /**
+     * @return Collection<int, ChaussuresQuantity>
+     */
+    public function getChaussuresQuantities(): Collection
+    {
+        return $this->chaussuresQuantities;
+    }
+
+    public function addChaussuresQuantity(ChaussuresQuantity $chaussuresQuantity): self
+    {
+        if (!$this->chaussuresQuantities->contains($chaussuresQuantity)) {
+            $this->chaussuresQuantities->add($chaussuresQuantity);
+            $chaussuresQuantity->setChaussures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChaussuresQuantity(ChaussuresQuantity $chaussuresQuantity): self
+    {
+        if ($this->chaussuresQuantities->removeElement($chaussuresQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($chaussuresQuantity->getChaussures() === $this) {
+                $chaussuresQuantity->setChaussures(null);
+            }
+        }
+
+        return $this;
     }
 }

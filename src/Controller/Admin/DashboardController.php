@@ -23,6 +23,7 @@ use App\Entity\SousCategorie;
 use App\Entity\BijouxQuantity;
 use App\Entity\ReviewVetement;
 use App\Entity\VetementQuantity;
+use App\Entity\ChaussuresQuantity;
 use App\Entity\AccessoiresQuantity;
 use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
@@ -112,7 +113,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Chaussures')->setSubItems([
             MenuItem::linkToCrud('Voir les Chaussures', 'fas fa-eye', Chaussures::class),
-            MenuItem::linkToCrud('Ajouter des chaussures', 'fas fa-plus', Chaussures::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter des chaussures', 'fas fa-plus', Chaussures::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voire les chaussures en vente', 'fas fa-eye', ChaussuresQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente une chaussure', 'fas fa-plus', ChaussuresQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::subMenu('Bijoux')->setSubItems([

@@ -2,20 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\AccessoiresQuantity;
+use App\Entity\ChaussuresQuantity;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class AccessoiresQuantityCrudController extends AbstractCrudController
+class ChaussuresQuantityCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return AccessoiresQuantity::class;
+        return ChaussuresQuantity::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -23,7 +22,7 @@ class AccessoiresQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('accessoires');
+        yield AssociationField::new('chaussures');
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color');
@@ -34,5 +33,4 @@ class AccessoiresQuantityCrudController extends AbstractCrudController
         yield NumberField::new('stock', 'Nombre en stock');
         
     }
-    
 }
