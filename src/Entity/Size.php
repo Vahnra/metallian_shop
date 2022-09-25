@@ -42,6 +42,12 @@ class Size implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: ChaussuresQuantity::class, orphanRemoval: true)]
     private Collection $chaussuresQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: VetementMerchandisingQuantity::class, orphanRemoval: true)]
+    private Collection $vetementMerchandisingQuantities;
+
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: AccessoiresMerchandisingQuantity::class, orphanRemoval: true)]
+    private Collection $accessoiresMerchandisingQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -52,6 +58,8 @@ class Size implements \JsonSerializable
         $this->accessoiresQuantities = new ArrayCollection();
         $this->vetementQuantities = new ArrayCollection();
         $this->chaussuresQuantities = new ArrayCollection();
+        $this->vetementMerchandisingQuantities = new ArrayCollection();
+        $this->accessoiresMerchandisingQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -317,6 +325,66 @@ class Size implements \JsonSerializable
             // set the owning side to null (unless already changed)
             if ($chaussuresQuantity->getSize() === $this) {
                 $chaussuresQuantity->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VetementMerchandisingQuantity>
+     */
+    public function getVetementMerchandisingQuantities(): Collection
+    {
+        return $this->vetementMerchandisingQuantities;
+    }
+
+    public function addVetementMerchandisingQuantity(VetementMerchandisingQuantity $vetementMerchandisingQuantity): self
+    {
+        if (!$this->vetementMerchandisingQuantities->contains($vetementMerchandisingQuantity)) {
+            $this->vetementMerchandisingQuantities->add($vetementMerchandisingQuantity);
+            $vetementMerchandisingQuantity->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetementMerchandisingQuantity(VetementMerchandisingQuantity $vetementMerchandisingQuantity): self
+    {
+        if ($this->vetementMerchandisingQuantities->removeElement($vetementMerchandisingQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementMerchandisingQuantity->getSize() === $this) {
+                $vetementMerchandisingQuantity->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccessoiresMerchandisingQuantity>
+     */
+    public function getAccessoiresMerchandisingQuantities(): Collection
+    {
+        return $this->accessoiresMerchandisingQuantities;
+    }
+
+    public function addAccessoiresMerchandisingQuantity(AccessoiresMerchandisingQuantity $accessoiresMerchandisingQuantity): self
+    {
+        if (!$this->accessoiresMerchandisingQuantities->contains($accessoiresMerchandisingQuantity)) {
+            $this->accessoiresMerchandisingQuantities->add($accessoiresMerchandisingQuantity);
+            $accessoiresMerchandisingQuantity->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresMerchandisingQuantity(AccessoiresMerchandisingQuantity $accessoiresMerchandisingQuantity): self
+    {
+        if ($this->accessoiresMerchandisingQuantities->removeElement($accessoiresMerchandisingQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresMerchandisingQuantity->getSize() === $this) {
+                $accessoiresMerchandisingQuantity->setSize(null);
             }
         }
 

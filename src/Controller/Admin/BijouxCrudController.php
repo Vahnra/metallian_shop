@@ -43,7 +43,6 @@ class BijouxCrudController extends AbstractCrudController
         yield TextField::new('description');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
         yield MoneyField::new('price', 'prix')->setCurrency('EUR');
-        yield AssociationField::new('color');
 
         yield FormField::addPanel('Photos de l\'article');
         yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images');
@@ -51,10 +50,6 @@ class BijouxCrudController extends AbstractCrudController
         yield ImageField::new('photo3')->setBasePath('images')->setUploadDir('public/images');
         yield ImageField::new('photo4')->setBasePath('images')->setUploadDir('public/images');
         yield ImageField::new('photo5')->setBasePath('images')->setUploadDir('public/images');
-
-        yield FormField::addPanel('Stock');
-        yield NumberField::new('stock', 'Nombre en stock');
-
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');

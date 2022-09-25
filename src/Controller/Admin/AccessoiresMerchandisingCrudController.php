@@ -45,15 +45,11 @@ class AccessoiresMerchandisingCrudController extends AbstractCrudController
         yield TextField::new('title', 'Titre');
         yield TextField::new('description');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
-        yield AssociationField::new('color');
-        yield AssociationField::new('size', 'Taille');
         yield AssociationField::new('material');
         yield MoneyField::new('price')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
         yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-
-        yield FormField::addPanel('Stock');
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorieMerchandising');

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,19 +49,23 @@ class VetementMerchandising
     private ?string $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
-    private ?Color $color = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
-    private ?Size $size = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vetementMerchandisings')]
     private ?Material $material = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $stock = null;
+    #[ORM\OneToMany(mappedBy: 'vetementMerchandising', targetEntity: VetementMerchandisingQuantity::class, orphanRemoval: true)]
+    private Collection $vetementMerchandisingQuantities;
+
+    public function __construct()
+    {
+        $this->vetementMerchandisingQuantities = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
+    }
 
     public function getId(): ?int
     {
@@ -186,30 +192,6 @@ class VetementMerchandising
         return $this;
     }
 
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getSize(): ?Size
-    {
-        return $this->size;
-    }
-
-    public function setSize(?Size $size): self
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
     public function getMaterial(): ?Material
     {
         return $this->material;
@@ -234,20 +216,38 @@ class VetementMerchandising
         return $this;
     }
 
-    public function getStock(): ?string
+    public function getClassName()
     {
-        return $this->stock;
+        return (new ReflectionClass($this))->getShortName();
     }
 
-    public function setStock(string $stock): self
+    /**
+     * @return Collection<int, VetementMerchandisingQuantity>
+     */
+    public function getVetementMerchandisingQuantities(): Collection
     {
-        $this->stock = $stock;
+        return $this->vetementMerchandisingQuantities;
+    }
+
+    public function addVetementMerchandisingQuantity(VetementMerchandisingQuantity $vetementMerchandisingQuantity): self
+    {
+        if (!$this->vetementMerchandisingQuantities->contains($vetementMerchandisingQuantity)) {
+            $this->vetementMerchandisingQuantities->add($vetementMerchandisingQuantity);
+            $vetementMerchandisingQuantity->setVetementMerchandising($this);
+        }
 
         return $this;
     }
 
-    public function getClassName()
+    public function removeVetementMerchandisingQuantity(VetementMerchandisingQuantity $vetementMerchandisingQuantity): self
     {
-        return (new ReflectionClass($this))->getShortName();
+        if ($this->vetementMerchandisingQuantities->removeElement($vetementMerchandisingQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementMerchandisingQuantity->getVetementMerchandising() === $this) {
+                $vetementMerchandisingQuantity->setVetementMerchandising(null);
+            }
+        }
+
+        return $this;
     }
 }

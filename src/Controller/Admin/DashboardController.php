@@ -30,8 +30,10 @@ use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
+use App\Entity\VetementMerchandisingQuantity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\AccessoiresMerchandisingQuantity;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -139,12 +141,16 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Vetements')->setSubItems([
             MenuItem::linkToCrud('Voir les vetements', 'fas fa-eye', VetementMerchandising::class),
-            MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', VetementMerchandising::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter un vetement', 'fas fa-plus', VetementMerchandising::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voire les vêtements merchandising en vente', 'fas fa-eye', VetementMerchandisingQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente un vetement merchandising', 'fas fa-plus', VetementMerchandisingQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::subMenu('Accesoires')->setSubItems([
             MenuItem::linkToCrud('Voir les accesoires', 'fas fa-eye', AccessoiresMerchandising::class),
-            MenuItem::linkToCrud('Ajouter un accesoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Ajouter un accesoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voire les accessoires merchandising en vente', 'fas fa-eye', AccessoiresMerchandisingQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente un accessoires merchandising', 'fas fa-plus', AccessoiresMerchandisingQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         yield MenuItem::section('Marques');

@@ -48,6 +48,12 @@ class Color implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'color', targetEntity: ChaussuresQuantity::class, orphanRemoval: true)]
     private Collection $chaussuresQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: VetementMerchandisingQuantity::class, orphanRemoval: true)]
+    private Collection $vetementMerchandisingQuantities;
+
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: AccessoiresMerchandisingQuantity::class, orphanRemoval: true)]
+    private Collection $accessoiresMerchandisingQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -60,6 +66,8 @@ class Color implements \JsonSerializable
         $this->vetementQuantities = new ArrayCollection();
         $this->bijouxQuantities = new ArrayCollection();
         $this->chaussuresQuantities = new ArrayCollection();
+        $this->vetementMerchandisingQuantities = new ArrayCollection();
+        $this->accessoiresMerchandisingQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -385,6 +393,66 @@ class Color implements \JsonSerializable
             // set the owning side to null (unless already changed)
             if ($chaussuresQuantity->getColor() === $this) {
                 $chaussuresQuantity->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VetementMerchandisingQuantity>
+     */
+    public function getVetementMerchandisingQuantities(): Collection
+    {
+        return $this->vetementMerchandisingQuantities;
+    }
+
+    public function addVetementMerchandisingQuantity(VetementMerchandisingQuantity $vetementMerchandisingQuantity): self
+    {
+        if (!$this->vetementMerchandisingQuantities->contains($vetementMerchandisingQuantity)) {
+            $this->vetementMerchandisingQuantities->add($vetementMerchandisingQuantity);
+            $vetementMerchandisingQuantity->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetementMerchandisingQuantity(VetementMerchandisingQuantity $vetementMerchandisingQuantity): self
+    {
+        if ($this->vetementMerchandisingQuantities->removeElement($vetementMerchandisingQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($vetementMerchandisingQuantity->getColor() === $this) {
+                $vetementMerchandisingQuantity->setColor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccessoiresMerchandisingQuantity>
+     */
+    public function getAccessoiresMerchandisingQuantities(): Collection
+    {
+        return $this->accessoiresMerchandisingQuantities;
+    }
+
+    public function addAccessoiresMerchandisingQuantity(AccessoiresMerchandisingQuantity $accessoiresMerchandisingQuantity): self
+    {
+        if (!$this->accessoiresMerchandisingQuantities->contains($accessoiresMerchandisingQuantity)) {
+            $this->accessoiresMerchandisingQuantities->add($accessoiresMerchandisingQuantity);
+            $accessoiresMerchandisingQuantity->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresMerchandisingQuantity(AccessoiresMerchandisingQuantity $accessoiresMerchandisingQuantity): self
+    {
+        if ($this->accessoiresMerchandisingQuantities->removeElement($accessoiresMerchandisingQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresMerchandisingQuantity->getColor() === $this) {
+                $accessoiresMerchandisingQuantity->setColor(null);
             }
         }
 

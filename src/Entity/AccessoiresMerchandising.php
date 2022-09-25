@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -44,16 +46,23 @@ class AccessoiresMerchandising
     private ?\DateTimeInterface $deletedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
-    private ?Color $color = null;
-
-    #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
     private ?Material $material = null;
-
-    #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
-    private ?Size $size = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
+
+    #[ORM\OneToMany(mappedBy: 'accessoiresMerchandising', targetEntity: AccessoiresMerchandisingQuantity::class, orphanRemoval: true)]
+    private Collection $accessoiresMerchandisingQuantities;
+
+    public function __construct()
+    {
+        $this->accessoiresMerchandisingQuantities = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title; 
+    }
 
     public function getId(): ?int
     {
@@ -168,18 +177,6 @@ class AccessoiresMerchandising
         return $this;
     }
 
-    public function getColor(): ?Color
-    {
-        return $this->color;
-    }
-
-    public function setColor(?Color $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
     public function getMaterial(): ?Material
     {
         return $this->material;
@@ -188,18 +185,6 @@ class AccessoiresMerchandising
     public function setMaterial(?Material $material): self
     {
         $this->material = $material;
-
-        return $this;
-    }
-
-    public function getSize(): ?Size
-    {
-        return $this->size;
-    }
-
-    public function setSize(?Size $size): self
-    {
-        $this->size = $size;
 
         return $this;
     }
@@ -219,5 +204,35 @@ class AccessoiresMerchandising
     public function getClassName()
     {
         return (new ReflectionClass($this))->getShortName();
+    }
+
+    /**
+     * @return Collection<int, AccessoiresMerchandisingQuantity>
+     */
+    public function getAccessoiresMerchandisingQuantities(): Collection
+    {
+        return $this->accessoiresMerchandisingQuantities;
+    }
+
+    public function addAccessoiresMerchandisingQuantity(AccessoiresMerchandisingQuantity $accessoiresMerchandisingQuantity): self
+    {
+        if (!$this->accessoiresMerchandisingQuantities->contains($accessoiresMerchandisingQuantity)) {
+            $this->accessoiresMerchandisingQuantities->add($accessoiresMerchandisingQuantity);
+            $accessoiresMerchandisingQuantity->setAccessoiresMerchandising($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoiresMerchandisingQuantity(AccessoiresMerchandisingQuantity $accessoiresMerchandisingQuantity): self
+    {
+        if ($this->accessoiresMerchandisingQuantities->removeElement($accessoiresMerchandisingQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($accessoiresMerchandisingQuantity->getAccessoiresMerchandising() === $this) {
+                $accessoiresMerchandisingQuantity->setAccessoiresMerchandising(null);
+            }
+        }
+
+        return $this;
     }
 }
