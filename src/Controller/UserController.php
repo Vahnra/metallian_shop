@@ -7,13 +7,16 @@ use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Form\UserInfoFormType;
 use App\Form\UserMailFormType;
+use App\Entity\FavoriteProduct;
 use App\Entity\UserPostalAdress;
 use App\Form\UserAdressFormType;
 use App\Form\UserPasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -181,6 +184,26 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('show_profile_adress', [
             'id' => $user->getId()
+        ]);
+    }
+
+    #[Route('/profile/mon-espace-perso-{id}/favorite', name: 'show_favorite_products', methods:['GET', 'POST'])]
+    public function showFavoriteProducts(
+        EntityManagerInterface $entityManager,
+        RequestStack $requestStack,
+        PaginatorInterface $paginator,
+        ): Response
+    {
+        $favoriteProducts = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser()]);
+
+        $requestStack = $requestStack->getMainRequest();
+
+        $page = $requestStack->query->getInt('page', 1);
+
+        $searchResults = $paginator->paginate($favoriteProducts, $page, 6);
+
+        return $this->render('user/show_profile_favorites.html.twig',[
+            'favoriteProducts' => $searchResults
         ]);
     }
 }

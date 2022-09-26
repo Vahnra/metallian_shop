@@ -14,12 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FavoriteProductController extends AbstractController
 {
-    #[Route('/favorite/product', name: 'show_favorite_products')]
-    public function showFavoriteProducts(): Response
-    {
-        return $this->render('favorite_product/index.html.twig');
-    }
-
     #[Route('/add-favorite/vetement-{id}', name: 'add_favorite_vetement', methods:['GET', 'POST'])]
     public function addFavoriteVetement(
         Vetement $vetements,
