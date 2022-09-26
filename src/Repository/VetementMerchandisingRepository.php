@@ -46,6 +46,9 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorieMerchandising = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.vetementMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         return $qb->getQuery();
@@ -56,6 +59,9 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.sousCategorieMerchandising = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.vetementMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         return $qb->getQuery();
@@ -178,7 +184,10 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         if ($mots != null) {
             $query
                 ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
-                ->setParameter('mots', $mots);
+                ->setParameter('mots', $mots)
+                ->leftJoin('a.vetementMerchandisingQuantities', 'vqc')
+                ->andWhere('vqc.stock IS NOT NULL')
+                ->andWhere('vqc.stock != 0');
         }
 
         return $query->getQuery()->getResult();

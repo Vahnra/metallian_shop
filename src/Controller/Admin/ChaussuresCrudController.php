@@ -40,8 +40,6 @@ class ChaussuresCrudController extends AbstractCrudController
         yield TextField::new('title');
         yield TextField::new('description');
         yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
-        yield AssociationField::new('color');
-        yield AssociationField::new('size');
         yield AssociationField::new('material');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
@@ -50,8 +48,6 @@ class ChaussuresCrudController extends AbstractCrudController
         yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images');
         yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images');
         yield ImageField::new('photo4', 'photo')->setBasePath('images')->setUploadDir('public/images');
-
-        yield FormField::addPanel('Stock');
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorie');
