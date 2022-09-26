@@ -143,4 +143,5 @@ class CartController extends AbstractController
     
         return $this->redirectToRoute('show_cart_details');
     }
+    
 }

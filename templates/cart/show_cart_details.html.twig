@@ -129,12 +129,29 @@
 											{% if app.user is not empty %}	
 
 												{% if userPostAdress is not empty %}
+
+													{% if cart is not null %}
 												
-												<a href="{{ path('choose_adress', {"user": app.user.id, "cart": cart.id}) }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+														<a href="{{ path('choose_adress', {"user": app.user.id, "cart": cart.id}) }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+
+													{% else %}
+														
+														<a href="#" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+
+													{% endif %}
 
 												{% else %}
+
+													{% if cart is not null %}
 													
-													<a href="{{ path('new_adress', {"user": app.user.id, "cart": cart.id}) }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+													
+														<a href="{{ path('new_adress', {"user": app.user.id, "cart": cart.id}) }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+
+													{% else %}
+														
+														<a href="#" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+
+													{% endif %}
 
 												{% endif %}
 
