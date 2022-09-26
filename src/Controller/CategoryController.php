@@ -343,7 +343,7 @@ class CategoryController extends AbstractController
             );        
         }  
 
-        if ($filterAccessoiresForm->isSubmitted() && $filterChaussuresForm->isValid()) {
+        if ($filterChaussuresForm->isSubmitted() && $filterChaussuresForm->isValid()) {
             // on prend les valeurs du formulaire
             $color = $filterChaussuresForm->get('Couleur')->getData();
 

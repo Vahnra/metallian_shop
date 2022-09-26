@@ -72,13 +72,15 @@ class ChaussuresRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.chaussuresQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }
 
         if (isset($size)) {
             $qb
-                ->andWhere('v.size = :size')
+                ->leftJoin('v.chaussuresQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
                 ->setParameter('size', $size);
         }
 
@@ -120,13 +122,15 @@ class ChaussuresRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.chaussuresQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }
 
         if (isset($size)) {
             $qb
-                ->andWhere('v.size = :size')
+                ->leftJoin('v.chaussuresQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
                 ->setParameter('size', $size);
         }
 

@@ -72,7 +72,8 @@ class AccessoiresRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.accessoiresQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }
 
@@ -114,7 +115,8 @@ class AccessoiresRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.accessoiresQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }
 

@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\VetementQuantity;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<Vetement>
@@ -88,13 +89,15 @@ class VetementRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.vetementQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }
 
         if (isset($size)) {
             $qb
-                ->andWhere('v.size = :size')
+                ->leftJoin('v.vetementQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
                 ->setParameter('size', $size);
         }
 
@@ -141,13 +144,15 @@ class VetementRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.vetementQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }
 
         if (isset($size)) {
             $qb
-                ->andWhere('v.size = :size')
+                ->leftJoin('v.vetementQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
                 ->setParameter('size', $size);
         }
 

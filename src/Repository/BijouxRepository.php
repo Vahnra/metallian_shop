@@ -71,7 +71,8 @@ class BijouxRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.bijouxQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }   
 
@@ -106,7 +107,8 @@ class BijouxRepository extends ServiceEntityRepository
 
         if (isset($color)) {
             $qb
-                ->andWhere('v.color = :color')
+                ->leftJoin('v.bijouxQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
                 ->setParameter('color', $color);
         }   
 
