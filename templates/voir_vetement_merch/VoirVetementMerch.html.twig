@@ -1,114 +1,173 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Merchandising Vêtement{% endblock %}
+{% block title %}Merchandising Vêtement
+{% endblock %}
 
 {% block body %}
-<div class="container-xl">
-    <div class="row">
-        <div class="col-12 bg-dark text-white">
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-11"><h1>Merchandising Vêtement : {{ vetementMerche.0.title }}</h1></div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-1 pt-3 text-center bg-dark ">
-            
-            <img src={{ asset('images/'~vetementMerche.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
-            <img src={{ asset('images/'~vetementMerche.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
-            <img src={{ asset('images/'~vetementMerche.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
-            <img src={{ asset('images/'~vetementMerche.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
-            <img src={{ asset('images/'~vetementMerche.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+	<div class="container-xl">
+		<div class="row">
+			<div class="col-12 bg-dark text-white">
+				<div class="row">
+					<div class="col-1"></div>
+					<div class="col-11">
+						<h1>Merchandising Vêtement :
+							{{ vetementMerche.0.title }}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-1 pt-3 text-center bg-dark ">
 
-        </div>
+				<img src={{ asset('images/'~vetementMerche.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+				<img src={{ asset('images/'~vetementMerche.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+				<img src={{ asset('images/'~vetementMerche.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+				<img src={{ asset('images/'~vetementMerche.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+				<img src={{ asset('images/'~vetementMerche.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
 
-        <div class="col-7 pt-3 text-center bg-light border-bottom border-dark">
-        
-            <img id="imageBox" src={{ asset('images/'~vetementMerche.0.photo) }} class="img-fluid p-2" title="Grande image du produit"/>
-       
+			</div>
 
-        </div>
+			<div class="col-7 pt-3 text-center bg-light border-bottom border-dark">
 
-        <div class="col-4 pt-3 bg-light border-bottom border-end border-dark">
-        <div class="row">
-        <div class="col-8">
-        <h2>{{ vetementMerche.0.description }}</h2>
-        </div>
-        <div class="col-4 pt-2">
-        <p>{{ vetementMerche.0.price/100 }}€</p>
-        </div>
-        </div>
+				<img id="imageBox" src={{ asset('images/'~vetementMerche.0.photo) }} class="img-fluid p-2" title="Grande image du produit"/>
 
 
+			</div>
 
-            
-            <p>{{ color.0.color }}</p>
-            <p>{{ vetementMerche.0.sousCategorieMerchandising }}</p>
-            <p>{{ material.0.material }}</p>
-            
-            <div class="col mb-3 text-center">
-                {# <button type="button" class="btn btn-success">Ajouter au panier</button> #}
-                {# {{form(form)}} #}
-            </div>
-            <div class="col-12 p-2 border-top border-dark bg-light">
-                <h3>description</h3>
-                <p>
-                 {{ vetementMerche.0.longDescription }}
-                </p>
-            </div>
-            <div class="col-12 p-2 border-top border-dark bg-light">
-                <h3><i class="fa-solid fa-truck-fast"></i>  {{ expedition.0.title }}</h3> 
-                <p>{{ expedition.0.description }}</p> 
-                <p>{{ expedition.0.longDescription }}</p> 
-            </div> 
-        </div>
+			<div class="col-4 pt-3 bg-light border-bottom border-end border-dark">
+				<div class="row">
+					<div class="col-8">
+						<h2>{{ vetementMerche.0.description }}</h2>
+					</div>
+					<div class="col-4 my-auto justify-content-end d-flex">
+						<h3 class="my-auto fw-bold">{{ vetementMerche.0.price/100 }}€</h3>
+					</div>
+				</div>
 
-    </div>
-</div>
-{# ------------------------------------------------------------------------------------ #}
-<div class="container">
-    <div class="row">
-        <div class="col-12 bg-light">
-            
-            <h2>Produits similaires</h2>
-        </div>
+                <form method="post">
 
-         {% for vetementMerche in similarItm |slice(0,4) %} 
-        <div class="col-3 bg-light mb-3 "> 
-            <div class="card" style="width: 18rem;">
-                <img src={{ asset('images/'~vetementMerche.photo) }} class="card-img-top">
-                <div class="card-body">
-                     <h5 class="card-title">{{ vetementMerche.title }}</h5> 
-                      <p>{{ vetementMerche.sousCategorieMerchandising }}</p>
-                    <p class="card-text">{{ vetementMerche.description }}</p>
-                    <p>{{ vetementMerche.price/100 }}€</p>
-                    <div class="text-center">
-                        <a href={{ path('voir_vetement_merch', {'id':vetementMerche.id})}} class="btn btn-warning">Plus d'informations</a>
+                    <div class="col-6 py-4">
+
+                        <p><span>Choisissez une couleur :</span></p>
+                    
+                        <select class="form-select" id="test" name="color" aria-label="Default select example">
+                            <option selected>Couleur</option>
+
+                            {% for couleur in couleurs %}
+
+                                <option value="{{ couleur.id }}">{{ couleur.color }}</option>
+
+                            {% endfor %}
+                            
+                        </select>
                     </div>
+
+                    <div class="col-6 pt-3 pb-4">
+
+                        <p><span>Choisissez une taille :</span></p>
+
+                        <select class="form-select" id="test2" name="size" aria-label="Default select example">
+                            <option selected>Taille</option>              
+                        
+                        </select>
+                    </div>
+
+                    <script>
+
+                    var test = {{ vetementVariations|json_encode(constant('JSON_HEX_TAG'))|raw }};
+
+                    console.log(test);
+        
+                    var options=""; 
+                    
+                    $("#test").on('click',function(){ 
+                        var value=$(this).val(); 
+                        options="<option>Taille</option>"
+                        
+                        for(let i = 0 ; i < test.length; i++) {
+                            if(value == test[i].color.id)
+                            {
+                                options+="<option value='" + test[i].size.id + "'>" + test[i].size.size + "</option>"
+
+                                $("#test2").html(options);
+
+                            }
+                        }
+                    });
+                
+                    </script>
+      
+                <p>{{ vetementMerche.0.sousCategorieMerchandising }}</p>
+                <p>{{ vetementMerche.0.material }}</p>
+                <div class="col-6 mb-4">
+                
+                    {{form(form)}}
                 </div>
-            </div>
-        </div>
-        {% endfor %}
+
+            </form>
+
+				<p>{{ vetementMerche.0.sousCategorieMerchandising }}</p>
+				<p>{{ material.0.material }}</p>
+
+				<div class="col mb-3 text-center">{# <button type="button" class="btn btn-success">Ajouter au panier</button> #}
+					{# {{form(form)}} #}
+				</div>
+				<div class="col-12 p-2 border-top border-dark bg-light">
+					<h3>description</h3>
+					<p>
+						{{ vetementMerche.0.longDescription }}
+					</p>
+				</div>
+				<div class="col-12 p-2 border-top border-dark bg-light">
+					<h3>
+						<i class="fa-solid fa-truck-fast"></i>
+						{{ expedition.0.title }}</h3>
+					<p>{{ expedition.0.description }}</p>
+					<p>{{ expedition.0.longDescription }}</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	{# ------------------------------------------------------------------------------------ #}
+	<div class="container">
+		<div class="row">
+			<div class="col-12 bg-light">
+
+				<h2>Produits similaires</h2>
+			</div>
+
+			{% for vetementMerche in similarItm |slice(0,4) %}
+				<div class="col-3 bg-light mb-3 ">
+					<div class="card" style="width: 18rem;">
+						<img src={{ asset('images/'~vetementMerche.photo) }} class="card-img-top">
+						<div class="card-body">
+							<h5 class="card-title">{{ vetementMerche.title }}</h5>
+							<p>{{ vetementMerche.sousCategorieMerchandising }}</p>
+							<p class="card-text">{{ vetementMerche.description }}</p>
+							<p>{{ vetementMerche.price/100 }}€</p>
+							<div class="text-center">
+								<a href={{ path('voir_vetement_merch', {'id':vetementMerche.id} )}} class="btn btn-warning">Plus d'informations</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 
 
+		</div>
+		{# end row #}
 
 
-    </div>
-    {# end row #}
-    
+	</div>
+	{# end Container #}
 
 
-</div> 
-{# end Container #}
-
-
-
-{# ----------------------------------------------------------------------------------- #}
-<script>
-    function myFunction(smallImg){
-        var fullImg = document.getElementById("imageBox");
-        fullImg.src = smallImg.src;
-    }
-</script>
+	{# ----------------------------------------------------------------------------------- #}
+	<script>
+		function myFunction(smallImg) {
+var fullImg = document.getElementById("imageBox");
+fullImg.src = smallImg.src;
+}
+	</script>
 {% endblock %}
