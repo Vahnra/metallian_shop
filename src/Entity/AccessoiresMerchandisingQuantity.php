@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\AccessoiresMerchandisingQuantityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AccessoiresMerchandising;
+use App\Repository\AccessoiresMerchandisingQuantityRepository;
 
 #[ORM\Entity(repositoryClass: AccessoiresMerchandisingQuantityRepository::class)]
 class AccessoiresMerchandisingQuantity implements \JsonSerializable
