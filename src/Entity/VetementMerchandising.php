@@ -67,6 +67,18 @@ class VetementMerchandising
         return $this->title; 
     }
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo2 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo3 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo4 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo5 = null;
+
     public function getId(): ?int
     {
         return $this->id;
