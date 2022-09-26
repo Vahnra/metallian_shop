@@ -10,6 +10,7 @@ use App\Entity\Material;
 use App\Entity\Vetement;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
+use App\Entity\FavoriteProduct;
 use App\Entity\VetementQuantity;
 use App\Form\CartProductFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -115,11 +116,12 @@ class VoirVetementController extends AbstractController
 
         }
 
-
         $similarItm = $entityManager->getRepository(Vetement::class)->findBy([
             'sousCategorie' => $vetement[0]->getSousCategorie(),
             'categorie' => $vetement[0]->getCategorie(),
         ]);
+
+        $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'vetement' => $vetements]);
 
         return $this->render('voir_vetement/voir_vetement.html.twig', [
             'vetement' => $vetement,
@@ -130,7 +132,8 @@ class VoirVetementController extends AbstractController
             'material' => $material,
             'expedition' => $expedition,
             'form' => $form->createView(),
-            'similarItm' => $similarItm
+            'similarItm' => $similarItm,
+            'userFavorites' => $userFavorites
         ]);
     }
 }

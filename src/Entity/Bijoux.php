@@ -66,10 +66,14 @@ class Bijoux
     #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: BijouxQuantity::class, orphanRemoval: true)]
     private Collection $bijouxQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: FavoriteProduct::class)]
+    private Collection $favoriteProducts;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
         $this->bijouxQuantities = new ArrayCollection();
+        $this->favoriteProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -309,6 +313,36 @@ class Bijoux
             // set the owning side to null (unless already changed)
             if ($bijouxQuantity->getBijoux() === $this) {
                 $bijouxQuantity->setBijoux(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteProduct>
+     */
+    public function getFavoriteProducts(): Collection
+    {
+        return $this->favoriteProducts;
+    }
+
+    public function addFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
+            $favoriteProduct->setBijoux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if ($this->favoriteProducts->removeElement($favoriteProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteProduct->getBijoux() === $this) {
+                $favoriteProduct->setBijoux(null);
             }
         }
 

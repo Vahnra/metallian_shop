@@ -9,6 +9,7 @@ use App\Entity\Bijoux;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
 use App\Entity\BijouxQuantity;
+use App\Entity\FavoriteProduct;
 use App\Form\CartProductFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,6 +111,8 @@ class VoirBijouxController extends AbstractController
             'categorie' => $bijou[0]->getCategorie(),
         ]);
 
+        $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'bijoux' => $bijoux]);
+
         return $this->render('voir_bijoux/v_bijoux.html.twig', [
             'bijou' => $bijou,
             'bijouxVariations' => $bijouxVariations,
@@ -117,13 +120,9 @@ class VoirBijouxController extends AbstractController
             'couleurs' => $couleurs,
             'expedition' => $expedition,
             'form' => $form->createView(),
-            'similarItm' => $similarItm
+            'similarItm' => $similarItm,
+            'userFavorites' => $userFavorites
         ]);
     }
 
-    #[Route('/ajouter-panier/bijoux-{id}', name: 'ajouer_panier_bijoux', methods: ['GET', 'POST'])]
-    public function ajouterPanierBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager, Request $request): Response
-    {
-
-    }
 }

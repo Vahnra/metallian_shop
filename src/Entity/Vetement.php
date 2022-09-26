@@ -77,11 +77,15 @@ class Vetement
     #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: VetementQuantity::class)]
     private Collection $vetementQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: FavoriteProduct::class)]
+    private Collection $favoriteProducts;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
         $this->cartProducts = new ArrayCollection();
         $this->vetementQuantities = new ArrayCollection();
+        $this->favoriteProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -375,6 +379,36 @@ class Vetement
             // set the owning side to null (unless already changed)
             if ($vetementQuantity->getVetement() === $this) {
                 $vetementQuantity->setVetement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteProduct>
+     */
+    public function getFavoriteProducts(): Collection
+    {
+        return $this->favoriteProducts;
+    }
+
+    public function addFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
+            $favoriteProduct->setVetement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if ($this->favoriteProducts->removeElement($favoriteProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteProduct->getVetement() === $this) {
+                $favoriteProduct->setVetement(null);
             }
         }
 

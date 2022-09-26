@@ -67,12 +67,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private Collection $carts;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: FavoriteProduct::class, orphanRemoval: true)]
+    private Collection $favoriteProducts;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
         $this->reviewMedia = new ArrayCollection();
         $this->postalAdress = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->favoriteProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -355,6 +359,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($cart->getUser() === $this) {
                 $cart->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteProduct>
+     */
+    public function getFavoriteProducts(): Collection
+    {
+        return $this->favoriteProducts;
+    }
+
+    public function addFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
+            $favoriteProduct->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if ($this->favoriteProducts->removeElement($favoriteProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteProduct->getUser() === $this) {
+                $favoriteProduct->setUser(null);
             }
         }
 
