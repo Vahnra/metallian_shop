@@ -38,10 +38,27 @@
 
 			<div class="col-4 pt-3 bg-light border-bottom border-end border-dark">
 				<div class="row">
-					<div class="col-8">
+					<div class="col-7">
 						<h2>{{ accessoriesMerch.0.description }}</h2>
 					</div>
-					<div class="col-4 my-auto justify-content-end d-flex">
+					{# Favorite button #}
+					{% if app.user is null %}
+						<a class="col-2 d-flex align-items-center text-decoration-none text-dark" href="{{ path('app_login')}}">
+							<i type="button" class="fa-regular fa-heart fa-2x"></i>
+						</a> 
+					{% else %}
+						{% if userFavorites is not empty %}
+							<a class="col-2 d-flex align-items-center text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_accessoires_merchandising', {'id':accessoriesMerch.0.id})}}">
+								<i type="button" class="fa-solid fa-heart fa-2x"></i>
+							</a>
+						{% else %}
+							<a class="col-2 d-flex align-items-center text-decoration-none text-dark" href="{{ path('add_favorite_accessoires_merchandising', {'id': accessoriesMerch.0.id})}}">
+								<i type="button" class="fa-regular fa-heart fa-2x"></i>
+							</a>
+						{% endif %}
+					{% endif %}
+					{# End favorite button #}
+					<div class="col-3 my-auto justify-content-end d-flex">
 						<h3 class="my-auto fw-bold">{{ accessoriesMerch.0.price/100 }}€</h3>
 					</div>
 				</div>

@@ -75,10 +75,14 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $stock = null;
 
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: FavoriteProduct::class)]
+    private Collection $favoriteProducts;
+
     public function __construct()
     {
         $this->reviewMedia = new ArrayCollection();
         $this->cartProducts = new ArrayCollection();
+        $this->favoriteProducts = new ArrayCollection();
     }
 
 
@@ -351,6 +355,36 @@ class Media
     public function setStock(string $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteProduct>
+     */
+    public function getFavoriteProducts(): Collection
+    {
+        return $this->favoriteProducts;
+    }
+
+    public function addFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
+            $favoriteProduct->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if ($this->favoriteProducts->removeElement($favoriteProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteProduct->getMedia() === $this) {
+                $favoriteProduct->setMedia(null);
+            }
+        }
 
         return $this;
     }

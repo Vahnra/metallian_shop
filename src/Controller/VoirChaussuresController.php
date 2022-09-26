@@ -9,6 +9,7 @@ use App\Entity\Color;
 use App\Entity\Chaussures;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
+use App\Entity\FavoriteProduct;
 use App\Form\CartProductFormType;
 use App\Entity\ChaussuresQuantity;
 use Doctrine\ORM\EntityManagerInterface;
@@ -112,6 +113,8 @@ class VoirChaussuresController extends AbstractController
             'sousCategorie' => $chaussure[0]->getSousCategorie(),
             'categorie' => $chaussure[0]->getCategorie(),
         ]);
+
+        $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'chaussures' => $chaussures]);
     
         return $this->render('voir_chaussures/voir_chaussures.html.twig', [
             'chaussure' => $chaussure,
@@ -121,8 +124,8 @@ class VoirChaussuresController extends AbstractController
             'sizes' => $sizes,
             'expedition' => $expedition,
             'form' => $form->createView(),
-            'similarItm' => $similarItm
-            
+            'similarItm' => $similarItm,
+            'userFavorites' => $userFavorites    
         ]);
     }
 }

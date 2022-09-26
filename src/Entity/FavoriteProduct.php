@@ -27,6 +27,21 @@ class FavoriteProduct
     #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
     private ?Bijoux $bijoux = null;
 
+    #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
+    private ?Chaussures $chaussures = null;
+
+    #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
+    private ?Accessoires $accessoires = null;
+
+    #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
+    private ?Media $media = null;
+
+    #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
+    private ?VetementMerchandising $vetementMerchandising = null;
+
+    #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
+    private ?AccessoiresMerchandising $accessoiresMerchandising = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +91,66 @@ class FavoriteProduct
     public function setBijoux(?Bijoux $bijoux): self
     {
         $this->bijoux = $bijoux;
+
+        return $this;
+    }
+
+    public function getChaussures(): ?Chaussures
+    {
+        return $this->chaussures;
+    }
+
+    public function setChaussures(?Chaussures $chaussures): self
+    {
+        $this->chaussures = $chaussures;
+
+        return $this;
+    }
+
+    public function getAccessoires(): ?Accessoires
+    {
+        return $this->accessoires;
+    }
+
+    public function setAccessoires(?Accessoires $accessoires): self
+    {
+        $this->accessoires = $accessoires;
+
+        return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?Media $media): self
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    public function getVetementMerchandising(): ?VetementMerchandising
+    {
+        return $this->vetementMerchandising;
+    }
+
+    public function setVetementMerchandising(?VetementMerchandising $vetementMerchandising): self
+    {
+        $this->vetementMerchandising = $vetementMerchandising;
+
+        return $this;
+    }
+
+    public function getAccessoiresMerchandising(): ?AccessoiresMerchandising
+    {
+        return $this->accessoiresMerchandising;
+    }
+
+    public function setAccessoiresMerchandising(?AccessoiresMerchandising $accessoiresMerchandising): self
+    {
+        $this->accessoiresMerchandising = $accessoiresMerchandising;
 
         return $this;
     }

@@ -9,6 +9,7 @@ use App\Entity\Color;
 use App\Entity\Material;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
+use App\Entity\FavoriteProduct;
 use App\Form\CartProductFormType;
 use App\Entity\VetementMerchandising;
 use Doctrine\ORM\EntityManagerInterface;
@@ -120,6 +121,8 @@ class VoirVetementMerchController extends AbstractController
             'categorieMerchandising' => $vetementMerche[0]->getCategorieMerchandising(),
         ]);
 
+        $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'vetementMerchandising' => $vetementMerches]);
+
         return $this->render('voir_vetement_merch/VoirVetementMerch.html.twig', [
             'vetementMerche' => $vetementMerche,
             'vetementVariations' => $vetementVariations,
@@ -130,7 +133,7 @@ class VoirVetementMerchController extends AbstractController
             'expedition' => $expedition,
             'form' => $form->createView(),
             'similarItm' => $similarItm,
-
+            'userFavorites' => $userFavorites
         ]);
     }
 }

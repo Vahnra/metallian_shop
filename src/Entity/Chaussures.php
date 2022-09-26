@@ -65,10 +65,14 @@ class Chaussures
     #[ORM\OneToMany(mappedBy: 'chaussures', targetEntity: ChaussuresQuantity::class, orphanRemoval: true)]
     private Collection $chaussuresQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'chaussures', targetEntity: FavoriteProduct::class)]
+    private Collection $favoriteProducts;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
         $this->chaussuresQuantities = new ArrayCollection();
+        $this->favoriteProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -307,6 +311,36 @@ class Chaussures
             // set the owning side to null (unless already changed)
             if ($chaussuresQuantity->getChaussures() === $this) {
                 $chaussuresQuantity->setChaussures(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteProduct>
+     */
+    public function getFavoriteProducts(): Collection
+    {
+        return $this->favoriteProducts;
+    }
+
+    public function addFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
+            $favoriteProduct->setChaussures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if ($this->favoriteProducts->removeElement($favoriteProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteProduct->getChaussures() === $this) {
+                $favoriteProduct->setChaussures(null);
             }
         }
 

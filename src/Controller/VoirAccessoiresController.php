@@ -9,9 +9,10 @@ use App\Entity\Color;
 use App\Entity\Material;
 use App\Entity\Expedition;
 use App\Entity\Accessoires;
-use App\Entity\AccessoiresQuantity;
 use App\Entity\CartProduct;
+use App\Entity\FavoriteProduct;
 use App\Form\CartProductFormType;
+use App\Entity\AccessoiresQuantity;
 use App\Repository\VetementRepository;
 use App\Repository\ExpeditionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -122,6 +123,7 @@ class VoirAccessoiresController extends AbstractController
             'categorie' => $accessoire[0]->getCategorie(),
         ]);
 
+        $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'accessoires' => $accessoires]);
 
         return $this->render('voir_accessoires/voir_accessoires.html.twig', [
             'accessoire' => $accessoire,
@@ -132,7 +134,8 @@ class VoirAccessoiresController extends AbstractController
             'form' => $form->createView(),
             'similarItm' => $similarItm,
             'couleurs' => $couleurs,
-            'sizes' => $sizes
+            'sizes' => $sizes,
+            'userFavorites' => $userFavorites
         ]);
     }
 }
