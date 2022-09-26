@@ -70,20 +70,24 @@
 
                 <div class="col-xl-10">
 
-                    <h3 class="mb-4">{{ categories.title }}</h3>
+                    <div class="row mb-3">
 
-                    {# Select pour trier #}
-                    <div class="col-3 ms-auto mb-4">
+                        <h3 class="col-9"><a href="{{ path('default_home') }}" class="text-underline-hover text-black">Accueil</a> / {{ categories.title }}</h3>
+
+                        {# Select pour trier #}
+                        <div class="col-3 ms-auto">
 
 
-                        <select class="form-select" onChange="window.location=this.value;">
-                            <option selected>Trier par</option>
-                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
-                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
-                            <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
-                        </select>
-                        
-                    </div>      
+                            <select class="form-select" onChange="window.location=this.value;">
+                                <option selected>Trier par</option>
+                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
+                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
+                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
+                            </select>
+                            
+                        </div>
+
+                    </div>    
 
                     <div class="row mx-auto">
 
