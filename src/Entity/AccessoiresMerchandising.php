@@ -66,9 +66,13 @@ class AccessoiresMerchandising
     #[ORM\Column(length: 255)]
     private ?string $photo5 = null;
 
+    #[ORM\OneToMany(mappedBy: 'accessoiresMerchandising', targetEntity: CartProduct::class)]
+    private Collection $cartProducts;
+
     public function __construct()
     {
         $this->accessoiresMerchandisingQuantities = new ArrayCollection();
+        $this->cartProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -292,6 +296,36 @@ class AccessoiresMerchandising
     public function setPhoto5(string $photo5): self
     {
         $this->photo5 = $photo5;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartProduct>
+     */
+    public function getCartProducts(): Collection
+    {
+        return $this->cartProducts;
+    }
+
+    public function addCartProduct(CartProduct $cartProduct): self
+    {
+        if (!$this->cartProducts->contains($cartProduct)) {
+            $this->cartProducts->add($cartProduct);
+            $cartProduct->setAccessoiresMerchandising($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartProduct(CartProduct $cartProduct): self
+    {
+        if ($this->cartProducts->removeElement($cartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($cartProduct->getAccessoiresMerchandising() === $this) {
+                $cartProduct->setAccessoiresMerchandising(null);
+            }
+        }
 
         return $this;
     }

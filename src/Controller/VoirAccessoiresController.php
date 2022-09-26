@@ -23,7 +23,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class VoirAccessoiresController extends AbstractController
 {
     #[Route('/voir/accessoires-{id}', name: 'voir_accessoires', methods: ['GET', 'POST'])]
-    public function voirAccessoires(Accessoires $accessoires, EntityManagerInterface $entityManager, Request $request): Response
+    public function voirAccessoires(
+        Accessoires $accessoires,
+        EntityManagerInterface $entityManager,
+        Request $request
+        ): Response
     {
         $color = $request->get('color');
 
@@ -129,7 +133,6 @@ class VoirAccessoiresController extends AbstractController
             'similarItm' => $similarItm,
             'couleurs' => $couleurs,
             'sizes' => $sizes
-            
         ]);
     }
 }

@@ -68,6 +68,9 @@ class CartProduct
     #[ORM\ManyToOne(inversedBy: 'cartProducts')]
     private ?VetementMerchandising $vetementMerchandising = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
+    private ?AccessoiresMerchandising $accessoiresMerchandising = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -278,6 +281,18 @@ class CartProduct
     public function setVetementMerchandising(?VetementMerchandising $vetementMerchandising): self
     {
         $this->vetementMerchandising = $vetementMerchandising;
+
+        return $this;
+    }
+
+    public function getAccessoiresMerchandising(): ?AccessoiresMerchandising
+    {
+        return $this->accessoiresMerchandising;
+    }
+
+    public function setAccessoiresMerchandising(?AccessoiresMerchandising $accessoiresMerchandising): self
+    {
+        $this->accessoiresMerchandising = $accessoiresMerchandising;
 
         return $this;
     }
