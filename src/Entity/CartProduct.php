@@ -65,6 +65,9 @@ class CartProduct
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $size = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
+    private ?VetementMerchandising $vetementMerchandising = null;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
@@ -263,6 +266,18 @@ class CartProduct
     public function setSize(string $size): self
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+    public function getVetementMerchandising(): ?VetementMerchandising
+    {
+        return $this->vetementMerchandising;
+    }
+
+    public function setVetementMerchandising(?VetementMerchandising $vetementMerchandising): self
+    {
+        $this->vetementMerchandising = $vetementMerchandising;
 
         return $this;
     }

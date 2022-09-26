@@ -86,10 +86,10 @@ class VoirVetementMerchController extends AbstractController
             $cartProduct->setPhoto($vetementMerche[0]->getPhoto());
             $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
             $cartProduct->setSize($entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]));
-            $cartProduct->setSubCategory($vetementMerche[0]->getSousCategorie());         
+            $cartProduct->setSubCategory($vetementMerche[0]->getSousCategorieMerchandising());         
 
-            $sku = $entityManager->getRepository(VetementQuantity::class)->findOneBy([
-                'vetement' => $vetementMerche[0]->getId(), 
+            $sku = $entityManager->getRepository(VetementMerchandisingQuantity::class)->findOneBy([
+                'vetementMerchandising' => $vetementMerche[0]->getId(), 
                 'color' => $color,
                 'size' => $size
             ])->getSku();
