@@ -93,6 +93,18 @@
 
 									{% endif %}
 
+									{% if searchResult.className == 'VetementMerchandising' %}
+
+										<a href="{{ path('voir_vetement_merch', {"id": searchResult.id} ) }}" class="text-decoration-none text-black">
+
+									{% endif %}
+
+									{% if searchResult.className == 'AccessoiresMerchandising' %}
+
+										<a href="{{ path('voir_accessoires_merch', {"id": searchResult.id} ) }}" class="text-decoration-none text-black">
+
+									{% endif %}
+
 									<img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 									<div class="card-body">
 										<ul class="list-group list-group-flush">
