@@ -36,8 +36,8 @@
                 <div class="col-8">
                     <h2>{{ bijou.0.description }}</h2>
                 </div>
-                <div class="col-4 pt-2">
-                    <p>{{ bijou.0.price/100 }}€</p>
+                <div class="col-4 my-auto justify-content-end d-flex">
+                    <h4 class="my-auto fw-bold">{{ bijou.0.price/100 }}€</h4>
                 </div>
             </div>
             
@@ -84,15 +84,13 @@
                 
                     </script>
 
-
-                <p>{{ bijou.0.price/100 }}€</p>
                 <div class="col-6 mb-4">
                     {{form(form)}}
                 </div>
 
             </form>
             <div class="col-12 p-2 border-top border-dark bg-light">
-                <h3>description</h3>
+                <h3>Description</h3>
                 <p>
                  {{ bijou.0.longDescription }}
                 </p>
@@ -108,8 +106,8 @@
 </div>
 
 {# -----------------------------------Produits similaires--------------- #}
-<div class="container">
-    <div class="row">
+<div class="container pt-3">
+    <div class="row py-1">
       
         <div class="col-12 bg-light">
             <h2>Produits similaires</h2>
@@ -125,7 +123,7 @@
                     <p class="card-text">{{ bijou.description }}</p>
                     <p>{{ bijou.price/100 }}€</p>
                     <div class="text-center">
-                        <a href={{ path('voir_bijoux', {'id':bijou.id})}} class="btn btn-warning">Plus d'informations</a>
+                        <a href="{{ path('voir_bijoux', {'id':bijou.id})}}" class="btn btn-warning">Plus d'informations</a>
                     </div>
                 </div>
             </div>

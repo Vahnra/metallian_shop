@@ -120,4 +120,10 @@ class VoirBijouxController extends AbstractController
             'similarItm' => $similarItm
         ]);
     }
+
+    #[Route('/ajouter-panier/bijoux-{id}', name: 'ajouer_panier_bijoux', methods: ['GET', 'POST'])]
+    public function ajouterPanierBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager, Request $request): Response
+    {
+
+    }
 }
