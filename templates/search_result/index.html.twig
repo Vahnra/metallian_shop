@@ -108,10 +108,10 @@
 									<img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 									<div class="card-body">
 										<ul class="list-group list-group-flush">
-											<li class="list-group-item">{{ (searchResult.price)/100 }}
+											<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 												€</li>
 										</ul>
-										<h5 class="card-title">{{ searchResult.title }}</h5>
+										<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 										{# <p class="card-text">{{ vetement.description }}</p> #}
 									</div>
 

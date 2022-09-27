@@ -122,7 +122,7 @@
             
                 <div class="col-xl-2">
                 
-                    <p>Catégories</p>
+                    <p class="mt-2">Catégories</p>
                     <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.title}) }}">{{ categories.title }}</a></h3>
                     <ul class="" style="list-style-type: none">
 
@@ -142,47 +142,51 @@
 
                     </ul>
 
-                    {% if categories.title == 'Femme' %}
+                    <div class="pt-3 border-top">
+
+                        {% if categories.title == 'Femme' %}
+                        
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.title == 'Enfant' %}
+                        
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.title == 'Homme' %}
+                        
+                            {{ form(filterForm) }}
+
+                        {% endif %}
+
+                        {% if categories.title == 'Bijoux' %}
                     
-                        {{ form(filterForm) }}
+                            {{ form(filterBijouxForm) }}
 
-                    {% endif %}
+                        {% endif %}
 
-                    {% if categories.title == 'Enfant' %}
+                        {% if categories.title == 'Chaussures' %}
                     
-                        {{ form(filterForm) }}
+                            {{ form(filterChaussuresForm) }}
 
-                    {% endif %}
+                        {% endif %}
 
-                    {% if categories.title == 'Homme' %}
+                        {% if categories.title == 'Accessoires' %}
                     
-                        {{ form(filterForm) }}
+                            {{ form(filterAccessoiresForm) }}
 
-                    {% endif %}
+                        {% endif %}
 
-                    {% if categories.title == 'Bijoux' %}
-                
-                        {{ form(filterBijouxForm) }}
+                        {% if categories.title == 'Musique' %}
+                    
+                            {{ form(filterMediaForm) }}
 
-                    {% endif %}
+                        {% endif %}
 
-                    {% if categories.title == 'Chaussures' %}
-                
-                        {{ form(filterChaussuresForm) }}
-
-                    {% endif %}
-
-                    {% if categories.title == 'Accessoires' %}
-                
-                        {{ form(filterAccessoiresForm) }}
-
-                    {% endif %}
-
-                    {% if categories.title == 'Musique' %}
-                
-                        {{ form(filterMediaForm) }}
-
-                    {% endif %}
+                    </div>
                     
                 </div>
 
@@ -206,8 +210,7 @@
                     </div>
 
                     <div class="row mx-auto">
-
-                        
+                                        
                         {# For pour afficher les vetements en forme de cartes #}
 
                         {# {% if categories.title == 'Femme' %} #}
@@ -222,9 +225,9 @@
                                     <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
-                                        <h5 class="card-title">{{ vetement.title }}</h5>
+                                        <h5 class="card-title text-muted">{{ vetement.title }}</h5>
                                         {# <p class="card-text">{{ vetement.description }}</p> #}
                                     </div>      
 
@@ -245,9 +248,9 @@
                                 <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ bijou.title }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ (bijou.price)/100 }} €</li>
+                                        <li class="list-group-item fw-bold">{{ (bijou.price)/100 }} €</li>
                                     </ul>
-                                    <h5 class="card-title">{{ bijou.title }}</h5>
+                                    <h5 class="card-title text-muted">{{ bijou.title }}</h5>
                                     {# <p class="card-text">{{ bijou.description }}</p>
                                     <a href="#" class="card-link">Ajouter au panier</a> #}
                                 </div>      
@@ -267,11 +270,9 @@
                                 <img src="{{ asset('images/' ~ media.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ media.title }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ (media.price)/100 }} €</li>
+                                        <li class="list-group-item fw-bold">{{ (media.price)/100 }} €</li>
                                     </ul>
-                                    <h5 class="card-title">{{ media.title }}</h5>
-                                    <p class="card-text">{{ media.description }}</p>
-                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                    <h5 class="card-title text-muted">{{ media.title }}</h5>
                                 </div>      
 
                             </a>
@@ -289,11 +290,9 @@
                                 <img src="{{ asset('images/' ~ chaussure.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ (chaussure.price)/100 }} €</li>
+                                        <li class="list-group-item fw-bold">{{ (chaussure.price)/100 }} €</li>
                                     </ul>
-                                    <h5 class="card-title">{{ chaussure.title }}</h5>
-                                    <p class="card-text">{{ chaussure.description }}</p>
-                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                    <h5 class="card-title text-muted">{{ chaussure.title }}</h5>
                                 </div>      
 
                             </a>
@@ -311,11 +310,9 @@
                                 <img src="{{ asset('images/' ~ accessoire.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ (accessoire.price)/100 }} €</li>
+                                        <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
                                     </ul>
-                                    <h5 class="card-title">{{ accessoire.title }}</h5>
-                                    <p class="card-text">{{ accessoire.description }}</p>
-                                    <a href="#" class="card-link">Ajouter au panier</a>
+                                    <h5 class="card-title text-muted">{{ accessoire.title }}</h5>
                                 </div>      
 
                             </a>
@@ -326,19 +323,41 @@
 
                         {# Pagination #}
 
-                        <div class="container mt-3">
-                    
-                            <div class="row">
+                        {% if vetements is not null %}
+
+                            <div class="container mt-3">
                         
-                                <div class="col-12 ms-auto">
+                                <div class="row">
                             
-                                {{ knp_pagination_render(vetements) }}
+                                    <div class="col-12 ms-auto">
+                                
+                                    {{ knp_pagination_render(vetements) }}
+                                
+                                    </div>
                             
                                 </div>
-                        
+
                             </div>
 
-                        </div>
+                        {% endif %}
+
+                        {% if bijoux is not null %}
+
+                            <div class="container mt-3">
+                        
+                                <div class="row">
+                            
+                                    <div class="col-12 ms-auto">
+                                
+                                    {{ knp_pagination_render(bijoux) }}
+                                
+                                    </div>
+                            
+                                </div>
+
+                            </div>
+
+                        {% endif %}
 
                     </div>
                 

@@ -14,7 +14,7 @@
             
                 <div class="col-2">
 
-                    <p>Catégories</p>
+                    <p class="mt-2">Catégories</p>
 
                     <h3><a class="text-underline-hover text-black" href="{{ path('show_from_category_merchandising', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></h3>
 
@@ -34,23 +34,27 @@
 
                         </ul>
 
-                        {% if categories.0.title == 'Merchandising Femme' %}
-                        
-                            {{ form(filterForm) }}
+                        <div class="pt-3 border-top">
 
-                        {% endif %}
+                            {% if categories.0.title == 'Merchandising Femme' %}
+                            
+                                {{ form(filterForm) }}
 
-                        {% if categories.0.title == 'Merchandising Homme' %}
-                        
-                            {{ form(filterForm) }}
+                            {% endif %}
 
-                        {% endif %}  
+                            {% if categories.0.title == 'Merchandising Homme' %}
+                            
+                                {{ form(filterForm) }}
 
-                        {% if categories.0.title == 'Accessoires Merchandising' %}
-                        
-                            {{ form(filterAccessoiresForm) }}
+                            {% endif %}  
 
-                        {% endif %} 
+                            {% if categories.0.title == 'Accessoires Merchandising' %}
+                            
+                                {{ form(filterAccessoiresForm) }}
+
+                            {% endif %} 
+
+                        </div>
                 
                 </div>
 
@@ -90,11 +94,9 @@
 
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
-                                        <h5 class="card-title">{{ vetement.title }}</h5>
-                                        <p class="card-text">{{ vetement.description }}</p>
-                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                        <h5 class="card-title text-muted">{{ vetement.title }}</h5>
                                     </div>                
 
                                 </a>
@@ -116,11 +118,9 @@
                                     <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">{{ (bijou.price)/100 }} €</li>
+                                            <li class="list-group-item fw-bold">{{ (bijou.price)/100 }} €</li>
                                         </ul>
-                                        <h5 class="card-title">{{ bijou.title }}</h5>
-                                        <p class="card-text">{{ bijou.description }}</p>
-                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                        <h5 class="card-title text-muted">{{ bijou.title }}</h5>
                                     </div>      
 
                                 </a>
@@ -140,11 +140,9 @@
                                     <img src="{{ asset('images/' ~ accessoire.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">{{ (accessoire.price)/100 }} €</li>
+                                            <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
                                         </ul>
-                                        <h5 class="card-title">{{ accessoire.title }}</h5>
-                                        <p class="card-text">{{ accessoire.description }}</p>
-                                        <a href="#" class="card-link">Ajouter au panier</a>
+                                        <h5 class="card-title text-muted">{{ accessoire.title }}</h5>
                                     </div>      
 
                                 </a>
@@ -155,19 +153,23 @@
 
                         {# Pagination #}
 
-                        <div class="container mt-3">
-                    
-                            <div class="row">
+                        {% if vetements is not null %}
+
+                            <div class="container mt-3">
                         
-                                <div class="col-12 ms-auto">
+                                <div class="row">
                             
-                                    {{ knp_pagination_render(vetements) }}
+                                    <div class="col-12 ms-auto">
+                                
+                                        {{ knp_pagination_render(vetements) }}
+                                
+                                    </div>
                             
                                 </div>
-                        
-                            </div>
 
-                        </div>
+                            </div>
+                            
+                        {% endif %}
 
                     </div>
         
