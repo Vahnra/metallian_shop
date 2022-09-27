@@ -93,27 +93,28 @@
                             {{form_row(form.quantity)}}
                         </div>
                         <div class="row">
-                            <div class="col-6">
-                                {{form_row(form.submit)}}
-                            </div>
 
                             {# Favorite button #}
                             {% if app.user is null %}
-                                <a class="col-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('app_login')}}">
+                                <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('app_login')}}">
                                     <i type="button" class="fa-regular fa-heart fa-2x"></i>
                                 </a>
                             {% else %}
                                 {% if userFavorites is not empty %}
-                                    <a class="col-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_bijoux', {'id':bijou.0.id})}}">
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_bijoux', {'id':bijou.0.id})}}">
                                         <i type="button" class="fa-solid fa-heart fa-2x"></i>
                                     </a>
                                 {% else %}
-                                    <a class="col-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_bijoux', {'id':bijou.0.id})}}">
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_bijoux', {'id':bijou.0.id})}}">
                                         <i type="button" class="fa-regular fa-heart fa-2x"></i>
                                     </a>
                                 {% endif %}
                             {% endif %}
                             {# End favorite button #}
+
+                            <div class="col-6">
+                                {{form_row(form.submit)}}
+                            </div>
 
                     </div>
                     {{form_end(form)}}
