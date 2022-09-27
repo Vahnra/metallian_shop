@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 body {
   background-color: rgb(249, 248, 251);
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* CSS pour le footer */
