@@ -56,11 +56,23 @@
             </div>
         </div>
 
+        <div class="col-6 pt-3 pb-4">
 
+            <p><span>Choisissez une taille :</span></p>
+
+            <select class="form-select" id="test2" name="size" aria-label="Default select example">
+
+                <option selected>Taille</option>              
+                        
+            </select>
+
+            <div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;"><i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles</div>
+
+        </div>
             
            
             
-        <div class="col mb-3 text-center">
+        <div class="col-6 mb-4">
             {{form(form)}}
         </div>
         <div class="col-12 p-2 border-top border-dark bg-light">
@@ -110,7 +122,24 @@
 </div> 
 {# end container #}
 
-
+    <!-- Modal taille-->
+    <div class="modal fade" id="sizeGuideModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+                {# <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> #}
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ render(url('size_guide')) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                {# <button type="button" class="btn btn-primary">Save changes</button> #}
+            </div>
+            </div>
+        </div>
+    </div>
 
 {# ------------------------------------GALLERY SCRIPT--------------------- #}
 <script>
