@@ -55,7 +55,17 @@ class VoirBijouxController extends AbstractController
         $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) 
-        {              
+        {   
+            $choosedColor = $entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]);
+
+            if ($choosedColor == null) {
+                $this->addFlash('Attention', "Sélectionnez une couleur");
+
+                $route = $request->headers->get('referer');
+
+                return $this->redirect($route);
+            }
+    
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
             if ($user !== null && $cart == null) {

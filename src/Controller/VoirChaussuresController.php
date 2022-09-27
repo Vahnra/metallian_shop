@@ -56,7 +56,17 @@ class VoirChaussuresController extends AbstractController
         $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) 
-        {              
+        {   
+            $choosedSize = $entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]);
+
+            if ($choosedSize == null) {
+                $this->addFlash('Attention', "Sélectionnez une taille");
+
+                $route = $request->headers->get('referer');
+
+                return $this->redirect($route);
+            }
+
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
             if ($user !== null && $cart == null) {

@@ -66,6 +66,26 @@ class VoirAccessoiresController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {              
+            $choosedColor = $entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]);
+
+            if ($choosedColor == null) {
+                $this->addFlash('Attention', "Sélectionnez une couleur");
+
+                $route = $request->headers->get('referer');
+
+                return $this->redirect($route);
+            }
+
+            $choosedSize = $entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]);
+
+            if ($choosedSize == null) {
+                $this->addFlash('Attention', "Sélectionnez une taille");
+
+                $route = $request->headers->get('referer');
+
+                return $this->redirect($route);
+            }
+            
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
             if ($user !== null && $cart == null) {
