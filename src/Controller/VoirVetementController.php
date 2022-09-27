@@ -63,7 +63,27 @@ class VoirVetementController extends AbstractController
         $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) 
-        {        
+        {   
+            $choosedColor = $entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]);
+
+            if ($choosedColor == null) {
+                $this->addFlash('Attention', "Sélectionnez une couleur");
+
+                $route = $request->headers->get('referer');
+
+                return $this->redirect($route);
+            }
+
+            $choosedSize = $entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]);
+
+            if ($choosedSize == null) {
+                $this->addFlash('Attention', "Sélectionnez une taille");
+
+                $route = $request->headers->get('referer');
+
+                return $this->redirect($route);
+            }
+
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
             if ($user !== null && $cart == null) {
@@ -85,8 +105,8 @@ class VoirVetementController extends AbstractController
             $cartProduct->setPrice($vetement[0]->getPrice());
             $cartProduct->setTitle($vetement[0]->getTitle());
             $cartProduct->setPhoto($vetement[0]->getPhoto());
-            $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
-            $cartProduct->setSize($entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]));
+            $cartProduct->setColor($choosedColor);
+            $cartProduct->setSize($choosedSize);
             $cartProduct->setSubCategory($vetement[0]->getSousCategorie());         
 
             $sku = $entityManager->getRepository(VetementQuantity::class)->findOneBy([
