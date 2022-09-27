@@ -136,10 +136,11 @@ class VoirVetementController extends AbstractController
 
         }
 
-        $similarItm = $entityManager->getRepository(Vetement::class)->findBy([
-            'sousCategorie' => $vetement[0]->getSousCategorie(),
-            'categorie' => $vetement[0]->getCategorie(),
-        ]);
+        $categorie = $vetement[0]->getCategorie();
+
+        $sousCategorie = $vetement[0]->getSousCategorie();
+
+        $similarItm = $entityManager->getRepository(Vetement::class)->findSimilarItem($categorie, $sousCategorie);
 
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'vetement' => $vetements]);
 

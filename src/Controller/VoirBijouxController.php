@@ -116,10 +116,7 @@ class VoirBijouxController extends AbstractController
             $entityManager->flush();
 
         }
-        $similarItm = $entityManager->getRepository(Bijoux::class)->findBy([
-            'sousCategorie' => $bijou[0]->getSousCategorie(),
-            'categorie' => $bijou[0]->getCategorie(),
-        ]);
+        $similarItm = $entityManager->getRepository(Bijoux::class)->findSimilarItem($bijou[0]->getCategorie(), $bijou[0]->getSousCategorie());
 
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'bijoux' => $bijoux]);
 

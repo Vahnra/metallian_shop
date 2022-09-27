@@ -206,21 +206,22 @@
     </div>
 </div>
 {# ------------------------------------------------------------------------------------ #}
-<div class="container">
-    <div class="row">
-        <div class="col-12 bg-light">
+<div class="container-xl py-3">
+    <div class="row pt-2" style="background-color: white; border: solid 1px black">
+        <div class="col-12">
             
             <h2>Produits similaires</h2>
+
         </div>
 
          {% for vetement in similarItm |slice(0,4) %} 
-        <div class="col-3 bg-light mb-3 "> 
+        <div class="col-3 mb-3" style="background-color: white;"> 
             <div class="card" style="width: 18rem;">
                 <img src={{ asset('images/'~vetement.photo) }} class="card-img-top">
                 <div class="card-body">
                      <h5 class="card-title">{{ vetement.title }}</h5> 
-                      <p>{{ vetement.sousCategorie }}</p>
-                    <p class="card-text">{{ vetement.description }}</p>
+                      {# <p>{{ vetement.sousCategorie }}</p>
+                    <p class="card-text">{{ vetement.description }}</p> #}
                     <p>{{ vetement.price/100 }}€</p>
                     <div class="text-center">
                         <a href={{ path('voir_vetement', {'id':vetement.id})}} class="btn btn-warning">Plus d'informations</a>

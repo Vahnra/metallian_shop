@@ -41,6 +41,25 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
     }
 
 
+    /**
+    * @return AccessoiresMerchandising[] Returns an array of Vetement objects
+    */
+   public function findSimilarItem($categorie, $sousCategorie): array
+   {
+       return $this->createQueryBuilder('v')
+            ->andWhere('v.categorieMerchandising = :val')
+            ->setParameter('val', $categorie)
+            ->andWhere('v.sousCategorieMerchandising = :val2')
+            ->setParameter('val2', $sousCategorie)
+            ->leftJoin('v.accessoiresMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('v.id', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+        ;
+   }
 
     //    Fonction pour la pagination
     public function findForPagination($value): Query
