@@ -25,6 +25,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -43,7 +44,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('title', 'Nom de l\'article');
         yield TextField::new('description', 'Description de l\'article');
-        yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
+        yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('marques', 'Marque de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');

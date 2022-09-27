@@ -26,6 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -45,7 +46,7 @@ class AccessoiresCrudController extends AbstractCrudController
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('title', 'Titre');
         yield TextField::new('description');
-        yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
+        yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('material');
         yield MoneyField::new('price', 'prix')->setCurrency('EUR');
 
