@@ -9,7 +9,7 @@
         <div class="col-12 bg-dark text-white">
             <div class="row">
                 <div class="col-1"></div>
-                <div class="col-11"><h1>Vêtements : {{ vetement.0.title }}</h1></div>
+                <div class="col-11 pt-1"><h1>Vêtements : {{ vetement.0.title }}</h1></div>
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@
       
                 <p>{{ vetement.0.sousCategorie }}</p>
                 <p>{{ material.0.material }}</p>
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-1">
                     {{form_start(form)}}
                         <div class="col-6">
                             {{form_row(form.quantity)}}
@@ -237,7 +237,7 @@
 
     <!-- Modal taille-->
     <div class="modal fade" id="sizeGuideModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
             <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="exampleModalLabel">Guide des tailles</h2>

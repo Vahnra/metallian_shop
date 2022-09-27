@@ -9,7 +9,7 @@
 			<div class="col-12 bg-dark text-white">
 				<div class="row">
 					<div class="col-1"></div>
-					<div class="col-11">
+					<div class="col-11 pt-1">
 						<h1>Merchandising Vêtement :
 							{{ vetementMerche.0.title }}</h1>
 					</div>
@@ -65,7 +65,7 @@
                         </select>
                     </div>
 
-                    <div class="col-6 pt-3 pb-4">
+                    <div class="col-12 pt-3 pb-4">
 
                         <p><span>Choisissez une taille :</span></p>
 
@@ -110,7 +110,7 @@
       
                 <p>{{ vetementMerche.0.sousCategorieMerchandising }}</p>
                 <p>{{ vetementMerche.0.material }}</p>
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-1">
                     {{form_start(form)}}
                         <div class="col-6">
                             {{form_row(form.quantity)}}
@@ -144,11 +144,6 @@
                 </div>
 
             </form>
-
-
-				<div class="col mb-3 text-center">{# <button type="button" class="btn btn-success">Ajouter au panier</button> #}
-					{# {{form(form)}} #}
-				</div>
 
                 <div class="col-12 p-2 border-top border-dark bg-light">
 
@@ -227,7 +222,7 @@
 
 	<!-- Modal taille-->
     <div class="modal fade" id="sizeGuideModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
             <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="exampleModalLabel">Guide des tailles</h2>
