@@ -37,26 +37,8 @@
                 <div class="col-8">
                     <h2>{{ vetement.0.description }}</h2>
                 </div>
-
-                {# Favorite button #}
-                {% if app.user is null %}
-                    <a class="col-2 justify-content-end d-flex align-items-center text-decoration-none text-dark" href="{{ path('app_login')}}">
-                        <i type="button" class="fa-regular fa-heart fa-2x"></i>
-                    </a> 
-                {% else %}
-                    {% if userFavorites is not empty %}
-                        <a class="col-2 justify-content-end d-flex align-items-center text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':vetement.0.id})}}">
-                            <i type="button" class="fa-solid fa-heart fa-2x"></i>
-                        </a>
-                    {% else %}
-                        <a class="col-2 justify-content-end d-flex align-items-center text-decoration-none text-dark" href="{{ path('add_favorite_vetement', {'id':vetement.0.id})}}">
-                            <i type="button" class="fa-regular fa-heart fa-2x"></i>
-                        </a>
-                    {% endif %}
-                {% endif %}
-                {# End favorite button #}
                 
-                <div class="col-2 my-auto justify-content-end d-flex">
+                <div class="col-4 my-auto justify-content-end d-flex">
                     <h3 class="my-auto fw-bold">{{ vetement.0.price/100 }}€</h3>
                 </div>
             </div>
@@ -145,9 +127,36 @@
       
                 <p>{{ vetement.0.sousCategorie }}</p>
                 <p>{{ material.0.material }}</p>
-                <div class="col-6 mb-4">
-                
-                    {{form(form)}}
+                <div class="col-12 mb-4">
+                    {{form_start(form)}}
+                        <div class="col-6">
+                            {{form_row(form.quantity)}}
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                {{form_row(form.submit)}}
+                            </div>
+
+                            {# Favorite button #}
+                            {% if app.user is null %}
+                                <a class="col-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('app_login')}}">
+                                    <i type="button" class="fa-regular fa-heart fa-2x"></i>
+                                </a>
+                            {% else %}
+                                {% if userFavorites is not empty %}
+                                    <a class="col-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':vetement.0.id})}}">
+                                        <i type="button" class="fa-solid fa-heart fa-2x"></i>
+                                    </a>
+                                {% else %}
+                                    <a class="col-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_vetement', {'id':vetement.0.id})}}">
+                                        <i type="button" class="fa-regular fa-heart fa-2x"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            {# End favorite button #}
+
+                    </div>
+                    {{form_end(form)}}
                     
                 </div>
                 
