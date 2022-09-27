@@ -151,10 +151,35 @@
 					{# {{form(form)}} #}
 				</div>
 				<div class="col-12 p-2 border-top border-dark bg-light">
-					<h3>Description</h3>
-					<p>
-						{{ accessoriesMerch.0.longDescription }}
-					</p>
+
+					<script>
+					function showDescription() {
+						if(document.getElementById('description').style.cssText == 'display: none;'){
+							document.getElementById('description').style.cssText = 'display: inline;';
+							document.getElementById('fleche').classList.add('fa-minus');
+							document.getElementById('fleche').classList.remove('fa-plus');
+						}
+						else {
+							document.getElementById('description').style.cssText = 'display: none;';
+							document.getElementById('fleche').classList.add('fa-plus');
+							document.getElementById('fleche').classList.remove('fa-minus');
+						}
+					}
+					</script>
+
+					<div class="row align-items-center" onclick="showDescription()" style="cursor: pointer;">
+
+						<h3 class="col-10">Description</h3>
+						<div class="col-2">
+							<i class="fa-solid fa-plus d-flex justify-content-end" id="fleche"></i>
+						</div>
+
+					</div> 
+
+					<div id="description" style="display: none;">
+					{{ accessoriesMerch.0.longDescription }}
+					</div>
+
 				</div>
 				<div class="col-12 p-2 border-top border-dark bg-light">
 					<h3>

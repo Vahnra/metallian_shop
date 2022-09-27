@@ -124,12 +124,39 @@
             </form>
 
             </form>
+
             <div class="col-12 p-2 border-top border-dark bg-light">
-                <h3>Description</h3>
-                <p>
+
+                <script>
+                function showDescription() {
+                    if(document.getElementById('description').style.cssText == 'display: none;'){
+                        document.getElementById('description').style.cssText = 'display: inline;';
+                        document.getElementById('fleche').classList.add('fa-minus');
+                        document.getElementById('fleche').classList.remove('fa-plus');
+                    }
+                    else {
+                        document.getElementById('description').style.cssText = 'display: none;';
+                        document.getElementById('fleche').classList.add('fa-plus');
+                        document.getElementById('fleche').classList.remove('fa-minus');
+                    }
+                }
+                </script>
+
+                <div class="row align-items-center" onclick="showDescription()" style="cursor: pointer;">
+
+                    <h3 class="col-10">Description</h3>
+                    <div class="col-2">
+                        <i class="fa-solid fa-plus d-flex justify-content-end" id="fleche"></i>
+                    </div>
+
+                </div> 
+
+                <div id="description" style="display: none;">
                  {{ bijou.0.longDescription }}
-                </p>
+                </div>
+
             </div>
+
             <div class="col-12 p-2 border-top border-dark bg-light">
                 <h3><i class="fa-solid fa-truck-fast"></i>  {{ expedition.0.title }}</h3> 
                 <p>{{ expedition.0.description }}</p> 
