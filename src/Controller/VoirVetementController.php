@@ -63,7 +63,7 @@ class VoirVetementController extends AbstractController
         $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) 
-        {              
+        {        
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
 
             if ($user !== null && $cart == null) {

@@ -79,18 +79,28 @@
                         </select>
                     </div>
 
-                    <div class="col-6 pt-3 pb-4">
+                    <div class="col-12 pt-3 pb-4">
 
                         <p><span>Choisissez une taille :</span></p>
 
-                        <select class="form-select" id="test2" name="size" aria-label="Default select example">
+                        <div id="test3">
+                            <label class="mx-2">
+                                <input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 1" style="width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;">S</div>
+                            </label><label class="mx-2">
+                                <input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 2" style="width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;">M</div>
+                            </label><label class="mx-2">
+                                <input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 2" style="width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;">L</div>
+                            </label>
+                        </div>
+
+                        {# <select class="form-select" id="test2" name="size" aria-label="Default select example">
                             <option selected>Taille</option>              
                         
-                        </select>
+                        </select> #}
 
                         <div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;">
                             <i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles
-                            </div>
+                        </div>
 
                     </div>
 
@@ -103,15 +113,27 @@
                     var options=""; 
                     
                     $("#test").on('click',function(){ 
-                        var value=$(this).val(); 
-                        options="<option>Taille</option>"
-                        
+                        var value=$(this).val();
+
+                        // options="<option>Taille</option>"
+
+                        // for(let i = 0 ; i < test.length; i++) {
+                        //     if(value == test[i].color.id)
+                        //     {
+                        //         options+="<option value='" + test[i].size.id + "'>" + test[i].size.size + "</option>"
+
+                        //         $("#test2").html(options);
+
+                        //     }
+                        // }
+                        size=""
+
                         for(let i = 0 ; i < test.length; i++) {
                             if(value == test[i].color.id)
                             {
-                                options+="<option value='" + test[i].size.id + "'>" + test[i].size.size + "</option>"
+                                size+="<label class='mx-2'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
 
-                                $("#test2").html(options);
+                                $("#test3").html(size);
 
                             }
                         }
