@@ -48,13 +48,16 @@ class VetementRepository extends ServiceEntityRepository
    public function findByFourVetements($value): array
    {
        return $this->createQueryBuilder('v')
-           ->andWhere('v.categorie = :val')
-           ->setParameter('val', $value)
-           ->orderBy('v.id', 'DESC')
-           ->setMaxResults(4)
-           ->getQuery()
-           ->getResult()
-       ;
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->leftJoin('v.vetementQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('v.id', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+        ;
    }
 
 //    Fonction pour la pagination

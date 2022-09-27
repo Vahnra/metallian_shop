@@ -73,7 +73,7 @@
                                 <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 300px; object-fit: contain;" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ (vetement.price)/100 }} €</li>
+                                        <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                     </ul>
                                     {# <h5 class="card-title">{{ vetement.title }}</h5>
                                     <p class="card-text">{{ vetement.description }}</p>
@@ -117,7 +117,7 @@
                                     <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 300px; object-fit: contain;" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush ">
-                                            <li class="list-group-item bg-dark text-white">{{ (vetement.price)/100 }} €</li>
+                                            <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
                                         {# <h5 class="card-title">{{ vetement.title }}</h5>
                                         <p class="card-text">{{ vetement.description }}</p>
