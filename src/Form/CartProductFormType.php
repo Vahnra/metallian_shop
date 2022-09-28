@@ -24,7 +24,7 @@ class CartProductFormType extends AbstractType
                 'label' => 'Ajouter au panier',
                 'validate' => False,
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-success',
                 ],
             ])
         ;

@@ -134,6 +134,7 @@ class VoirVetementController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            return $this->redirectToRoute('added_product');
         }
 
         $categorie = $vetement[0]->getCategorie();

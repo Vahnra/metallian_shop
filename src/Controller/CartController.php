@@ -144,4 +144,114 @@ class CartController extends AbstractController
         return $this->redirectToRoute('show_cart_details');
     }
     
+    #[Route('/cart/added-product', name:'added_product', methods:['GET', 'POST'])]
+    public function addedProduct(
+        EntityManagerInterface $entityManager,
+        Request $request
+        ): Response
+    {
+        $user = $this->getUser();
+
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+
+        // dd($request->getSession()->get('id'));
+        
+        if ($user !== null && $cart == null) {
+            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
+        }
+
+        $cartProducts = null;
+
+        $numberOfItem = null;
+
+        if ($cart !== null) {
+            $numberOfItem = $cart->getCartProduct()->count();
+        }
+
+        if ($cart !== null) {
+            $cartProducts = $cart->getCartProduct()->toArray();
+        }
+
+        $totalPrice = 0;
+
+        // Boucle pour récuper le prix total de tout les produits du panier
+        if ($numberOfItem !== null) {
+            foreach ($cartProducts as $value) {
+                $totalPrice = $totalPrice + ($value->getPrice() * $value->getQuantity());
+            }
+        }
+
+        // On récupère le dernier produit du panier
+        $lastProduct = $cartProducts[array_key_last($cartProducts)];
+
+        return $this->render('cart/added_product.html.twig', [
+            'numberOfItem' => $numberOfItem,
+            'totalPrice' => $totalPrice,
+            'cartProducts' => $cartProducts,
+            'lastProduct' => $lastProduct
+        ]);
+    }
+
+    #[Route('/return', name:'return', methods:['GET', 'POST'])]
+    public function return(
+        EntityManagerInterface $entityManager,
+        Request $request
+        ): Response
+    {
+        $user = $this->getUser();
+
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+        
+        if ($user !== null  && $cart == null) {
+            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
+        }
+
+        $cartProducts = null;
+
+        if ($cart !== null) {
+            $cartProducts = $cart->getCartProduct()->toArray();
+        }
+
+        // Boucle pour récuper le prix total de tout les produits du panier
+        $lastProducts = $cartProducts[array_key_last($cartProducts)];
+
+        // Condition pour chaque type de prodruit pour former la route précédent
+        if ($lastProducts->getVetement()->getId() !== null) {
+            return $this->redirectToRoute('voir_vetement', [
+                'id' => $lastProducts->getVetement()->getId()
+            ]);
+        }
+
+        if ($lastProducts->getAccessoires()->getId() !== null) {
+            return $this->redirectToRoute('voir_accessoires', [
+                'id' => $lastProducts->getAccessoires()->getId()
+            ]);
+        }
+
+        if ($lastProducts->getBijoux()->getId() !== null) {
+            return $this->redirectToRoute('voir_bijoux', [
+                'id' => $lastProducts->getBijoux()->getId()
+            ]);
+        }
+
+        if ($lastProducts->getChaussures()->getId() !== null) {
+            return $this->redirectToRoute('voir_chaussures', [
+                'id' => $lastProducts->getChaussures()->getId()
+            ]);
+        }
+
+        if ($lastProducts->getAccessoiresMerchandising()->getId() !== null) {
+            return $this->redirectToRoute('voir_accessoires_merch', [
+                'id' => $lastProducts->getAccessoiresMerchandising()->getId()
+            ]);
+        }
+
+        if ($lastProducts->getVetementMerchandising()->getId() !== null) {
+            return $this->redirectToRoute('voir_vetement_merch', [
+                'id' => $lastProducts->getVetementMerchandising()->getId()
+            ]);
+        }
+
+        return $this->redirectToRoute('default_home');
+    }
 }

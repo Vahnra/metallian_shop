@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Aperçu du panier{% endblock %}
+
+{% block body %}
+    <div class="container-xl">
+
+		{# <h2 class=" mt-3 mb-2">Votre panier</h2> #}
+
+		<section class="">
+			<div class="container py-5 h-50">
+				<div class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-12">
+						<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+							<div class="card-body p-0">
+								<div class="row g-0">
+									<div class="col-lg-12">
+										<div class="p-5">
+											<div class="d-flex justify-content-between align-items-center mb-2">
+												<h4 class="fw-bold mb-0 text-black">Article ajouté a votre panier</h4>
+											</div>
+
+											<hr class="my-4">
+
+                                            <div class="col-lg-8 mx-auto">         
+                                                
+                                    
+                                            
+                                            </div>
+
+											<div class="pt-5 row">
+												<h6 class="mb-0 col-3">
+													<a href="{{ path('return') }}" class="text-body">
+														<i class="fas fa-long-arrow-alt-left me-2"></i>Retourner a la fiche produit</a>
+												</h6>
+
+												<h6 class="mb-0 ms-auto col-2 text-end">
+													<a href="{{ path('return') }}" class="text-body">
+														Voir votre panier</a> <i class="fas fa-long-arrow-alt-right me-2"></i>
+												</h6>
+											</div>
+
+										</div>
+									</div>
+					
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+
+{% endblock %}
