@@ -42,9 +42,11 @@
                     <h3 class="my-auto fw-bold">{{ vetement.0.price/100 }}€</h3>
                 </div>
 
-                <div class="col-8">
-                    <h5>{{ vetement.0.marques.title }}</h5>
-                </div>
+                {% if vetement.0.marques is not null %}
+                    <div class="col-8">
+                        <h5>{{ vetement.0.marques.title }}</h5>
+                    </div>
+                {% endif %}
             </div>
 
             <form method="post">

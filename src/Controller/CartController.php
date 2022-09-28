@@ -143,6 +143,15 @@ class CartController extends AbstractController
     
         return $this->redirectToRoute('show_cart_details');
     }
+
+    #[Route('/delete-product-from-preview-{id}', name:'delete_product_preview', methods:['GET', 'POST'])]
+    public function hardDeleteProductPreview(CartProduct $cartProduct, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $entityManager->remove($cartProduct);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('added_product');
+    }
     
     #[Route('/cart/added-product', name:'added_product', methods:['GET', 'POST'])]
     public function addedProduct(
@@ -182,7 +191,13 @@ class CartController extends AbstractController
         }
 
         // On récupère le dernier produit du panier
-        $lastProduct = $cartProducts[array_key_last($cartProducts)];
+
+        if ($cartProducts == null) {
+            $lastProduct = null;
+        }
+        if ($cartProducts != null) {
+            $lastProduct = $cartProducts[array_key_last($cartProducts)];
+        }
 
         return $this->render('cart/added_product.html.twig', [
             'numberOfItem' => $numberOfItem,

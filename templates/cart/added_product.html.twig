@@ -22,20 +22,72 @@
 
 											<hr class="my-4">
 
-                                            <div class="col-lg-8 mx-auto">         
+                                            <div class="col-lg-12 mx-auto">  
+
+												{% if lastProduct is not null %}
+												       
                                                 
+												<div class="row mb-4 d-flex justify-content-between align-items-center">
+														<div class="col-md-2 col-lg-2 col-xl-2">
+															<img src="{{ asset('images/' ~ lastProduct.photo) }}" class="img-fluid rounded-3" alt="Cotton T-shirt">
+														</div>
+														<div class="col-md-3 col-lg-3 col-xl-3">
+															<h6 class="text-muted">{{ lastProduct.subCategory }}</h6>
+															<h5 class="text-black fw-bold mb-0">{{ lastProduct.title }}</h5>
+															<p class="text-black mb-0">Couleur : {{ lastProduct.color }}</p>
+															<p class="text-black mb-0">Taille : {{ lastProduct.size }}</p>
+														</div>
+														<div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+
+															<form action="" id="form-quantity{{lastProduct.id}}" method="POST" class="d-flex">
+
+																<button class="btn btn-link px-1" id="minusOne{{lastProduct.id}}">
+																	<i class="fas fa-minus"></i>
+																</button>
+															
+																	<div class="col-6 text-center mt-1 border-2 border" style="border-radius: 5px">{{lastProduct.quantity}}</div>
+														
+																<button class="btn btn-link px-1" id="plusOne{{lastProduct.id}}">
+																	<i class="fas fa-plus"></i>
+
+																	
+																</button> 
+
+															</form> 
+														</div>
+														<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+															<h6 class="mb-0">{{ lastProduct.price/100 * lastProduct.quantity }} €</h6>
+														</div>
+														<div class="col-md-1 col-lg-1 col-xl-1 text-end">
+															<a href="{{ path('delete_product_preview', {'id': lastProduct.id }) }}" class="text-muted">
+																<i class="fas fa-times"></i>
+															</a>
+														</div>
+													</div>
+
+													<hr class="my-4">
+
+													{% endif %}
                                     
                                             
                                             </div>
 
 											<div class="pt-5 row">
 												<h6 class="mb-0 col-3">
-													<a href="{{ path('return') }}" class="text-body">
-														<i class="fas fa-long-arrow-alt-left me-2"></i>Retourner a la fiche produit</a>
+													{% if lastProduct is not null %}
+													
+														<a href="{{ path('return') }}" class="text-body">
+															<i class="fas fa-long-arrow-alt-left me-2"></i>Retourner a la fiche produit</a>
+													{% else %}
+														
+														<a href="{{ path('default_home') }}" class="text-body">
+															<i class="fas fa-long-arrow-alt-left me-2"></i>Retourner a l'acueil</a>
+
+													{% endif %}
 												</h6>
 
 												<h6 class="mb-0 ms-auto col-2 text-end">
-													<a href="{{ path('return') }}" class="text-body">
+													<a href="{{ path('show_cart_details') }}" class="text-body">
 														Voir votre panier</a> <i class="fas fa-long-arrow-alt-right me-2"></i>
 												</h6>
 											</div>
