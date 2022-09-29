@@ -115,6 +115,7 @@ class VoirBijouxController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            return $this->redirectToRoute('added_product');
         }
         $similarItm = $entityManager->getRepository(Bijoux::class)->findSimilarItem($bijou[0]->getCategorie(), $bijou[0]->getSousCategorie());
 

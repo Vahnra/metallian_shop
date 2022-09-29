@@ -135,6 +135,7 @@ class VoirAccessoriesMerchController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            return $this->redirectToRoute('added_product');
         }
 
         $similarItm = $entityManager->getRepository(AccessoiresMerchandising::class)->findSimilarItem($accessoiresMerch[0]->getCategorieMerchandising(), $accessoiresMerch[0]->getSousCategorieMerchandising());

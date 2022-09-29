@@ -231,37 +231,37 @@ class CartController extends AbstractController
         $lastProducts = $cartProducts[array_key_last($cartProducts)];
 
         // Condition pour chaque type de prodruit pour former la route précédent
-        if ($lastProducts->getVetement()->getId() !== null) {
+        if ($lastProducts->getVetement() !== null) {
             return $this->redirectToRoute('voir_vetement', [
                 'id' => $lastProducts->getVetement()->getId()
             ]);
         }
 
-        if ($lastProducts->getAccessoires()->getId() !== null) {
+        if ($lastProducts->getAccessoires() !== null) {
             return $this->redirectToRoute('voir_accessoires', [
                 'id' => $lastProducts->getAccessoires()->getId()
             ]);
         }
 
-        if ($lastProducts->getBijoux()->getId() !== null) {
+        if ($lastProducts->getBijoux() !== null) {
             return $this->redirectToRoute('voir_bijoux', [
                 'id' => $lastProducts->getBijoux()->getId()
             ]);
         }
 
-        if ($lastProducts->getChaussures()->getId() !== null) {
+        if ($lastProducts->getChaussures() !== null) {
             return $this->redirectToRoute('voir_chaussures', [
                 'id' => $lastProducts->getChaussures()->getId()
             ]);
         }
 
-        if ($lastProducts->getAccessoiresMerchandising()->getId() !== null) {
+        if ($lastProducts->getAccessoiresMerchandising() !== null) {
             return $this->redirectToRoute('voir_accessoires_merch', [
                 'id' => $lastProducts->getAccessoiresMerchandising()->getId()
             ]);
         }
 
-        if ($lastProducts->getVetementMerchandising()->getId() !== null) {
+        if ($lastProducts->getVetementMerchandising() !== null) {
             return $this->redirectToRoute('voir_vetement_merch', [
                 'id' => $lastProducts->getVetementMerchandising()->getId()
             ]);

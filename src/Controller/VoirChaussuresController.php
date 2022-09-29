@@ -118,9 +118,10 @@ class VoirChaussuresController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            return $this->redirectToRoute('added_product');
         }
-        $similarItm = $entityManager->getRepository(Chaussures::class)->findSimilarItem($chaussure[0]->getCategorie(), $chaussure[0]->getSousCategorie() 
-        );
+
+        $similarItm = $entityManager->getRepository(Chaussures::class)->findSimilarItem($chaussure[0]->getCategorie(), $chaussure[0]->getSousCategorie());
 
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'chaussures' => $chaussures]);
     

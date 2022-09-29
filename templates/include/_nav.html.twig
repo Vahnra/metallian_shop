@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{ path('default_home') }}">
 
@@ -9,7 +9,7 @@
 		{# {{ render(controller('App\\Controller\\RenderController::renderSearchArticle')) }} #}
 		<form action="{{ path('render_search_article')}}" id="search" class="d-flex me-4" method="GET">
 			<div>
-				<input class="me-2 searchBar align-middle" type="search" placeholder="Entrez votre recherche" id="searchBar" name="search" aria-label="Search"><i type="button" onclick="document.getElementById('search').submit()" id="searchBar-icon" class="align-middle fa-solid fa-magnifying-glass"></i>
+				<input class="me-2 searchBar align-middle text-white" type="search" placeholder="Entrez votre recherche" id="searchBar" name="search" aria-label="Search"><i type="button" onclick="document.getElementById('search').submit()" id="searchBar-icon" class="align-middle fa-solid fa-magnifying-glass"></i>
 			</div>
 		</form>
 		{# <div class="collapse navbar-collapse" id="navbarSupportedContent"> #}
@@ -26,11 +26,11 @@
 				{% endif %}
 				<div class="dropdown">
 					{% if app.user %}
-					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="{{ path('show_profile', {"id": app.user.id}) }}"   aria-expanded="false">	
+					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: black" href="{{ path('show_profile', {"id": app.user.id}) }}"   aria-expanded="false">	
 							<i class="fa-solid fa-user"></i>
 					</a>
 					{% else %}
-						<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="{{ path('app_login') }}"   aria-expanded="false">	
+						<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: black" href="{{ path('app_login') }}"   aria-expanded="false">	
 							<i class="fa-solid fa-user"></i>
 						</a>
 					{% endif %}
@@ -58,7 +58,7 @@
 				
 			
 				<div class="dropdown">
-					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: rgb(33, 37, 41)" href="{{ path('show_cart_details') }}"   aria-expanded="false">
+					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: black" href="{{ path('show_cart_details') }}"   aria-expanded="false">
 						<i class="fa-solid fa-basket-shopping"></i>
 					</a>
 
