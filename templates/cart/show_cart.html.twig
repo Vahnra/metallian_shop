@@ -1,24 +1,24 @@
-
+{% if cartProducts is not empty %}
     <div class="mb-3">Votre panier :</div>
 
-    {% if cartProducts is not null %}
+	{% for cartProduct in cartProducts %}
+		<div class="row pb-1">
+			<div class="col-4"><img src="{{ asset('images/' ~ cartProduct.photo) }}" alt="" style="max-width: 4rem"></div>
+			<div class="col-8">
+				<div class="col-12" class="fw-bold">
+					<strong>{{cartProduct.title}}</strong>
+				</div>
+				<div class="col-12">Quantité:
+					{{cartProduct.quantity}}</div>
+				<div class="col-12">{{cartProduct.price/100}}
+					€</div>
 
-        {% for cartProduct in cartProducts %}
-            <div class="row pb-1">
-                <div class="col-4"><img src="{{ asset('images/' ~ cartProduct.photo) }}" alt="" style="max-width: 4rem"></div>
-                <div class="col-8">
-                    <div class="col-12" class="fw-bold"><strong>{{cartProduct.title}}</strong></div>
-                    <div class="col-12">Quantité: {{cartProduct.quantity}}</div>
-                    <div class="col-12">{{cartProduct.price/100}} €</div>
-                
-                </div>
-            </div>
-        {% endfor %}
+			</div>
+		</div>
+	{% endfor %}
 
-    {% else %}
-        <div class="row pb-1">
-                Cricket noise
-            </div>
+{% else %}
 
-    {% endif %}
+	<div class="my-3">Votre panier est vide</div>
 
+{% endif %}
