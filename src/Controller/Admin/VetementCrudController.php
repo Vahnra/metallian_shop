@@ -28,6 +28,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
@@ -51,9 +52,6 @@ class VetementCrudController extends AbstractCrudController
         yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('marques', 'Marque de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
-        yield AssociationField::new('material', 'Matière de l\'article');
-        // yield AssociationField::new('material', '1 Matière de l\'article');
-        // yield AssociationField::new('material', '2 Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
@@ -92,10 +90,14 @@ class VetementCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(EntityFilter::new('marques'))
-            ->add(EntityFilter::new('categorie'))
-            ->add(EntityFilter::new('sousCategorie'))
-            ->add(DateTimeFilter::new('createdAt'));
+        ->add(TextFilter::new('title'))
+        ->add(EntityFilter::new('material'))
+        ->add(EntityFilter::new('marques'))
+        ->add(NumericFilter::new('price'))
+        ->add(EntityFilter::new('categorie'))
+        ->add(EntityFilter::new('sousCategorie'))
+        ->add(DateTimeFilter::new('createdAt'))
+        ->add(DateTimeFilter::new('updatedAt'));
     }
 
     public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {

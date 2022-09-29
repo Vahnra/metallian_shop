@@ -22,7 +22,7 @@ class SousCategorieMerchandisingCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Titre');
-        yield AssociationField::new('categorieMerchandising');
+        yield AssociationField::new('categorieMerchandising', 'Catégorie merchandising')->setRequired(true);
 
     }
 
@@ -30,6 +30,6 @@ class SousCategorieMerchandisingCrudController extends AbstractCrudController
     {
         return parent::configureFilters($filters)
             ->add(TextFilter::new('title'))
-            ->add(EntityFilter::new('categorie'));
+            ->add(EntityFilter::new('categorieMerchandising'));
     }
 }

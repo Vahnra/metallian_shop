@@ -23,7 +23,7 @@ class SousCategorieCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Titre');
-        yield AssociationField::new('categorie')->setRequired(true);
+        yield AssociationField::new('categorie', 'Catégorie')->setRequired(true);
 
     }
     

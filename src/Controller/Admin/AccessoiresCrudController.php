@@ -8,6 +8,7 @@ use App\Entity\SousCategorie;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
@@ -27,6 +28,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -45,23 +47,23 @@ class AccessoiresCrudController extends AbstractCrudController
 
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('title', 'Titre');
-        yield TextField::new('description');
+        yield TextField::new('Description');
         yield TextEditorField::new('longDescription', 'Description complète');
-        yield AssociationField::new('material');
-        yield MoneyField::new('price', 'prix')->setCurrency('EUR');
+        yield AssociationField::new('material', 'Matière de l\'article');
+        yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
-        yield ImageField::new('photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo4', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo5', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo', 'Photo 1')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo2', 'Photo 2')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo3', 'Photo 3')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo4', 'Photo 4')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo5', 'Photo 5')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
 
         yield FormField::addPanel('Catégorie de l\'article');
-        yield AssociationField::new('categorie');
-        yield AssociationField::new('sousCategorie')->hideOnForm();
-        yield DateField::new('createdAt')->hideOnForm();
-        yield DateField::new('updatedAt')->hideOnForm();
+        yield AssociationField::new('categorie', 'Catégorie');
+        yield AssociationField::new('sousCategorie', 'Sous-catégorie')->hideOnForm();
+        yield DateField::new('createdAt', 'Créer le')->hideOnForm();
+        yield DateField::new('updatedAt', 'Modifier le')->hideOnForm();
     }
 
 
@@ -72,12 +74,25 @@ class AccessoiresCrudController extends AbstractCrudController
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         parent::persistEntity($entityManager, $entityInstance);
     }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Accessoire')
+            ->setEntityLabelInPlural('Accessoires')
+        ;
+    }
     
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
             ->add(TextFilter::new('title'))
-            ->add(EntityFilter::new('categorie'));
+            ->add(EntityFilter::new('material'))
+            ->add(NumericFilter::new('price'))
+            ->add(EntityFilter::new('categorie'))
+            ->add(EntityFilter::new('sousCategorie'))
+            ->add(DateTimeFilter::new('createdAt'))
+            ->add(DateTimeFilter::new('updatedAt'));
     }
 
     public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
@@ -101,6 +116,7 @@ class AccessoiresCrudController extends AbstractCrudController
             function (FormEvent $event) {
                 $form = $event->getForm();
                 $form->add('sousCategorie', EntityType::class, [
+                    'label' => 'Sous-catégorie',
                     'class' => SousCategorie::class,
                     'placeholder' => '',
                     'choices' => [],

@@ -24,11 +24,11 @@ class ExpeditionCrudController extends AbstractCrudController
     {
         
         yield IdField::new('id')->hideOnForm();
-        yield TextField::new('title', 'titre');
-        yield TextareaField::new('description');
+        yield TextField::new('title', 'Titre');
+        yield TextareaField::new('description', 'Description');
         yield TextareaField::new('LongDescription', 'Description complète');
-        yield DateField::new('createdAt')->hideOnForm();
-        yield DateField::new('updatedAt')->hideOnForm();
+        yield DateField::new('createdAt', 'Créez le')->hideOnForm();
+        yield DateField::new('updatedAt', 'Modifier le')->hideOnForm();
         
     }
 

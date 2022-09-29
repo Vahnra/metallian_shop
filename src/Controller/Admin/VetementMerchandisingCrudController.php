@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\SousCategorieMerchandising;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
@@ -25,6 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -47,17 +49,16 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('marques', 'Marque de l\'article');
         yield AssociationField::new('material', 'Matière de l\'article');
-        yield AssociationField::new('material', 'Matière de l\'article');
         // yield AssociationField::new('material', '1 Matière de l\'article');
         // yield AssociationField::new('material', '2 Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
-        yield ImageField::new('photo', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo2', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo3', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo4', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo5', 'Photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo', 'Photo 1')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo2', 'Photo 2')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo3', 'Photo 3')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo4', 'Photo 4')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo5', 'Photo 5')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
 
         yield FormField::addPanel('Catégorie de l\'article');
         yield AssociationField::new('categorieMerchandising');
@@ -77,13 +78,25 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         parent::persistEntity($entityManager, $entityInstance);
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Vetement merchandising')
+            ->setEntityLabelInPlural('Vetements merchandising')
+        ;
+    }
+
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(EntityFilter::new('marques'))
-            ->add(EntityFilter::new('categorieMerchandising'))
-            ->add(EntityFilter::new('sousCategorieMerchandising'))
-            ->add(DateTimeFilter::new('createdAt'));
+        ->add(TextFilter::new('title'))
+        ->add(EntityFilter::new('material'))
+        ->add(EntityFilter::new('marques'))
+        ->add(NumericFilter::new('price'))
+        ->add(EntityFilter::new('categorieMerchandising'))
+        ->add(EntityFilter::new('sousCategorieMerchandising'))
+        ->add(DateTimeFilter::new('createdAt'))
+        ->add(DateTimeFilter::new('updatedAt'));
     }
 
     public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
