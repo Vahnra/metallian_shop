@@ -49,34 +49,33 @@
 
 					{% include "include/_flashes.html.twig" %}
 
-                    <div class="col-6 py-4">
-
-                        <p><span>Choisissez une couleur :</span></p>
-                    
-                        <select class="form-select" id="test" name="color" aria-label="Default select example">
-                            <option selected>Couleur</option>
+                    <div>
 
                             {% for couleur in couleurs %}
+                                
+                                    <label class="mx-2" style="cursor:pointer;">
+                                        <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+                                            <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
 
-                                <option value="{{ couleur.id }}">{{ couleur.color }}</option>
+                                                <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
+
+                                            </div>
+                                        </input>
+                                    </label>
+                                
 
                             {% endfor %}
-                            
-                        </select>
-                    </div>
+
+                        </div>
 
                     <div class="col-12 pt-3 pb-4">
 
                         <p><span>Choisissez une taille :</span></p>
 
                         <div id="test3">
-                            <label class="mx-2">
-                                <input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 1" style="width: 3em; height: 2.4em; border-radius: 2px; border: solid 1px black; justify-content: center; align-items: center;display: flex;">S</div>
-                            </label><label class="mx-2">
-                                <input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 2" style="width: 3em; height: 2.4em; border-radius: 2px; border: solid 1px black; justify-content: center; align-items: center;display: flex;">M</div>
-                            </label><label class="mx-2">
-                                <input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 2" style="width: 3em; height: 2.4em; border-radius: 2px; border: solid 1px black; justify-content: center; align-items: center;display: flex;">L</div>
-                            </label>
+                            <div id="test3">
+                            {% for size in sizes %}<label class="mx-2 mb-2"><input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
+                        </div>
                         </div>
 
 						<div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;"><i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles</div>
@@ -91,14 +90,14 @@
         
                     var options=""; 
                     
-                    $("#test").on('click',function(){ 
+                    $(".test").on('click',function(){ 
                         var value=$(this).val(); 
                         size=""
 
                         for(let i = 0 ; i < test.length; i++) {
                             if(value == test[i].color.id)
                             {
-                                size+="<label class='mx-2'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
+                                size+="<label class='mx-2 mb-2'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
 
                                 $("#test3").html(size);
 

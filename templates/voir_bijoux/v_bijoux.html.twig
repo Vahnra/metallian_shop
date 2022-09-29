@@ -46,20 +46,29 @@
 
                     {% include "include/_flashes.html.twig" %}
 
-                    <div class="col-6 py-4">
+                    <div class="col-12 py-4">
 
                         <p><span>Choisissez une couleur :</span></p>
                     
-                        <select class="form-select" id="test" name="color" aria-label="Default select example">
-                            <option selected>Couleur</option>
+                        <div>
 
                             {% for couleur in couleurs %}
+                                
+                                    <label class="mx-2" style="cursor:pointer;">
+                                        <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+                                            <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
 
-                                <option value="{{ couleur.id }}">{{ couleur.color }}</option>
+                                                <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
+
+                                            </div>
+                                        </input>
+                                    </label>
+                                
 
                             {% endfor %}
-                            
-                        </select>
+
+                        </div>
+                        
                     </div>
 
                     <script>
