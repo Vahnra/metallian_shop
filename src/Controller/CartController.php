@@ -144,6 +144,25 @@ class CartController extends AbstractController
         return $this->redirectToRoute('show_cart_details');
     }
 
+    #[Route('/delete_all-product-from-cart-{id}', name:'delete_all_product', methods:['GET', 'POST'])]
+    public function hardDeleteAllProduct(Cart $cart, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        // On récupère les produit dans le panier
+        $cartProducts = null;
+
+        if ($cart != null) {
+            $cartProducts = $cart->getCartProduct()->toArray();
+        }
+
+        foreach ($cartProducts as $cartProduct) {
+            $entityManager->remove($cartProduct);
+        }
+        
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('show_cart_details');
+    }
+
     #[Route('/delete-product-from-preview-{id}', name:'delete_product_preview', methods:['GET', 'POST'])]
     public function hardDeleteProductPreview(CartProduct $cartProduct, EntityManagerInterface $entityManager): RedirectResponse
     {
