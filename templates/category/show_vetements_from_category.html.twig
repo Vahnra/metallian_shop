@@ -4,117 +4,7 @@
 
 {% block body %}
 
-    {# Titre dynamique #}
-
     <div class="container-xl bg-white">
-
-        {# <h1 class="py-2 ms-4">
-
-            {% if categories.title == 'Femme' %}
-            
-                Vêtements pour Femme 
-
-            {% elseif categories.title == 'Homme' %}
-
-                Les vêtements pour Homme
-
-            {% endif %}
-
-        </h1> #}
-
-        {# Banniere nouveautés et topseller dynamique #}
-
-        {# {% if categories.title == 'Femme' %}
-
-            <div class="row ps-3">
-
-                <a href="#" class="parent col-md-6 text-decoration-none" style="height: 45rem">
-
-                    <div class="text-white image1" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h3 class="pt-3 ps-4">Nouveautés</h3>
-                        
-                    </div>
-
-                    <img class="image2" style="width: 550px" src="https://www.emp-online.fr/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dw765bba3d/99425_MT_1000_Herbstumstellung_Teaser_Frau_Neuheiten.jpg?sw=600" />
-
-                    <div class="text-white image3 " style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h5 class="pb-2 text-underline-hover2 ps-4 position-absolute bottom-0 start-0">Commander !</h5>
-                        
-                    </div>
-
-                </a>
-
-                <a href="#" class="parent col-md-5 text-decoration-none" style="height: 20rem">
-
-                    <div class="image1" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <div class="text-white" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h3 class="pt-3 ps-4">Topseller</h3>
-                        
-                    </div>
-                    
-                    </div>
-                    <img class="image2" style="width: 550px" src="https://www.emp-online.fr/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dw39a269a9/99425_MT_1000_Herbstumstellung_Teaser_Frau_Topseller.jpg?sw=600" />
-
-                    <div class="text-white image3" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h5 class="pb-2 ps-4 text-underline-hover2 position-absolute bottom-0 start-0">Commander !</h5>
-                        
-                    </div>
-                </a>
-
-            </div>
-
-            {% elseif categories.title == 'Homme' %}
-
-            <div class="row ps-3">
-
-                <a href="#" class="parent col-md-6 text-decoration-none" style="height: 45rem">
-
-                    <div class="text-white image1" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h3 class="pt-3 ps-4">Nouveautés</h3>
-                        
-                    </div>
-
-                    <img class="image2" style="width: 550px" src="https://www.emp-online.fr/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dw8e385687/99426_MT_1000_Herbst_Mann_Neuheiten.jpg?sw=600" />
-
-                    <div class="text-white image3 " style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h5 class="pb-2 ps-4 text-underline-hover2 position-absolute bottom-0 start-0">Commander !</h5>
-                        
-                    </div>
-
-                </a>
-
-                <a href="#" class="parent col-md-5 text-decoration-none" style="height: 20rem">
-
-                    <div class="image1" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <div class="text-white" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h3 class="pt-3 ps-4">Topseller</h3>
-                        
-                    </div>
-                    
-                    </div>
-                    <img class="image2" style="width: 550px" src="https://www.emp-online.fr/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dwf99ab6bf/99426_MT_1000_Herbst_Mann_Topseller.jpg?sw=600" />
-
-                    <div class="text-white image3" style="height: 300px; width: 400px; background-color: black">
-                    
-                        <h5 class="pb-2 ps-4 text-underline-hover2 position-absolute bottom-0 start-0">Commander !</h5>
-                        
-                    </div>
-                </a>
-
-            </div>
-
-
-
-        {% endif %} #}
 
         <div class="container-fluid py-4">
         
@@ -228,7 +118,25 @@
                                             <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
                                         <h5 class="card-title text-muted">{{ vetement.title }}</h5>
-                                        {# <p class="card-text">{{ vetement.description }}</p> #}
+                                        {% set colors = {} %}
+                                        {% for variations in vetement.vetementQuantities.values %}
+
+                                            {% if variations.color.color not in colors %}
+                                            
+                                                {% set colors = colors | merge({ (variations.color.id): variations.color.color}) %}
+                                            
+                                            {% endif %}
+                                            
+
+                                        {% endfor %}
+
+                                        {% for color in colors %}
+                                            <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                                <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color | trans }}; border-radius: 50%; margin-top: 3px;"></div>
+                                            </div>
+                                            
+                                        {% endfor %}
+                                
                                     </div>      
 
                                 </a>
@@ -327,9 +235,7 @@
 
                             <div class="container mt-3">
                         
-                                <div class="row">
-                            
-                                    <div class="col-12 ms-auto">
+                                    <div class="col-3 ms-auto me-2">
                                 
                                     {{ knp_pagination_render(vetements) }}
                                 
@@ -337,24 +243,18 @@
                             
                                 </div>
 
-                            </div>
-
                         {% endif %}
 
                         {% if bijoux is not null %}
 
                             <div class="container mt-3">
                         
-                                <div class="row">
-                            
-                                    <div class="col-12 ms-auto">
+                                    <div class="col-3 ms-auto me-2">
                                 
                                     {{ knp_pagination_render(bijoux) }}
                                 
                                     </div>
-                            
-                                </div>
-
+                
                             </div>
 
                         {% endif %}
