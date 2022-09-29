@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~medium.0.photo1) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
-            <img src={{ asset('images/'~medium.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
-            <img src={{ asset('images/'~medium.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit"/>
+            <img src={{ asset('images/'~medium.0.photo1) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ medium.0.title }}"/>
+            <img src={{ asset('images/'~medium.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ medium.0.title }}"/>
+            <img src={{ asset('images/'~medium.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ medium.0.title }}"/>
         </div>
 
         <div class="col-7 pt-3 text-center bg-light border-bottom border-dark">
             
-            <img id="imageBox" src={{ asset('images/'~medium.0.photo1) }} class="img-fluid p-2" title="Grande image du produit"/>
+            <img id="imageBox" src={{ asset('images/'~medium.0.photo1) }} class="img-fluid p-2" alt="{{ medium.0.title }}"/>
             
 
         </div>
@@ -111,8 +111,8 @@
         
 
         {% for medium in similaeGnr |slice(0,4) %} 
-          <div class="col-3 bg-light mb-3"> 
-            <div class="card" style="width: 18rem;">
+       
+            <div class="card mx-auto mb-3" style="width: 18rem; background-color: white;">
                 <img src={{ asset('images/'~medium.photo1) }} class="card-img-top">
                 <div class="card-body">
                      <h5 class="card-title">{{ medium.title }}</h5> 
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+  
 
         {% endfor %} 
 

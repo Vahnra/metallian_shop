@@ -97,7 +97,7 @@ class RenderController extends AbstractController
 
         $searchResults = $paginator->paginate($searchResult, $page, 5);
 
-        return $this->render('search_result/index.html.twig', [
+        return $this->render('search_result/search_result.html.twig', [
             'searchResults' => $searchResults,
             'search' => $search,
             'categories' => $categories

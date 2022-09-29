@@ -3,7 +3,7 @@
 
 	{% for cartProduct in cartProducts %}
 		<div class="row pb-1">
-			<div class="col-4"><img src="{{ asset('images/' ~ cartProduct.photo) }}" alt="" style="max-width: 4rem"></div>
+			<div class="col-4 jus"><img src="{{ asset('images/' ~ cartProduct.photo) }}" alt="" class="mx-auto" style="max-height: 4rem; object-fit: contain;"></div>
 			<div class="col-8">
 				<div class="col-12" class="fw-bold">
 					<strong>{{cartProduct.title}}</strong>
