@@ -54,6 +54,9 @@ class Color implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'color', targetEntity: AccessoiresMerchandisingQuantity::class, orphanRemoval: true)]
     private Collection $accessoiresMerchandisingQuantities;
 
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -455,6 +458,18 @@ class Color implements \JsonSerializable
                 $accessoiresMerchandisingQuantity->setColor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

@@ -121,6 +121,24 @@
                                             <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
                                         <h5 class="card-title text-muted">{{ vetement.title }}</h5>
+                                            {% set colors = {} %}
+                                            {% for variations in vetement.vetementQuantities.values %}
+
+                                                {% if variations.color.code not in colors %}
+                                                
+                                                    {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                
+                                                {% endif %}
+                                                
+
+                                            {% endfor %}
+
+                                            {% for color in colors %}
+                                                <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                                    <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+                                                </div>
+                                            
+                                            {% endfor %}
                                         {# <p class="card-text">{{ vetement.description }}</p>
                                         <a href="#" class="card-link">Ajouter au panier</a> #}
                                     </div>                
@@ -147,6 +165,24 @@
                                             <li class="list-group-item fw-bold">{{ (bijou.price)/100 }} €</li>
                                         </ul>
                                         <h5 class="card-title text-muted">{{ bijou.title }}</h5>
+                                            {% set colors = {} %}
+                                            {% for variations in bijou.bijouxQuantities.values %}
+
+                                                {% if variations.color.code not in colors %}
+                                                
+                                                    {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                
+                                                {% endif %}
+                                                
+
+                                            {% endfor %}
+
+                                            {% for color in colors %}
+                                                <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                                    <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+                                                </div>
+                                            
+                                            {% endfor %}
                                     </div>      
 
                                 </a>
@@ -169,6 +205,24 @@
                                             <li class="list-group-item fw-bold">{{ (chaussure.price)/100 }} €</li>
                                         </ul>
                                         <h5 class="card-title text-muted">{{ chaussure.title }}</h5>
+                                            {% set colors = {} %}
+                                            {% for variations in chaussure.chaussuresQuantities.values %}
+
+                                                {% if variations.color.code not in colors %}
+                                                
+                                                    {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                
+                                                {% endif %}
+                                                
+
+                                            {% endfor %}
+
+                                            {% for color in colors %}
+                                                <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                                    <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+                                                </div>
+                                                
+                                            {% endfor %}
                                     </div>      
 
                                 </a>
@@ -189,6 +243,24 @@
                                             <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
                                         </ul>
                                         <h5 class="card-title text-muted">{{ accessoire.title }}</h5>
+                                            {% set colors = {} %}
+                                            {% for variations in accessoire.accessoiresQuantities.values %}
+
+                                                {% if variations.color.code not in colors %}
+                                                
+                                                    {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                
+                                                {% endif %}
+                                                
+
+                                            {% endfor %}
+
+                                            {% for color in colors %}
+                                                <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                                    <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+                                                </div>
+                                                
+                                            {% endfor %}
                                     </div>      
 
                                 </a>
