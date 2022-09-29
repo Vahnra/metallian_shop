@@ -95,34 +95,38 @@ class VoirVetementController extends AbstractController
                $request->getSession()->set('id', uniqid(rand(), true));
             }
 
+            // If pour savoir si le produit en question est deja dans le panier
             if ($cart != null) {
                 $cartProducts = $cart->getCartProduct()->toArray();
                 foreach ($cartProducts as $cartProduct) {
 
-                    if ($cartProduct->getVetement()->getId() == $vetement[0]->getId() 
-                        && $cartProduct->getSize() == $choosedSize 
-                        && $cartProduct->getcolor() == $choosedColor) {
+                    if ($cartProduct->getVetement() !== null) {
 
-                        $cartProduct->setQuantity($cartProduct->getQuantity() + $form->get('quantity')->getData());
+                        if ($cartProduct->getVetement()->getId() == $vetement[0]->getId() 
+                            && $cartProduct->getSize() == $choosedSize 
+                            && $cartProduct->getcolor() == $choosedColor) {
 
-                        $entityManager->persist($cartProduct);
+                            $cartProduct->setQuantity($cartProduct->getQuantity() + $form->get('quantity')->getData());
 
-                        $cart->setUpdatedAt(new DateTime());     
-                        $cart->setUser($user);
-                        $cart->addCartProduct($cartProduct);
-            
-                        $token = $cart->getToken();
-            
-                        if ($token == null) {
-                            $cart->setToken($request->getSession()->get('id'));
-                        } else {
-                            $cart->setToken($cart->getToken());
+                            $entityManager->persist($cartProduct);
+
+                            $cart->setUpdatedAt(new DateTime());     
+                            $cart->setUser($user);
+                            $cart->addCartProduct($cartProduct);
+                
+                            $token = $cart->getToken();
+                
+                            if ($token == null) {
+                                $cart->setToken($request->getSession()->get('id'));
+                            } else {
+                                $cart->setToken($cart->getToken());
+                            }
+                
+                            $entityManager->persist($cart);
+                            $entityManager->flush();
+
+                            return $this->redirectToRoute('added_product');
                         }
-            
-                        $entityManager->persist($cart);
-                        $entityManager->flush();
-
-                        return $this->redirectToRoute('added_product');
                     }
                 }
             }

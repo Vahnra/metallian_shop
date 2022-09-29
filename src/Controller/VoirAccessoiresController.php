@@ -58,8 +58,6 @@ class VoirAccessoiresController extends AbstractController
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
-        $cartProduct= new CartProduct();
-
         $form = $this->createForm(CartProductFormType::class)->handleRequest($request);
 
         $user = $this->getUser();
@@ -98,6 +96,44 @@ class VoirAccessoiresController extends AbstractController
                $cart->setStatus('active');
                $request->getSession()->set('id', uniqid(rand(), true));
             }
+
+            // If pour savoir si le produit en question est deja dans le panier
+            if ($cart != null) {
+                $cartProducts = $cart->getCartProduct()->toArray();
+                foreach ($cartProducts as $cartProduct) {
+
+                    if ($cartProduct->getAccessoires() !== null) {
+
+                        if ($cartProduct->getAccessoires()->getId() == $accessoire[0]->getId() 
+                            && $cartProduct->getSize() == $choosedSize 
+                            && $cartProduct->getcolor() == $choosedColor) {
+
+                            $cartProduct->setQuantity($cartProduct->getQuantity() + $form->get('quantity')->getData());
+
+                            $entityManager->persist($cartProduct);
+
+                            $cart->setUpdatedAt(new DateTime());     
+                            $cart->setUser($user);
+                            $cart->addCartProduct($cartProduct);
+                
+                            $token = $cart->getToken();
+                
+                            if ($token == null) {
+                                $cart->setToken($request->getSession()->get('id'));
+                            } else {
+                                $cart->setToken($cart->getToken());
+                            }
+                
+                            $entityManager->persist($cart);
+                            $entityManager->flush();
+
+                            return $this->redirectToRoute('added_product');
+                        }
+                    }
+                }
+            }
+
+            $cartProduct= new CartProduct();
             
             $cartProduct->setCreatedAt(new DateTime());
             $cartProduct->setUpdatedAt(new DateTime());

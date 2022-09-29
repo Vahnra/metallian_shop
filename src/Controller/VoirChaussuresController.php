@@ -49,8 +49,6 @@ class VoirChaussuresController extends AbstractController
       
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
-        $cartProduct= new CartProduct();
-
         $form = $this->createForm(CartProductFormType::class)->handleRequest($request);
 
         $user = $this->getUser();
@@ -79,6 +77,43 @@ class VoirChaussuresController extends AbstractController
                $cart->setStatus('active');
                $request->getSession()->set('id', uniqid(rand(), true));
             }
+
+            // If pour savoir si le produit en question est deja dans le panier
+            if ($cart != null) {
+                $cartProducts = $cart->getCartProduct()->toArray();
+                foreach ($cartProducts as $cartProduct) {
+
+                    if ($cartProduct->getChaussures() !== null) {
+
+                        if ($cartProduct->getChaussures()->getId() == $chaussure[0]->getId() 
+                            && $cartProduct->getSize() == $choosedSize) {
+
+                            $cartProduct->setQuantity($cartProduct->getQuantity() + $form->get('quantity')->getData());
+
+                            $entityManager->persist($cartProduct);
+
+                            $cart->setUpdatedAt(new DateTime());     
+                            $cart->setUser($user);
+                            $cart->addCartProduct($cartProduct);
+                
+                            $token = $cart->getToken();
+                
+                            if ($token == null) {
+                                $cart->setToken($request->getSession()->get('id'));
+                            } else {
+                                $cart->setToken($cart->getToken());
+                            }
+                
+                            $entityManager->persist($cart);
+                            $entityManager->flush();
+
+                            return $this->redirectToRoute('added_product');
+                        }
+                    }
+                }
+            }
+
+            $cartProduct= new CartProduct();
      
             $cartProduct->setCreatedAt(new DateTime());
             $cartProduct->setUpdatedAt(new DateTime());
@@ -89,7 +124,7 @@ class VoirChaussuresController extends AbstractController
             $cartProduct->setTitle($chaussure[0]->getTitle());
             $cartProduct->setPhoto($chaussure[0]->getPhoto());
             $cartProduct->setColor($entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]));
-            $cartProduct->setSize($entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]));
+            $cartProduct->setSize($choosedSize);
             $cartProduct->setSubCategory($chaussure[0]->getSousCategorie());
 
             $sku = $entityManager->getRepository(ChaussuresQuantity::class)->findOneBy([
