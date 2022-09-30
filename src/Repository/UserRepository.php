@@ -56,6 +56,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user, true);
     }
 
+    public function registeredUserByDate($date1, $date2)
+    {
+        return $this->createQueryBuilder('u')
+                ->andWhere('u.createdAt > :firstDate')
+                ->andWhere('u.createdAt < :secondDate')
+                ->setParameter('firstDate', $date1)
+                ->setParameter('secondDate', $date2)
+                ->getQuery()
+                ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
