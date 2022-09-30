@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirAccessoiresController extends AbstractController
 {
-    #[Route('/voir/accessoires-{id}', name: 'voir_accessoires', methods: ['GET', 'POST'])]
+    #[Route('/articles-accessoires-{id}', name: 'voir_accessoires', methods: ['GET', 'POST'])]
     public function voirAccessoires(
         Accessoires $accessoires,
         EntityManagerInterface $entityManager,

@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirChaussuresController extends AbstractController
 {
-    #[Route('/voir/chaussures-{id}', name: 'voir_chaussures', methods: ['GET', 'POST'])]
+    #[Route('/articles-chaussures-{id}', name: 'voir_chaussures', methods: ['GET', 'POST'])]
     public function index(Chaussures $chaussures, EntityManagerInterface $entityManager, Request $request): Response
     {
         $color = $request->get('color');

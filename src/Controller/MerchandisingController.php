@@ -209,7 +209,7 @@ class MerchandisingController extends AbstractController
         ]);
     }
 
-    #[Route('/merchand-{title1}/{title}', name:'show_merchandising_sous_categorie', methods:['GET', 'POST'])]
+    #[Route('/merchandising-{title1}/{title}', name:'show_merchandising_sous_categorie', methods:['GET', 'POST'])]
     public function showMerchandisingSousCategorie(
         SousCategorieMerchandising $souscategories,
         VetementMerchandisingService $vetementMerchandisingService,

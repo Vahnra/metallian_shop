@@ -25,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SousCategoryController extends AbstractController
 {
-    #[Route('/produits-{title1}/{title}', name: 'show_souscategorie_from_category', methods: ['GET', 'POST'])]
+    #[Route('/articles-{title1}/{title}', name: 'show_souscategorie_from_category', methods: ['GET', 'POST'])]
     public function showSousCategorie(
         SousCategorie $souscategories,
         EntityManagerInterface $entityManager,

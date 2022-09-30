@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirAccessoriesMerchController extends AbstractController
 {
-    #[Route('/voir/accessoires/merch-{id}', name: 'voir_accessoires_merch', methods:['GET', 'POST'])]
+    #[Route('/articles-accessoires/merch-{id}', name: 'voir_accessoires_merch', methods:['GET', 'POST'])]
     public function index(
         AccessoiresMerchandising $accessoiresMerches,
         EntityManagerInterface $entityManager,

@@ -39,7 +39,7 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart-details', name: 'show_cart_details', methods:['GET', 'POST'])]
+    #[Route('/cart/details', name: 'show_cart_details', methods:['GET', 'POST'])]
     public function showCartDetails(EntityManagerInterface $entityManager, Request $request): Response
     {
         $user = $this->getUser();

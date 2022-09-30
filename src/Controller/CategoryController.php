@@ -28,7 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/produits-{title}', name: 'show_vetements_from_category', methods:['GET', 'POST'])]
+    #[Route('/articles-{title}', name: 'show_vetements_from_category', methods:['GET', 'POST'])]
     public function showVetementsFromCategorie(
         Categorie $categories, 
         EntityManagerInterface $entityManager, 
