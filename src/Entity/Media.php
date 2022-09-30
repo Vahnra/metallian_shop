@@ -72,17 +72,18 @@ class Media
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo4 = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $stock = null;
-
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: FavoriteProduct::class)]
     private Collection $favoriteProducts;
+
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: MediaQuantity::class, orphanRemoval: true)]
+    private Collection $mediaQuantities;
 
     public function __construct()
     {
         $this->reviewMedia = new ArrayCollection();
         $this->cartProducts = new ArrayCollection();
         $this->favoriteProducts = new ArrayCollection();
+        $this->mediaQuantities = new ArrayCollection();
     }
 
 
@@ -347,18 +348,6 @@ class Media
         return $this;
     }
 
-    public function getStock(): ?string
-    {
-        return $this->stock;
-    }
-
-    public function setStock(string $stock): self
-    {
-        $this->stock = $stock;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, FavoriteProduct>
      */
@@ -383,6 +372,36 @@ class Media
             // set the owning side to null (unless already changed)
             if ($favoriteProduct->getMedia() === $this) {
                 $favoriteProduct->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MediaQuantity>
+     */
+    public function getMediaQuantities(): Collection
+    {
+        return $this->mediaQuantities;
+    }
+
+    public function addMediaQuantity(MediaQuantity $mediaQuantity): self
+    {
+        if (!$this->mediaQuantities->contains($mediaQuantity)) {
+            $this->mediaQuantities->add($mediaQuantity);
+            $mediaQuantity->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaQuantity(MediaQuantity $mediaQuantity): self
+    {
+        if ($this->mediaQuantities->removeElement($mediaQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($mediaQuantity->getMedia() === $this) {
+                $mediaQuantity->setMedia(null);
             }
         }
 

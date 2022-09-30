@@ -19,6 +19,7 @@ use App\Entity\Chaussures;
 use App\Entity\Expedition;
 use App\Entity\Accessoires;
 use App\Entity\ReviewMedia;
+use App\Entity\MediaQuantity;
 use App\Entity\SousCategorie;
 use App\Entity\BijouxQuantity;
 use App\Entity\ReviewVetement;
@@ -93,6 +94,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Accessoires')->setSubItems([
             MenuItem::linkToCrud('Voire les accessoires en vente', 'fas fa-eye', AccessoiresQuantity::class),
             MenuItem::linkToCrud('Mettre en vente un accessoire', 'fas fa-plus', AccessoiresQuantity::class)->setAction(Crud::PAGE_NEW)
+        ]);
+        yield MenuItem::subMenu('Médias')->setSubItems([
+            MenuItem::linkToCrud('Voire les médias en vente', 'fas fa-eye', MediaQuantity::class),
+            MenuItem::linkToCrud('Mettre en vente un média', 'fas fa-plus', MediaQuantity::class)->setAction(Crud::PAGE_NEW)
         ]);
         yield MenuItem::subMenu('Chaussures')->setSubItems([
             MenuItem::linkToCrud('Voire les chaussures en vente', 'fas fa-eye', ChaussuresQuantity::class),

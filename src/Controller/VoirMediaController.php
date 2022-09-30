@@ -16,32 +16,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class VoirMediaController extends AbstractController
 {
     #[Route('/voir/media-{id}', name: 'voir_media', methods:['GET', 'POST'])]
-    public function index(Media $media ,EntityManagerInterface $entityManager): Response
+    public function voirMedia(Media $media ,EntityManagerInterface $entityManager): Response
     {
-        $medium = $entityManager->getRepository(Media::class)->findBy(['id'=>$media->getId()]);
+        $media = $entityManager->getRepository(Media::class)->findBy(['id'=>$media->getId()]);
 
-        $artist = $entityManager->getRepository(Artist::class)->findBy(['id'=>$medium[0]->getArtist()]);
+        $mediaVariations = $entityManager->getRepository(MediaQuantity::class)->findBy(['media' => $media->getId()]);
+
+        $artist = $entityManager->getRepository(Artist::class)->findBy(['id'=>$media[0]->getArtist()]);
         
-        $musicType = $entityManager->getRepository(MusicType::class)->findBy(['id'=>$medium[0]->getGenre()]);
+        $musicType = $entityManager->getRepository(MusicType::class)->findBy(['id'=>$media[0]->getGenre()]);
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
         $similarCategory = $entityManager->getRepository(SousCategorie::class)->findBy([
-            'id' => $medium[0]->getSousCategorie()  
+            'id' => $media[0]->getSousCategorie()  
         ]);
 
         $similarItm = $entityManager->getRepository(Media::class)->findBy([
-            'sousCategorie' => $medium[0]->getSousCategorie()
+            'sousCategorie' => $media[0]->getSousCategorie()
            
         ]);
         $similaeGnr = $entityManager->getRepository(Media::class)->findBy([
-            'genre' => $medium[0]->getGenre()
+            'genre' => $media[0]->getGenre()
             
         ]);
     
 
         return $this->render('voir_media/voir_media.html.twig', [
-            'medium' => $medium,
+            'media' => $media,
             'artist' => $artist,
             'musicType' => $musicType,
             'expedition' => $expedition,

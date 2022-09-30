@@ -24,6 +24,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -44,27 +45,23 @@ class MediaCrudController extends AbstractCrudController
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('title', 'Titre de album');
         yield TextField::new('description');
-        yield TextareaField::new('longDescription', 'Description complète')->setMaxLength(250)->setNumOfRows(7);
+        yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('artist', 'Nom de l\'artiste');
         yield AssociationField::new('genre', 'Genre musical');
         yield TextField::new('releaseDate')->setRequired(false);
-        yield MoneyField::new('price')->setCurrency('EUR');
+        yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
-        yield ImageField::new('photo1', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo2', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo3', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        yield ImageField::new('photo4', 'photo')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-
-
-        yield FormField::addPanel('Stock');
-        yield NumberField::new('stock', 'Nombre en stock');
+        yield ImageField::new('photo1', 'Photo 1')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo2', 'Photo 2')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo3', 'Photo 3')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
+        yield ImageField::new('photo4', 'Photo 4')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
 
         yield FormField::addPanel('Catégorie de l\'article');
-        yield AssociationField::new('categorie');
-        yield AssociationField::new('sousCategorie')->hideOnForm();
-        yield DateField::new('createdAt')->hideOnForm();
-        yield DateField::new('updatedAt')->hideOnForm();
+        yield AssociationField::new('categorie', 'Catégorie');
+        yield AssociationField::new('sousCategorie', 'Sous-catégorie')->hideOnForm();
+        yield DateField::new('createdAt', 'Créé le')->hideOnForm();
+        yield DateField::new('updatedAt', 'Modifié le')->hideOnForm();
         
     }
     
