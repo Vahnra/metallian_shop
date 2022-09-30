@@ -291,18 +291,18 @@ class DashboardController extends AbstractDashboardController
     {
         $usersChart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
 
-        $january = count($this->userRepository->registeredUserByDate('01-01-2022', '01-02-2022'));
-        $february = count($this->userRepository->registeredUserByDate('01-02-2022', '01-03-2022'));
-        $march = count($this->userRepository->registeredUserByDate('01-03-2022', '01-04-2022'));
-        $april = count($this->userRepository->registeredUserByDate('01-04-2022', '01-05-2022'));
-        $may = count($this->userRepository->registeredUserByDate('01-05-2022', '01-06-2022'));
-        $june = count($this->userRepository->registeredUserByDate('01-06-2022', '01-07-2022'));
-        $july = count($this->userRepository->registeredUserByDate('01-07-2022', '01-08-2022'));
-        $august = count($this->userRepository->registeredUserByDate('01-08-2022', '01-09-2022'));
-        $september = count($this->userRepository->registeredUserByDate('01-09-2022', '01-10-2022'));
-        $october = count($this->userRepository->registeredUserByDate('01-10-2022', '01-11-2022'));
-        $november = count($this->userRepository->registeredUserByDate('01-11-2022', '01-12-2022'));
-        $december = count($this->userRepository->registeredUserByDate('01-12-2022', '31-12-2022'));
+        $january = count($this->userRepository->registeredUserByDate('2022-01-01 00:00:00', '2022-02-01 00:00:00'));
+        $february = count($this->userRepository->registeredUserByDate('2022-02-01 00:00:00', '2022-03-01 00:00:00'));
+        $march = count($this->userRepository->registeredUserByDate('2022-03-01 00:00:00', '2022-04-01 00:00:00'));
+        $april = count($this->userRepository->registeredUserByDate('2022-04-01 00:00:00', '2022-05-01 00:00:00'));
+        $may = count($this->userRepository->registeredUserByDate('2022-05-01 00:00:00', '2022-06-01 00:00:00'));
+        $june = count($this->userRepository->registeredUserByDate('2022-06-01 00:00:00', '2022-07-01 00:00:00'));
+        $july = count($this->userRepository->registeredUserByDate('2022-07-01 00:00:00', '2022-08-01 00:00:00'));
+        $august = count($this->userRepository->registeredUserByDate('2022-08-01 00:00:00', '2022-09-01 00:00:00'));
+        $september = count($this->userRepository->registeredUserByDate('2022-09-01 00:00:00', '2022-10-01 00:00:00'));
+        $october = count($this->userRepository->registeredUserByDate('2022-10-01 00:00:00', '01-11-01 00:00:00'));
+        $november = count($this->userRepository->registeredUserByDate('2022-11-01 00:00:00', '2022-12-01 00:00:00'));
+        $december = count($this->userRepository->registeredUserByDate('2022-12-01 00:00:00', '2022-12-31 00:00:00'));
 
         $usersChart->setData([
             'labels' => ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
