@@ -47,7 +47,7 @@
     <div class="row">
 
         <div class="col-12 p-3 bg-white text-dark">
-            <h2>Nouveautées pour les femmes</h2>     
+            <h1>Nouveautées pour les femmes</h1>     
             <div class="row text-center">
 
                 {% for vetement in nouveautesFemme | slice(0, 4) %}
@@ -75,8 +75,8 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                     </ul>
-                                    {# <h5 class="card-title">{{ vetement.title }}</h5>
-                                    <p class="card-text">{{ vetement.description }}</p>
+                                     <h5 class="card-title">{{ vetement.title }}</h5>
+                                    {#<p class="card-text">{{ vetement.description }}</p>
                                     <a href="#" class="card-link">Ajouter au panier</a> #}
                                 </div>      
 
@@ -119,8 +119,8 @@
                                         <ul class="list-group list-group-flush ">
                                             <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
-                                        {# <h5 class="card-title">{{ vetement.title }}</h5>
-                                        <p class="card-text">{{ vetement.description }}</p>
+                                        <h5 class="card-title">{{ vetement.title }}</h5>
+                                        {# <p class="card-text">{{ vetement.description }}</p>
                                         <a href="#" class="card-link">Ajouter au panier</a> #}
                                     </div>      
 
