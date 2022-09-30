@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VoirMediaController!{% endblock %}
+{% block title %}{{ media.title }}{% endblock %}
 
 {% block body %}
 
-<div class="container">
+<div class="container-xl">
     <div class="row">
         <div class="col-12 bg-dark text-white">
             <div class="row">
@@ -33,47 +33,99 @@
         <div class="row">
 
             <div class="col-8">
-                <h2>{{ media.title }}</h2>
+                <h2>{{ media.description }}</h2>
             </div>
-
-            {# Favorite button #}
-                {% if app.user is null %}
-                    <a class="col-2 d-flex align-items-center text-decoration-none text-dark" href="{{ path('app_login')}}">
-                        <i type="button" class="fa-regular fa-heart fa-2x"></i>
-                    </a> 
-                {% else %}
-                    {% if userFavorites is not empty %}
-                        <a class="col-2 d-flex align-items-center text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':media.id})}}">
-                            <i type="button" class="fa-solid fa-heart fa-2x"></i>
-                        </a>
-                    {% else %}
-                        <a class="col-2 d-flex align-items-center text-decoration-none text-dark" href="{{ path('add_favorite_media', {'id':media.id})}}">
-                            <i type="button" class="fa-regular fa-heart fa-2x"></i>
-                        </a>
-                    {% endif %}
-                {% endif %}
-            {# End favorite button #}
 
             <div class="col-4 my-auto justify-content-end d-flex">
                 <h3 class="my-auto fw-bold">{{ media.price/100 }}€</h3>
             </div>
 
+            <div class="col-8">
+                <h5>{{ artist.0.artist }}</h5>
+            </div>
+
         </div>
-             
-            <h3>{{ artist.0.artist }}</h3>
-            <p>{{ musicType.0.genre }}</p>
-            <h4>{{ media.description }}</h4>
-            <p>{{ media.sousCategorie }}</p>
+
+        <form method="post">
+
+                    {% include "include/_flashes.html.twig" %}
+
+                    <div class="col-12 py-4">
+
+
+                <div class="col-12 mb-1">
+
+                    
+                    <p>{{ musicType.0.genre }}</p>
+                    <p>{{ media.sousCategorie }}</p>
+
+                    {{form_start(form)}}
+                        <div class="col-6">
+                            {{form_row(form.quantity)}}
+                        </div>
+                        <div class="row">
+
+                            {# Favorite button #}
+                            {% if app.user is null %}
+                                <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('app_login')}}">
+                                    <i type="button" class="fa-regular fa-heart fa-2x"></i>
+                                </a>
+                            {% else %}
+                                {% if userFavorites is not empty %}
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_media', {'id':media.id})}}">
+                                        <i type="button" class="fa-solid fa-heart fa-2x"></i>
+                                    </a>
+                                {% else %}
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_media', {'id':media.id})}}">
+                                        <i type="button" class="fa-regular fa-heart fa-2x"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            {# End favorite button #}
+
+                            <div class="col-6">
+                                {{form_row(form.submit)}}
+                            </div>
+
+                    </div>
+                    {{form_end(form)}}
+                    
+                </div>               
+
+            </form>
             
-            <div class="col mb-3 text-center">
-                <button type="button" class="btn btn-success">Ajouter au panier</button>
-            </div>
-            <div class="col-12 p-2 border-top border-dark bg-light">
-                <h3>description</h3>
-                <p>
+            <div class="col-12 p-2 border-top bg-light border-dark">
+
+                <script>
+                function showDescription() {
+                    if(document.getElementById('description').style.cssText == 'display: none;'){
+                        document.getElementById('description').style.cssText = 'display: inline;';
+                        document.getElementById('fleche').classList.add('fa-minus');
+                        document.getElementById('fleche').classList.remove('fa-plus');
+                    }
+                    else {
+                        document.getElementById('description').style.cssText = 'display: none;';
+                        document.getElementById('fleche').classList.add('fa-plus');
+                        document.getElementById('fleche').classList.remove('fa-minus');
+                    }
+                }
+                </script>
+
+                <div class="row align-items-center" onclick="showDescription()" style="cursor: pointer;">
+
+                    <h3 class="col-10">Description</h3>
+                    <div class="col-2">
+                        <i class="fa-solid fa-plus d-flex justify-content-end" id="fleche"></i>
+                    </div>
+
+                </div> 
+
+                <div id="description" style="display: none;">
                  {{ media.longDescription | raw }}
-                </p>
+                </div>
+
             </div>
+            
             <div class="col-12 p-2 border-top border-dark bg-light">
                 <h3><i class="fa-solid fa-truck-fast"></i>  {{ expedition.0.title }}</h3> 
                 <p>{{ expedition.0.description }}</p> 
@@ -83,29 +135,31 @@
 
     </div>
 </div>
-<div class="container">
-    <div class="row">
+
+</div> 
+
+<div class="container-xl py-3">
+
+    <div class="row pt-2" style="background-color: white; border: solid 1px black">
       
-        <div class="col-12 bg-light ">   
+        <div class="col-12">   
             <h2>Produits similaires</h2>
         </div>
 
         {% for media in similarItm |slice(0,4)%} 
-        <div class="col-3 bg-light mb-3"> 
-            <div class="card" style="width: 18rem;">
-                <img src={{ asset('images/'~media.photo1) }} class="card-img-top">
+       
+            <div class="card mx-auto mb-3" style="width: 18rem; background-color: white;">
+                <img src={{ asset('images/'~media.photo1) }} class="card-img-top" style="object-fit: contain">
                 <div class="card-body">
-                     <h5 class="card-title">{{ media.title }}</h5> 
-                     <h6>{{ media.artist }}</h6>
-                      <p>{{ media.sousCategorie }}</p>
-                    <p class="card-text">{{ media.description }}</p>
+                    <h5 class="card-title">{{ media.title }}</h5> 
+                    <h6>{{ media.artist }}</h6>
                     <p>{{ media.price/100 }}€</p>
                     <div class="text-center">
                         <a href={{ path('voir_media', {'id':media.id})}} class="btn btn-warning">Plus d'informations</a>
                     </div>
                 </div>
             </div>
-        </div>
+       
         {% endfor %}
             
         
@@ -113,12 +167,10 @@
         {% for media in similaeGnr |slice(0,4) %} 
        
             <div class="card mx-auto mb-3" style="width: 18rem; background-color: white;">
-                <img src={{ asset('images/'~media.photo1) }} class="card-img-top">
+                <img src={{ asset('images/'~media.photo1) }} class="card-img-top" style="object-fit: contain">
                 <div class="card-body">
-                     <h5 class="card-title">{{ media.title }}</h5> 
-                     <h6>{{ media.artist }}</h6>
-                      <p>{{ media.sousCategorie }}</p>
-                    <p class="card-text">{{ media.description }}</p>
+                    <h5 class="card-title">{{ media.title }}</h5> 
+                    <h6>{{ media.artist }}</h6>
                     <p>{{ media.price/100 }}€</p>
                     <div class="text-center">
                         <a href={{ path('voir_media', {'id':media.id})}} class="btn btn-warning">Plus d'informations</a>
@@ -133,6 +185,7 @@
 
  
 
+    </div> 
 </div> 
 
 {# ------------------------------------------------------- #}

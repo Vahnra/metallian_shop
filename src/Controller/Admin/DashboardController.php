@@ -39,6 +39,7 @@ use App\Repository\AccessoiresMerchandisingRepository;
 use App\Repository\AccessoiresRepository;
 use App\Repository\BijouxRepository;
 use App\Repository\ChaussuresRepository;
+use App\Repository\MediaRepository;
 use App\Repository\UserRepository;
 use App\Repository\VetementMerchandisingRepository;
 use App\Repository\VetementRepository;
@@ -63,7 +64,8 @@ class DashboardController extends AbstractDashboardController
         AccessoiresRepository $accessoiresRepository,
         BijouxRepository $bijouxRepository,
         VetementMerchandisingRepository $vetementMerchandisingRepository,
-        AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository
+        AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository,
+        MediaRepository $mediaRepository
         )
     {
         $this->userRepository = $userRepository;
@@ -73,6 +75,7 @@ class DashboardController extends AbstractDashboardController
         $this->bijouxRepository = $bijouxRepository;
         $this->vetementMerchandisingRepository = $vetementMerchandisingRepository;
         $this->accessoiresMerchandisingRepository = $accessoiresMerchandisingRepository;
+        $this->mediaRepository = $mediaRepository;
         $this->chartBuilder = $chartBuilder;
     }
 
@@ -333,17 +336,18 @@ class DashboardController extends AbstractDashboardController
         $accessoires = count($this->accessoiresRepository->findAll());
         $chaussures = count($this->chaussuresRepository->findAll());
         $bijoux = count($this->bijouxRepository->findAll());
+        $media = count($this->mediaRepository->findAll());
         $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
         $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
 
         $totalArticlesChart->setData([
-            'labels' => ['Vêtements', 'Accessoires', 'Chaussures', 'Bijoux', 'Vêtements Merch', 'Accessoires Merch'],
+            'labels' => ['Vêtements', 'Accessoires', 'Chaussures', 'Bijoux', 'Médias', 'Vêtements Merch', 'Accessoires Merch'],
             'datasets' => [
                 [
                     'label' => 'Nombres d\'articles',
                     'backgroundColor' => 'rgb(255, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [$vetements, $accessoires, $chaussures, $bijoux, $vetementMerchandising, $accessoiresMerchandising],
+                    'data' => [$vetements, $accessoires, $chaussures, $bijoux, $media, $vetementMerchandising, $accessoiresMerchandising],
                 ],
             ],
         ]);
