@@ -9,21 +9,21 @@
         <div class="col-12 bg-dark text-white">
             <div class="row">
                 <div class="col-1"></div>
-                <div class="col-11 pt-1"><h1>Media : {{ medium.0.title }}</h1></div>
+                <div class="col-11 pt-1"><h1>Media : {{ media.title }}</h1></div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~medium.0.photo1) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ medium.0.title }}"/>
-            <img src={{ asset('images/'~medium.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ medium.0.title }}"/>
-            <img src={{ asset('images/'~medium.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ medium.0.title }}"/>
+            <img src={{ asset('images/'~media.photo1) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
+            <img src={{ asset('images/'~media.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
+            <img src={{ asset('images/'~media.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
         </div>
 
         <div class="col-7 pt-3 text-center bg-light border-bottom border-dark">
             
-            <img id="imageBox" src={{ asset('images/'~medium.0.photo1) }} class="img-fluid p-2" alt="{{ medium.0.title }}"/>
+            <img id="imageBox" src={{ asset('images/'~media.photo1) }} class="img-fluid p-2" alt="{{ media.title }}"/>
             
 
         </div>
@@ -33,7 +33,7 @@
         <div class="row">
 
             <div class="col-8">
-                <h2>{{ medium.0.title }}</h2>
+                <h2>{{ media.title }}</h2>
             </div>
 
             {# Favorite button #}
@@ -43,11 +43,11 @@
                     </a> 
                 {% else %}
                     {% if userFavorites is not empty %}
-                        <a class="col-2 d-flex align-items-center text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':medium.0.id})}}">
+                        <a class="col-2 d-flex align-items-center text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':media.id})}}">
                             <i type="button" class="fa-solid fa-heart fa-2x"></i>
                         </a>
                     {% else %}
-                        <a class="col-2 d-flex align-items-center text-decoration-none text-dark" href="{{ path('add_favorite_media', {'id':medium.0.id})}}">
+                        <a class="col-2 d-flex align-items-center text-decoration-none text-dark" href="{{ path('add_favorite_media', {'id':media.id})}}">
                             <i type="button" class="fa-regular fa-heart fa-2x"></i>
                         </a>
                     {% endif %}
@@ -55,15 +55,15 @@
             {# End favorite button #}
 
             <div class="col-4 my-auto justify-content-end d-flex">
-                <h3 class="my-auto fw-bold">{{ medium.0.price/100 }}€</h3>
+                <h3 class="my-auto fw-bold">{{ media.price/100 }}€</h3>
             </div>
 
         </div>
              
             <h3>{{ artist.0.artist }}</h3>
             <p>{{ musicType.0.genre }}</p>
-            <h4>{{ medium.0.description }}</h4>
-            <p>{{ medium.0.sousCategorie }}</p>
+            <h4>{{ media.description }}</h4>
+            <p>{{ media.sousCategorie }}</p>
             
             <div class="col mb-3 text-center">
                 <button type="button" class="btn btn-success">Ajouter au panier</button>
@@ -71,7 +71,7 @@
             <div class="col-12 p-2 border-top border-dark bg-light">
                 <h3>description</h3>
                 <p>
-                 {{ medium.0.longDescription | raw }}
+                 {{ media.longDescription | raw }}
                 </p>
             </div>
             <div class="col-12 p-2 border-top border-dark bg-light">
@@ -90,18 +90,18 @@
             <h2>Produits similaires</h2>
         </div>
 
-        {% for medium in similarItm |slice(0,4)%} 
+        {% for media in similarItm |slice(0,4)%} 
         <div class="col-3 bg-light mb-3"> 
             <div class="card" style="width: 18rem;">
-                <img src={{ asset('images/'~medium.photo1) }} class="card-img-top">
+                <img src={{ asset('images/'~media.photo1) }} class="card-img-top">
                 <div class="card-body">
-                     <h5 class="card-title">{{ medium.title }}</h5> 
-                     <h6>{{ medium.artist }}</h6>
-                      <p>{{ medium.sousCategorie }}</p>
-                    <p class="card-text">{{ medium.description }}</p>
-                    <p>{{ medium.price/100 }}€</p>
+                     <h5 class="card-title">{{ media.title }}</h5> 
+                     <h6>{{ media.artist }}</h6>
+                      <p>{{ media.sousCategorie }}</p>
+                    <p class="card-text">{{ media.description }}</p>
+                    <p>{{ media.price/100 }}€</p>
                     <div class="text-center">
-                        <a href={{ path('voir_media', {'id':medium.id})}} class="btn btn-warning">Plus d'informations</a>
+                        <a href={{ path('voir_media', {'id':media.id})}} class="btn btn-warning">Plus d'informations</a>
                     </div>
                 </div>
             </div>
@@ -110,18 +110,18 @@
             
         
 
-        {% for medium in similaeGnr |slice(0,4) %} 
+        {% for media in similaeGnr |slice(0,4) %} 
        
             <div class="card mx-auto mb-3" style="width: 18rem; background-color: white;">
-                <img src={{ asset('images/'~medium.photo1) }} class="card-img-top">
+                <img src={{ asset('images/'~media.photo1) }} class="card-img-top">
                 <div class="card-body">
-                     <h5 class="card-title">{{ medium.title }}</h5> 
-                     <h6>{{ medium.artist }}</h6>
-                      <p>{{ medium.sousCategorie }}</p>
-                    <p class="card-text">{{ medium.description }}</p>
-                    <p>{{ medium.price/100 }}€</p>
+                     <h5 class="card-title">{{ media.title }}</h5> 
+                     <h6>{{ media.artist }}</h6>
+                      <p>{{ media.sousCategorie }}</p>
+                    <p class="card-text">{{ media.description }}</p>
+                    <p>{{ media.price/100 }}€</p>
                     <div class="text-center">
-                        <a href={{ path('voir_media', {'id':medium.id})}} class="btn btn-warning">Plus d'informations</a>
+                        <a href={{ path('voir_media', {'id':media.id})}} class="btn btn-warning">Plus d'informations</a>
                     </div>
                 </div>
             </div>

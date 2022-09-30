@@ -6,7 +6,7 @@ use App\Repository\MediaQuantityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MediaQuantityRepository::class)]
-class MediaQuantity
+class MediaQuantity implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -62,5 +62,12 @@ class MediaQuantity
         $this->sku = $sku;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+
+        return $vars;
     }
 }

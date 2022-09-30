@@ -86,6 +86,10 @@ class Media
         $this->mediaQuantities = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->title; 
+    }
 
     public function getId(): ?int
     {
