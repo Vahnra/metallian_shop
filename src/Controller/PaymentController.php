@@ -47,6 +47,11 @@ class PaymentController extends AbstractController
 
         $totalPriceFinal = $totalPrice + $livraison;
 
+        $cart[0]->setTotalPrice($totalPrice);
+
+        $entityManager->persist($cart[0]);
+        $entityManager->flush();
+
         return $this->render('payment/payment.html.twig', [
             'userPostAdress' => $userPostAdress,
             'totalPriceFinal' => $totalPriceFinal,

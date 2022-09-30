@@ -73,6 +73,11 @@ class CartController extends AbstractController
             }
         }
 
+        $cart->setTotalPrice($totalPrice);
+
+        $entityManager->persist($cart);
+        $entityManager->flush();
+
         // On initialise des tableaux vide pour stocker les forms, et les produits du panier
         $forms = [];
 
@@ -102,6 +107,8 @@ class CartController extends AbstractController
                     // On se sert de l'id du produit en question pour avoir le bon objet produit et on set la quantité demander
                     $formData[$form->getData()->getId()]->setQuantity($form->get('quantity')->getData());
                     // $formData[$form->getData()->getId()]->setPrice($form->get('quantity')->getData() * $form->getData()->getPrice());
+
+                    // $cart->setTotalPrice($cart->getTotalPrice() + $form->get('quantity')->getData() * $form->getData()->getPrice());
                     // On persist et on flush et on redirect
                     $entityManager->persist($formData[$form->getData()->getId()]);
                     $entityManager->flush();
@@ -124,7 +131,6 @@ class CartController extends AbstractController
             $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $user->getId()]);
         }
         
-
         return $this->render('cart/show_cart_details.html.twig', [
             'numberOfItem' => $numberOfItem,
             'totalPrice' => $totalPrice,

@@ -140,6 +140,7 @@ class VoirChaussuresController extends AbstractController
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
             $cart->addCartProduct($cartProduct);
+            // $cart->setTotalPrice($cart->getTotalPrice() + $quantity * $chaussure[0]->getPrice());
 
             $token = $cart->getToken();
    

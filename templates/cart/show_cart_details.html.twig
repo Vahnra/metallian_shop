@@ -38,7 +38,7 @@
 														{% if cartProduct.bijoux is not null %}href="{{ path('voir_bijoux', {'id': cartProduct.bijoux.id}) }}"{% endif %}
 														{% if cartProduct.chaussures is not null %}href="{{ path('voir_chaussures', {'id': cartProduct.chaussures.id}) }}"{% endif %}
 														{% if cartProduct.vetementMerchandising is not null %}href="{{ path('voir_vetement_merch', {'id': cartProduct.vetementMerchandising.id}) }}"{% endif %}
-														{% if cartProduct.accessoiresMerchandising is not null %}href="{{ path('voir_accessoiresMerchg', {'id': cartProduct.accessoiresMerchandising.id}) }}"{% endif %}
+														{% if cartProduct.accessoiresMerchandising is not null %}href="{{ path('voir_accessoires_merch', {'id': cartProduct.accessoiresMerchandising.id}) }}"{% endif %}
 														class="col-md-2 col-lg-2 col-xl-2">
 															<img src="{{ asset('images/' ~ cartProduct.photo) }}" class="img-fluid rounded-3" alt="{{ cartProduct.title }}">
 														</a>

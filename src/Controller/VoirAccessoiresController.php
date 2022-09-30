@@ -160,6 +160,7 @@ class VoirAccessoiresController extends AbstractController
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
             $cart->addCartProduct($cartProduct);
+            // $cart->setTotalPrice($cart->getTotalPrice() + $quantity * $accessoire[0]->getPrice());
 
             $token = $cart->getToken();
     

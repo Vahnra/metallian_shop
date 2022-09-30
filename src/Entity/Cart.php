@@ -35,6 +35,9 @@ class Cart
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $totalPrice = null;
+
     public function __construct()
     {
         $this->cartProduct = new ArrayCollection();
@@ -131,6 +134,18 @@ class Cart
     public function setToken(string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?string
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(?string $totalPrice): self
+    {
+        $this->totalPrice = $totalPrice;
 
         return $this;
     }
