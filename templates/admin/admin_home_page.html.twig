@@ -1,0 +1,29 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}
+    Tableaux de bord Metallian Store
+{% endblock %}
+
+{% block main %}
+
+    <div class="row mt-3">
+
+        <div class="col-10 mx-auto">
+
+            <h4 class="ms-4">Nombre total de comptes créés : {{ totalRegisteredUser }}</h4>
+
+            {{ render_chart(usersChart) }}
+
+        </div>
+
+        <div class="col-10 mx-auto mt-5">
+
+            <h4 class="ms-4">Nombre total d'articles : {{ totalArticles }}</h4>
+
+            {{ render_chart(totalArticlesChart) }}
+
+        </div>
+
+    </div>
+
+{% endblock %}

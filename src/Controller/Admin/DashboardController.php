@@ -35,6 +35,13 @@ use App\Entity\VetementMerchandisingQuantity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AccessoiresMerchandisingQuantity;
+use App\Repository\AccessoiresMerchandisingRepository;
+use App\Repository\AccessoiresRepository;
+use App\Repository\BijouxRepository;
+use App\Repository\ChaussuresRepository;
+use App\Repository\UserRepository;
+use App\Repository\VetementMerchandisingRepository;
+use App\Repository\VetementRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -43,28 +50,52 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 class DashboardController extends AbstractDashboardController
 {
+    public function __construct(
+        ChartBuilderInterface $chartBuilder,
+        UserRepository $userRepository,
+        VetementRepository $vetementRepository,
+        ChaussuresRepository $chaussuresRepository,
+        AccessoiresRepository $accessoiresRepository,
+        BijouxRepository $bijouxRepository,
+        VetementMerchandisingRepository $vetementMerchandisingRepository,
+        AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository
+        )
+    {
+        $this->userRepository = $userRepository;
+        $this->vetementRepository = $vetementRepository;
+        $this->accessoiresRepository = $accessoiresRepository;
+        $this->chaussuresRepository = $chaussuresRepository;
+        $this->bijouxRepository = $bijouxRepository;
+        $this->vetementMerchandisingRepository = $vetementMerchandisingRepository;
+        $this->accessoiresMerchandisingRepository = $accessoiresMerchandisingRepository;
+        $this->chartBuilder = $chartBuilder;
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        $totalRegisteredUser = $this->userRepository->findAll();
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+        $vetements = count($this->vetementRepository->findAll());
+        $accessoires = count($this->accessoiresRepository->findAll());
+        $chaussures = count($this->chaussuresRepository->findAll());
+        $bijoux = count($this->bijouxRepository->findAll());
+        $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
+        $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
 
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
+        $totalArticles = $vetements + $accessoires + $chaussures + $bijoux + $vetementMerchandising + $accessoiresMerchandising;
 
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
+        return $this->render('admin/admin_home_page.html.twig', [
+            'usersChart' => $this->usersChart(),
+            'totalArticlesChart' => $this->totalArticlesChart(),
+            'totalRegisteredUser' => count($totalRegisteredUser),
+            'totalArticles' => $totalArticles
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -249,6 +280,83 @@ class DashboardController extends AbstractDashboardController
     {
         return parent::configureAssets()
         ->addJsFile('jquery-3.6.1.js')
-        ->addJsFile('ajax.js');
+        ->addJsFile('ajax.js')
+        ->addWebpackEncoreEntry('admin');
+    }
+
+    public function usersChart(): Chart
+    {
+        $usersChart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
+
+        $january = count($this->userRepository->registeredUserByDate('01-01-2022', '01-02-2022'));
+        $february = count($this->userRepository->registeredUserByDate('01-02-2022', '01-03-2022'));
+        $march = count($this->userRepository->registeredUserByDate('01-03-2022', '01-04-2022'));
+        $april = count($this->userRepository->registeredUserByDate('01-04-2022', '01-05-2022'));
+        $may = count($this->userRepository->registeredUserByDate('01-05-2022', '01-06-2022'));
+        $june = count($this->userRepository->registeredUserByDate('01-06-2022', '01-07-2022'));
+        $july = count($this->userRepository->registeredUserByDate('01-07-2022', '01-08-2022'));
+        $august = count($this->userRepository->registeredUserByDate('01-08-2022', '01-09-2022'));
+        $september = count($this->userRepository->registeredUserByDate('01-09-2022', '01-10-2022'));
+        $october = count($this->userRepository->registeredUserByDate('01-10-2022', '01-11-2022'));
+        $november = count($this->userRepository->registeredUserByDate('01-11-2022', '01-12-2022'));
+        $december = count($this->userRepository->registeredUserByDate('01-12-2022', '31-12-2022'));
+
+        $usersChart->setData([
+            'labels' => ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            'datasets' => [
+                [
+                    'label' => 'Utilisateurs enregistrés par mois',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [$january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december],
+                ],
+            ],
+        ]);
+
+        $usersChart->setOptions([
+            'scales' => [
+                'y' => [
+                   'suggestedMin' => 0,
+                   'suggestedMax' => 100,
+                ],
+            ],
+        ]);
+
+        return $usersChart;
+    }
+
+    public function totalArticlesChart(): Chart
+    {
+        $totalArticlesChart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
+
+        $vetements = count($this->vetementRepository->findAll());
+        $accessoires = count($this->accessoiresRepository->findAll());
+        $chaussures = count($this->chaussuresRepository->findAll());
+        $bijoux = count($this->bijouxRepository->findAll());
+        $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
+        $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
+
+        $totalArticlesChart->setData([
+            'labels' => ['Vêtements', 'Accessoires', 'Chaussures', 'Bijoux', 'Vêtements Merch', 'Accessoires Merch'],
+            'datasets' => [
+                [
+                    'label' => 'Nombres d\'articles',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [$vetements, $accessoires, $chaussures, $bijoux, $vetementMerchandising, $accessoiresMerchandising],
+                ],
+            ],
+        ]);
+
+        $totalArticlesChart->setOptions([
+            'scales' => [
+                'y' => [
+                   'suggestedMin' => 0,
+                   'suggestedMax' => 100,
+                ],
+            ],
+        ]);
+
+        return $totalArticlesChart;
     }
 }
