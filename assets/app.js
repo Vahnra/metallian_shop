@@ -22,4 +22,13 @@ $(document).ready(function(){
     });
 }); 
 
+$(document).ready(function(){
+    $(".dropdown-center").hover(function(){
+        var dropdownMenu = $(this).children(".dropdown-menu");
+        if(dropdownMenu.is(":visible")){
+            dropdownMenu.parent().toggleClass("open");
+        }
+    });
+}); 
+
 // Fin JS pour le hover des dropdown bootstrap

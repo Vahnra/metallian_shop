@@ -184,6 +184,14 @@ body {
   margin-top: 0;
 }
 
+.dropdown-center:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  margin-top: 0;
+}
+
 /* Fin CSS pour le hover des dopdown */
 
 /* Underline link hover */

@@ -13,7 +13,7 @@
 				
 					<div class="col-4 ps-4 ">Livré sous 24 ou 48h</div>
 					<div class="col-4 text-center ">Plus de 8 000 articles en stock</div>
-					<div class="col-4 text-end pe-2"> Retour gratuit sous 30 jours</div>
+					<div class="col-4 text-end pe-3"> Retour gratuit sous 30 jours</div>
 				
 				</div>
 			</div>
@@ -37,11 +37,27 @@
 				{% if is_granted("ROLE_ADMIN") %}
 
 					<li class="nav-item">
-						<a class="nav-link text-white" href="{{ path('admin') }}">
-							<i class="fa-solid fa-screwdriver-wrench mx-2"></i>Menu Admin</a>
+						<a class="nav-link text-white" style="padding-top: 0.38em" href="{{ path('admin') }}">
+						<i class="fa-solid fa-screwdriver-wrench mx-2"></i>Menu Admin</a>
 					</li>
 
 				{% endif %}
+
+				<li class="nav-item">
+
+					{% if app.user %}
+						<a class="nav-link text-white" style="padding-top: 0.38em" href="{{ path('show_favorite_products', {"id": app.user.id}) }}">
+						<i class="fa-solid fa-heart mx-2"></i></i></a>
+
+					{% else %}
+				
+						<a class="nav-link text-white" style="padding-top: 0.38em" href="{{ path('app_login') }}">
+						<i class="fa-solid fa-heart mx-2"></i></i></a>
+						
+					{% endif %}
+
+				</li>
+
 				<div class="dropdown">
 					{% if app.user %}
 					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: black" href="{{ path('show_profile', {"id": app.user.id}) }}"   aria-expanded="false">	
@@ -72,11 +88,9 @@
 						{% endif %}
 					</ul>
 				</div>
-
 				
-			
 				<div class="dropdown">
-					<a class="btn btn-secondary dropdown-toggle border-0"  style="background-color: black" href="{{ path('show_cart_details') }}"   aria-expanded="false">
+					<a class="btn btn-secondary dropdown-toggle border-0" title="Voir votre panier"  style="background-color: black" href="{{ path('show_cart_details') }}"   aria-expanded="false">
 						<i class="fa-solid fa-basket-shopping"></i>
 					</a>
 
