@@ -1,5 +1,3 @@
-
-
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
 	<div class="container-fluid">
 		<a class="ms-auto navbar-brand py-4" href="{{ path('default_home') }}">
@@ -10,11 +8,12 @@
 
 		<div class="">
 
-			<div class="container text-center" style="width: 55em; color: white">
-				<div class="row">
+			<div class="container" style="width: 55em; heigth: 3em; color: white">
+				<div class="row pb-2">
 				
-					<div class="col-6">Livré sous 24 ou 48h</div>
-					<div class="col-6"><p> Retour gratuit sous 30 jours</p></div>
+					<div class="col-4 ps-5 ">Livré sous 24 ou 48h</div>
+					<div class="col-4 text-center ">Plus de 8 000 articles en stock</div>
+					<div class="col-4 text-end"> Retour gratuit sous 30 jours</div>
 				
 				</div>
 			</div>
@@ -23,11 +22,11 @@
 			<div class="mx-auto text-center">
 
 				<div class="mx-auto">
-				<form action="{{ path('render_search_article')}}" id="search" method="GET">
-					<div>
-						<input class="me-2 searchBar align-middle text-white" type="search" placeholder="Entrez votre recherche" id="searchBar" name="search" aria-label="Search"><i type="button" onclick="document.getElementById('search').submit()" id="searchBar-icon" class="align-middle fa-solid fa-magnifying-glass"></i>
-					</div>
-				</form>
+					<form action="{{ path('render_search_article')}}" id="search" method="GET">
+						<div>
+							<input class="me-2 searchBar align-middle text-white" type="search" placeholder="Entrez votre recherche" id="searchBar" name="search" aria-label="Search"><i type="button" onclick="document.getElementById('search').submit()" id="searchBar-icon" class="align-middle fa-solid fa-magnifying-glass"></i>
+						</div>
+					</form>
 				</div>
 			</div>
 		

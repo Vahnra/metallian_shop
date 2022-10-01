@@ -73,14 +73,12 @@ class CartController extends AbstractController
             }
         }
 
-        if ($totalPrice !== null) {
+        if ($totalPrice != null) {
             $cart->setTotalPrice($totalPrice);
+            $entityManager->persist($cart);
+            $entityManager->flush();
         }
         
-
-        $entityManager->persist($cart);
-        $entityManager->flush();
-
         // On initialise des tableaux vide pour stocker les forms, et les produits du panier
         $forms = [];
 
