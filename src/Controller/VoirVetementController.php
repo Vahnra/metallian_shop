@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirVetementController extends AbstractController
 {
-    #[Route('/articles-vetement-{id}', name: 'voir_vetement', methods:['GET', 'POST'])]
+    #[Route('/article-vetement-{id}', name: 'voir_vetement', methods:['GET', 'POST'])]
     public function voirVetement(
         Vetement $vetements,
         EntityManagerInterface $entityManager,

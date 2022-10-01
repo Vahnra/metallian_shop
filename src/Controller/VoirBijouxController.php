@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirBijouxController extends AbstractController
 {
-    #[Route('/articles-bijoux-{id}', name: 'voir_bijoux', methods: ['GET', 'POST'])]
+    #[Route('/article-bijoux-{id}', name: 'voir_bijoux', methods: ['GET', 'POST'])]
     public function voirBijoux(Bijoux $bijoux ,EntityManagerInterface $entityManager, Request $request): Response
     {
         $color = $request->get('color');

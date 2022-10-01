@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoirMediaController extends AbstractController
 {
-    #[Route('/articles-media-{id}', name: 'voir_media', methods:['GET', 'POST'])]
+    #[Route('/article-media-{id}', name: 'voir_media', methods:['GET', 'POST'])]
     public function voirMedia(
         Media $media, 
         EntityManagerInterface $entityManager,

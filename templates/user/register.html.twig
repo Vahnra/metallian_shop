@@ -3,12 +3,12 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <div class="container bg-white text-dark">
+    <div class="container-xl bg-white text-dark">
         <div class="row">
-            <div class="col-6 mx-auto">
+            <div class="col-6 mx-auto border-1 border m-4" style="border-radius: 6px">
                 {{ form_start(form) }}
                 <div class="col-12">
-                    <h2 class="text-start mt-5 fw-normal">Inscription</h2>
+                    <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Inscription</h1>
                 </div>
                 <div class="row">
                     <div class="col-6">{{ form_row(form.firstname) }}</div>
@@ -17,11 +17,17 @@
                     <div class="col-6">{{ form_row(form.gender) }}</div>
                     <div class="col-12">{{ form_row(form.password) }}</div>
                 </div>
-                <div class="col-12 text-start">{{ form_row(form.submit) }}</div>
+                <div class="col-12 text-center">{{ form_row(form.submit) }}</div>
                 {{ form_end(form) }}
+
+                <div class="col-3 mx-auto mt-4 mb-4" style="height:1px; width:500px; background-color:#a3a3a3;"></div>
+
+                <h5 class="text-center mb-4 mt-1">Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a></h5>
+
             </div>
         </div>
 
     </div>
+
     
 {% endblock %}

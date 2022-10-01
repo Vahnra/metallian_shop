@@ -3,52 +3,75 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+    
 
-    <div class="container bg-white text-dark">
 
-        <div class="row">
+	<div class="container-xl bg-white text-dark">
+		<form method="post">
+			<div class="row">
+				<div class="col-6 mx-auto border-1 border mt-4" style="border-radius: 6px">
 
-            <div class="col-6 mx-auto my-5">
+					{% if error %}
+						<div class="alert alert-danger mt-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
 
-                <h1 class="h3 mb-3 font-weight-normal text-center mb-5 fw-normal">Merci de vous connecter</h1>
-                <label for="inputEmail">E-mail</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                <label for="inputPassword">Mot de passe</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+					{% if app.user %}
+						<div class="mb-3">
+							Vous êtes déjà connecter
+							{{ app.user.userIdentifier }},
+							<a href="{{ path('app_logout') }}">Logout</a>
+						</div>
+					{% endif %}
 
-                <input type="hidden" name="_csrf_token"
-                    value="{{ csrf_token('authenticate') }}"
-                >
+					<div class="row">
+						<div class="col-12">
+							<h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Merci de vous connecter</h1>
+						</div>
 
-                
-                    {# Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                    See https://symfony.com/doc/current/security/remember_me.html #}
+						<div class="col-12">
 
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me"> Se souvenir de moi
-                        </label>
-                    </div>
-                
+							<label class="mb-2" for="inputEmail">E-mail</label>
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
 
-                <button class="btn btn-lg" style="color: white; background-color: #cd0019" type="submit">
-                    Se connecter
-                </button>
+						</div>
+						<div class="col-12 mt-3">
 
-            </div>
+							<label class="mb-2" for="inputPassword">Mot de passe</label>
+							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-        </div>
+						</div>
+					</div>
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<div class="checkbox mb-3 mt-3">
+						<label>
+							<input type="checkbox" name="_remember_me">
+							Se souvenir de moi
+						</label>
+					</div>
 
-    </div>
-</form>
+					<div class="text-center">
+						<button class="btn btn-lg mb-3 px-5" style="color: white; background-color: #cd0019" type="submit">
+							Connexion
+						</button>
+
+						<div class="mb-4"><a class="text-black text-decoration-none" href="">Mot de passe oublié ?</a></div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-4 ms-auto mt-5 mb-4" style="height:1px; width:200px; background-color:#a3a3a3;"></div>
+				<div class="col-2 text-center mb-4" style="margin-top: 1.2rem">Pas de compte ?<a href="{{ path('user_register') }}"> Inscrivez-vous</a></div>
+				<div class="col-4 me-auto mt-5 mb-4" style="height:1px; width:200px; background-color:#a3a3a3;"></div>
+			</div>
+			
+		</form>
+	</div>
+
+
+	
+
 {% endblock %}
