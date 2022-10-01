@@ -10,8 +10,16 @@
             <div class="col-12 bg-dark text-white">
                 <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-10 pt-1">             
-                        <h1>Accessoire : {{ accessoire.0.title }}</h1>
+                    <div class="col-10 pt-1">
+
+                        <h1>
+                            <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': accessoire.0.categorie}) }}">{{ accessoire.0.categorie }}
+                            </a> / 
+                            <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': accessoire.0.categorie, 'title': accessoire.0.souscategorie}) }}">{{ accessoire.0.souscategorie }}
+                            </a>
+                            / {{ vetement.0.title }}
+                        </h1>
+                        
                     </div>
                 </div>
 

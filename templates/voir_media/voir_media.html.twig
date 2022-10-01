@@ -9,7 +9,17 @@
         <div class="col-12 bg-dark text-white">
             <div class="row">
                 <div class="col-1"></div>
-                <div class="col-11 pt-1"><h1>Media : {{ media.title }}</h1></div>
+                <div class="col-11 pt-1">
+
+                    <h1>
+                        <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': media.categorie}) }}">{{ media.categorie }}
+                        </a> / 
+                        <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': media.categorie, 'title': media.souscategorie}) }}">{{ media.souscategorie }}
+                        </a>
+                         / {{ media.title }}
+                    </h1>
+
+                </div>
             </div>
         </div>
     </div>

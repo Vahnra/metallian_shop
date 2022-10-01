@@ -9,7 +9,15 @@
         <div class="col-12 bg-dark text-white">
             <div class="row">
                 <div class="col-1"></div>
-                <div class="col-11 pt-1"><h1>Vêtements : {{ vetement.0.title }}</h1></div>
+                <div class="col-11 pt-1">
+                    <h1>
+                        <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': vetement.0.categorie}) }}">{{ vetement.0.categorie }}
+                        </a> / 
+                        <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': vetement.0.categorie, 'title': vetement.0.souscategorie}) }}">{{ vetement.0.souscategorie }}
+                        </a>
+                         / {{ vetement.0.title }}
+                    </h1>
+                </div>
             </div>
         </div>
     </div>

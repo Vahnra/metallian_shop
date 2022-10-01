@@ -12,8 +12,15 @@
 				<div class="row">
 					<div class="col-1"></div>
 					<div class="col-11 pt-1">
-						<h1>Merchandising Accessoires :
-							{{ accessoriesMerch.0.title }}</h1>
+						
+						<h1>
+                            <a class="text-decoration-none text-white" href="{{ path('show_from_category_merchandising', {'title': accessoriesMerch.0.categoriemerchandising}) }}">{{ accessoriesMerch.0.categoriemerchandising }}
+                            </a> / 
+                            <a class="text-decoration-none text-white" href="{{ path('show_merchandising_sous_categorie', {'title1': accessoriesMerch.0.categoriemerchandising, 'title': accessoriesMerch.0.souscategoriemerchandising}) }}">{{ accessoriesMerch.0.souscategoriemerchandising }}
+                            </a>
+                            / {{ accessoriesMerch.0.title }}
+                        </h1>
+
 					</div>
 				</div>
 			</div>
