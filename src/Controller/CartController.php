@@ -73,7 +73,10 @@ class CartController extends AbstractController
             }
         }
 
-        $cart->setTotalPrice($totalPrice);
+        if ($totalPrice !== null) {
+            $cart->setTotalPrice($totalPrice);
+        }
+        
 
         $entityManager->persist($cart);
         $entityManager->flush();
