@@ -70,6 +70,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FavoriteProduct::class, orphanRemoval: true)]
     private Collection $favoriteProducts;
 
+    #[ORM\Column]
+    private ?bool $isVerified = false;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
@@ -391,6 +394,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $favoriteProduct->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

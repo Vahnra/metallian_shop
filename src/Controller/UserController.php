@@ -10,20 +10,26 @@ use App\Form\UserMailFormType;
 use App\Entity\FavoriteProduct;
 use App\Entity\UserPostalAdress;
 use App\Form\UserAdressFormType;
+use Symfony\Component\Mime\Email;
 use App\Form\UserPasswordFormType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class UserController extends AbstractController
 {
     #[Route('/inscription', name: 'user_register', methods:['GET', 'POST'])]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, VerifyEmailHelperInterface $verifyEmailHelper, MailerInterface $mailer): Response
     {
         $user = new User;
 
@@ -43,12 +49,56 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $signatureComponents = $verifyEmailHelper->generateSignature(
+                'verify_email',
+                $user->getId(),
+                $user->getEmail(),
+                ['id' => $user->getId()]
+            );
+
+            $message = (new TemplatedEmail())
+                ->from('test@ornchanarong.com')
+                ->to($user->getEmail())
+                ->subject('Vérifiez votre mail pour créer votre compte Metallian Eshop')
+                ->htmlTemplate('email/verification_mail.html.twig')
+                ->context([
+                    'link' => $signatureComponents->getSignedUrl(),
+                    'user' => $user
+                ]);
+
+            $mailer->send($message);
+
             return $this->redirectToRoute('app_login');
         }
 
         return $this->render('user/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/verify', name:"verify_email")]
+    public function verifyUserEmail(Request $request, VerifyEmailHelperInterface $verifyEmailHelper, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->find($request->query->get('id'));
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+
+        try {
+            $verifyEmailHelper->validateEmailConfirmation(
+                $request->getUri(),
+                $user->getId(),
+                $user->getEmail(),
+            );
+        }   catch (VerifyEmailExceptionInterface $e) {
+                $this->addFlash('error', $e->getReason());
+                return $this->redirectToRoute('user_register');
+            }
+
+        $user->setIsVerified(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/profile/mon-espace-perso-{id}', name: 'show_profile', methods:['GET', 'POST'])]

@@ -22,7 +22,7 @@ class ContactController extends AbstractController
             $contactFormData = $form->getData();
 
             $message = (new Email())
-                ->from($contactFormData['email'])
+                ->from('test@ornchanarong.com')
                 ->to('vahnra@gmail.com')
                 ->subject('Vous avez reçu un email')
                 ->text('Sender : ' . $contactFormData['email'] . ' ' . $contactFormData['message']);
@@ -31,7 +31,7 @@ class ContactController extends AbstractController
 
             $this->addFlash('success', 'Vore message a été envoyé');
 
-            return $this->redirectToRoute('contact_email');
+            return $this->redirectToRoute('email_contact');
         }
 
         return $this->render('contact/contact.html.twig', [
