@@ -8,19 +8,48 @@
             
             </a>
         </div>
-        <ul class="dropdown-menu border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
-            <li>
-                {% for subcategory in souscategoriesMerchandising %}
+        <ul class="dropdown-menu multi-column columns-2 border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
+            <div class="row">
 
-                    {% if subcategory.categorieMerchandising.title == category.title %}
+                <div class="col-sm-6">
                     
-                        <a class="dropdown-item text-underline-hover" href="{{ path('show_merchandising_sous_categorie', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
+                    <ul class="multi-column-dropdown">
+                        <li>
+                            {% for subcategory in sousCategoriesMerchandisingGauche %}
 
-                    {% endif %}
+                                {% if subcategory.categorieMerchandising.title == category.title %}
+                                
+                                    <a class="dropdown-item text-underline-hover" href="{{ path('show_merchandising_sous_categorie', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
 
-                {% endfor %}
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </li>
+                    </ul>
+                    
+                </div>
                 
-            </li>
+                <div class="col-sm-6">
+                    
+                    <ul class="multi-column-dropdown">
+                        <li>
+                            {% for subcategory in sousCategoriesMerchandisingDroite %}
+
+                                {% if subcategory.categorieMerchandising.title == category.title %}
+                                
+                                    <a class="dropdown-item text-underline-hover" href="{{ path('show_merchandising_sous_categorie', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
+
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
         </ul>
     </li>
 

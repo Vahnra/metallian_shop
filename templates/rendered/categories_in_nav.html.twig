@@ -8,19 +8,43 @@
             
             </a>
         </div>
-        <ul class="dropdown-menu border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
-            <li>
-                {% for subcategory in souscategories %}
-
-                    {% if subcategory.categorie.title == category.title %}
+        <ul class="dropdown-menu multi-column columns-2 border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
+            <div class="row">
+            
+                <div class="col-sm-6">
                     
-                        <a class="dropdown-item text-underline-hover"  href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
+                    <ul class="multi-column-dropdown">
+                        <li>
+                            {% for subcategory in sousCategoriesGauche %}
 
-                    {% endif %}
+                                {% if subcategory.categorie.title == category.title %}
+                                
+                                    <a class="dropdown-item text-underline-hover"  href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
 
-                {% endfor %}
-                
-            </li>
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="multi-column-dropdown">
+                        <li>
+                            {% for subcategory in sousCategoriesDroite %}
+
+                                {% if subcategory.categorie.title == category.title %}
+                                
+                                    <a class="dropdown-item text-underline-hover"  href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": category.title}) }}">{{ subcategory.title }}</a>
+
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </ul>
     </li>
 

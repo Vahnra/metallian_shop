@@ -36,6 +36,9 @@ class SousCategorie
     #[ORM\OneToMany(mappedBy: 'sousCategorie', targetEntity: Bijoux::class)]
     private Collection $bijouxes;
 
+    #[ORM\Column(length: 255)]
+    private ?string $position = null;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -225,6 +228,18 @@ class SousCategorie
                 $bijoux->setSousCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?string
+    {
+        return $this->position;
+    }
+
+    public function setPosition(string $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

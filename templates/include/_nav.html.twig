@@ -131,10 +131,50 @@
 				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			</div>
 
+			{# Nav catégories #}
 
 			<div class="offcanvas-body">
 
 				<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+					{# Nouveautés drop down #}
+
+					<li class="nav-item dropdown">
+						<div class="navigation-color">
+							<a class="nav-link dropdown-toggle" href="" style="color: white" id="navbarDropdown" role="button" aria-expanded="false">
+
+								Nouveautés
+
+							</a>
+						</div>
+						<ul class="dropdown-menu multi-column columns-2 border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
+							<div class="row">
+								<div class="col-sm-6">
+
+									<ul class="multi-column-dropdown">
+										<li>
+
+
+											<a class="dropdown-item text-underline-hover" href="">Homme</a>
+
+
+										</li>
+									</ul>
+								</div>
+								<div class="col-sm-6">
+									<ul class="multi-column-dropdown">
+										<li>
+
+
+											<a class="dropdown-item text-underline-hover" href="">Femme</a>
+
+
+										</li>
+									</ul>
+								</div>
+							</div>
+						</ul>
+					</li>
 
 					{{ render(url('render_categories_in_nav')) }}
 

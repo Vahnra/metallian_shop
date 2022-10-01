@@ -6,6 +6,7 @@ use App\Entity\SousCategorieMerchandising;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -23,6 +24,10 @@ class SousCategorieMerchandisingCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Titre');
         yield AssociationField::new('categorieMerchandising', 'Catégorie merchandising')->setRequired(true);
+        yield ChoiceField::new('position')->setChoices([
+            'Gauche' => 'left',
+            'Droite' => 'right',
+        ]);
 
     }
 

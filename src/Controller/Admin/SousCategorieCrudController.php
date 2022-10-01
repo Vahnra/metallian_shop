@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class SousCategorieCrudController extends AbstractCrudController
 {
@@ -24,6 +25,10 @@ class SousCategorieCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Titre');
         yield AssociationField::new('categorie', 'Catégorie')->setRequired(true);
+        yield ChoiceField::new('position')->setChoices([
+            'Gauche' => 'left',
+            'Droite' => 'right',
+        ]);
 
     }
     

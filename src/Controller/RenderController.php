@@ -30,11 +30,14 @@ class RenderController extends AbstractController
         // On récupère toutes les categories et sous categories normaux
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
 
-        $souscategories = $entityManager->getRepository(SousCategorie::class)->findAll();
+        $sousCategoriesGauche = $entityManager->getRepository(SousCategorie::class)->findBy(['position' => 'left']);
+
+        $sousCategoriesDroite = $entityManager->getRepository(SousCategorie::class)->findBy(['position' => 'right']);
 
         return $this->render('rendered/categories_in_nav.html.twig', [
             'categories' => $categories,
-            'souscategories' => $souscategories
+            'sousCategoriesGauche' => $sousCategoriesGauche,
+            'sousCategoriesDroite' => $sousCategoriesDroite,
         ]);
     }
 
@@ -44,11 +47,13 @@ class RenderController extends AbstractController
         // On récupre toutes les categoriesMerchandising et sousCategoriesMerchandising
         $categoriesMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findAll();
 
-        $souscategoriesMerchandising = $entityManager->getRepository(SousCategorieMerchandising::class)->findAll();
+        $sousCategoriesMerchandisingGauche = $entityManager->getRepository(SousCategorieMerchandising::class)->findBy(['position' => 'left']);
+        $sousCategoriesMerchandisingDroite = $entityManager->getRepository(SousCategorieMerchandising::class)->findBy(['position' => 'right']);
 
         return $this->render('rendered/categories_merchandising_in_nav.html.twig', [
             'categoriesMerchandising' => $categoriesMerchandising,
-            'souscategoriesMerchandising' => $souscategoriesMerchandising
+            'sousCategoriesMerchandisingGauche' => $sousCategoriesMerchandisingGauche,
+            'sousCategoriesMerchandisingDroite' => $sousCategoriesMerchandisingDroite,
         ]);
     }
 

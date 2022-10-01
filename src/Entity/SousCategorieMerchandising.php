@@ -27,6 +27,9 @@ class SousCategorieMerchandising
     #[ORM\OneToMany(mappedBy: 'sousCategorieMerchandising', targetEntity: AccessoiresMerchandising::class)]
     private Collection $accessoiresMerchandisings;
 
+    #[ORM\Column(length: 255)]
+    private ?string $position = null;
+
     public function __construct()
     {
         $this->vetementMerchandisings = new ArrayCollection();
@@ -123,6 +126,18 @@ class SousCategorieMerchandising
                 $accessoiresMerchandising->setSousCategorieMerchandising(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?string
+    {
+        return $this->position;
+    }
+
+    public function setPosition(string $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }
