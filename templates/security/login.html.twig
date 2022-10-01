@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion Metallian Store{% endblock %}
 
 {% block body %}
-
-    
-
 
 	<div class="container-xl bg-white text-dark">
 		<form method="post">
 			<div class="row">
 				<div class="col-6 mx-auto border-1 border mt-4" style="border-radius: 6px">
 
+					{% include "include/_flashes.html.twig" %}
+
 					{% if error %}
-						<div class="alert alert-danger mt-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						<div class="alert text-center alert-danger mt-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 					{% endif %}
 
 					{% if app.user %}
@@ -55,7 +54,7 @@
 							Connexion
 						</button>
 
-						<div class="mb-4"><a class="text-black text-decoration-none" href="">Mot de passe oublié ?</a></div>
+						<div class="mb-4"><a class="text-black text-decoration-none" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a></div>
 					</div>
 
 				</div>

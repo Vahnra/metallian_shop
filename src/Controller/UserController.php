@@ -13,6 +13,7 @@ use App\Form\UserAdressFormType;
 use Symfony\Component\Mime\Email;
 use App\Form\UserPasswordFormType;
 use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -57,7 +58,7 @@ class UserController extends AbstractController
             );
 
             $message = (new TemplatedEmail())
-                ->from('test@ornchanarong.com')
+                ->from(new Address('test@ornchanarong.com', 'Metallian Store'))
                 ->to($user->getEmail())
                 ->subject('Vérifiez votre mail pour créer votre compte Metallian Eshop')
                 ->htmlTemplate('email/verification_mail.html.twig')
@@ -67,6 +68,8 @@ class UserController extends AbstractController
                 ]);
 
             $mailer->send($message);
+
+            $this->addFlash('Mail Vérification', "Un mail de confirmation vous a été envoyé");
 
             return $this->redirectToRoute('app_login');
         }
