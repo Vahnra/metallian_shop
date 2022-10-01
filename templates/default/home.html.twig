@@ -44,10 +44,18 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row bg-white">
 
-        <div class="col-12 p-3 bg-white text-dark">
-            <h1>Nouveautées pour les femmes</h1>     
+        <div class="row d-flex text-center mt-3 mb-2 mx-auto ">
+
+			<h1 style="margin-bottom: 1rem">Nos nouveautés Metallian Eshop</h1>
+			<hr>
+            <p>Avide de nouveautés, voici les touts nouveaux produits arrivant chez nous qu'elles soient Metal, Rock ou Pop culture ainsi que des merchandising de vos groupes préférés</p>
+
+		</div>
+
+        <div class="col-12 p-3 text-dark">
+            <h3>Femmes</h3>     
             <div class="row text-center">
 
                 {% for vetement in nouveautesFemme | slice(0, 4) %}
@@ -93,7 +101,9 @@
     </div>
     <div class="row" >
         <div class="col-12 p-3 bg-dark text-white">
-            <h2>Nouveautées pour les hommes</h2>     
+
+            <h3>Hommes</h3>     
+
             <div class="row text-center">
 
                 {% for vetement in nouveautesHomme %}
@@ -136,6 +146,21 @@
             </div>
         </div>
     </div>
+
+    <div class="row" >
+        <div class="col-12 p-3 bg-white">
+
+            <div class="row d-flex text-center mt-3 mb-2 mx-auto ">
+
+                <h2 style="margin-bottom: 1rem">Les meilleurs marques</h2>
+                <hr>
+                <p>Nous proposons les meilleurs marques de mode alternative, du Punk au Gothique en passant par le underground et beaucoup plus d'autre pour affirmer vore propres style.</p>
+
+		    </div>
+
+        </div>
+    </div>
+    
 </div>
 
 
