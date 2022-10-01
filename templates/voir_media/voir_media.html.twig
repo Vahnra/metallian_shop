@@ -21,14 +21,14 @@
             <img src={{ asset('images/'~media.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
         </div>
 
-        <div class="col-7 pt-3 text-center border-bottom border-dark" style="background-color: white;">
+        <div class="col-7 pt-3 text-center" style="background-color: white;">
             
             <img id="imageBox" src={{ asset('images/'~media.photo1) }} class="img-fluid p-2" alt="{{ media.title }}"/>
             
 
         </div>
 
-        <div class="col-4 pt-3 border-bottom border-end border-dark" style="background-color: white;">
+        <div class="col-4 pt-3" style="background-color: white;">
         
         <div class="row">
 
@@ -140,7 +140,7 @@
 
 <div class="container-xl py-3">
 
-    <div class="row pt-2" style="background-color: white; border: solid 1px black">
+    <div class="row pt-2" style="background-color: white;">
       
         <div class="col-12">   
             <h2>Produits similaires</h2>
@@ -148,7 +148,7 @@
 
         {% for media in similarItm |slice(0,4)%} 
        
-            <div class="card mx-auto mb-3" style="width: 18rem; background-color: white;">
+            <div class="card mx-auto mb-3 border-0" style="width: 18rem; background-color: white;">
                 <img src={{ asset('images/'~media.photo1) }} class="card-img-top" style="object-fit: contain">
                 <div class="card-body">
                     <h5 class="card-title">{{ media.title }}</h5> 
@@ -166,7 +166,7 @@
 
         {% for media in similaeGnr |slice(0,4) %} 
        
-            <div class="card mx-auto mb-3" style="width: 18rem; background-color: white;">
+            <div class="card mx-auto mb-3 border-0" style="width: 18rem; background-color: white;">
                 <img src={{ asset('images/'~media.photo1) }} class="card-img-top" style="object-fit: contain">
                 <div class="card-body">
                     <h5 class="card-title">{{ media.title }}</h5> 
