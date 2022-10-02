@@ -26,18 +26,31 @@
 		<div class="row">
 			<div class="col-1 pt-3 text-center bg-dark ">
 
-				<img src={{ asset('images/'~vetementMerche.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
-				<img src={{ asset('images/'~vetementMerche.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
-				<img src={{ asset('images/'~vetementMerche.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
-				<img src={{ asset('images/'~vetementMerche.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
-				<img src={{ asset('images/'~vetementMerche.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
+                <a href="{{ asset('images/'~vetementMerche.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src="{{ asset('images/'~vetementMerche.0.photo) }}" onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}" />
+                </a>
+
+                <a href="{{ asset('images/'~vetementMerche.0.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src="{{ asset('images/'~vetementMerche.0.photo2) }}" onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                </a>
+
+                <a href="{{ asset('images/'~vetementMerche.0.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src={{ asset('images/'~vetementMerche.0.photo3) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                </a>
+
+                <a href="{{ asset('images/'~vetementMerche.0.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src={{ asset('images/'~vetementMerche.0.photo4) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                </a>
+
+                <a href="{{ asset('images/'~vetementMerche.0.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src={{ asset('images/'~vetevetementMerchement.0.photo5) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                </a>
 
 			</div>
 
 			<div class="col-7 pt-3 text-center" style="background-color: white;">
 
 				<img id="imageBox" src={{ asset('images/'~vetementMerche.0.photo) }} class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
-
 
 			</div>
 
@@ -58,22 +71,21 @@
 
                     <div>
 
-                            {% for couleur in couleurs %}
+                        {% for couleur in couleurs %}
                                 
-                                    <label class="mx-2" style="cursor:pointer;">
-                                        <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
-                                            <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+                            <label class="mx-2" style="cursor:pointer;">
+                                <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+                                    <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
 
-                                                <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
+                                        <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
 
-                                            </div>
-                                        </input>
-                                    </label>
+                                    </div>
+                                </input>
+                            </label>
                                 
+                         {% endfor %}
 
-                            {% endfor %}
-
-                        </div>
+                     </div>
 
                     <div class="col-12 pt-3 pb-4">
 
@@ -118,10 +130,10 @@
                 <p>{{ vetementMerche.0.material }}</p>
                 <div class="col-12 mb-1">
                     {{form_start(form)}}
-                        <div class="col-6">
+                        <div class="col-2">
                             {{form_row(form.quantity)}}
                         </div>
-                        <div class="row">
+                        <div class="row ps-4">
 
                             {# Favorite button #}
                             {% if app.user is null %}
@@ -141,7 +153,7 @@
                             {% endif %}
                             {# End favorite button #}
 
-                            <div class="col-6">
+                            <div class="col-9">
                                 {{form_row(form.submit)}}
                             </div>
 
@@ -250,8 +262,8 @@
 	{# ----------------------------------------------------------------------------------- #}
 	<script>
 		function myFunction(smallImg) {
-var fullImg = document.getElementById("imageBox");
-fullImg.src = smallImg.src;
-}
+        var fullImg = document.getElementById("imageBox");
+        fullImg.src = smallImg.src;
+    }
 	</script>
 {% endblock %}

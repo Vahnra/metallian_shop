@@ -61,7 +61,7 @@ class RegisterFormType extends AbstractType
                 'label' => 'S\'inscrire',
                 'validate' => false,
                 'attr' => [
-                    'class' => 'btn btn-lg ',
+                    'class' => 'btn btn-lg no-border-radius',
                     'style' => 'padding-left: 2.5rem; padding-right: 2.5rem ;color: white; background-color: #cd0019'
                 ]
             ])

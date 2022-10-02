@@ -26,9 +26,9 @@
     <div class="row">
         <div class="col-1 pt-3 text-center bg-dark ">
             
-            <img src={{ asset('images/'~media.photo1) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
-            <img src={{ asset('images/'~media.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
-            <img src={{ asset('images/'~media.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
+            <img src={{ asset('images/'~media.photo1) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
+            <img src={{ asset('images/'~media.photo2) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
+            <img src={{ asset('images/'~media.photo3) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ media.title }}"/>
         </div>
 
         <div class="col-7 pt-3 text-center" style="background-color: white;">
@@ -70,7 +70,7 @@
                     <p>{{ media.sousCategorie }}</p>
 
                     {{form_start(form)}}
-                        <div class="col-6">
+                        <div class="col-2 ps-4">
                             {{form_row(form.quantity)}}
                         </div>
                         <div class="row">
@@ -93,7 +93,7 @@
                             {% endif %}
                             {# End favorite button #}
 
-                            <div class="col-6">
+                            <div class="col-9">
                                 {{form_row(form.submit)}}
                             </div>
 

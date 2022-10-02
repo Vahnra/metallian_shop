@@ -18,13 +18,16 @@ class CartProductFormType extends AbstractType
             ->add('quantity', IntegerType::class, [
                 'label' => 'Quantité',
                 'data' => '1',
-                'attr' => ['min' => '1'],
+                'attr' => [
+                    'min' => '1'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter au panier',
                 'validate' => False,
                 'attr' => [
-                    'class' => 'btn btn-success',
+                    'class' => 'btn btn-success no-border-radius border-0 mt-1',
+                    'style' => 'background-color: rgb(10, 19, 32); width: 100%'
                 ],
             ])
         ;

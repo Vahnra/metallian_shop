@@ -20,6 +20,7 @@ $(document).ready(function(){
             dropdownMenu.parent().toggleClass("open");
         }
     });
-}); 
+    
+});
 
 // Fin JS pour le hover des dropdown bootstrap

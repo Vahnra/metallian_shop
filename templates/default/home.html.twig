@@ -15,21 +15,21 @@
             </div>
             <div class="carousel-inner">            
                 <div class="carousel-item active">
-                {% if slider is not empty %}
-                <a href={{ slider.0.link }}>
-                <img src={{ asset('images/'~slider.0.photo1) }} class="d-block w-100" title="{{ slider.0.title1 }}" alt="{{ slider.0.title1 }}"/>
-                </a>
-                </div>
-                <div class="carousel-item">
-                <a href={{ slider.0.link2 }}>
-                <img src={{ asset('images/'~slider.0.photo2) }} class="d-block w-100" title="{{ slider.0.title2 }}" alt="{{ slider.0.title2 }}"/>
-                </a>
-                </div>
-                <div class="carousel-item">
-                <a href={{ slider.0.link3 }}>
-                <img src={{ asset('images/'~slider.0.photo2) }} class="d-block w-100" title="{{ slider.0.title3 }}" alt="{{ slider.0.title3 }}"/>
-                </a>
-                {% endif %}
+                    {% if slider is not empty %}
+                        <a href={{ slider.0.link }}>
+                            <img src={{ asset('images/'~slider.0.photo1) }} class="d-block w-100" title="{{ slider.0.title1 }}" alt="{{ slider.0.title1 }}"/>
+                        </a>
+                        </div>
+                        <div class="carousel-item">
+                        <a href={{ slider.0.link2 }}>
+                            <img src={{ asset('images/'~slider.0.photo2) }} class="d-block w-100" title="{{ slider.0.title2 }}" alt="{{ slider.0.title2 }}"/>
+                        </a>
+                        </div>
+                        <div class="carousel-item">
+                        <a href={{ slider.0.link3 }}>
+                            <img src={{ asset('images/'~slider.0.photo2) }} class="d-block w-100" title="{{ slider.0.title3 }}" alt="{{ slider.0.title3 }}"/>
+                        </a>
+                    {% endif %}
                 </div>   
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

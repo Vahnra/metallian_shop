@@ -28,11 +28,11 @@
         <div class="row">
             <div class="col-1 text-center bg-dark ">
                 
-                <img src={{ asset('images/'~accessoire.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
-                <img src={{ asset('images/'~accessoire.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
-                <img src={{ asset('images/'~accessoire.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
-                <img src={{ asset('images/'~accessoire.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
-                <img src={{ asset('images/'~accessoire.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
+                <img src={{ asset('images/'~accessoire.0.photo) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
+                <img src={{ asset('images/'~accessoire.0.photo2) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
+                <img src={{ asset('images/'~accessoire.0.photo3) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
+                <img src={{ asset('images/'~accessoire.0.photo4) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
+                <img src={{ asset('images/'~accessoire.0.photo5) }} onmouseover="myFunction(this)" class="img-fluid p-2" alt="{{ accessoire.0.title }}"/>
         
             </div>
 
@@ -120,10 +120,10 @@
                     
                     <div class="col-12 mb-1">
                     {{form_start(form)}}
-                        <div class="col-6">
+                        <div class="col-2">
                             {{form_row(form.quantity)}}
                         </div>
-                        <div class="row">
+                        <div class="row ps-4">
 
                             {# Favorite button #}
                             {% if app.user is null %}
@@ -143,7 +143,7 @@
                             {% endif %}
                             {# End favorite button #}
 
-                            <div class="col-6">
+                            <div class="col-9">
                                 {{form_row(form.submit)}}
                             </div>
 

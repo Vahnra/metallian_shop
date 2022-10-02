@@ -22,19 +22,38 @@
         </div>
     </div>
     <div class="row">
+    
         <div class="col-1 d-sm-none d-none d-md-none d-lg-block pt-3 text-center bg-dark ">
-            
-            <img src={{ asset('images/'~vetement.0.photo) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit" alt="{{ vetement.0.title }}" />
-            <img src={{ asset('images/'~vetement.0.photo2) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit" alt="{{ vetement.0.title }}"/>
-            <img src={{ asset('images/'~vetement.0.photo3) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit" alt="{{ vetement.0.title }}"/>
-            <img src={{ asset('images/'~vetement.0.photo4) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit" alt="{{ vetement.0.title }}"/>
-            <img src={{ asset('images/'~vetement.0.photo5) }} onclick="myFunction(this)" class="img-fluid p-2" title="Petite photo du produit" alt="{{ vetement.0.title }}"/>
+
+            <a href="{{ asset('images/'~vetement.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src="{{ asset('images/'~vetement.0.photo) }}" onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}" />
+            </a>
+
+            <a href="{{ asset('images/'~vetement.0.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src="{{ asset('images/'~vetement.0.photo2) }}" onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            </a>
+
+            <a href="{{ asset('images/'~vetement.0.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src={{ asset('images/'~vetement.0.photo3) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            </a>
+
+            <a href="{{ asset('images/'~vetement.0.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src={{ asset('images/'~vetement.0.photo4) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            </a>
+
+            <a href="{{ asset('images/'~vetement.0.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src={{ asset('images/'~vetement.0.photo5) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            </a>
 
         </div>
 
         <div class="col-md-7 pt-3 text-center" style="background-color: white;">
+
+            <a href="{{ asset('images/'~vetement.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
         
-            <img id="imageBox" src={{ asset('images/'~vetement.0.photo) }} class="img-fluid p-2" alt="{{ vetement.0.title }}"/>
+                <img id="imageBox" src="{{ asset('images/'~vetement.0.photo) }}" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+
+            </a>
        
 
         </div>
@@ -144,30 +163,30 @@
                 <p>{{ material.0.material }}</p>
                 <div class="col-12 mb-1">
                     {{form_start(form)}}
-                        <div class="col-6">
+                        <div class="col-2">
                             {{form_row(form.quantity)}}
                         </div>
-                        <div class="row">
+                        <div class="row ps-4">
                             
                             {# Favorite button #}
                             {% if app.user is null %}
-                                <a class="col-1 ms-2 ps-1 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('app_login')}}">
+                                <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('app_login')}}">
                                     <i type="button" class="fa-regular fa-heart fa-2x"></i>
                                 </a>
                             {% else %}
                                 {% if userFavorites is not empty %}
-                                    <a class="col-1 ms-2 ps-1 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':vetement.0.id})}}">
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':vetement.0.id})}}">
                                         <i type="button" class="fa-solid fa-heart fa-2x"></i>
                                     </a>
                                 {% else %}
-                                    <a class="col-1 ms-2 ps-1 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_vetement', {'id':vetement.0.id})}}">
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_vetement', {'id':vetement.0.id})}}">
                                         <i type="button" class="fa-regular fa-heart fa-2x"></i>
                                     </a>
                                 {% endif %}
                             {% endif %}
                             {# End favorite button #}
 
-                            <div class="col-6">
+                            <div class="col-9">
                                 {{form_row(form.submit)}}
                             </div>
 
@@ -232,7 +251,7 @@
         {% for vetement in similarItm |slice(0,4) %} 
          
                 <div class="card mx-auto mb-3 border-0" style="width: 18rem; background-color: white;">
-                    <img src={{ asset('images/'~vetement.photo) }} style="object-fit: contain" class="card-img-top">
+                    <img src={{ asset('images/'~vetement.photo) }} style="object-fit: contain" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" >
                     <div class="card-body">
                         <h5 class="card-title">{{ vetement.title }}</h5> 
                         <p>{{ vetement.price/100 }}€</p>

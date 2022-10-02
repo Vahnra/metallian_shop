@@ -155,7 +155,7 @@
 
                                 <a href="{{ path('voir_vetement', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ vetement.title }}">
+                                    <img src="{{ asset('images/' ~ vetement.photo) }}"  style="height: 200px; object-fit: contain;" id="test{{vetement.id}}" class="card-img-top" alt="{{ vetement.title }}">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
@@ -185,6 +185,21 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                function functionImageEnter(){
+                                    var image = document.getElementById("test" + {{vetement.id}});
+                                    image.src = "{{ asset('images/' ~ vetement.photo2) }}";
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("test" + {{vetement.id}});
+                                    image.src = "{{ asset('images/' ~ vetement.photo) }}";
+                                }
+
+                                document.getElementById("test" + {{vetement.id}}).addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("test" + {{vetement.id}}).addEventListener("mouseleave", functionImageLeave);
+                            </script>
 
                             {% endfor %}
 
@@ -367,5 +382,7 @@
         
         </div>
     </div>
+
+
 
 {% endblock %}
