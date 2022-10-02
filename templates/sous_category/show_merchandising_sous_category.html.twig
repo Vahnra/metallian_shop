@@ -34,27 +34,38 @@
 
                         </ul>
 
-                        <div class="pt-3 border-top">
+                        <nav class="navbar navbar-expand-lg">
+                            <div class="container-fluid" style="flex-direction: column">
+                                <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
+                                    <span class="">Filtres</span>
+                                </button>
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        
+                                    <div class="pt-3 border-top">
 
-                            {% if categories.0.title == 'Merchandising Femme' %}
-                            
-                                {{ form(filterForm) }}
+                                        {% if categories.0.title == 'Merchandising Femme' %}
+                                        
+                                            {{ form(filterForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Merchandising Homme' %}
-                            
-                                {{ form(filterForm) }}
+                                        {% if categories.0.title == 'Merchandising Homme' %}
+                                        
+                                            {{ form(filterForm) }}
 
-                            {% endif %}  
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Accessoires Merchandising' %}
-                            
-                                {{ form(filterAccessoiresForm) }}
+                                    </div>
 
-                            {% endif %} 
-
+                                </div>
+                            </div>
                         </div>
+                    </nav>
                 
                 </div>
 

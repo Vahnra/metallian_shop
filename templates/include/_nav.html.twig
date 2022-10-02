@@ -123,7 +123,7 @@
 	</div>
 </nav>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg ">
 	<div class="container-fluid" style="background-color: rgb(205, 0, 25)">
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -146,41 +146,15 @@
 
 					{# Nouveautés drop down #}
 
-					<li class="nav-item dropdown">
+					<li class="nav-item">
 						<div class="navigation-color">
-							<a class="nav-link dropdown-toggle categorieNav" href="" id="navbarDropdown" role="button" aria-expanded="false">
+							<a class="nav-link text-white" href="" aria-expanded="false">
 
-								Nouveautés
+								NOUVEAUTES
 
 							</a>
 						</div>
-						<ul class="dropdown-menu multi-column columns-2 border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
-							<div class="row">
-								<div class="col-sm-6">
-
-									<ul class="multi-column-dropdown">
-										<li>
-
-
-											<a class="dropdown-item text-underline-hover" href="">Homme</a>
-
-
-										</li>
-									</ul>
-								</div>
-								<div class="col-sm-6">
-									<ul class="multi-column-dropdown">
-										<li>
-
-
-											<a class="dropdown-item text-underline-hover" href="">Femme</a>
-
-
-										</li>
-									</ul>
-								</div>
-							</div>
-						</ul>
+						
 					</li>
 
 					{{ render(url('render_categories_in_nav')) }}

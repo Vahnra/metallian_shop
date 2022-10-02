@@ -34,51 +34,69 @@
 
                         </ul>
 
-                        <div class="pt-3 border-top">
+                        {# Partie filtres #}
+                        <nav class="navbar navbar-expand-lg">
+                            <div class="container-fluid" style="flex-direction: column">
+                                <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
+                                    <span class="">Filtres</span>
+                                </button>
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        
+                                    <div class="pt-3 border-top">
 
-                            {% if categories.0.title == 'Femme' %}
-                        
-                                {{ form(filterForm) }}
+                                        {% if categories.0.title == 'Femme' %}
+                                        
+                                            {{ form(filterForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Enfant' %}
-                        
-                                {{ form(filterForm) }}
+                                        {% if categories.0.title == 'Enfant' %}
+                                        
+                                            {{ form(filterForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Homme' %}
-                            
-                                {{ form(filterForm) }}
+                                        {% if categories.0.title == 'Homme' %}
+                                        
+                                            {{ form(filterForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Bijoux' %}
-                        
-                                {{ form(filterBijouxForm) }}
+                                        {% if categories.0.title == 'Bijoux' %}
+                                    
+                                            {{ form(filterBijouxForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Chaussures' %}
-                    
-                                {{ form(filterChaussuresForm) }}
+                                        {% if categories.0.title == 'Chaussures' %}
+                                    
+                                            {{ form(filterChaussuresForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Accessoires' %}
-                    
-                                {{ form(filterAccessoiresForm) }}
+                                        {% if categories.0.title == 'Accessoires' %}
+                                    
+                                            {{ form(filterAccessoiresForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
-                            {% if categories.0.title == 'Musique' %}
-                    
-                                {{ form(filterMediaForm) }}
+                                        {% if categories.0.title == 'Musique' %}
+                                    
+                                            {{ form(filterMediaForm) }}
 
-                            {% endif %}
+                                        {% endif %}
 
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
+                    </nav>
                 
                 </div>
 
