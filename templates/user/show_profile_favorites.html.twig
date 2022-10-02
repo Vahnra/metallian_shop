@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col-7">
 
-                                    <select class="form-select" onchange="window.location=this.value;">
+                                    <select class="form-select no-border-radius" onchange="window.location=this.value;">
                                         <option selected>Trier par</option>
                                         {{ knp_pagination_sortable(favoriteProducts, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
                                         {{ knp_pagination_sortable(favoriteProducts, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}

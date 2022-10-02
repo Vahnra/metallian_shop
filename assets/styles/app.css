@@ -223,7 +223,7 @@ body {
 /* .dropdown:hover{
   background-image: none;
   background-color: rgb(255, 255, 255);
-  color: black;
+  color: rgb(188, 8, 8);
 } */
 
 /* remove padding for dropdown */
@@ -552,4 +552,8 @@ margin: 50px;
 .multi-column-dropdown > li > a:hover {
   background-image: none;
   background-color: white;
+}
+
+.no-border-radius {
+  border-radius: 0%;
 }

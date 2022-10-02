@@ -104,12 +104,18 @@
 
                     <div class="row mb-3">
 
-                        <h3 class="col-9"><a href="{{ path('default_home') }}" class="text-underline-hover text-black">Accueil</a> / <a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}">{{ categories.0.title }}</a> / {{ souscategories.title }}</h3>
+                        <h3 class="col-8" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item text-underline-hover"><a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item text-underline-hover"><a class="text-decoration-none text-muted" href="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></li>
+                                <li class="breadcrumb-item active">{{ souscategories.title }}</li>
+                            </ol>
+                        </h3>
 
                         {# Select pour trier #}
                         <div class="col-3 ms-auto">
 
-                            <select class="form-select" onChange="window.location=this.value;">
+                            <select class="form-select no-border-radius" onChange="window.location=this.value;">
                                 <option selected>Trier par</option>
                                 <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
                                 <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>

@@ -61,6 +61,9 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('Size', ChoiceType::class, [
@@ -71,6 +74,9 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Size $category) {
                     return $category ? $category->getSize() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('material', ChoiceType::class, [
@@ -81,6 +87,9 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('marque', ChoiceType::class, [
@@ -91,21 +100,30 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Marques $category) {
                     return $category ? $category->getTitle() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMax', MoneyType::class, [
                 'label' => 'Prix max',
                 'divisor' => 100,
                 'required' => false,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
             ])
             ->add('priceMini', MoneyType::class, [
                 'label' => 'Prix mini',
                 'divisor' => 100,
                 'required' => false,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
             ])
             ->add('Filtrer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
                 ]
             ])
             ->getForm();
@@ -122,21 +140,30 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMax', MoneyType::class, [
                 'label' => 'Prix max',
                 'divisor' => 100,
                 'required' => false,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
             ])
             ->add('priceMini', MoneyType::class, [
                 'label' => 'Prix mini',
                 'divisor' => 100,
                 'required' => false,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
             ])
             ->add('Filtrer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
                 ]
             ])
             ->getForm();
@@ -152,6 +179,9 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('Size', ChoiceType::class, [
@@ -162,6 +192,9 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Size $category) {
                     return $category ? $category->getSize() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('material', ChoiceType::class, [
@@ -172,21 +205,30 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMax', MoneyType::class, [
                 'label' => 'Prix max',
                 'divisor' => 100,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMini', MoneyType::class, [
                 'label' => 'Prix mini',
                 'divisor' => 100,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('Filtrer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
                 ]
             ])
             ->getForm();
@@ -202,6 +244,9 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('material', ChoiceType::class, [
@@ -212,21 +257,30 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMax', MoneyType::class, [
                 'label' => 'Prix max',
                 'divisor' => 100,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMini', MoneyType::class, [
                 'label' => 'Prix mini',
                 'divisor' => 100,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('Filtrer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
                 ]
             ])
             ->getForm();
@@ -243,21 +297,30 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?MusicType $category) {
                     return $category ? $category->getGenre() : '';
                 },
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMax', MoneyType::class, [
                 'label' => 'Prix max',
                 'divisor' => 100,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('priceMini', MoneyType::class, [
                 'label' => 'Prix mini',
                 'divisor' => 100,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
                 'required' => false,
             ])
             ->add('Filtrer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect'
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
                 ]
             ])
             ->getForm();

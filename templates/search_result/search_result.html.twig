@@ -31,17 +31,25 @@
 
 					{% endfor %}
 
+					{% for categorieMerchandising in categoriesMerchandising %}
+
+						<h5>
+							<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
+						</h5>
+
+					{% endfor %}
+
 
 				</div>
 
-				<div class="col-xl-10">
+				<div class="col-xl-10 row">
 
-					<h3 class="mb-4">Résultat</h3>
+					<h3 class="mb-4 col-8">Résultat</h3>
 
 					{# Select pour trier #}
 					<div class="col-3 ms-auto mb-4">
 
-						<select class="form-select" onchange="window.location=this.value;">
+						<select class="form-select no-border-radius" onchange="window.location=this.value;">
 							<option selected>Trier par</option>
 							{{ knp_pagination_sortable(searchResults, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
 							{{ knp_pagination_sortable(searchResults, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}

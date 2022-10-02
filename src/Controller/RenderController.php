@@ -57,6 +57,21 @@ class RenderController extends AbstractController
         ]);
     }
 
+    #[Route('/categories3', name: 'render_categories_in_footer')]
+    public function renderCategoriesInFooter(EntityManagerInterface $entityManager): Response
+    {
+        // On récupre toutes les categoriesMerchandising et catégories
+        $categories = $entityManager->getRepository(Categorie::class)->findAll();
+        $categoriesMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findAll();
+
+
+        return $this->render('rendered/categories_in_footer.html.twig', [
+            'categoriesMerchandising' => $categoriesMerchandising,
+            'categories' => $categories
+
+        ]);
+    }
+
     #[Route('/search', name: 'render_search_article', methods:['GET'])]
     public function renderSearchArticle(
         VetementRepository $vetementRepository, 
@@ -74,6 +89,8 @@ class RenderController extends AbstractController
 
         // On query toutes les catégories pour la side bar
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
+
+        $categoriesMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findAll();
 
         // query de filtre pour chaque tables
         $search = $request->get('search');
@@ -105,7 +122,8 @@ class RenderController extends AbstractController
         return $this->render('search_result/search_result.html.twig', [
             'searchResults' => $searchResults,
             'search' => $search,
-            'categories' => $categories
+            'categories' => $categories,
+            'categoriesMerchandising' => $categoriesMerchandising
         ]);
     }
     
