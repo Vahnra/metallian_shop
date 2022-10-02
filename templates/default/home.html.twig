@@ -62,18 +62,6 @@
                     
                     {% if vetement.categorie.title == 'Femme' %}
 
-                        {# <div class="col-3 mx-auto">
-
-                            <a href="#" class="text-decoration-none text-dark">
-
-                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="max-width: 17rem; object-fit: cover" class="p-4" alt="text text" title="text">
-
-                                <p>{{ vetement.price/100 }} €</p>
-
-                            </a>
-
-                        </div> #}
-
                         <div class="card g-0 mx-auto my-5 border-0" style="width: 15rem;">
 
                             <a href="{{ path('voir_vetement', {"id": vetement.id}) }}" class="text-decoration-none text-black">
@@ -84,8 +72,6 @@
                                         <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
                                     </ul>
                                      <h5 class="card-title">{{ vetement.title }}</h5>
-                                    {#<p class="card-text">{{ vetement.description }}</p>
-                                    <a href="#" class="card-link">Ajouter au panier</a> #}
                                 </div>      
 
                             </a>
@@ -112,14 +98,6 @@
 
                         <div class="col-3 mx-auto">
 
-                            {# <a href="#" class="text-decoration-none text-white">
-
-                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="max-width: 17rem; object-fit: cover" class="p-4" alt="text text" title="text">
-
-                                <p>{{ vetement.price/100 }} €</p>
-
-                            </a> #}
-
                             <div class="card g-0 mx-auto my-5 border-0 bg-dark" style="width: 15rem;">
 
                                 <a href="{{ path('voir_vetement', {"id": vetement.id}) }}" class="text-decoration-none text-black">
@@ -129,9 +107,7 @@
                                         <ul class="list-group list-group-flush ">
                                             <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
                                         </ul>
-                                        <h5 class="card-title">{{ vetement.title }}</h5>
-                                        {# <p class="card-text">{{ vetement.description }}</p>
-                                        <a href="#" class="card-link">Ajouter au panier</a> #}
+                                        <h5 class="card-title text-white">{{ vetement.title }}</h5>
                                     </div>      
 
                                 </a>
@@ -155,6 +131,20 @@
                 <h2 style="margin-bottom: 1rem">Les meilleurs marques</h2>
                 <hr>
                 <p>Nous proposons les meilleurs marques de mode alternative, du Punk au Gothique en passant par le underground et beaucoup plus d'autre pour affirmer vore propres style.</p>
+
+		    </div>
+
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-12 p-3 bg-white">
+
+            <div class="row d-flex text-center mt-3 mb-2 mx-auto ">
+
+                <h2 style="margin-bottom: 1rem">Merchandising de vos groupes préférés</h2>
+                <hr>
+                <p>Nous faisons tout notres possible pour avoir les merchandisings de vos groupes préférés, que ce soit des mugs, puzzles ou encore des patchs ainsi que des sacs et portefeuilles et bien plus encore.</p>
 
 		    </div>
 
