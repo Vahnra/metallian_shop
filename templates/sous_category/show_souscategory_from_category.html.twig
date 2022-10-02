@@ -18,86 +18,105 @@
 
                     <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></h3>
 
-                        <ul class="" style="list-style-type: none">
-
-                            {# For pour afficher la bare de navigation a gauche #}
-
-                            {% for subcategory in allsouscategories %}
-
-                            {% if subcategory.categorie.title == categories.0.title %}
-                      
-                                <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.0.title}) }}">{{ subcategory.title }}</a></li>
-
-                            {% endif %}
-
-                        {% endfor %}
-
-                        </ul>
-
-                        {# Partie filtres #}
+                    <div class="row">
                         <nav class="navbar navbar-expand-lg">
-                            <div class="container-fluid" style="flex-direction: column">
-                                <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
-                                    <span class="">Filtres</span>
-                                </button>
-                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
-                                    <div class="offcanvas-header">
-                                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                <div class="container-fluid" style="flex-direction: column">
+                                    <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSubCategories" aria-controls="offcanvasNavbar">
+                                        <span class="">Sous catégories</span>
+                                    </button>
+                                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSubCategories" aria-labelledby="offcanvasSubCategories">
+                                        <div class="offcanvas-header">
+                                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Sous catégories</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                        </div>
+                                        <div class="offcanvas-body">
+                                        
+                                            {# Parties sous catégories #}
+                                            <ul class="ps-3" style="list-style-type: none">
+
+                                                {# For pour afficher la bare de navigation a gauche #}
+                                                {% for subcategory in allsouscategories %}
+
+                                                    {% if subcategory.categorie.title == categories.0.title %}
+                                            
+                                                        <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.0.title}) }}">{{ subcategory.title }}</a></li>
+
+                                                    {% endif %}
+
+                                                {% endfor %}
+
+                                            </ul>
+
+                                        </div>
                                     </div>
-                                    <div class="offcanvas-body">
+                                </div>
+                            </nav>
+
+                            {# Partie filtres #}
+                            <nav class="navbar navbar-expand-lg">
+                                <div class="container-fluid" style="flex-direction: column">
+                                    <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
+                                        <span class="">Filtres</span>
+                                    </button>
+                                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
+                                        <div class="offcanvas-header">
+                                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                        </div>
+                                        <div class="offcanvas-body">
+                                            
+                                        <div class="pt-3 border-top">
+
+                                            {% if categories.0.title == 'Femme' %}
+                                            
+                                                {{ form(filterForm) }}
+
+                                            {% endif %}
+
+                                            {% if categories.0.title == 'Enfant' %}
+                                            
+                                                {{ form(filterForm) }}
+
+                                            {% endif %}
+
+                                            {% if categories.0.title == 'Homme' %}
+                                            
+                                                {{ form(filterForm) }}
+
+                                            {% endif %}
+
+                                            {% if categories.0.title == 'Bijoux' %}
                                         
-                                    <div class="pt-3 border-top">
+                                                {{ form(filterBijouxForm) }}
 
-                                        {% if categories.0.title == 'Femme' %}
+                                            {% endif %}
+
+                                            {% if categories.0.title == 'Chaussures' %}
                                         
-                                            {{ form(filterForm) }}
+                                                {{ form(filterChaussuresForm) }}
 
-                                        {% endif %}
+                                            {% endif %}
 
-                                        {% if categories.0.title == 'Enfant' %}
+                                            {% if categories.0.title == 'Accessoires' %}
                                         
-                                            {{ form(filterForm) }}
+                                                {{ form(filterAccessoiresForm) }}
 
-                                        {% endif %}
+                                            {% endif %}
 
-                                        {% if categories.0.title == 'Homme' %}
+                                            {% if categories.0.title == 'Musique' %}
                                         
-                                            {{ form(filterForm) }}
+                                                {{ form(filterMediaForm) }}
 
-                                        {% endif %}
+                                            {% endif %}
 
-                                        {% if categories.0.title == 'Bijoux' %}
-                                    
-                                            {{ form(filterBijouxForm) }}
-
-                                        {% endif %}
-
-                                        {% if categories.0.title == 'Chaussures' %}
-                                    
-                                            {{ form(filterChaussuresForm) }}
-
-                                        {% endif %}
-
-                                        {% if categories.0.title == 'Accessoires' %}
-                                    
-                                            {{ form(filterAccessoiresForm) }}
-
-                                        {% endif %}
-
-                                        {% if categories.0.title == 'Musique' %}
-                                    
-                                            {{ form(filterMediaForm) }}
-
-                                        {% endif %}
+                                        </div>
 
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-                    </nav>
-                
+                        </nav>
+                    
+                    </div>
                 </div>
 
                  <div class="col-10">
