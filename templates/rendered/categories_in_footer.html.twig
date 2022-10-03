@@ -1,11 +1,11 @@
 {% for categorie in categories %}
     <li>
-		<a href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+		<a class="text-white-50" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
 	</li>
 {% endfor %}
 
 {% for categorie in categoriesMerchandising %}
     <li>
-		<a href="{{ path('show_from_category_merchandising', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+		<a class="text-white-50" href="{{ path('show_from_category_merchandising', {"title": categorie.title}) }}">{{ categorie.title }}</a>
 	</li>
 {% endfor %}

@@ -113,7 +113,7 @@ class RenderController extends AbstractController
         $searchResult = array_merge($chaussures, $vetements, $medias, $accessoires, $bijoux, $vetementMerchandising, $accessoiresMerchandising);
 
         // Partie pour la pagination 
-        $requestStack = $requestStack->getMainRequest();        
+        $requestStack = $requestStack->getMainRequest();   
 
         $page = $requestStack->query->getInt('page', 1);
 

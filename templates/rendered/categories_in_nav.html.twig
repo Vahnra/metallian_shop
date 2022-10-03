@@ -2,13 +2,13 @@
 
     <li class="nav-item dropdown">
         <div class="navigation-color">
-            <a class="nav-link dropdown-toggle categorieNav" href="{{ path('show_vetements_from_category', {"title": category.title}) }}" id="navbarDropdown" role="button"  aria-expanded="false">
+            <a class="nav-link dropdown-toggle categorieNav" href="{{ path('show_vetements_from_category', {"title": category.title}) }}" id="navbarDropdown{{ category.title }}" role="button"  aria-expanded="false">
             
                 {{ category.title }}
             
             </a>
         </div>
-        <ul class="dropdown-menu multi-column columns-2 border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown">
+        <ul class="dropdown-menu multi-column columns-2 border-0 rounded-0 shadow p-3 mb-5 bg-body rounded" aria-labelledby="navbarDropdown{{ category.title }}">
             <div class="row bg">
             
                 <div class="col-sm-6">

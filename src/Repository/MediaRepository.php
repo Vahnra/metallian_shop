@@ -155,11 +155,22 @@ class MediaRepository extends ServiceEntityRepository
             $query
                 ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
                 ->setParameter('mots', $mots)
-                ->leftJoin('v.mediaQuantities', 'vqc')
+                ->leftJoin('a.mediaQuantities', 'vqc')
                 ->andWhere('vqc.stock IS NOT NULL')
                 ->andWhere('vqc.stock != 0');
         }
 
+        return $query->getQuery()->getResult();
+    }
+
+    public function newProducts()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->leftJoin('a.mediaQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('a.createdAt', 'DESC');
+      
         return $query->getQuery()->getResult();
     }
 }

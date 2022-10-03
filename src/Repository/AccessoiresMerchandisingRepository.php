@@ -206,4 +206,15 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function newProducts()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->leftJoin('a.accessoiresMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('a.createdAt', 'DESC');
+      
+        return $query->getQuery()->getResult();
+    }
 }
