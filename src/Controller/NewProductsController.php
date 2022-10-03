@@ -45,7 +45,7 @@ class NewProductsController extends AbstractController
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $searchResults = $paginator->paginate($newProducts, $page, 5);
+        $searchResults = $paginator->paginate($newProducts, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
 
 
         return $this->render('new_products/new_products.html.twig', [
