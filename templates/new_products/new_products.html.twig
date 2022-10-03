@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello newProductsController!{% endblock %}
+{% block title %}Nouveautés Metallian Shop{% endblock %}
 
 {% block body %}
 
@@ -29,7 +29,6 @@
 						</h5>
 
 					{% endfor %}
-
 
 				</div>
 
@@ -281,7 +280,6 @@
 													
 													{% endif %}
 													
-
 												{% endfor %}
 
 												{% for color in colors %}
@@ -304,21 +302,15 @@
 						{% endfor %}
 
 						{# Pagination #}
-
-
 					</div>
 
 					<div class="container mt-3">
-
-						<div class="row">
-
-							<div class="col-12 ms-auto">
-
-								{{ knp_pagination_render(newProducts) }}
-
-							</div>
-
-						</div>
+    
+                        <div class="col-3 ms-auto me-2">
+                                
+                            {{ knp_pagination_render(searchResults) }}
+                                
+                        </div>
 
 					</div>
 
