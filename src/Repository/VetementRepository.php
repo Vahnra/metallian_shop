@@ -45,7 +45,7 @@ class VetementRepository extends ServiceEntityRepository
    /**
     * @return Vetement[] Returns an array of Vetement objects
     */
-   public function findByFourVetements($value): array
+   public function findByTwelveVetements($value): array
    {
        return $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
@@ -54,7 +54,7 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
             ->orderBy('v.id', 'DESC')
-            ->setMaxResults(4)
+            ->setMaxResults(12)
             ->getQuery()
             ->getResult()
         ;

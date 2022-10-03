@@ -24,9 +24,9 @@ class DefaultController extends AbstractController
             'title' => 'Homme'
         ]);
 
-        $nouveautesFemme = $entityManager->getRepository(Vetement::class)->findByFourVetements($femme);
+        $nouveautesFemme = $entityManager->getRepository(Vetement::class)->findByTwelveVetements($femme);
 
-        $nouveautesHomme = $entityManager->getRepository(Vetement::class)->findByFourVetements($homme);
+        $nouveautesHomme = $entityManager->getRepository(Vetement::class)->findByTwelveVetements($homme);
 
         $slider = $entityManager->getRepository(Slider::class)->findAll();
 
