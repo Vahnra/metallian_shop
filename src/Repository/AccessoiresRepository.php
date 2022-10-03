@@ -53,7 +53,7 @@ class AccessoiresRepository extends ServiceEntityRepository
                 ->leftJoin('v.accessoiresQuantities', 'vqc')
                 ->andWhere('vqc.stock IS NOT NULL')
                 ->andWhere('vqc.stock != 0')
-                ->orderBy('v.id', 'DESC')
+                ->orderBy('v.createdAt', 'DESC')
                 ->setMaxResults(4)
                 ->getQuery()
                 ->getResult()
@@ -94,6 +94,9 @@ class AccessoiresRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.accessoiresQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($color)) {
@@ -137,6 +140,9 @@ class AccessoiresRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.sousCategorie = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.accessoiresQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($color)) {

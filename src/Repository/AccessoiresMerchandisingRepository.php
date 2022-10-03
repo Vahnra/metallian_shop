@@ -94,6 +94,9 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorieMerchandising = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.accessoiresMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($color)) {
@@ -149,6 +152,9 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.sousCategorieMerchandising = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.accessoiresMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($color)) {

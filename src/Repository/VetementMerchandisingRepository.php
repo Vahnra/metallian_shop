@@ -53,7 +53,7 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
             ->leftJoin('v.vetementMerchandisingQuantities', 'vqc')
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
-            ->orderBy('v.id', 'DESC')
+            ->orderBy('v.createdAt', 'DESC')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult()
@@ -93,6 +93,9 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorieMerchandising = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.vetementMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($color)) {
@@ -148,6 +151,9 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.sousCategorieMerchandising = :val')
             ->setParameter('val', $value)
+            ->leftJoin('v.vetementMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($color)) {
