@@ -126,7 +126,7 @@
 
                                 <a href="{{ path('voir_vetement_merch', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <img src="{{ asset('images/' ~ vetement.photo) }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
@@ -157,6 +157,24 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
+                                    image.src = "{{ asset('images/' ~ vetement.photo2) }}";
+                                    
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
+                                    image.src = "{{ asset('images/' ~ vetement.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseleave", functionImageLeave);
+         
+                            </script>
                         
                             {% endfor %}
 
@@ -222,6 +240,23 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
+                                    image.src = "{{ asset('images/' ~ accessoire.photo2) }}";
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
+                                    image.src = "{{ asset('images/' ~ accessoire.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseleave", functionImageLeave);
+                
+                            </script>
                         
                         {% endfor %}
 

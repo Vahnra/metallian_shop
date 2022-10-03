@@ -157,7 +157,7 @@
 
                                 <a href="{{ path('voir_vetement', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ vetement.title }}">
+                                    <img src="{{ asset('images/' ~ vetement.photo) }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ vetement.title }}">
 
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
@@ -189,6 +189,24 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
+                                    image.src = "{{ asset('images/' ~ vetement.photo2) }}";
+                                    
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
+                                    image.src = "{{ asset('images/' ~ vetement.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseleave", functionImageLeave);
+         
+                            </script>
                         
                             {% endfor %}
 
@@ -202,7 +220,7 @@
 
                                 <a href="{{ path('voir_bijoux', {"id": bijou.id} ) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ bijou.title }}">
+                                    <img src="{{ asset('images/' ~ bijou.photo) }}" id="article{{bijou.title}}{{bijou.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ bijou.title }}">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ (bijou.price)/100 }} €</li>
@@ -231,6 +249,23 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                    
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{bijou.title}}{{bijou.id}}");
+                                    image.src = "{{ asset('images/' ~ bijou.photo2) }}";
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{bijou.title}}{{bijou.id}}");
+                                    image.src = "{{ asset('images/' ~ bijou.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{bijou.title}}{{bijou.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{bijou.title}}{{bijou.id}}").addEventListener("mouseleave", functionImageLeave);
+         
+                            </script>
                         
                             {% endfor %}
 
@@ -242,7 +277,7 @@
 
                                 <a href="{{ path('voir_chaussures', {'id': chaussure.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ chaussure.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ chaussure.title }}">
+                                    <img src="{{ asset('images/' ~ chaussure.photo) }}" id="article{{chaussure.title}}{{chaussure.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ chaussure.title }}">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ (chaussure.price)/100 }} €</li>
@@ -271,6 +306,24 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{chaussure.title}}{{chaussure.id}}");
+                                    image.src = "{{ asset('images/' ~ chaussure.photo2) }}";
+                                        
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{chaussure.title}}{{chaussure.id}}");
+                                    image.src = "{{ asset('images/' ~ chaussure.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{chaussure.title}}{{chaussure.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{chaussure.title}}{{chaussure.id}}").addEventListener("mouseleave", functionImageLeave);
+            
+                            </script>
                         
                         {% endfor %}
 
@@ -280,7 +333,7 @@
 
                                 <a href="{{ path('voir_accessoires', {"id": accessoire.id} ) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ accessoire.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}">
+                                    <img src="{{ asset('images/' ~ accessoire.photo) }}" id="article{{accessoire.title}}{{accessoire.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
@@ -309,6 +362,23 @@
                                 </a>
 
                             </div>
+
+                            <script>
+                                
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
+                                    image.src = "{{ asset('images/' ~ accessoire.photo2) }}";
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
+                                    image.src = "{{ asset('images/' ~ accessoire.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseleave", functionImageLeave);
+            
+                            </script>
                         
                         {% endfor %}
 
