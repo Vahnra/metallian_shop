@@ -74,9 +74,9 @@ class MediaRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
             ->setParameter('val', $value)
-            ->leftJoin('v.mediaQuantities', 'vqc')
-            ->andWhere('vqc.stock IS NOT NULL')
-            ->andWhere('vqc.stock != 0')
+            ->leftJoin('v.mediaQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($musicType)) {
@@ -113,9 +113,9 @@ class MediaRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.sousCategorie = :val')
             ->setParameter('val', $value)
-            ->leftJoin('v.mediaQuantities', 'vqc')
-            ->andWhere('vqc.stock IS NOT NULL')
-            ->andWhere('vqc.stock != 0')
+            ->leftJoin('v.mediaQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
         if (isset($musicType)) {
