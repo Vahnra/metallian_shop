@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BrandsController!{% endblock %}
+
+{% block body %}
+
+    {% for brandsArticle in brandsArticles %}
+        <pre>
+            {{ dump(brandsArticle.vetements.values) }}
+        </pre>
+    {% endfor %}
+
+{% endblock %}

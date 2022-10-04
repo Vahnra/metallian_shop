@@ -52,23 +52,23 @@
 					<div class="row">		
 
 						{# For pour afficher les vetements en forme de cartes #}
-							{% for searchresult in newProducts |sort((b, a) => a.createdAt <=> b.createdAt) %}
+							{% for searchResult in newProducts %}
 
 								<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;"> 
 
-									{% if searchresult.className == 'Chaussures' %}
+									{% if searchResult.className == 'Chaussures' %}
 
-										<a href="{{ path('voir_chaussures', {"id": searchresult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/' ~ searchResult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.chaussuresQuantities.values %}
+												{% for variations in searchResult.chaussuresQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -90,19 +90,19 @@
 
 									{% endif %}
 
-									{% if searchresult.className == 'Vetement' %}
+									{% if searchResult.className == 'Vetement' %}
 
-										<a href="{{ path('voir_vetement', {"id": searchresult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a href="{{ path('voir_vetement', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.vetementQuantities.values %}
+												{% for variations in searchResult.vetementQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -124,19 +124,19 @@
 
 									{% endif %}
 
-									{% if searchresult.className == 'Media' %}
+									{% if searchResult.className == 'Media' %}
 
-										<a href="{{ path('voir_media', {"id": searchresult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a href="{{ path('voir_media', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.mediaQuantities.values %}
+												{% for variations in searchResult.mediaQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -158,19 +158,19 @@
 
 									{% endif %}
 
-									{% if searchresult.className == 'Bijoux' %}
+									{% if searchResult.className == 'Bijoux' %}
 
-										<a href="{{ path('voir_bijoux', {"id": searchresult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a href="{{ path('voir_bijoux', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.bijouxQuantities.values %}
+												{% for variations in searchResult.bijouxQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -192,19 +192,19 @@
 
 									{% endif %}
 
-									{% if searchresult.className == 'Accessoires' %}
+									{% if searchResult.className == 'Accessoires' %}
 
-										<a href="{{ path('voir_accessoires', {"id": searchresult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a href="{{ path('voir_accessoires', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.accessoiresQuantities.values %}
+												{% for variations in searchResult.accessoiresQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -226,19 +226,19 @@
 
 									{% endif %}
 
-									{% if searchresult.className == 'VetementMerchandising' %}
+									{% if searchResult.className == 'VetementMerchandising' %}
 
-										<a href="{{ path('voir_vetement_merch', {"id": searchresult.id} ) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a href="{{ path('voir_vetement_merch', {"id": searchResult.id} ) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.vetementMerchandisingQuantities.values %}
+												{% for variations in searchResult.vetementMerchandisingQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -260,19 +260,19 @@
 
 									{% endif %}
 
-									{% if searchresult.className == 'AccessoiresMerchandising' %}
+									{% if searchResult.className == 'AccessoiresMerchandising' %}
 
-										<a href="{{ path('voir_accessoires_merch', {"id": searchresult.id} ) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/' ~ searchresult.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<a href="{{ path('voir_accessoires_merch', {"id": searchResult.id} ) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchresult.price)/100 }}
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 													€</li>
 											</ul>
-											<h5 class="card-title text-muted">{{ searchresult.title }}</h5>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 												{% set colors = {} %}
-												{% for variations in searchresult.accessoiresMerchandisingQuantities.values %}
+												{% for variations in searchResult.accessoiresMerchandisingQuantities.values %}
 
 													{% if variations.color.code not in colors %}
 													
@@ -296,6 +296,26 @@
 								</a>
 
 							</div>
+							<script>
+
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").src = "{{ asset('images/' ~ searchResult.photo) }}";
+                                });                                                 
+                                            
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
+                                    image.src = "{{ asset('images/' ~ searchResult.photo2) }}";
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
+                                    image.src = "{{ asset('images/' ~ searchResult.photo) }}";
+                                }
+
+                                document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseleave", functionImageLeave);
+         
+                            </script>
 
 						{% endfor %}
 		
