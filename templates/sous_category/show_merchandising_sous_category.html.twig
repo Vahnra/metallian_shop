@@ -126,7 +126,7 @@
 
                                 <a href="{{ path('voir_vetement_merch', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ vetement.photo) }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <img src="{{ asset('images/image_placeholder.png') }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
@@ -159,6 +159,10 @@
                             </div>
 
                             <script>
+
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").src = "{{ asset('images/' ~ vetement.photo) }}";
+                                });  
                                 
                                 function functionImageEnter(){
                                     var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
@@ -211,7 +215,7 @@
 
                                 <a href="{{ path('voir_accessoires_merch', {"id": accessoire.id} ) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ accessoire.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                    <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
@@ -242,6 +246,10 @@
                             </div>
 
                             <script>
+
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").src = "{{ asset('images/' ~ accessoire.photo) }}";
+                                });
                                 
                                 function functionImageEnter(){
                                     var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");

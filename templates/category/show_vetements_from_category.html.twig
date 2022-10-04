@@ -142,12 +142,7 @@
                         </div>      
                     </div>
 
-                    <div class="row">
-                                        
-                        {# For pour afficher les vetements en forme de cartes #}
-
-                        {# {% if categories.title == 'Femme' %} #}
-                        
+                    <div class="row">    
 
                             {% for vetement in vetements %}
                         
@@ -155,7 +150,7 @@
 
                                 <a href="{{ path('voir_vetement', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/' ~ vetement.photo) }}"  style="height: 200px; object-fit: contain;" id="article{{vetement.title}}{{vetement.id}}" class="card-img-top" alt="{{ vetement.title }}">
+                                    <img src="{{ asset('images/image_placeholder.png') }}"  style="height: 200px; object-fit: contain;" id="article{{vetement.title}}{{vetement.id}}" class="card-img-top" alt="{{ vetement.title }}">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
@@ -187,11 +182,14 @@
                             </div>
 
                             <script>
-                                
+
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").src = "{{ asset('images/' ~ vetement.photo) }}";
+                                });                                                 
+                                            
                                 function functionImageEnter(){
                                     var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
                                     image.src = "{{ asset('images/' ~ vetement.photo2) }}";
-                                    
                                 }
 
                                 function functionImageLeave(){
@@ -214,7 +212,7 @@
 
                             <a href="{{ path('voir_bijoux', {"id": bijou.id} ) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ bijou.photo) }}" id="article{{bijou.title}}{{bijou.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ bijou.title }}">
+                                <img src="{{ asset('images/image_placeholder.png') }}" id="article{{bijou.title}}{{bijou.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ bijou.title }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (bijou.price)/100 }} €</li>
@@ -247,6 +245,10 @@
                         </div>
 
                         <script>
+
+                             document.addEventListener("DOMContentLoaded", () => {
+                                document.getElementById("article" + "{{bijou.title}}{{bijou.id}}").src = "{{ asset('images/' ~ bijou.photo) }}";
+                            });
                                 
                             function functionImageEnter(){
                                 var image = document.getElementById("article" + "{{bijou.title}}{{bijou.id}}");
@@ -269,7 +271,7 @@
                     
                         <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-                            <a href="{{ path('voir_media', {'id': media.id}) }}" class="text-decoration-none text-black">
+                            <a href="{{ asset('images/image_placeholder.png') }}" class="text-decoration-none text-black">
 
                                 <img src="{{ asset('images/' ~ media.photo1) }}" id="article{{media.title}}{{media.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ media.title }}">
                                 <div class="card-body">
@@ -285,6 +287,10 @@
                         </div>
 
                         <script>
+
+                            document.addEventListener("DOMContentLoaded", () => {
+                                document.getElementById("article" + "{{media.title}}{{media.id}}").src = "{{ asset('images/' ~ media.photo) }}";
+                            });
                                 
                             function functionImageEnter(){
                                 var image = document.getElementById("article" + "{{media.title}}{{media.id}}");
@@ -309,7 +315,7 @@
 
                             <a href="{{ path('voir_chaussures', {'id': chaussure.id}) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ chaussure.photo) }}" id="article{{chaussure.title}}{{chaussure.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+                                <img src="{{ asset('images/image_placeholder.png') }}" id="article{{chaussure.title}}{{chaussure.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (chaussure.price)/100 }} €</li>
@@ -341,6 +347,10 @@
 
                         <script>
                                 
+                             document.addEventListener("DOMContentLoaded", () => {
+                                document.getElementById("article" + "{{chaussure.title}}{{chaussure.id}}").src = "{{ asset('images/' ~ chaussure.photo) }}";
+                            });
+
                             function functionImageEnter(){
                                 var image = document.getElementById("article" + "{{chaussure.title}}{{chaussure.id}}");
                                 image.src = "{{ asset('images/' ~ chaussure.photo2) }}";
@@ -365,7 +375,7 @@
 
                             <a href="{{ path('voir_accessoires', {"id": accessoire.id} ) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ accessoire.photo) }}" id="article{{accessoire.title}}{{accessoire.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}">
+                                <img src="{{ asset('images/image_placeholder.png') }}" id="article{{accessoire.title}}{{accessoire.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
@@ -396,6 +406,9 @@
                         </div>
 
                         <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").src = "{{ asset('images/' ~ accessoire.photo) }}";
+                            });
                                 
                             function functionImageEnter(){
                                 var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
