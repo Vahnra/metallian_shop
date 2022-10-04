@@ -42,9 +42,6 @@ class AccessoiresMerchandising
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deletedAt = null;
-
     #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
     private ?Material $material = null;
 
@@ -181,18 +178,6 @@ class AccessoiresMerchandising
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deletedAt;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
-    {
-        $this->deletedAt = $deletedAt;
 
         return $this;
     }

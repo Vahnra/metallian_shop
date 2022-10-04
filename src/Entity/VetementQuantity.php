@@ -14,6 +14,7 @@ class VetementQuantity implements \JsonSerializable
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'vetementQuantities')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Vetement $vetement = null;
 
     #[ORM\ManyToOne(inversedBy: 'vetementQuantities')]

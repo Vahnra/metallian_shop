@@ -42,9 +42,6 @@ class Chaussures
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deletedAt = null;
-
     #[ORM\ManyToOne(inversedBy: 'chaussures')]
     private ?Material $material = null;
 
@@ -67,6 +64,9 @@ class Chaussures
 
     #[ORM\OneToMany(mappedBy: 'chaussures', targetEntity: FavoriteProduct::class)]
     private Collection $favoriteProducts;
+
+    #[ORM\Column(length: 255)]
+    private ?string $photo5 = null;
 
     public function __construct()
     {
@@ -177,18 +177,6 @@ class Chaussures
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deletedAt;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
-    {
-        $this->deletedAt = $deletedAt;
 
         return $this;
     }
@@ -343,6 +331,18 @@ class Chaussures
                 $favoriteProduct->setChaussures(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoto5(): ?string
+    {
+        return $this->photo5;
+    }
+
+    public function setPhoto5(string $photo5): self
+    {
+        $this->photo5 = $photo5;
 
         return $this;
     }

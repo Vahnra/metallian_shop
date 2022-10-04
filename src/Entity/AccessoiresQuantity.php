@@ -14,12 +14,15 @@ class AccessoiresQuantity implements \JsonSerializable
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'accessoiresQuantities')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Accessoires $accessoires = null;
 
     #[ORM\ManyToOne(inversedBy: 'accessoiresQuantities')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Color $color = null;
 
     #[ORM\ManyToOne(inversedBy: 'accessoiresQuantities')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Size $size = null;
 
     #[ORM\Column(length: 255)]
