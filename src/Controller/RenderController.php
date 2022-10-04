@@ -117,7 +117,7 @@ class RenderController extends AbstractController
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $searchResults = $paginator->paginate($searchResult, $page, 5);
+        $searchResults = $paginator->paginate($searchResult, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
 
         return $this->render('search_result/search_result.html.twig', [
             'searchResults' => $searchResults,
