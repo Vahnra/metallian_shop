@@ -14,19 +14,24 @@
 
 					<p class="mt-2">Catégories</p>
 
-						<h5><a class="text-underline-hover text-black" href="">Nos marques</a></h5>
+					<h5><a class="text-underline-hover text-black" href="">Nos marques</a></h5>
 
-                        <div class="row">
+                    <div class="row">
+
                         <nav class="navbar navbar-expand-lg">
                             <div class="container-fluid" style="flex-direction: column">
+
                                 <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSubCategories" aria-controls="offcanvasNavbar">
                                     <span class="">Marques</span>
                                 </button>
+
                                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSubCategories" aria-labelledby="offcanvasSubCategories">
+
                                     <div class="offcanvas-header">
                                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Les marques</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                     </div>
+
                                     <div class="offcanvas-body">
                                     
                                         {# Parties sous catégories #}
@@ -49,10 +54,13 @@
 
                         {# Partie filtres #}
                         <nav class="navbar navbar-expand-lg">
+
                             <div class="container-fluid" style="flex-direction: column">
+
                                 <button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
                                     <span class="">Filtres</span>
                                 </button>
+
                                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
                                     <div class="offcanvas-header">
                                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
@@ -75,32 +83,30 @@
 
 				</div>
 
-				<div class="col-xl-10 row">
+				<div class="col-xl-10">
 
                     <div class="row mb-3">
 
-					<h3 class="col-8" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item text-underline-hover">
-                                <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
-                            </li>
-                            <li class="breadcrumb-item active">Nos marques</li>
-                        </ol>
-                    </h3>
+                        <h3 class="col-8" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item text-underline-hover">
+                                    <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
+                                </li>
+                                <li class="breadcrumb-item active">Nos marques</li>
+                            </ol>
+                        </h3>
 
-					{# Select pour trier #}
-					<div class="col-3 ms-auto mb-4">
+                        {# Select pour trier #}
+                        <div class="col-3 ms-auto mb-4">
 
-						<select class="form-select no-border-radius" onchange="window.location=this.value;">
-							<option disabled selected hidden>Trier par</option>
-                            {{ knp_pagination_sortable(allArticles, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
-							{{ knp_pagination_sortable(allArticles, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
-							{{ knp_pagination_sortable(allArticles, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}
-							
+                            <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                <option disabled selected hidden>Trier par</option>
+                                {{ knp_pagination_sortable(allArticles, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
+                                {{ knp_pagination_sortable(allArticles, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
+                                {{ knp_pagination_sortable(allArticles, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}          
+                            </select>
 
-						</select>
-
-					</div>
+                        </div>
 
 					<div class="row">		
 
@@ -118,29 +124,28 @@
                                         <li class="list-group-item fw-bold">{{ (article.price)/100 }}
                                             €</li>
                                     </ul>
+
                                     <h5 class="card-title text-muted">{{ article.title }}</h5>
-
                                     
-                                        {% set colors = {} %}
-                                        {% for variations in article.vetementQuantities.values %}
+                                    {% set colors = {} %}
+                                    {% for variations in article.vetementQuantities.values %}
 
-                                            {% if variations.color.code not in colors %}
+                                        {% if variations.color.code not in colors %}
 
-                                                {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                            {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
 
-                                            {% endif %}
+                                        {% endif %}
 
 
-                                        {% endfor %}
+                                    {% endfor %}
 
-                                        {% for color in colors %}
-                                            <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-                                                <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-                                            </div>
+                                    {% for color in colors %}
 
-                                        {% endfor %}
+                                        <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                            <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+                                        </div>
 
-                                    
+                                    {% endfor %}
                                    
                                 </div>
 
@@ -177,6 +182,7 @@
                             <a href="{{ path('voir_vetement_merch', {'id': article.id}) }}" class="text-decoration-none text-black">
 
                                 <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}">
+
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (article.price)/100 }}
@@ -184,27 +190,24 @@
                                     </ul>
                                     <h5 class="card-title text-muted">{{ article.title }}</h5>
 
-                                    
-                                        {% set colors = {} %}
-                                        {% for variations in article.vetementMerchandisingQuantities.values %}
+                                    {% set colors = {} %}
+                                    {% for variations in article.vetementMerchandisingQuantities.values %}
 
-                                            {% if variations.color.code not in colors %}
+                                        {% if variations.color.code not in colors %}
 
-                                                {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                            {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
 
-                                            {% endif %}
+                                        {% endif %}
 
 
-                                        {% endfor %}
+                                    {% endfor %}
 
-                                        {% for color in colors %}
-                                            <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-                                                <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-                                            </div>
+                                    {% for color in colors %}
+                                        <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+                                            <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+                                        </div>
 
-                                        {% endfor %}
-
-                                    
+                                    {% endfor %}        
                                    
                                 </div>
 
@@ -260,6 +263,6 @@
 
 		</div>
 	</div>
-	</div>
+	
 
 {% endblock %}
