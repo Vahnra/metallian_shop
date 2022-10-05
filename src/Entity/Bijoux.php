@@ -31,9 +31,6 @@ class Bijoux
     private ?SousCategorie $sousCategorie = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -65,6 +62,9 @@ class Bijoux
 
     #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: FavoriteProduct::class)]
     private Collection $favoriteProducts;
+
+    #[ORM\Column]
+    private ?int $price = null;
 
     public function __construct()
     {
@@ -127,18 +127,6 @@ class Bijoux
     public function setSousCategorie(?SousCategorie $sousCategorie): self
     {
         $this->sousCategorie = $sousCategorie;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -330,6 +318,18 @@ class Bijoux
                 $favoriteProduct->setBijoux(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -31,9 +31,6 @@ class AccessoiresMerchandising
     private ?SousCategorieMerchandising $sousCategorieMerchandising = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -68,6 +65,9 @@ class AccessoiresMerchandising
 
     #[ORM\OneToMany(mappedBy: 'accessoiresMerchandising', targetEntity: FavoriteProduct::class)]
     private Collection $favoriteProducts;
+
+    #[ORM\Column]
+    private ?int $price = null;
 
     public function __construct()
     {
@@ -130,18 +130,6 @@ class AccessoiresMerchandising
     public function setSousCategorieMerchandising(?SousCategorieMerchandising $sousCategorieMerchandising): self
     {
         $this->sousCategorieMerchandising = $sousCategorieMerchandising;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -345,6 +333,18 @@ class AccessoiresMerchandising
                 $favoriteProduct->setAccessoiresMerchandising(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

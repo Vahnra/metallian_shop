@@ -44,9 +44,6 @@ class Vetement
     #[ORM\ManyToOne(inversedBy: 'vetements')]
     private ?Marques $marques = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
     #[ORM\ManyToOne(inversedBy: 'vetements')]
     private ?Material $material = null;
 
@@ -76,6 +73,9 @@ class Vetement
 
     #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: FavoriteProduct::class)]
     private Collection $favoriteProducts;
+
+    #[ORM\Column]
+    private ?int $price = null;
 
     public function __construct()
     {
@@ -187,18 +187,6 @@ class Vetement
     public function setMarques(?Marques $marques): self
     {
         $this->marques = $marques;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -396,6 +384,18 @@ class Vetement
                 $favoriteProduct->setVetement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

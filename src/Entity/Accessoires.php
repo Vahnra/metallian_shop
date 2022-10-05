@@ -64,11 +64,11 @@ class Accessoires
     #[ORM\OneToMany(mappedBy: 'accessoires', targetEntity: AccessoiresQuantity::class)]
     private Collection $accessoiresQuantities;
 
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
     #[ORM\OneToMany(mappedBy: 'accessoires', targetEntity: FavoriteProduct::class)]
     private Collection $favoriteProducts;
+
+    #[ORM\Column]
+    private ?int $price = null;
 
     public function __construct()
     {
@@ -308,18 +308,6 @@ class Accessoires
         return $this;
     }
 
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, FavoriteProduct>
      */
@@ -346,6 +334,18 @@ class Accessoires
                 $favoriteProduct->setAccessoires(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -25,9 +25,6 @@ class Chaussures
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'chaussures')]
@@ -68,6 +65,9 @@ class Chaussures
     #[ORM\Column(length: 255)]
     private ?string $photo5 = null;
 
+    #[ORM\Column]
+    private ?int $price = null;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
@@ -105,18 +105,6 @@ class Chaussures
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -343,6 +331,18 @@ class Chaussures
     public function setPhoto5(string $photo5): self
     {
         $this->photo5 = $photo5;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

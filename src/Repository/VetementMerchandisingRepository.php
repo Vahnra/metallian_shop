@@ -340,13 +340,13 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
 
         if (isset($priceMini)) {
             $qb
-                ->andWhere('a.price < :priceMini')
+                ->andWhere('a.price > :priceMini')
                 ->setParameter('priceMini', $priceMini);
         }
 
         if (isset($priceMax)) {
             $qb
-                ->andWhere('a.price > :priceMax')
+                ->andWhere('a.price < :priceMax')
                 ->setParameter('priceMax', $priceMax);
         }
 

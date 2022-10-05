@@ -21,9 +21,6 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
-
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?Categorie $categorie = null;
 
@@ -75,6 +72,9 @@ class Media
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: MediaQuantity::class, orphanRemoval: true)]
     private Collection $mediaQuantities;
 
+    #[ORM\Column]
+    private ?int $price = null;
+
     public function __construct()
     {
         $this->reviewMedia = new ArrayCollection();
@@ -101,18 +101,6 @@ class Media
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -393,6 +381,18 @@ class Media
                 $mediaQuantity->setMedia(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
