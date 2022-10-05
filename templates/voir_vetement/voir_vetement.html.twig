@@ -104,17 +104,6 @@
                             {% endfor %}
 
                         </div>
-        
-                        {# <select class="form-select" id="test" name="color" aria-label="Default select example">
-                            <option selected>Couleur</option>
-
-                            {% for couleur in couleurs %}
-
-                                <option value="{{ couleur.id }}">{{ couleur.color}}</option>
-
-                            {% endfor %}
-                            
-                        </select> #}
 
                     </div>
 
@@ -125,11 +114,6 @@
                         <div id="test3">
                             {% for size in sizes %}<label class="mx-2 mb-2"><input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
                         </div>
-
-                        {# <select class="form-select" id="test2" name="size" aria-label="Default select example">
-                            <option selected>Taille</option>              
-                        
-                        </select> #}
 
                         <div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;">
                             <i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles

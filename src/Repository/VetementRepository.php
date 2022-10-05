@@ -277,4 +277,114 @@ class VetementRepository extends ServiceEntityRepository
       
         return $query->getQuery()->getResult();
     }
+
+    public function findForPaginationFilteredBrands($color, $size, $material, $marque, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.marques IS NOT NULL')
+            ->leftJoin('a.vetementQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->orderBy('a.createdAt', 'DESC');
+
+        if (isset($color)) {
+            $qb
+                ->leftJoin('a.vetementQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', $color);
+        }
+
+        if (isset($size)) {
+            $qb
+                ->leftJoin('a.vetementQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
+                ->setParameter('size', $size);
+        }
+
+        if (isset($material)) {
+            $qb
+                ->andWhere('a.material = :material')
+                ->setParameter('material', $material);
+        }
+
+        if (isset($marque)) {
+            $qb
+                ->andWhere('a.marques = :marques')
+                ->setParameter('marques', $marque);
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('a.price > :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('a.price < :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('a.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findForPaginationFilteredSpecificBrands($brand, $color, $size, $material, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.marques IS NOT NULL')
+            ->andWhere('a.marques= :brand')
+            ->setParameter('brand', $brand)
+            ->leftJoin('a.vetementQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->orderBy('a.createdAt', 'DESC');
+
+        if (isset($color)) {
+            $qb
+                ->leftJoin('a.vetementQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', $color);
+        }
+
+        if (isset($size)) {
+            $qb
+                ->leftJoin('a.vetementQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
+                ->setParameter('size', $size);
+        }
+
+        if (isset($material)) {
+            $qb
+                ->andWhere('a.material = :material')
+                ->setParameter('material', $material);
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('a.price > :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('a.price < :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('a.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery()->getResult();
+    }
 }

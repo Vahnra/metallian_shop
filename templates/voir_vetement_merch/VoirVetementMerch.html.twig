@@ -50,7 +50,9 @@
 
 			<div class="col-7 pt-3 text-center" style="background-color: white;">
 
-				<img id="imageBox" src={{ asset('images/'~vetementMerche.0.photo) }} class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
+                <a href="{{ asset('images/'~vetementMerche.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+				    <img id="imageBox" src={{ asset('images/'~vetementMerche.0.photo) }} class="img-fluid p-2" alt="{{ vetementMerche.0.title }}"/>
+                </a>
 
 			</div>
 
