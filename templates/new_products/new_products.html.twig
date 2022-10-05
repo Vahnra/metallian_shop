@@ -12,29 +12,87 @@
 
 				<div class="col-xl-2">
 
-					<p>Catégories</p>
+					<p class="mt-2">Catégories</p>
 
-					{% for categorie in categories %}
+					<div class="row">
+						<nav class="navbar navbar-expand-lg">
+							<div class="container-fluid" style="flex-direction: column">
+								<button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSubCategories" aria-controls="offcanvasNavbar">
+									<span class="">Marques</span>
+								</button>
+								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSubCategories" aria-labelledby="offcanvasSubCategories">
+									<div class="offcanvas-header">
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Les marques</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
 
-						<h5>
-							<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
-						</h5>
+										<ul class="ps-1" style="list-style-type: none">
 
-					{% endfor %}
+											{% for categorie in categories %}
+												<li>
+													<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+												</li>
 
-					{% for categorieMerchandising in categoriesMerchandising %}
+											{% endfor %}
 
-						<h5>
-							<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
-						</h5>
+											{% for categorieMerchandising in categoriesMerchandising %}
 
-					{% endfor %}
+												<li>
+													<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
+												</li>
 
-				</div>
+											{% endfor %}
 
-				<div class="col-xl-10 row">
+										</ul>
 
-					<h3 class="mb-4 col-8">Les Nouveautés</h3>
+									</div>
+								</div>
+							</div>
+						</nav>
+
+						{# Partie filtres #}
+						<nav class="navbar navbar-expand-lg">
+							<div class="container-fluid" style="flex-direction: column">
+								<button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
+									<span class="">Filtres</span>
+								</button>
+								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
+									<div class="offcanvas-header">
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<div class="pt-3 border-top">
+
+											{{ form(filterForm) }}
+
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</nav>
+
+						</div>
+
+					</div>
+
+
+				<div class="col-xl-10">
+
+					<div class="row mb-3">
+
+					{# <h3 class="mb-4 col-8">Les Nouveautés</h3> #}
+					<h3 class="col-8" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item text-underline-hover">
+                                <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
+                            </li>
+                            <li class="breadcrumb-item active">Les Nouveautés</li>
+                        </ol>
+                    </h3>
 
 					{# Select pour trier #}
 					<div class="col-3 ms-auto mb-4">
@@ -339,6 +397,7 @@
 
 
 		</div>
+	</div>
 	</div>
 
 {% endblock %}

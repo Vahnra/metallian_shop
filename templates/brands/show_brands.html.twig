@@ -38,27 +38,6 @@
                                                     <a class="text-underline-hover text-black" href="{{ path('show_specific_brands', {id: brand.id }) }}">{{ brand.title }}</a>
                                                 </li>
 
-                                                {# {% set brands = {} %}
-                                                {% for variations in brand.vetements.values %}
-
-                                                    {% if variations.categorie.title not in brands %}
-
-                                                        {% set brands = brands | merge({ (variations.categorie.id): variations.categorie.title}) %}
-
-                                                    {% endif %}
-
-                                                {% endfor %}
-
-                                                {% for variations in brand.vetementMerchandisings.values %}
-
-                                                    {% if variations.categorieMerchandising.title not in brands %}
-
-                                                        {% set brands = brands | merge({ (variations.categorieMerchandising.id): variations.categorieMerchandising.title}) %}
-
-                                                    {% endif %}
-
-                                                {% endfor %}#}
-
                                             {% endfor %} 
                                         
                                         </ul>
@@ -92,13 +71,13 @@
                             </div>
                         </nav>
             
-                    </div>
-
-                            
+                    </div>            
 
 				</div>
 
 				<div class="col-xl-10 row">
+
+                    <div class="row mb-3">
 
 					<h3 class="col-8" aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -280,6 +259,7 @@
 
 
 		</div>
+	</div>
 	</div>
 
 {% endblock %}
