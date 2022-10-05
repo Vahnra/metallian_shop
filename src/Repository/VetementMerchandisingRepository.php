@@ -229,4 +229,16 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
       
         return $query->getQuery()->getResult();
     }
+
+    public function brandsProducts()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.marques IS NOT NULL')
+            ->leftJoin('a.vetementMerchandisingQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('a.createdAt', 'DESC');
+      
+        return $query->getQuery()->getResult();
+    }
 }
