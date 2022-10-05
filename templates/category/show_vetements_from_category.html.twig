@@ -124,10 +124,13 @@
                         {# <h3 class="col-9"><a href="{{ path('default_home') }}" class="text-underline-hover text-black">Accueil</a> / {{ categories.title }}</h3> #}
                         <h3 class="col-8" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item text-underline-hover"><a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item text-underline-hover">
+                                    <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
+                                </li>
                                 <li class="breadcrumb-item active">{{ categories.title }}</li>
                             </ol>
                         </h3>
+
 
                         {# Select pour trier #}
                         <div class="col-3 ms-auto">

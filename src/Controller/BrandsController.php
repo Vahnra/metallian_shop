@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BrandsController extends AbstractController
 {
-    #[Route('/marques', name: 'show_brands')]
+    #[Route('/marques', name: 'show_brands', methods:['GET'])]
     public function showBrands(
         EntityManagerInterface $entityManager,
         RequestStack $requestStack,
@@ -39,6 +39,35 @@ class BrandsController extends AbstractController
         return $this->render('brands/show_brands.html.twig', [
             'brandsArticles' => $brandsArticles,
             'allArticles' => $allArticles
+        ]);
+    }
+
+    #[Route('/marques/{id}', name: 'show_specific_brands', methods:['GET'])]
+    public function showSpecificBreand(
+        Marques $brand,
+        EntityManagerInterface $entityManager,
+        RequestStack $requestStack,
+        PaginatorInterface $paginator
+        ): Response
+    {
+        $brandsArticles = $entityManager->getRepository(Marques::class)->findAll();
+
+        $brandVetements = $entityManager->getRepository(Vetement::class)->specificBrandsProducts($brand);
+
+        $brandVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->specificBrandsProducts($brand);
+
+        $allArticlesArray = array_merge($brandVetements, $brandVetementsMerchandising,);
+
+        $requestStack = $requestStack->getMainRequest();   
+
+        $page = $requestStack->query->getInt('page', 1);
+
+        $allArticles = $paginator->paginate($allArticlesArray, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
+
+        return $this->render('brands/show_specific_brands.html.twig', [
+            'brandsArticles' => $brandsArticles,
+            'allArticles' => $allArticles,
+            'brand' => $brand
         ]);
     }
 }

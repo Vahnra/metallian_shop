@@ -3,11 +3,11 @@
 
         <div class="alert text-center mt-2 alert-{{ label }} alert-dismissible fade show p-0" role="alert">
             {% if label == 'success' %}
-                <span class="alert-inner--icon"><i class="fa fa-thumbs-up"></i></span>
+                <span class="alert-inner--icon"></span>
             {% elseif label == 'Mail Vérification' %}
                 <span class="alert-inner--icon"></span>
             {% else %}
-                <span class="alert-inner--icon" style="color: red"><i class="fa fa-thumbs-down"></i></span>
+                <span class="alert-inner--icon" style="color: red"></span>
             {% endif %}
             <span class="alert-inner--text"><strong>{{ label | title }} : </strong> {{ message | raw }}</span>
         </div>

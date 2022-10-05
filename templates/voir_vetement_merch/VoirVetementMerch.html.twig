@@ -24,26 +24,26 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-1 pt-3 text-center bg-dark ">
+			<div class="col-1 d-sm-none d-none d-md-none d-lg-block p-0 text-center bg-dark">
 
                 <a href="{{ asset('images/'~vetementMerche.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src="{{ asset('images/'~vetementMerche.0.photo) }}" onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}" />
+                    <img src="{{ asset('images/'~vetementMerche.0.photo) }}" onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}" />
                 </a>
 
                 <a href="{{ asset('images/'~vetementMerche.0.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src="{{ asset('images/'~vetementMerche.0.photo2) }}" onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                    <img src="{{ asset('images/'~vetementMerche.0.photo2) }}" onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
                 </a>
 
                 <a href="{{ asset('images/'~vetementMerche.0.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src={{ asset('images/'~vetementMerche.0.photo3) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                    <img src={{ asset('images/'~vetementMerche.0.photo3) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
                 </a>
 
                 <a href="{{ asset('images/'~vetementMerche.0.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src={{ asset('images/'~vetementMerche.0.photo4) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                    <img src={{ asset('images/'~vetementMerche.0.photo4) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
                 </a>
 
                 <a href="{{ asset('images/'~vetementMerche.0.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src={{ asset('images/'~vetementMerche.0.photo5) }} onmouseover="myFunction(this)" class="img-fluid p-2" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
+                    <img src={{ asset('images/'~vetementMerche.0.photo5) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetementMerche.0.title }}" alt="{{ vetementMerche.0.title }}"/>
                 </a>
 
 			</div>
@@ -63,11 +63,24 @@
 					<div class="col-4 my-auto justify-content-end d-flex">
 						<h3 class="my-auto fw-bold">{{ vetementMerche.0.price/100 }}€</h3>
 					</div>
+
+                    {% if vetementMerche.0.marques is not null %}
+                        <div class="col-8">
+                            <a href="{{ path('show_specific_brands', {'id': vetementMerche.0.marques.id }) }}" class="text-underline-hover text-dark">
+                                <h5 >{{ vetementMerche.0.marques.title }}</h5>
+                            </a>
+                        </div>
+                    {% endif %}
+
 				</div>
 
                 <form method="post">
 
 					{% include "include/_flashes.html.twig" %}
+
+                    <div class="col-12 py-4">
+
+                        <p><span>Choisissez une couleur :</span></p>
 
                     <div>
 

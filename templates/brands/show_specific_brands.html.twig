@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Nos marques{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 
@@ -14,7 +14,7 @@
 
 					<p class="mt-2">Catégories</p>
 
-						<h5><a class="text-underline-hover text-black" href="">Nos marques</a></h5>
+						<h5><a class="text-underline-hover text-black" href="{{ path('show_brands') }}">Nos marques</a></h5>
 
                         <div class="row">
                         <nav class="navbar navbar-expand-lg">
@@ -30,12 +30,16 @@
                                     <div class="offcanvas-body">
                                     
                                         {# Parties sous catégories #}
-                                        <ul class="ps-1" style="list-style-type: none">
+                                        <ul class="ps-0" style="list-style-type: none">
 
                                             {# For pour afficher les sous catégories en question #}
-                                            {% for brand in brandsArticles %}
+                                            {% for brands in brandsArticles %}
                                                 <li>
-                                                    <a class="text-underline-hover text-black" href="{{ path('show_specific_brands', {id: brand.id }) }}">{{ brand.title }}</a>
+                                                    {% if brand.title == brands.title %}
+                                                        <a class="text-underline-hover fw-bold text-black" href="{{ path('show_specific_brands', {id: brands.id }) }}">{{ brands.title }}</a>
+                                                    {% else %}
+                                                        <a class="text-underline-hover text-black" href="{{ path('show_specific_brands', {id: brands.id }) }}">{{ brands.title }}</a>
+                                                    {% endif %}
                                                 </li>
 
                                                 {# {% set brands = {} %}
@@ -99,14 +103,15 @@
 
 				<div class="col-xl-10 row">
 
-					<h3 class="col-8" aria-label="breadcrumb">
+                    <h3 class="col-8" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item text-underline-hover">
                                 <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
                             </li>
-                            <li class="breadcrumb-item active">Nos marques</li>
+                            <li class="breadcrumb-item active">{{ brand.title }}</li>
                         </ol>
                     </h3>
+
 
 					{# Select pour trier #}
 					<div class="col-3 ms-auto mb-4">
@@ -280,5 +285,7 @@
 
 		</div>
 	</div>
+
+
 
 {% endblock %}
