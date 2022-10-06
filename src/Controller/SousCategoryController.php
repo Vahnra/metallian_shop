@@ -35,7 +35,13 @@ class SousCategoryController extends AbstractController
         ChaussuresService $chaussuresService,
         AccessoiresService $accessoiresService,
         Request $request
-    ): Response {
+    ): Response 
+    {
+        $categories = $categories = $entityManager->getRepository(Categorie::class)
+        ->findOneBy([
+            'title' => $request->get("title1")
+        ]);
+
         // On récupère les info a mettre dans le filtre form
         $marques = $entityManager->getRepository(Marques::class)->findAll();
 
@@ -59,7 +65,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -74,7 +87,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -89,7 +109,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -104,7 +131,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showMarqueFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -146,7 +180,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -187,7 +228,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -202,7 +250,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -217,7 +272,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -258,7 +320,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -273,7 +342,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -315,7 +391,14 @@ class SousCategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'musicType',
+                    'class' => 'col-10',
+                    'onclick' => 'showMusicTypeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -462,44 +545,6 @@ class SousCategoryController extends AbstractController
                 $priceMax, 
                 $priceMini
             );        
-        }
-
-        
-
-        // Conditions pour remplir les catégories
-        if (!empty($bijoux[0])) {
-            $categories = $entityManager->getRepository(Categorie::class)
-                ->findBy([
-                    'id' => $bijoux[0]->getCategorie()
-                ]);
-        }
-
-        if (!empty($vetements[0])) {
-            $categories = $entityManager->getRepository(Categorie::class)
-                ->findBy([
-                    'id' => $vetements[0]->getCategorie()
-                ]);
-        }
-
-        if (!empty($medias[0])) {
-            $categories = $entityManager->getRepository(Categorie::class)
-                ->findBy([
-                    'id' => $medias[0]->getCategorie()
-                ]);
-        }
-
-        if (!empty($chaussures[0])) {
-            $categories = $entityManager->getRepository(Categorie::class)
-                ->findBy([
-                    'id' => $chaussures[0]->getCategorie()
-                ]);
-        }
-
-        if (!empty($accessoires[0])) {
-            $categories = $entityManager->getRepository(Categorie::class)
-                ->findBy([
-                    'id' => $accessoires[0]->getCategorie()
-                ]);
         }
 
         $allsouscategories = $entityManager->getRepository(SousCategorie::class)->findAll();

@@ -16,7 +16,7 @@
 
                     <p class="mt-2">Catégories</p>
 
-                    <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></h3>
+                    <h3><a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categories.title}) }}">{{ categories.title }}</a></h3>
 
                     <div class="row">
                         <nav class="navbar navbar-expand-lg">
@@ -37,9 +37,9 @@
                                                 {# For pour afficher la bare de navigation a gauche #}
                                                 {% for subcategory in allsouscategories %}
 
-                                                    {% if subcategory.categorie.title == categories.0.title %}
+                                                    {% if subcategory.categorie.title == categories.title %}
                                             
-                                                        <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.0.title}) }}">{{ subcategory.title }}</a></li>
+                                                        <li><a class="text-underline-hover text-black" href="{{ path('show_souscategorie_from_category', {"title": subcategory.title, "title1": categories.title}) }}">{{ subcategory.title }}</a></li>
 
                                                     {% endif %}
 
@@ -67,45 +67,289 @@
                                             
                                         <div class="pt-3 border-top">
 
-                                            {% if categories.0.title == 'Femme' %}
+                                            <h4>Les filtres</h4>
+
+                                            {% if categories.title == 'Femme' %}
+
+                                                {{ form_start(filterForm) }}
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Size) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Size) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.material) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.material) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterForm.marque) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMarque"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.marque) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterForm) }}
+
+                                            {% endif %}
+
+                                            {% if categories.title == 'Enfant' %}
                                             
-                                                {{ form(filterForm) }}
+                                                {{ form_start(filterForm) }}
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Size) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Size) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.material) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.material) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterForm.marque) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMarque"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.marque) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterForm) }}
 
                                             {% endif %}
 
-                                            {% if categories.0.title == 'Enfant' %}
+                                            {% if categories.title == 'Homme' %}
                                             
-                                                {{ form(filterForm) }}
+                                                {{ form_start(filterForm) }}
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Size) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Size) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.material) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.material) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterForm.marque) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMarque"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.marque) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterForm) }}
 
                                             {% endif %}
 
-                                            {% if categories.0.title == 'Homme' %}
-                                            
-                                                {{ form(filterForm) }}
+                                            {% if categories.title == 'Bijoux' %}
 
-                                            {% endif %}
-
-                                            {% if categories.0.title == 'Bijoux' %}
+                                                {{ form_start(filterBijouxForm) }}
                                         
-                                                {{ form(filterBijouxForm) }}
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterBijouxForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterBijouxForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterBijouxForm) }}
 
                                             {% endif %}
 
-                                            {% if categories.0.title == 'Chaussures' %}
+                                            {% if categories.title == 'Chaussures' %}
+
+                                                {{ form_start(filterChaussuresForm) }}
                                         
-                                                {{ form(filterChaussuresForm) }}
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterChaussuresForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterChaussuresForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                 <div class="row align-items-center">
+
+                                                    {{ form_label(filterChaussuresForm.Size) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterChaussuresForm.Size) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterChaussuresForm.material) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterChaussuresForm.material) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterChaussuresForm) }}
 
                                             {% endif %}
 
-                                            {% if categories.0.title == 'Accessoires' %}
+                                            {% if categories.title == 'Accessoires' %}
                                         
-                                                {{ form(filterAccessoiresForm) }}
+                                                {{ form_start(filterAccessoiresForm) }}
+                                                
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterAccessoiresForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterAccessoiresForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterAccessoiresForm.material) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterAccessoiresForm.material) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterAccessoiresForm) }}
 
                                             {% endif %}
 
-                                            {% if categories.0.title == 'Musique' %}
+                                            {% if categories.title == 'Médias' %}
                                         
-                                                {{ form(filterMediaForm) }}
+                                                {{ form_start(filterMediaForm) }}
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterMediaForm.musicType) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMusicType"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterMediaForm.musicType) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterMediaForm) }}
 
                                             {% endif %}
 
@@ -126,7 +370,7 @@
                         <h3 class="col-8" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item text-underline-hover"><a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a></li>
-                                <li class="breadcrumb-item text-underline-hover"><a class="text-decoration-none text-muted" href="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}">{{ categories.0.title }}</a></li>
+                                <li class="breadcrumb-item text-underline-hover"><a class="text-decoration-none text-muted" href="{{ path('show_vetements_from_category', {"title": categories.title}) }}">{{ categories.title }}</a></li>
                                 <li class="breadcrumb-item active">{{ souscategories.title }}</li>
                             </ol>
                         </h3>
@@ -136,9 +380,9 @@
 
                             <select class="form-select no-border-radius" onChange="window.location=this.value;">
                                 <option selected>Trier par</option>
-                                <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
-                                <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
-                                <option value="{{ path('show_vetements_from_category', {"title": categories.0.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
+                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
+                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
+                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
                             </select>
                                 
                         </div>
@@ -211,7 +455,7 @@
 
                         {# {% endif %} #}
 
-                        {% if categories.0.title == 'Bijoux' %}
+                        {% if categories.title == 'Bijoux' %}
 
                             {% for bijou in bijoux %}
                         
