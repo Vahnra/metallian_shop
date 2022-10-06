@@ -64,9 +64,16 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
                 ],
                 'required' => false,
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
+                ],
             ])
             ->add('Size', ChoiceType::class, [
                 'label' => 'Taille',
@@ -79,7 +86,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -94,7 +108,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -109,7 +130,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showMarqueFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -151,7 +179,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -192,7 +227,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -207,7 +249,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -222,7 +271,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -263,7 +319,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -278,7 +341,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -320,7 +390,14 @@ class CategoryController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'musicType',
+                    'class' => 'col-10',
+                    'onclick' => 'showMusicTypeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])

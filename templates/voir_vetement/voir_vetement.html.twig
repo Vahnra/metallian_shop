@@ -26,23 +26,23 @@
         <div class="col-1 d-sm-none d-none d-md-none d-lg-block p-0 text-center bg-dark">
 
             <a href="{{ asset('images/'~vetement.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src="{{ asset('images/'~vetement.0.photo) }}" onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}" />
+                <img src="{{ asset('images/'~vetement.0.photo) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}" />
             </a>
 
             <a href="{{ asset('images/'~vetement.0.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src="{{ asset('images/'~vetement.0.photo2) }}" onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+                <img src="{{ asset('images/'~vetement.0.photo2) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
             </a>
 
             <a href="{{ asset('images/'~vetement.0.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.0.photo3) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+                <img src={{ asset('images/'~vetement.0.photo3) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
             </a>
 
             <a href="{{ asset('images/'~vetement.0.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.0.photo4) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+                <img src={{ asset('images/'~vetement.0.photo4) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
             </a>
 
             <a href="{{ asset('images/'~vetement.0.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.0.photo5) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+                <img src={{ asset('images/'~vetement.0.photo5) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
             </a>
 
         </div>
@@ -186,21 +186,6 @@
             
             <div class="col-12 p-2 border-top border-dark" style="background-color: white;">
 
-                <script>
-                function showDescription() {
-                    if(document.getElementById('description').style.cssText == 'display: none;'){
-                        document.getElementById('description').style.cssText = 'display: inline;';
-                        document.getElementById('fleche').classList.add('fa-minus');
-                        document.getElementById('fleche').classList.remove('fa-plus');
-                    }
-                    else {
-                        document.getElementById('description').style.cssText = 'display: none;';
-                        document.getElementById('fleche').classList.add('fa-plus');
-                        document.getElementById('fleche').classList.remove('fa-minus');
-                    }
-                }
-                </script>
-
                 <div class="row align-items-center" onclick="showDescription()" style="cursor: pointer;">
 
                     <h3 class="col-10">Description</h3>
@@ -274,13 +259,4 @@
         </div>
     </div>
 
-
-
-{# ----------------------------------------------------------------------------------- #}
-<script>
-    function myFunction(smallImg){
-        var fullImg = document.getElementById("imageBox");
-        fullImg.src = smallImg.src;
-    }
-</script>
 {% endblock %}

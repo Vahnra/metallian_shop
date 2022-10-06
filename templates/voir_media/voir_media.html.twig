@@ -27,13 +27,13 @@
         <div class="col-1 d-sm-none d-none d-md-none d-lg-block p-0 text-center bg-dark">
             
             <a href="{{ asset('images/'~media.0.photo1) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~media.photo1) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" alt="{{ media.title }}"/>
+                <img src={{ asset('images/'~media.photo1) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" alt="{{ media.title }}"/>
             </a>
             <a href="{{ asset('images/'~media.0.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~media.photo2) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" alt="{{ media.title }}"/>
+                <img src={{ asset('images/'~media.photo2) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" alt="{{ media.title }}"/>
             </a>
             <a href="{{ asset('images/'~media.0.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~media.photo3) }} onmouseover="myFunction(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" alt="{{ media.title }}"/>
+                <img src={{ asset('images/'~media.photo3) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" alt="{{ media.title }}"/>
             </a>
         </div>
 
@@ -204,13 +204,5 @@
 
     </div> 
 </div> 
-
-{# ------------------------------------------------------- #}
-<script>
-    function myFunction(smallImg){
-        var fullImg = document.getElementById("imageBox");
-        fullImg.src = smallImg.src;
-    }
-</script>
 
 {% endblock %}
