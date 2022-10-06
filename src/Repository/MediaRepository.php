@@ -79,10 +79,10 @@ class MediaRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($musicType)) {
+        if ($musicType != null) {
             $qb
                 ->andWhere('v.genre = :genre')
-                ->setParameter('genre', $musicType);
+                ->setParameter('genre', array($musicType));
         }
 
         if (isset($priceMini)) {
@@ -118,10 +118,10 @@ class MediaRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($musicType)) {
+        if ($musicType != null) {
             $qb
                 ->andWhere('v.genre = :genre')
-                ->setParameter('genre', $musicType);
+                ->setParameter('genre', array($musicType));
         }
 
         if (isset($priceMini)) {

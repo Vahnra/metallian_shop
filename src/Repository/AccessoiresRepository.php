@@ -99,17 +99,17 @@ class AccessoiresRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('v.accessoiresQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('v.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
         if (isset($priceMini)) {
@@ -145,17 +145,17 @@ class AccessoiresRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color !=null) {
             $qb
                 ->leftJoin('v.accessoiresQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('v.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
         if (isset($priceMini)) {

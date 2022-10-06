@@ -54,6 +54,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -67,6 +69,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Size $category) {
                     return $category ? $category->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -80,6 +84,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -93,6 +99,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Marques $category) {
                     return $category ? $category->getTitle() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -206,6 +214,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -219,6 +229,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Size $category) {
                     return $category ? $category->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -232,6 +244,8 @@ class BrandsController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],

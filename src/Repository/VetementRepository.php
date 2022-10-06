@@ -119,30 +119,30 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('v.vetementQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size  != null) {
             $qb
                 ->leftJoin('v.vetementQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material  != null) {
             $qb
                 ->andWhere('v.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
-        if (isset($marque)) {
+        if ($marque  != null) {
             $qb
                 ->andWhere('v.marques = :marques')
-                ->setParameter('marques', $marque);
+                ->setParameter('marques', array($marque));
         }
 
         if (isset($priceMini)) {
@@ -177,30 +177,30 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('v.vetementQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size != null) {
             $qb
                 ->leftJoin('v.vetementQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('v.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
-        if (isset($marque)) {
+        if ($marque != null) {
             $qb
                 ->andWhere('v.marques = :marques')
-                ->setParameter('marques', $marque);
+                ->setParameter('marques', array($marque));
         }
 
         if (isset($priceMini)) {
@@ -287,30 +287,30 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('a.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('a.vetementQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size != null) {
             $qb
                 ->leftJoin('a.vetementQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('a.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
-        if (isset($marque)) {
+        if ($marque != null) {
             $qb
                 ->andWhere('a.marques = :marques')
-                ->setParameter('marques', $marque);
+                ->setParameter('marques', array($marque));
         }
 
         if (isset($priceMini)) {
@@ -346,24 +346,24 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('a.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('a.vetementQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size != null) {
             $qb
                 ->leftJoin('a.vetementQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('a.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
         if (isset($priceMini)) {
@@ -391,35 +391,35 @@ class VetementRepository extends ServiceEntityRepository
     public function findForPaginationFilteredNewProducts($color, $size, $material, $marque, $priceMini, $priceMax)
     {
         $qb = $this->createQueryBuilder('a')
-                ->leftJoin('a.vetementQuantities', 'vqc')
-                ->andWhere('vqc.stock IS NOT NULL')
-                ->andWhere('vqc.stock != 0')
+                ->leftJoin('a.vetementQuantities', 'vqcs')
+                ->andWhere('vqcs.stock IS NOT NULL')
+                ->andWhere('vqcs.stock != 0')
                 ->orderBy('a.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('a.vetementQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size != null) {
             $qb
                 ->leftJoin('a.vetementQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('a.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
-        if (isset($marque)) {
+        if ($marque != null) {
             $qb
                 ->andWhere('a.marques = :marques')
-                ->setParameter('marques', $marque);
+                ->setParameter('marques', array($marque));
         }
 
         if (isset($priceMini)) {

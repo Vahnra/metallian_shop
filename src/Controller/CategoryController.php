@@ -61,6 +61,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -74,6 +76,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Size $category) {
                     return $category ? $category->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -87,6 +91,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -100,6 +106,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Marques $category) {
                     return $category ? $category->getTitle() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -140,6 +148,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -179,6 +189,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -192,6 +204,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Size $category) {
                     return $category ? $category->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -205,6 +219,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -244,6 +260,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Color $category) {
                     return $category ? $category->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -257,6 +275,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?Material $category) {
                     return $category ? $category->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -297,6 +317,8 @@ class CategoryController extends AbstractController
                 'choice_label' => function(?MusicType $category) {
                     return $category ? $category->getGenre() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -341,7 +363,7 @@ class CategoryController extends AbstractController
         // Si le formulair de filtre est soumit, il filtre
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             // on prend les valeurs du formulaire
-            $color = $filterForm->get('Couleur')->getData();
+            $color = $filterForm->get('Couleur')->getData();            
 
             $size = $filterForm->get('Size')->getData();
 

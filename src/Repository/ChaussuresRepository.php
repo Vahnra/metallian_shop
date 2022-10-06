@@ -99,24 +99,24 @@ class ChaussuresRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('v.chaussuresQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size != null) {
             $qb
                 ->leftJoin('v.chaussuresQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('v.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
         if (isset($priceMini)) {
@@ -152,24 +152,24 @@ class ChaussuresRepository extends ServiceEntityRepository
             ->andWhere('vqcs.stock != 0')
             ->orderBy('v.createdAt', 'DESC');
 
-        if (isset($color)) {
+        if ($color != null) {
             $qb
                 ->leftJoin('v.chaussuresQuantities', 'vqc')
                 ->andWhere('vqc.color = :color')
-                ->setParameter('color', $color);
+                ->setParameter('color', array($color));
         }
 
-        if (isset($size)) {
+        if ($size != null) {
             $qb
                 ->leftJoin('v.chaussuresQuantities', 'vqs')
                 ->andWhere('vqs.size = :size')
-                ->setParameter('size', $size);
+                ->setParameter('size', array($size));
         }
 
-        if (isset($material)) {
+        if ($material != null) {
             $qb
                 ->andWhere('v.material = :material')
-                ->setParameter('material', $material);
+                ->setParameter('material', array($material));
         }
 
         if (isset($priceMini)) {

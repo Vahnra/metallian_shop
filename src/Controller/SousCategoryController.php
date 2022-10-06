@@ -56,6 +56,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function (?Color $souscategories) {
                     return $souscategories ? $souscategories->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -69,6 +71,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function (?Size $souscategories) {
                     return $souscategories ? $souscategories->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -82,6 +86,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function (?Material $souscategories) {
                     return $souscategories ? $souscategories->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -95,6 +101,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function (?Marques $souscategories) {
                     return $souscategories ? $souscategories->getTitle() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -135,6 +143,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function (?Color $souscategories) {
                     return $souscategories ? $souscategories->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -174,6 +184,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function(?Color $souscategories) {
                     return $souscategories ? $souscategories->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -187,6 +199,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function(?Size $souscategories) {
                     return $souscategories ? $souscategories->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -200,6 +214,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function(?Material $souscategories) {
                     return $souscategories ? $souscategories->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -239,6 +255,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function(?Color $souscategories) {
                     return $souscategories ? $souscategories->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -252,6 +270,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function(?Material $souscategories) {
                     return $souscategories ? $souscategories->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
@@ -292,6 +312,8 @@ class SousCategoryController extends AbstractController
                 'choice_label' => function(?MusicType $souscategories) {
                     return $souscategories ? $souscategories->getGenre() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius'
                 ],
