@@ -62,7 +62,7 @@ class AccessoiresMerchandisingService
         $page = $request->query->getInt('page', 1);
         $limit = 8;
 
-        $vetementQuery = $this->bijouxRepository->findForPaginationAccessoiresFiltered($value, $color, $material, $priceMini, $priceMax);
+        $vetementQuery = $this->bijouxRepository->findForPaginationSousCategoriesFiltered($value, $color, $material, $priceMini, $priceMax);
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }

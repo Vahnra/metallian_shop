@@ -54,7 +54,14 @@ class MerchandisingController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -69,7 +76,14 @@ class MerchandisingController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -84,7 +98,14 @@ class MerchandisingController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -99,7 +120,14 @@ class MerchandisingController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showMarqueFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -140,7 +168,14 @@ class MerchandisingController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -155,7 +190,14 @@ class MerchandisingController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -260,6 +302,7 @@ class MerchandisingController extends AbstractController
         Request $request
         ): Response 
     {
+        $categorieMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findOneBy(['title' => $request->get('title1')]);
         // On récupère les info a mettre dans le filtre form
         $marques = $entityManager->getRepository(Marques::class)->findAll();
 
@@ -280,8 +323,17 @@ class MerchandisingController extends AbstractController
                 'choice_label' => function(?Color $souscategories) {
                     return $souscategories ? $souscategories->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -293,8 +345,17 @@ class MerchandisingController extends AbstractController
                 'choice_label' => function(?Size $souscategories) {
                     return $souscategories ? $souscategories->getSize() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -306,8 +367,17 @@ class MerchandisingController extends AbstractController
                 'choice_label' => function(?Material $souscategories) {
                     return $souscategories ? $souscategories->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -319,8 +389,17 @@ class MerchandisingController extends AbstractController
                 'choice_label' => function(?Marques $souscategories) {
                     return $souscategories ? $souscategories->getTitle() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showMarqueFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -358,8 +437,17 @@ class MerchandisingController extends AbstractController
                 'choice_label' => function(?Color $souscategories) {
                     return $souscategories ? $souscategories->getColor() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -371,8 +459,17 @@ class MerchandisingController extends AbstractController
                 'choice_label' => function(?Material $souscategories) {
                     return $souscategories ? $souscategories->getMaterial() : '';
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -453,23 +550,6 @@ class MerchandisingController extends AbstractController
                 $priceMax, 
                 $priceMini
             );        
-        }
-
-        $categorieMerchandising = [];
-
-        // Conditions pour remplir les catégories
-        if (!empty($vetements[0])) {
-            $categorieMerchandising = $entityManager->getRepository(CategorieMerchandising::class)
-                ->findBy([
-                    'id' => $vetements[0]->getCategorieMerchandising()
-                ]);
-        }
-
-        if (!empty($accessoires[0])) {
-            $categorieMerchandising = $entityManager->getRepository(CategorieMerchandising::class)
-                ->findBy([
-                    'id' => $accessoires[0]->getCategorieMerchandising()
-                ]);
         }
 
         $allsouscategories = $entityManager->getRepository(SousCategorieMerchandising::class)->findAll();
