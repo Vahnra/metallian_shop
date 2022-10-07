@@ -32,114 +32,114 @@ class VetementFilterFormType extends AbstractType
         $sizes = $this->entityManager->getRepository(Size::class)->findAll();
         
         $builder
-        ->add('Couleur', ChoiceType::class, [
-            'placeholder' => 'Choisir une couleur',
-            'choices' => $colors,
-            'choice_value' => 'id',
-            'choice_label' => function(?Color $category) {
-                return $category ? $category->getColor() : '';
-            },
-            'multiple' => true,
-            'expanded' => true,
-            'attr' => [
-                'class' => 'no-border-radius col-12',
-                'style' => 'display: none;'
-            ],
-            'required' => false,
-            'label_attr' => [
-                'id' => 'color',
-                'class' => 'col-10',
-                'onclick' => 'showColorFilterVetement()',
-                'style' => 'cursor: pointer;'
-            ],
-        ])
-        ->add('Size', ChoiceType::class, [
-            'label' => 'Taille',
-            'placeholder' => 'Choisir une taille',
-            'choices'  => $sizes,
-            'choice_value' => 'id',
-            'choice_label' => function(?Size $category) {
-                return $category ? $category->getSize() : '';
-            },
-            'multiple' => true,
-            'expanded' => true,
-            'attr' => [
-                'class' => 'no-border-radius col-12',
-                'style' => 'display: none;'
-            ],
-            'label_attr' => [
-                'id' => 'size',
-                'class' => 'col-10',
-                'onclick' => 'showSizeFilterVetement()',
-                'style' => 'cursor: pointer;'
-            ],
-            'required' => false,
-        ])
-        ->add('material', ChoiceType::class, [
-            'label' => 'Matière',
-            'placeholder' => 'Choisir une matière',
-            'choices'  => $materials,
-            'choice_value' => 'id',
-            'choice_label' => function(?Material $category) {
-                return $category ? $category->getMaterial() : '';
-            },
-            'multiple' => true,
-            'expanded' => true,
-            'attr' => [
-                'class' => 'no-border-radius col-12',
-                'style' => 'display: none;'
-            ],
-            'label_attr' => [
-                'id' => 'material',
-                'class' => 'col-10',
-                'onclick' => 'showMaterialFilterVetement()',
-                'style' => 'cursor: pointer;'
-            ],
-            'required' => false,
-        ])
-        ->add('marque', ChoiceType::class, [
-            'label' => 'Marques',
-            'placeholder' => 'Choisir une marque',
-            'choices'  => $marques,
-            'choice_value' => 'id',
-            'choice_label' => function(?Marques $category) {
-                return $category ? $category->getTitle() : '';
-            },
-            'multiple' => true,
-            'expanded' => true,
-            'attr' => [
-                'class' => 'no-border-radius col-12',
-                'style' => 'display: none;'
-            ],
-            'label_attr' => [
-                'id' => 'marque',
-                'class' => 'col-10',
-                'onclick' => 'showMarqueFilterVetement()',
-                'style' => 'cursor: pointer;'
-            ],
-            'required' => false,
-        ])
-        ->add('priceMax', MoneyType::class, [
-            'label' => 'Prix max',
-            'divisor' => 100,
-            'required' => false,
-            'attr' => [
-                'class' => 'no-border-radius'
-            ],
-        ])
-        ->add('priceMini', MoneyType::class, [
-            'label' => 'Prix mini',
-            'divisor' => 100,
-            'required' => false,
-            'attr' => [
-                'class' => 'no-border-radius'
-            ],
-        ])
-        ->add('Filtrer', SubmitType::class, [
-            'attr' => [
-                'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
-            ]
-        ])
+            ->add('Couleur', ChoiceType::class, [
+                'placeholder' => 'Choisir une couleur',
+                'choices' => $colors,
+                'choice_value' => 'id',
+                'choice_label' => function(?Color $category) {
+                    return $category ? $category->getColor() : '';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'required' => false,
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilterVetement()',
+                    'style' => 'cursor: pointer;'
+                ],
+            ])
+            ->add('Size', ChoiceType::class, [
+                'label' => 'Taille',
+                'placeholder' => 'Choisir une taille',
+                'choices'  => $sizes,
+                'choice_value' => 'id',
+                'choice_label' => function(?Size $category) {
+                    return $category ? $category->getSize() : '';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilterVetement()',
+                    'style' => 'cursor: pointer;'
+                ],
+                'required' => false,
+            ])
+            ->add('material', ChoiceType::class, [
+                'label' => 'Matière',
+                'placeholder' => 'Choisir une matière',
+                'choices'  => $materials,
+                'choice_value' => 'id',
+                'choice_label' => function(?Material $category) {
+                    return $category ? $category->getMaterial() : '';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilterVetement()',
+                    'style' => 'cursor: pointer;'
+                ],
+                'required' => false,
+            ])
+            ->add('marque', ChoiceType::class, [
+                'label' => 'Marques',
+                'placeholder' => 'Choisir une marque',
+                'choices'  => $marques,
+                'choice_value' => 'id',
+                'choice_label' => function(?Marques $category) {
+                    return $category ? $category->getTitle() : '';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showMarqueFilterVetement()',
+                    'style' => 'cursor: pointer;'
+                ],
+                'required' => false,
+            ])
+            ->add('priceMax', MoneyType::class, [
+                'label' => 'Prix max',
+                'divisor' => 100,
+                'required' => false,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
+            ])
+            ->add('priceMini', MoneyType::class, [
+                'label' => 'Prix mini',
+                'divisor' => 100,
+                'required' => false,
+                'attr' => [
+                    'class' => 'no-border-radius'
+                ],
+            ])
+            ->add('Filtrer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
+                ]
+            ])
         ;
     }
 
