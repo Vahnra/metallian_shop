@@ -13,6 +13,7 @@ use App\Repository\ChaussuresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AccessoiresRepository;
 use App\Entity\SousCategorieMerchandising;
+use App\Form\FilterFormType;
 use App\Repository\AccessoiresMerchandisingRepository;
 use App\Repository\VetementMerchandisingRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -109,6 +110,8 @@ class RenderController extends AbstractController
 
         $accessoiresMerchandising = $accessoiresMerchandisingRepository->search($search);
 
+        $filterForm = $this->createForm(FilterFormType::class)->handleRequest($request);
+
         // On merge les resultats dans un meme tableau
         $searchResult = array_merge($chaussures, $vetements, $medias, $accessoires, $bijoux, $vetementMerchandising, $accessoiresMerchandising);
 
@@ -123,7 +126,8 @@ class RenderController extends AbstractController
             'searchResults' => $searchResults,
             'search' => $search,
             'categories' => $categories,
-            'categoriesMerchandising' => $categoriesMerchandising
+            'categoriesMerchandising' => $categoriesMerchandising,
+            'filterForm' => $filterForm->createView()
         ]);
     }
     
