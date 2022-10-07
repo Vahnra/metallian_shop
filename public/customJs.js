@@ -79,6 +79,33 @@ function showMaterialFilterAccessoires() {
     }
 }
 
+// Accessories merchandising filter
+function showColorFilterAccessoiresMerchandising() {
+    if(document.getElementById('accessoires_merchandising_filter_form_Couleur').style.cssText == 'display: none;'){
+        document.getElementById('accessoires_merchandising_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheCouleur').classList.add('fa-minus');
+        document.getElementById('flecheCouleur').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('accessoires_merchandising_filter_form_Couleur').style.cssText = 'display: none;';
+        document.getElementById('flecheCouleur').classList.add('fa-plus');
+        document.getElementById('flecheCouleur').classList.remove('fa-minus');
+    }
+}
+
+function showMaterialFilterAccessoiresMerchandising() {
+    if(document.getElementById('accessoires_merchandising_filter_form_material').style.cssText == 'display: none;'){
+        document.getElementById('accessoires_merchandising_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheMaterial').classList.add('fa-minus');
+        document.getElementById('flecheMaterial').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('accessoires_merchandising_filter_form_material').style.cssText = 'display: none;';
+        document.getElementById('flecheMaterial').classList.add('fa-plus');
+        document.getElementById('flecheMaterial').classList.remove('fa-minus');
+    }
+}
+
 // Vetement filter
 function showColorFilterVetement() {
     if(document.getElementById('vetement_filter_form_Couleur').style.cssText == 'display: none;'){
@@ -127,6 +154,59 @@ function showMarqueFilterVetement() {
     }
     else {
         document.getElementById('vetement_filter_form_marque').style.cssText = 'display: none;';
+        document.getElementById('flecheMarque').classList.add('fa-plus');
+        document.getElementById('flecheMarque').classList.remove('fa-minus');
+    }
+}
+
+// Vetement mechandising filter
+function showColorFilterVetementMerchandising() {
+    if(document.getElementById('vetement_merchandising_filter_form_Couleur').style.cssText == 'display: none;'){
+        document.getElementById('vetement_merchandising_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheCouleur').classList.add('fa-minus');
+        document.getElementById('flecheCouleur').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('vetement_merchandising_filter_form_Couleur').style.cssText = 'display: none;';
+        document.getElementById('flecheCouleur').classList.add('fa-plus');
+        document.getElementById('flecheCouleur').classList.remove('fa-minus');
+    }
+}
+
+function showSizeFilterVetementMerchandising() {
+    if(document.getElementById('vetement_merchandising_filter_form_Size').style.cssText == 'display: none;'){
+        document.getElementById('vetement_merchandising_filter_form_Size').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheSize').classList.add('fa-minus');
+        document.getElementById('flecheSize').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('vetement_merchandising_filter_form_Size').style.cssText = 'display: none;';
+        document.getElementById('flecheSize').classList.add('fa-plus');
+        document.getElementById('flecheSize').classList.remove('fa-minus');
+    }
+}
+
+function showMaterialFilterVetementMerchandising() {
+    if(document.getElementById('vetement_merchandising_filter_form_material').style.cssText == 'display: none;'){
+        document.getElementById('vetement_merchandising_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheMaterial').classList.add('fa-minus');
+        document.getElementById('flecheMaterial').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('vetement_merchandising_filter_form_material').style.cssText = 'display: none;';
+        document.getElementById('flecheMaterial').classList.add('fa-plus');
+        document.getElementById('flecheMaterial').classList.remove('fa-minus');
+    }
+}
+
+function showMarqueFilterVetementMerchandising() {
+    if(document.getElementById('vetement_merchandising_filter_form_marque').style.cssText == 'display: none;'){
+        document.getElementById('vetement_merchandising_filter_form_marque').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheMarque').classList.add('fa-minus');
+        document.getElementById('flecheMarque').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('vetement_merchandising_filter_form_marque').style.cssText = 'display: none;';
         document.getElementById('flecheMarque').classList.add('fa-plus');
         document.getElementById('flecheMarque').classList.remove('fa-minus');
     }
