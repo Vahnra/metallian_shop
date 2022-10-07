@@ -163,6 +163,47 @@ class MediaRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function searchFilter($mots, $musicType, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('a');
+        if($mots != null)
+        {
+            $qb
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots)
+                ->leftJoin('a.mediaQuantities', 'vqcs')
+                ->andWhere('vqcs.stock IS NOT NULL')
+                ->andWhere('vqcs.stock != 0');
+        }
+
+        if ($musicType != null) {
+            $qb
+                ->andWhere('a.genre = :genre')
+                ->setParameter('genre', array($musicType));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('a.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('a.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('a.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function newProducts()
     {
         $query = $this->createQueryBuilder('a')

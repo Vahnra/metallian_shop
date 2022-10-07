@@ -428,16 +428,77 @@ class VetementRepository extends ServiceEntityRepository
     // Query pour la recherche
     public function search($mots)
     {
-        $query = $this->createQueryBuilder('a');
+        $qb = $this->createQueryBuilder('a');
         if ($mots != null) {
-            $query
+            $qb
                 ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
                 ->setParameter('mots', $mots)
-                ->leftJoin('a.vetementQuantities', 'vqc')
-                ->andWhere('vqc.stock IS NOT NULL')
-                ->andWhere('vqc.stock != 0');
+                ->leftJoin('a.vetementQuantities', 'vqcs')
+                ->andWhere('vqcs.stock IS NOT NULL')
+                ->andWhere('vqcs.stock != 0');
         }
 
-        return $query->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
+    }
+
+    public function searchFilter($mots, $color, $size, $material, $marque, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if ($mots != null) {
+            $qb
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots)
+                ->leftJoin('a.vetementQuantities', 'vqcs')
+                ->andWhere('vqcs.stock IS NOT NULL')
+                ->andWhere('vqcs.stock != 0');
+        }
+
+        if ($color != null) {
+            $qb
+                ->leftJoin('a.vetementQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', array($color));
+        }
+
+        if ($size != null) {
+            $qb
+                ->leftJoin('a.vetementQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
+                ->setParameter('size', array($size));
+        }
+
+        if ($material != null) {
+            $qb
+                ->andWhere('a.material = :material')
+                ->setParameter('material', array($material));
+        }
+
+        if ($marque != null) {
+            $qb
+                ->andWhere('a.marques = :marques')
+                ->setParameter('marques', array($marque));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('a.price > :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('a.price < :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('a.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

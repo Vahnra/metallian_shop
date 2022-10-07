@@ -6,41 +6,149 @@
 
 	<div class="container-xl bg-white">
 
-		<h1 class="py-2 ms-4">
-
-			Résultat de la recherche "{{ search }}"
-
-		</h1>
-
-		<div class="container-fluid ">
+		<div class="container-fluid py-4">
 
 			<div class="row">
 
 				<div class="col-xl-2">
 
-					<p>Catégories</p>
+					<p class="mt-2">Catégories</p>
 
-					{% for categorie in categories %}
+					<div class="row">
 
-						<h5>
-							<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
-						</h5>
+						<nav class="navbar navbar-expand-lg">
+							<div class="container-fluid" style="flex-direction: column">
+								<button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSubCategories" aria-controls="offcanvasNavbar">
+									<span class="">Marques</span>
+								</button>
+								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSubCategories" aria-labelledby="offcanvasSubCategories">
+									<div class="offcanvas-header">
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Les marques</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
 
-					{% endfor %}
+										<ul class="ps-1" style="list-style-type: none">
 
-					{% for categorieMerchandising in categoriesMerchandising %}
+											{% for categorie in categories %}
+												<li>
+													<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+												</li>
 
-						<h5>
-							<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
-						</h5>
+											{% endfor %}
 
-					{% endfor %}
+											{% for categorieMerchandising in categoriesMerchandising %}
+
+												<li>
+													<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
+												</li>
+
+											{% endfor %}
+
+										</ul>
+
+									</div>
+								</div>
+							</div>
+						</nav>
+
+						{# Partie filtres #}
+						<nav class="navbar navbar-expand-lg">
+							<div class="container-fluid" style="flex-direction: column">
+								<button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
+									<span class="">Filtres</span>
+								</button>
+								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
+									<div class="offcanvas-header">
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<div class="pt-3 border-top">
+
+											<h4>Filtres</h4>
+
+											{{ form_start(filterForm) }}
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.Couleur) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+												</div>
+
+												{{ form_widget(filterForm.Couleur) }}
+
+											</div>
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.Size) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+												</div>
+
+												{{ form_widget(filterForm.Size) }}
+
+											</div>
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.material) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+												</div>
+
+												{{ form_widget(filterForm.material) }}
+
+											</div>
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.marque) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMarque"></i>
+												</div>
+
+												{{ form_widget(filterForm.marque) }}
+
+											</div>
+
+											<div class="row align-items-center mb-2">
+
+												{{ form_label(filterForm.musicType) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMusicType"></i>
+												</div>
+
+												{{ form_widget(filterForm.musicType) }}
+
+											</div>
+
+											{{ form_end(filterForm) }}
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</nav>
+
+					</div>
 
 				</div>
 
-				<div class="col-xl-10 row">
+				<div class="col-xl-10">
 
-					<h3 class="mb-4 col-8">Résultat</h3>
+					<div class="row mb-3">
+
+					<h3 class="mb-4 col-8">Résultat de la recherche "{{ search }}"</h3>
 
 					{# Select pour trier #}
 					<div class="col-3 ms-auto mb-4">
@@ -351,10 +459,10 @@
 				</div>
 
 			</div>
+			</div>
 
 
 		</div>
 	</div>
 
-	{{form(filterForm)}}
 {% endblock %}

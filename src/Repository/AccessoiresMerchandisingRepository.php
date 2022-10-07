@@ -186,12 +186,59 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
             $query
                 ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
                 ->setParameter('mots', $mots)
-                ->leftJoin('a.accessoiresMerchandisingQuantities', 'vqc')
-                ->andWhere('vqc.stock IS NOT NULL')
-                ->andWhere('vqc.stock != 0');
+                ->leftJoin('a.accessoiresMerchandisingQuantities', 'vqcs')
+                ->andWhere('vqcs.stock IS NOT NULL')
+                ->andWhere('vqcs.stock != 0');
         }
 
         return $query->getQuery()->getResult();
+    }
+    
+    public function searchFilter($mots, $color, $material, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('a');
+        if ($mots != null) {
+            $qb
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots)
+                ->leftJoin('a.accessoiresMerchandisingQuantities', 'vqcs')
+                ->andWhere('vqcs.stock IS NOT NULL')
+                ->andWhere('vqcs.stock != 0');
+        }
+
+        if ($color != null) {
+            $qb
+                ->leftJoin('a.accessoiresMerchandisingQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', array($color));
+        }
+
+        if ($material != null) {
+            $qb
+                ->andWhere('a.material = :material')
+                ->setParameter('material', array($material));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('a.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('a.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('a.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function newProducts()
