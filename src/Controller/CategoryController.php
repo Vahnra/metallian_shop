@@ -13,12 +13,14 @@ use App\Entity\SousCategorie;
 use App\Service\MediaService;
 use App\Service\BijouxService;
 use App\Service\VetementService;
+use App\Form\MediaFilterFormType;
 use App\Form\BijouxFilterFormType;
 use App\Service\ChaussuresService;
 use App\Service\AccessoiresService;
 use App\Form\VetementFilterFormType;
 use App\Form\ChaussuresFilterFormType;
 use App\Repository\VetementRepository;
+use App\Form\AccessoiresFilterFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,17 +46,6 @@ class CategoryController extends AbstractController
 
         ): Response
     {
-        // On récupère les info a mettre dans le filtre form
-        $marques = $entityManager->getRepository(Marques::class)->findAll();
-
-        $colors = $entityManager->getRepository(Color::class)->findAll();
-
-        $materials = $entityManager->getRepository(Material::class)->findAll();
-
-        $sizes = $entityManager->getRepository(Size::class)->findAll();
-
-        $musicType = $entityManager->getRepository(MusicType::class)->findAll();
-
         // Form pour le filtre
         $filterForm = $this->createForm(VetementFilterFormType::class)->handleRequest($request);
 
@@ -65,123 +56,10 @@ class CategoryController extends AbstractController
         $filterChaussuresForm = $this->createForm(ChaussuresFilterFormType::class)->handleRequest($request);
 
         // Form pour le filter accessoires
-        $filterAccessoiresForm = $this->createFormBuilder()
-            ->add('Couleur', ChoiceType::class, [
-                'placeholder' => 'Choisir une couleur',
-                'choices' => $colors,
-                'choice_value' => 'id',
-                'choice_label' => function(?Color $category) {
-                    return $category ? $category->getColor() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'label_attr' => [
-                    'id' => 'color',
-                    'class' => 'col-10',
-                    'onclick' => 'showColorFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-                'required' => false,
-            ])
-            ->add('material', ChoiceType::class, [
-                'label' => 'Matière',
-                'placeholder' => 'Choisir une matière',
-                'choices'  => $materials,
-                'choice_value' => 'id',
-                'choice_label' => function(?Material $category) {
-                    return $category ? $category->getMaterial() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'label_attr' => [
-                    'id' => 'material',
-                    'class' => 'col-10',
-                    'onclick' => 'showMaterialFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-                'required' => false,
-            ])
-            ->add('priceMax', MoneyType::class, [
-                'label' => 'Prix max',
-                'divisor' => 100,
-                'attr' => [
-                    'class' => 'no-border-radius'
-                ],
-                'required' => false,
-            ])
-            ->add('priceMini', MoneyType::class, [
-                'label' => 'Prix mini',
-                'divisor' => 100,
-                'attr' => [
-                    'class' => 'no-border-radius'
-                ],
-                'required' => false,
-            ])
-            ->add('Filtrer', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
-                ]
-            ])
-            ->getForm();
-
-        $filterAccessoiresForm -> handleRequest($request);
+        $filterAccessoiresForm = $this->createForm(AccessoiresFilterFormType::class)->handleRequest($request);
 
         // Form pour le filter media
-        $filterMediaForm = $this->createFormBuilder()
-            ->add('musicType', ChoiceType::class, [
-                'label' => 'Genre musical',
-                'placeholder' => 'Choisir un genre',
-                'choices' => $musicType,
-                'choice_value' => 'id',
-                'choice_label' => function(?MusicType $category) {
-                    return $category ? $category->getGenre() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'label_attr' => [
-                    'id' => 'musicType',
-                    'class' => 'col-10',
-                    'onclick' => 'showMusicTypeFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-                'required' => false,
-            ])
-            ->add('priceMax', MoneyType::class, [
-                'label' => 'Prix max',
-                'divisor' => 100,
-                'attr' => [
-                    'class' => 'no-border-radius'
-                ],
-                'required' => false,
-            ])
-            ->add('priceMini', MoneyType::class, [
-                'label' => 'Prix mini',
-                'divisor' => 100,
-                'attr' => [
-                    'class' => 'no-border-radius'
-                ],
-                'required' => false,
-            ])
-            ->add('Filtrer', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
-                ]
-            ])
-            ->getForm();
-
-        $filterMediaForm -> handleRequest($request);
+        $filterMediaForm = $this->createForm(MediaFilterFormType::class)->handleRequest($request);
 
         // Par défaut la pagination renvoit tout
         $vetements = $vetementService->getPaginatedVetements($categories);

@@ -1,3 +1,4 @@
+// Bijoux filter
 function showColorFilterBijoux() {
     if(document.getElementById('bijoux_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('bijoux_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
@@ -11,6 +12,7 @@ function showColorFilterBijoux() {
     }
 }
 
+// Chausures filter
 function showColorFilterChaussures() {
     if(document.getElementById('chaussures_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('chaussures_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
@@ -50,6 +52,34 @@ function showMaterialFilterChaussures() {
     }
 }
 
+// Accessories filter
+function showColorFilterAccessoires() {
+    if(document.getElementById('accessoires_filter_form_Couleur').style.cssText == 'display: none;'){
+        document.getElementById('accessoires_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheCouleur').classList.add('fa-minus');
+        document.getElementById('flecheCouleur').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('accessoires_filter_form_Couleur').style.cssText = 'display: none;';
+        document.getElementById('flecheCouleur').classList.add('fa-plus');
+        document.getElementById('flecheCouleur').classList.remove('fa-minus');
+    }
+}
+
+function showMaterialFilterAccessoires() {
+    if(document.getElementById('accessoires_filter_form_material').style.cssText == 'display: none;'){
+        document.getElementById('accessoires_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheMaterial').classList.add('fa-minus');
+        document.getElementById('flecheMaterial').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('accessoires_filter_form_material').style.cssText = 'display: none;';
+        document.getElementById('flecheMaterial').classList.add('fa-plus');
+        document.getElementById('flecheMaterial').classList.remove('fa-minus');
+    }
+}
+
+// Vetement filter
 function showColorFilterVetement() {
     if(document.getElementById('vetement_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('vetement_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
@@ -89,19 +119,6 @@ function showMaterialFilterVetement() {
     }
 }
 
-function showMusicTypeFilterVetement() {
-    if(document.getElementById('form_musicType').style.cssText == 'display: none;'){
-        document.getElementById('form_musicType').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
-        document.getElementById('flecheMusicType').classList.add('fa-minus');
-        document.getElementById('flecheMusicType').classList.remove('fa-plus');    
-    }
-    else {
-        document.getElementById('form_musicType').style.cssText = 'display: none;';
-        document.getElementById('flecheMusicType').classList.add('fa-plus');
-        document.getElementById('flecheMusicType').classList.remove('fa-minus');
-    }
-}
-
 function showMarqueFilterVetement() {
     if(document.getElementById('vetement_filter_form_marque').style.cssText == 'display: none;'){
         document.getElementById('vetement_filter_form_marque').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
@@ -115,7 +132,21 @@ function showMarqueFilterVetement() {
     }
 }
 
-// Function our le formtype
+// Media form type
+function showMusicTypeFilterMedia() {
+    if(document.getElementById('media_filter_form_musicType').style.cssText == 'display: none;'){
+        document.getElementById('media_filter_form_musicType').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheMusicType').classList.add('fa-minus');
+        document.getElementById('flecheMusicType').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('media_filter_form_musicType').style.cssText = 'display: none;';
+        document.getElementById('flecheMusicType').classList.add('fa-plus');
+        document.getElementById('flecheMusicType').classList.remove('fa-minus');
+    }
+}
+
+// Function pour le formtype al
 function showColorFilterAllFormFilter() {
     if(document.getElementById('all_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
