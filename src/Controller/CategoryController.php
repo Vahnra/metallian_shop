@@ -10,6 +10,7 @@ use App\Entity\Vetement;
 use App\Entity\Categorie;
 use App\Entity\MusicType;
 use App\Entity\SousCategorie;
+use App\Form\VetementFilterFormType;
 use App\Service\MediaService;
 use App\Service\BijouxService;
 use App\Service\VetementService;
@@ -53,118 +54,7 @@ class CategoryController extends AbstractController
         $musicType = $entityManager->getRepository(MusicType::class)->findAll();
 
         // Form pour le filtre
-        $filterForm = $this->createFormBuilder()
-            ->add('Couleur', ChoiceType::class, [
-                'placeholder' => 'Choisir une couleur',
-                'choices' => $colors,
-                'choice_value' => 'id',
-                'choice_label' => function(?Color $category) {
-                    return $category ? $category->getColor() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'required' => false,
-                'label_attr' => [
-                    'id' => 'color',
-                    'class' => 'col-10',
-                    'onclick' => 'showColorFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-            ])
-            ->add('Size', ChoiceType::class, [
-                'label' => 'Taille',
-                'placeholder' => 'Choisir une taille',
-                'choices'  => $sizes,
-                'choice_value' => 'id',
-                'choice_label' => function(?Size $category) {
-                    return $category ? $category->getSize() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'label_attr' => [
-                    'id' => 'size',
-                    'class' => 'col-10',
-                    'onclick' => 'showSizeFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-                'required' => false,
-            ])
-            ->add('material', ChoiceType::class, [
-                'label' => 'Matière',
-                'placeholder' => 'Choisir une matière',
-                'choices'  => $materials,
-                'choice_value' => 'id',
-                'choice_label' => function(?Material $category) {
-                    return $category ? $category->getMaterial() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'label_attr' => [
-                    'id' => 'material',
-                    'class' => 'col-10',
-                    'onclick' => 'showMaterialFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-                'required' => false,
-            ])
-            ->add('marque', ChoiceType::class, [
-                'label' => 'Marques',
-                'placeholder' => 'Choisir une marque',
-                'choices'  => $marques,
-                'choice_value' => 'id',
-                'choice_label' => function(?Marques $category) {
-                    return $category ? $category->getTitle() : '';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
-                ],
-                'label_attr' => [
-                    'id' => 'marque',
-                    'class' => 'col-10',
-                    'onclick' => 'showMarqueFilter()',
-                    'style' => 'cursor: pointer;'
-                ],
-                'required' => false,
-            ])
-            ->add('priceMax', MoneyType::class, [
-                'label' => 'Prix max',
-                'divisor' => 100,
-                'required' => false,
-                'attr' => [
-                    'class' => 'no-border-radius'
-                ],
-            ])
-            ->add('priceMini', MoneyType::class, [
-                'label' => 'Prix mini',
-                'divisor' => 100,
-                'required' => false,
-                'attr' => [
-                    'class' => 'no-border-radius'
-                ],
-            ])
-            ->add('Filtrer', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-outline-dark btn-rounded waves-effect no-border-radius'
-                ]
-            ])
-            ->getForm();
-
-        $filterForm -> handleRequest($request);
+        $filterForm = $this->createForm(VetementFilterFormType::class)->handleRequest($request);
 
         // Form pour le filtre bijoux
 

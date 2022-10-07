@@ -6,7 +6,6 @@ use App\Entity\Size;
 use App\Entity\Color;
 use App\Entity\Marques;
 use App\Entity\Material;
-use App\Entity\MusicType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,13 +14,13 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AllFilterFormType extends AbstractType
+class VetementFilterFormType extends AbstractType
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
-
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $marques = $this->entityManager->getRepository(Marques::class)->findAll();
@@ -31,9 +30,7 @@ class AllFilterFormType extends AbstractType
         $materials = $this->entityManager->getRepository(Material::class)->findAll();
 
         $sizes = $this->entityManager->getRepository(Size::class)->findAll();
-
-        $musicType = $this->entityManager->getRepository(MusicType::class)->findAll();
-
+        
         $builder
         ->add('Couleur', ChoiceType::class, [
             'placeholder' => 'Choisir une couleur',
@@ -52,7 +49,7 @@ class AllFilterFormType extends AbstractType
             'label_attr' => [
                 'id' => 'color',
                 'class' => 'col-10',
-                'onclick' => 'showColorFilterAllFormFilter()',
+                'onclick' => 'showColorFilterVetement()',
                 'style' => 'cursor: pointer;'
             ],
         ])
@@ -73,7 +70,7 @@ class AllFilterFormType extends AbstractType
             'label_attr' => [
                 'id' => 'size',
                 'class' => 'col-10',
-                'onclick' => 'showSizeFilterAllFormFilter()',
+                'onclick' => 'showSizeFilterVetement()',
                 'style' => 'cursor: pointer;'
             ],
             'required' => false,
@@ -95,7 +92,7 @@ class AllFilterFormType extends AbstractType
             'label_attr' => [
                 'id' => 'material',
                 'class' => 'col-10',
-                'onclick' => 'showMaterialFilterAllFormFilter()',
+                'onclick' => 'showMaterialFilterVetement()',
                 'style' => 'cursor: pointer;'
             ],
             'required' => false,
@@ -117,29 +114,7 @@ class AllFilterFormType extends AbstractType
             'label_attr' => [
                 'id' => 'marque',
                 'class' => 'col-10',
-                'onclick' => 'showMarqueFilterAllFormFilter()',
-                'style' => 'cursor: pointer;'
-            ],
-            'required' => false,
-        ])
-        ->add('musicType', ChoiceType::class, [
-            'label' => 'Genre musical',
-            'placeholder' => 'Choisir un genre',
-            'choices' => $musicType,
-            'choice_value' => 'id',
-            'choice_label' => function(?MusicType $category) {
-                return $category ? $category->getGenre() : '';
-            },
-            'multiple' => true,
-            'expanded' => true,
-            'attr' => [
-                'class' => 'no-border-radius col-12',
-                'style' => 'display: none;'
-            ],
-            'label_attr' => [
-                'id' => 'musicType',
-                'class' => 'col-10',
-                'onclick' => 'showMusicTypeFilterAllFormFilter()',
+                'onclick' => 'showMarqueFilterVetement()',
                 'style' => 'cursor: pointer;'
             ],
             'required' => false,
