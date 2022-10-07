@@ -359,4 +359,60 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
                 
         return $qb->getQuery()->getResult();
     }
+
+    public function findForPaginationFilteredNewProducts($color, $size, $material, $marque, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->leftJoin('v.vetementMerchandisingQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->orderBy('v.createdAt', 'DESC');
+
+        if ($color != null) {
+            $qb
+                ->leftJoin('v.vetementMerchandisingQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', array($color));
+        }
+
+        if ($size != null) {
+            $qb
+                ->leftJoin('v.vetementMerchandisingQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
+                ->setParameter('size', array($size));
+        }
+
+        if ($material != null) {
+            $qb
+                ->andWhere('v.material = :material')
+                ->setParameter('material', array($material));
+        }
+
+        if ($marque != null) {
+            $qb
+                ->andWhere('v.marques = :marques')
+                ->setParameter('marques', array($marque));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

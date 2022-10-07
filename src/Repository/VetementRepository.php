@@ -42,12 +42,12 @@ class VetementRepository extends ServiceEntityRepository
         }
     }
 
-   /**
-    * @return Vetement[] Returns an array of Vetement objects
-    */
-   public function findByTwelveVetements($value): array
-   {
-       return $this->createQueryBuilder('v')
+    /**
+     * @return Vetement[] Returns an array of Vetement objects
+     */
+    public function findByTwelveVetements($value): array
+    {
+        return $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
             ->setParameter('val', $value)
             ->leftJoin('v.vetementQuantities', 'vqc')
@@ -56,16 +56,15 @@ class VetementRepository extends ServiceEntityRepository
             ->orderBy('v.createdAt', 'DESC')
             ->setMaxResults(12)
             ->getQuery()
-            ->getResult()
-        ;
-   }
+            ->getResult();
+    }
 
-   /**
-    * @return Vetement[] Returns an array of Vetement objects
-    */
-   public function findSimilarItem($categorie, $sousCategorie): array
-   {
-       return $this->createQueryBuilder('v')
+    /**
+     * @return Vetement[] Returns an array of Vetement objects
+     */
+    public function findSimilarItem($categorie, $sousCategorie): array
+    {
+        return $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
             ->setParameter('val', $categorie)
             ->andWhere('v.sousCategorie = :val2')
@@ -76,14 +75,12 @@ class VetementRepository extends ServiceEntityRepository
             ->orderBy('v.createdAt', 'DESC')
             ->setMaxResults(4)
             ->getQuery()
-            ->getResult()
-        ;
-   }
+            ->getResult();
+    }
 
-//    Fonction pour la pagination
-
-   public function findForPagination($value): Query
-   {
+    // Fonction pour la pagination
+    public function findForPagination($value): Query
+    {
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
             ->setParameter('val', $value)
@@ -93,10 +90,10 @@ class VetementRepository extends ServiceEntityRepository
             ->orderBy('v.createdAt', 'DESC');
 
         return $qb->getQuery();
-   }
+    }
 
-   public function findForPaginationSousCategorie($value): Query
-   {
+    public function findForPaginationSousCategorie($value): Query
+    {
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.sousCategorie = :val')
             ->setParameter('val', $value)
@@ -106,9 +103,9 @@ class VetementRepository extends ServiceEntityRepository
             ->orderBy('v.createdAt', 'DESC');
 
         return $qb->getQuery();
-   }
+    }
 
-//    Query pour le filtre categorie
+    // Query pour le filtre categorie
     public function findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax): Query
     {
         $qb = $this->createQueryBuilder('v')
@@ -163,7 +160,7 @@ class VetementRepository extends ServiceEntityRepository
                 ->setParameter('priceMax', $priceMax)
                 ->setParameter('priceMini', $priceMini);
         }
-                
+
         return $qb->getQuery();
     }
 
@@ -221,24 +218,8 @@ class VetementRepository extends ServiceEntityRepository
                 ->setParameter('priceMax', $priceMax)
                 ->setParameter('priceMini', $priceMini);
         }
-                
+
         return $qb->getQuery();
-    }
-
-    public function search($mots)
-    {
-        $query = $this->createQueryBuilder('a');
-        if($mots != null)
-        {
-            $query
-                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
-                ->setParameter('mots', $mots)
-                ->leftJoin('a.vetementQuantities', 'vqc')
-                ->andWhere('vqc.stock IS NOT NULL')
-                ->andWhere('vqc.stock != 0');
-        }
-
-        return $query->getQuery()->getResult();
     }
 
     public function newProducts()
@@ -248,7 +229,7 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
             ->orderBy('a.createdAt', 'DESC');
-      
+
         return $query->getQuery()->getResult();
     }
 
@@ -260,7 +241,7 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
             ->orderBy('a.createdAt', 'DESC');
-      
+
         return $query->getQuery()->getResult();
     }
 
@@ -274,7 +255,7 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
             ->orderBy('a.createdAt', 'DESC');
-      
+
         return $query->getQuery()->getResult();
     }
 
@@ -331,7 +312,7 @@ class VetementRepository extends ServiceEntityRepository
                 ->setParameter('priceMax', $priceMax)
                 ->setParameter('priceMini', $priceMini);
         }
-                
+
         return $qb->getQuery()->getResult();
     }
 
@@ -384,17 +365,17 @@ class VetementRepository extends ServiceEntityRepository
                 ->setParameter('priceMax', $priceMax)
                 ->setParameter('priceMini', $priceMini);
         }
-                
+
         return $qb->getQuery()->getResult();
     }
 
     public function findForPaginationFilteredNewProducts($color, $size, $material, $marque, $priceMini, $priceMax)
     {
         $qb = $this->createQueryBuilder('a')
-                ->leftJoin('a.vetementQuantities', 'vqcs')
-                ->andWhere('vqcs.stock IS NOT NULL')
-                ->andWhere('vqcs.stock != 0')
-                ->orderBy('a.createdAt', 'DESC');
+            ->leftJoin('a.vetementQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->orderBy('a.createdAt', 'DESC');
 
         if ($color != null) {
             $qb
@@ -440,7 +421,23 @@ class VetementRepository extends ServiceEntityRepository
                 ->setParameter('priceMax', $priceMax)
                 ->setParameter('priceMini', $priceMini);
         }
-                
+
         return $qb->getQuery()->getResult();
+    }
+
+    // Query pour la recherche
+    public function search($mots)
+    {
+        $query = $this->createQueryBuilder('a');
+        if ($mots != null) {
+            $query
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots)
+                ->leftJoin('a.vetementQuantities', 'vqc')
+                ->andWhere('vqc.stock IS NOT NULL')
+                ->andWhere('vqc.stock != 0');
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

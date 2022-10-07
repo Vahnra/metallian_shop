@@ -72,9 +72,16 @@ class NewProductsController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
                 ],
                 'required' => false,
+                'label_attr' => [
+                    'id' => 'color',
+                    'class' => 'col-10',
+                    'onclick' => 'showColorFilter()',
+                    'style' => 'cursor: pointer;'
+                ],
             ])
             ->add('Size', ChoiceType::class, [
                 'label' => 'Taille',
@@ -87,7 +94,14 @@ class NewProductsController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'size',
+                    'class' => 'col-10',
+                    'onclick' => 'showSizeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -102,7 +116,14 @@ class NewProductsController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'material',
+                    'class' => 'col-10',
+                    'onclick' => 'showMaterialFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -117,7 +138,14 @@ class NewProductsController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showMarqueFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -132,7 +160,14 @@ class NewProductsController extends AbstractController
                 'multiple' => true,
                 'expanded' => true,
                 'attr' => [
-                    'class' => 'no-border-radius'
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'musicType',
+                    'class' => 'col-10',
+                    'onclick' => 'showMusicTypeFilter()',
+                    'style' => 'cursor: pointer;'
                 ],
                 'required' => false,
             ])
@@ -186,7 +221,51 @@ class NewProductsController extends AbstractController
                 $marque, 
                 $priceMax, 
                 $priceMini
-            );        
+            );
+
+            $newVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->findForPaginationFilteredNewProducts(
+                $color,
+                $size,
+                $material,
+                $marque,
+                $priceMax,
+                $priceMini
+            );
+
+            $newMedias = $entityManager->getRepository(Media::class)->findForPaginationFilteredNewProducts(
+                $musicType, 
+                $priceMax, 
+                $priceMini
+            );
+            
+            $newChaussures = $entityManager->getRepository(Chaussures::class)->findForPaginationFilteredNewProducts(
+                $color, 
+                $size, 
+                $material, 
+                $marque, 
+                $priceMax, 
+                $priceMini
+            );
+
+            $newBijoux = $entityManager->getRepository(Bijoux::class)->findForPaginationFilteredNewProducts(
+                $color,
+                $priceMax, 
+                $priceMini
+            );
+
+            $newAccessoires = $entityManager->getRepository(Accessoires::class)->findForPaginationFilteredNewProducts(
+                $color, 
+                $material,
+                $priceMax, 
+                $priceMini
+            );
+
+            $newAccessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->findForPaginationFilteredNewProducts(
+                $color, 
+                $material,
+                $priceMax, 
+                $priceMini
+            );
         }
 
         $newProducts = array_merge($newVetements, $newVetementsMerchandising, $newMedias, $newChaussures, $newBijoux, $newAccessoires, $newAccessoiresMerchandising);

@@ -66,7 +66,71 @@
 
 										<div class="pt-3 border-top">
 
-											{{ form(filterForm) }}
+											<h4>Filtres</h4>
+
+											{{ form_start(filterForm) }}
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Couleur) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Couleur) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.Size) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.Size) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.material) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.material) }}
+                                                
+                                                </div>
+
+                                                <div class="row align-items-center">
+
+                                                    {{ form_label(filterForm.marque) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMarque"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.marque) }}
+                                                
+                                                </div>
+
+												<div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterForm.musicType) }}
+                                    
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMusicType"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.musicType) }}
+                                                
+                                                </div>
+
+                                                {{ form_end(filterForm) }}
 
 											</div>
 

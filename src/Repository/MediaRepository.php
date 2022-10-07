@@ -173,4 +173,40 @@ class MediaRepository extends ServiceEntityRepository
       
         return $query->getQuery()->getResult();
     }
+
+    public function findForPaginationFilteredNewProducts($musicType, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->leftJoin('v.mediaQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->orderBy('v.createdAt', 'DESC');
+
+        if ($musicType != null) {
+            $qb
+                ->andWhere('v.genre = :genre')
+                ->setParameter('genre', array($musicType));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery()->getResult();
+    }
 }

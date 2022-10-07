@@ -207,4 +207,47 @@ class AccessoiresRepository extends ServiceEntityRepository
       
         return $query->getQuery()->getResult();
     }
+
+    public function findForPaginationFilteredNewProducts($color, $material, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->leftJoin('v.accessoiresQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->orderBy('v.createdAt', 'DESC');
+
+        if ($color != null) {
+            $qb
+                ->leftJoin('v.accessoiresQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', array($color));
+        }
+
+        if ($material != null) {
+            $qb
+                ->andWhere('v.material = :material')
+                ->setParameter('material', array($material));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('v.price < :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('v.price > :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('v.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+                
+        return $qb->getQuery()->getResult();
+    }
 }
