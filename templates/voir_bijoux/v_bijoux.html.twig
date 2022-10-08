@@ -72,11 +72,9 @@
 
                         <p><span>Choisissez une couleur :</span></p>
                     
-                        <div>
+                        <div id="colorOption">
 
-                            {% for couleur in couleurs %}
-                                
-                                    <label class="mx-2" style="cursor:pointer;">
+                            {% for couleur in couleurs %}<label class="mx-2" style="cursor:pointer;" required="required">
                                         <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
                                             <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
 
@@ -84,10 +82,7 @@
 
                                             </div>
                                         </input>
-                                    </label>
-                                
-
-                            {% endfor %}
+                                    </label>{% endfor %}
 
                         </div>
                         

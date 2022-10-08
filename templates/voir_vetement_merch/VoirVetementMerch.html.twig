@@ -84,21 +84,17 @@
 
                         <p><span>Choisissez une couleur :</span></p>
 
-                    <div>
+                    <div id="colorOption">
 
-                        {% for couleur in couleurs %}
-                                
-                            <label class="mx-2" style="cursor:pointer;">
-                                <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+                        {% for couleur in couleurs %}<label class="mx-2" style="cursor:pointer;">
+                                <input type="radio" id="" name="color" value="{{couleur.id}}"  class="mx-auto test colorRadio" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;" required="required">
                                     <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
 
                                         <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
 
                                     </div>
                                 </input>
-                            </label>
-                                
-                         {% endfor %}
+                            </label>{% endfor %}
 
                      </div>
 
@@ -108,7 +104,7 @@
 
                         <div id="test3">
                             <div id="test3">
-                            {% for size in sizes %}<label class="mx-2 mb-2"><input type="radio" class="testRadio" name="test" value="small"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
+                            {% for size in sizes %}<label class="mx-2 mb-2"><input type="radio" class="testRadio sizeOption" name="size" value="{{size.id}}" required="required"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
                         </div>
                         </div>
 
@@ -131,7 +127,7 @@
                         for(let i = 0 ; i < test.length; i++) {
                             if(value == test[i].color.id)
                             {
-                                size+="<label class='mx-2 mb-2'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
+                                size+="<label class='mx-2 mb-2'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "' required='required'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
 
                                 $("#test3").html(size);
 
@@ -139,6 +135,21 @@
                         }
                     });
                 
+                    $(".sizeOption").on('click',function(){ 
+                        var value=$(this).val();
+
+                        color=""
+
+                        for(let i = 0 ; i < test.length; i++) {
+                            if(value == test[i].size.id)
+                            {
+                                color+="<label class='mx-2' style='cursor:pointer;'><input type='radio' name='color' value='" + test[i].color.id + "'  class='mx-auto test colorRadio' style='height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;' required='required'><div class='colorSelect' style='height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;'><div class='mx-auto colorDiv' style='height: 36px; width: 36px; background-color:" + test[i].color.code + "; border-radius: 50%; margin-top: 3px; cursor:pointer;'></div></div></input></label>"
+
+                                $("#colorOption").html(color);
+
+                            }
+                        }
+                    });
                     </script>
       
                 <p>{{ vetementMerche.0.sousCategorieMerchandising }}</p>
