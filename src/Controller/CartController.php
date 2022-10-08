@@ -188,8 +188,6 @@ class CartController extends AbstractController
         $user = $this->getUser();
 
         $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
-
-        // dd($request->getSession()->get('id'));
         
         if ($user !== null && $cart == null) {
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
@@ -204,7 +202,7 @@ class CartController extends AbstractController
         }
 
         if ($cart !== null) {
-            $cartProducts = $cart->getCartProduct()->toArray();
+            $cartProducts = $entityManager->getRepository(CartProduct::class)->findBy(['cart'=>$cart], ['updatedAt'=>'ASC']);
         }
 
         $totalPrice = 0;
@@ -217,7 +215,6 @@ class CartController extends AbstractController
         }
 
         // On récupère le dernier produit du panier
-
         if ($cartProducts == null) {
             $lastProduct = null;
         }

@@ -32,7 +32,7 @@ class VoirVetementController extends AbstractController
 
         $size = $request->get('size');
 
-        $vetement = $entityManager->getRepository(Vetement::class)->findBy(['id'=>$vetements->getId()]);
+        $vetement = $entityManager->getRepository(Vetement::class)->findOneBy(['id'=>$vetements->getId()]);
 
         $vetementVariations = $entityManager->getRepository(VetementQuantity::class)->findBy(['vetement' => $vetements->getId()]);
 
@@ -52,7 +52,7 @@ class VoirVetementController extends AbstractController
             }
         }
         
-        $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$vetement[0]->getMaterial()]);
+        $material = $entityManager->getRepository(Material::class)->findBy(['id'=>$vetement->getMaterial()]);
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
@@ -102,11 +102,12 @@ class VoirVetementController extends AbstractController
 
                     if ($cartProduct->getVetement() !== null) {
 
-                        if ($cartProduct->getVetement()->getId() == $vetement[0]->getId() 
+                        if ($cartProduct->getVetement()->getId() == $vetement->getId() 
                             && $cartProduct->getSize() == $choosedSize 
                             && $cartProduct->getcolor() == $choosedColor) {
 
                             $cartProduct->setQuantity($cartProduct->getQuantity() + $form->get('quantity')->getData());
+                            $cartProduct->setUpdatedAt(new DateTime());
 
                             $entityManager->persist($cartProduct);
 
@@ -135,18 +136,18 @@ class VoirVetementController extends AbstractController
    
             $cartProduct->setCreatedAt(new DateTime());
             $cartProduct->setUpdatedAt(new DateTime());
-            $cartProduct->setVetement($vetement[0]);
+            $cartProduct->setVetement($vetement);
             $quantity = $form->get('quantity')->getData();
             $cartProduct->setQuantity($quantity);
-            $cartProduct->setPrice($vetement[0]->getPrice());
-            $cartProduct->setTitle($vetement[0]->getTitle());
-            $cartProduct->setPhoto($vetement[0]->getPhoto());
+            $cartProduct->setPrice($vetement->getPrice());
+            $cartProduct->setTitle($vetement->getTitle());
+            $cartProduct->setPhoto($vetement->getPhoto());
             $cartProduct->setColor($choosedColor);
             $cartProduct->setSize($choosedSize);
-            $cartProduct->setSubCategory($vetement[0]->getSousCategorie());         
+            $cartProduct->setSubCategory($vetement->getSousCategorie());         
 
             $sku = $entityManager->getRepository(VetementQuantity::class)->findOneBy([
-                'vetement' => $vetement[0]->getId(), 
+                'vetement' => $vetement->getId(), 
                 'color' => $color,
                 'size' => $size
             ])->getSku();
@@ -158,7 +159,7 @@ class VoirVetementController extends AbstractController
             $cart->setUpdatedAt(new DateTime());     
             $cart->setUser($user);
             $cart->addCartProduct($cartProduct);
-            // $cart->setTotalPrice($cart->getTotalPrice() + $quantity * $vetement[0]->getPrice());
+            // $cart->setTotalPrice($cart->getTotalPrice() + $quantity * $vetement->getPrice());
 
             $token = $cart->getToken();
 
@@ -174,9 +175,9 @@ class VoirVetementController extends AbstractController
             return $this->redirectToRoute('added_product');
         }
 
-        $categorie = $vetement[0]->getCategorie();
+        $categorie = $vetement->getCategorie();
 
-        $sousCategorie = $vetement[0]->getSousCategorie();
+        $sousCategorie = $vetement->getSousCategorie();
 
         $similarItm = $entityManager->getRepository(Vetement::class)->findSimilarItem($categorie, $sousCategorie);
 

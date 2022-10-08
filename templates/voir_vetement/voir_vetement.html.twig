@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ vetement.0.title }}{% endblock %}
+{% block title %}{{ vetement.title }}{% endblock %}
 
 {% block body %}
 
@@ -11,11 +11,11 @@
                 <div class="col-1"></div>
                 <div class="col-11 pt-1">
                     <h1>
-                        <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': vetement.0.categorie}) }}">{{ vetement.0.categorie }}
+                        <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': vetement.categorie}) }}">{{ vetement.categorie }}
                         </a> / 
-                        <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': vetement.0.categorie, 'title': vetement.0.souscategorie}) }}">{{ vetement.0.souscategorie }}
+                        <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': vetement.categorie, 'title': vetement.souscategorie}) }}">{{ vetement.souscategorie }}
                         </a>
-                         / {{ vetement.0.title }}
+                         / {{ vetement.title }}
                     </h1>
                 </div>
             </div>
@@ -25,33 +25,33 @@
     
         <div class="col-1 d-sm-none d-none d-md-none d-lg-block p-0 text-center bg-dark">
 
-            <a href="{{ asset('images/'~vetement.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src="{{ asset('images/'~vetement.0.photo) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}" />
+            <a href="{{ asset('images/'~vetement.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src="{{ asset('images/'~vetement.photo) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}" />
             </a>
 
-            <a href="{{ asset('images/'~vetement.0.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src="{{ asset('images/'~vetement.0.photo2) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            <a href="{{ asset('images/'~vetement.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src="{{ asset('images/'~vetement.photo2) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
             </a>
 
-            <a href="{{ asset('images/'~vetement.0.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.0.photo3) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            <a href="{{ asset('images/'~vetement.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src={{ asset('images/'~vetement.photo3) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
             </a>
 
-            <a href="{{ asset('images/'~vetement.0.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.0.photo4) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            <a href="{{ asset('images/'~vetement.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src={{ asset('images/'~vetement.photo4) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
             </a>
 
-            <a href="{{ asset('images/'~vetement.0.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.0.photo5) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+            <a href="{{ asset('images/'~vetement.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
+                <img src={{ asset('images/'~vetement.photo5) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
             </a>
 
         </div>
 
         <div class="col-md-7 pt-3 text-center" style="background-color: white;">
 
-            <a href="{{ asset('images/'~vetement.0.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+            <a href="{{ asset('images/'~vetement.photo) }}" data-toggle="lightbox" data-gallery="gallery">
         
-                <img id="imageBox" src="{{ asset('images/'~vetement.0.photo) }}" class="img-fluid p-2" title="{{ vetement.0.title }}" alt="{{ vetement.0.title }}"/>
+                <img id="imageBox" src="{{ asset('images/'~vetement.photo) }}" class="img-fluid p-2" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
 
             </a>
        
@@ -62,17 +62,17 @@
         
             <div class="row">
                 <div class="col-8">
-                    <h2>{{ vetement.0.description }}</h2>
+                    <h2>{{ vetement.description }}</h2>
                 </div>
                 
                 <div class="col-4 my-auto justify-content-end d-flex">
-                    <h3 class="my-auto fw-bold">{{ vetement.0.price/100 }}€</h3>
+                    <h3 class="my-auto fw-bold">{{ vetement.price/100 }}€</h3>
                 </div>
 
-                {% if vetement.0.marques is not null %}
+                {% if vetement.marques is not null %}
                     <div class="col-8">
-                        <a href="{{ path('show_specific_brands', {'id': vetement.0.marques.id }) }}" class="text-underline-hover text-dark">
-                            <h5 >{{ vetement.0.marques.title }}</h5>
+                        <a href="{{ path('show_specific_brands', {'id': vetement.marques.id }) }}" class="text-underline-hover text-dark">
+                            <h5 >{{ vetement.marques.title }}</h5>
                         </a>
                     </div>
                 {% endif %}
@@ -145,7 +145,7 @@
                 
                     </script>
       
-                <p>{{ vetement.0.sousCategorie }}</p>
+                <p>{{ vetement.sousCategorie }}</p>
                 <p>{{ material.0.material }}</p>
                 <div class="col-12 mb-1">
                     {{form_start(form)}}
@@ -161,11 +161,11 @@
                                 </a>
                             {% else %}
                                 {% if userFavorites is not empty %}
-                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':vetement.0.id})}}">
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" alt="blabla" href="{{ path('remove_favorite_vetement', {'id':vetement.id})}}">
                                         <i type="button" class="fa-solid fa-heart fa-2x"></i>
                                     </a>
                                 {% else %}
-                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_vetement', {'id':vetement.0.id})}}">
+                                    <a class="col-1 ms-2 p-0 mt-1 d-flex text-decoration-none text-dark" href="{{ path('add_favorite_vetement', {'id':vetement.id})}}">
                                         <i type="button" class="fa-regular fa-heart fa-2x"></i>
                                     </a>
                                 {% endif %}
@@ -196,7 +196,7 @@
                 </div> 
 
                 <div id="description" style="display: none;">
-                 {{ vetement.0.longDescription | raw }}
+                 {{ vetement.longDescription | raw }}
                 </div>
 
             </div>

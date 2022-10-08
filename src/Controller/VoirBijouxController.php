@@ -88,6 +88,7 @@ class VoirBijouxController extends AbstractController
                             && $cartProduct->getcolor() == $choosedColor) {
 
                             $cartProduct->setQuantity($cartProduct->getQuantity() + $form->get('quantity')->getData());
+                            $cartProduct->setUpdatedAt(new DateTime());
 
                             $entityManager->persist($cartProduct);
 
