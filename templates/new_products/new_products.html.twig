@@ -162,7 +162,7 @@
 					<div class="col-3 ms-auto mb-4">
 
 						<select class="form-select no-border-radius" onchange="window.location=this.value;">
-							<option selected>Trier par</option>
+							<option disabled selected hidden>Trier par</option>
 							{{ knp_pagination_sortable(newProducts, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
 							{{ knp_pagination_sortable(newProducts, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
 							{{ knp_pagination_sortable(newProducts, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}

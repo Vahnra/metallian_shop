@@ -376,16 +376,93 @@
                         </h3>
 
                         {# Select pour trier #}
-                        <div class="col-3 ms-auto">
+                        <div class="col-3 ms-auto mb-4">
 
-                            <select class="form-select no-border-radius" onChange="window.location=this.value;">
-                                <option selected>Trier par</option>
-                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.title&page=1">Nouveaux arrivages</option>
-                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=asc&sort=v.price&page=1">Pris plus bas à élévé</option>
-                                <option value="{{ path('show_vetements_from_category', {"title": categories.title}) }}?direction=desc&sort=v.price&page=1">Pris plus élévé à bas</option>
-                            </select>
-                                
-                        </div>
+                            {% if categories.title == 'Femme' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(vetements, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(vetements, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(vetements, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+                            {% if categories.title == 'Homme' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(vetements, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(vetements, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(vetements, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+                            {% if categories.title == 'Enfant' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(vetements, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(vetements, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(vetements, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+                            {% if categories.title == 'Accessoires' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(accessoires, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(accessoires, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(accessoires, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+                            {% if categories.title == 'Médias' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(medias, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(medias, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(medias, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+                            {% if categories.title == 'Chaussures' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(chaussures, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(chaussures, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(chaussures, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+                            {% if categories.title == 'Bijoux' %}
+
+                                <select class="form-select no-border-radius" onchange="window.location=this.value;">
+                                    <option disabled selected hidden>Trier par</option>
+                                    {{ knp_pagination_sortable(bijoux, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                    {{ knp_pagination_sortable(bijoux, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                    {{ knp_pagination_sortable(bijoux, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+
+                                </select>
+
+                            {% endif %}
+
+					    </div> 
                     </div> 
 
                     <div class="row">
@@ -643,18 +720,56 @@
 
                             <div class="container mt-3">
                         
-                                <div class="row">
-                            
-                                    <div class="col-12 ms-auto">
+                                <div class="col-3 ms-auto me-2">
                                 
-                                        {{ knp_pagination_render(vetements) }}
+                                    {{ knp_pagination_render(vetements) }}
                                 
-                                    </div>
-                            
                                 </div>
-
-                            </div>
                             
+                            </div>
+
+                        {% endif %}
+
+                        {% if bijoux is not null %}
+
+                            <div class="container mt-3">
+                        
+                                <div class="col-3 ms-auto me-2">
+                                
+                                    {{ knp_pagination_render(bijoux) }}
+                                
+                                </div>
+                
+                            </div>
+
+                        {% endif %}
+
+                        {% if chaussures is not null %}
+
+                            <div class="container mt-3">
+                        
+                                <div class="col-3 ms-auto me-2">
+                                
+                                    {{ knp_pagination_render(chaussures) }}
+                                
+                                </div>
+                
+                            </div>
+
+                        {% endif %}
+
+                        {% if accessoires is not null %}
+
+                            <div class="container mt-3">
+                        
+                                <div class="col-3 ms-auto me-2">
+                                
+                                    {{ knp_pagination_render(accessoires) }}
+                                
+                                </div>
+                
+                            </div>
+
                         {% endif %}
 
                     </div>
