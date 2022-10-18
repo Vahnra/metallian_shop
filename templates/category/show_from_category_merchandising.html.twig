@@ -248,7 +248,7 @@
 
                                     <a href="{{ path('voir_vetement_merch', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
-                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ vetement.title }}">
+                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ vetement.title }}" loading="lazy">
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
@@ -309,7 +309,7 @@
 
                                     <a href="{{ path('voir_accessoires_merch', {"id": accessoire.id} ) }}" class="text-decoration-none text-black">
 
-                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{accessoire.title}}{{accessoire.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}">
+                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{accessoire.title}}{{accessoire.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}" loading="lazy">
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>

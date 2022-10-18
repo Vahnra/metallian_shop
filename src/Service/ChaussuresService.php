@@ -21,7 +21,7 @@ class ChaussuresService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->chaussuresRepository->findForPagination($value);
 
@@ -33,7 +33,7 @@ class ChaussuresService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->chaussuresRepository->findForPaginationSousCategorie($value);
 
@@ -46,7 +46,7 @@ class ChaussuresService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->chaussuresRepository->findForPaginationFiltered($value, $color, $size, $material, $priceMini, $priceMax);
 
@@ -59,7 +59,7 @@ class ChaussuresService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->chaussuresRepository->findForPaginationSousCategoriesFiltered($value, $color, $size, $material, $priceMini, $priceMax);
 

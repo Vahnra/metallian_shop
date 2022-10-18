@@ -118,7 +118,7 @@
 
                             <a href="{{ path('voir_vetement', {'id': article.id}) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}">
+                                <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}" loading="lazy">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (article.price)/100 }}
@@ -181,7 +181,7 @@
 
                             <a href="{{ path('voir_vetement_merch', {'id': article.id}) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}">
+                                <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}" loading="lazy">
 
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">

@@ -23,7 +23,7 @@ class VetementService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->vetementRepository->findForPagination($value);
 
@@ -35,7 +35,7 @@ class VetementService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->vetementRepository->findForPaginationSousCategorie($value);
 
@@ -48,7 +48,7 @@ class VetementService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->vetementRepository->findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax);
 
@@ -61,7 +61,7 @@ class VetementService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 8;
+        $limit = 50;
 
         $vetementQuery = $this->vetementRepository->findForPaginationSousCategoriesFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax);
 

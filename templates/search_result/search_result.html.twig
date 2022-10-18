@@ -172,7 +172,7 @@
 									{% if searchResult.className == 'Chaussures' %}
 
 										<a href="{{ path('voir_chaussures', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
@@ -206,7 +206,7 @@
 									{% if searchResult.className == 'Vetement' %}
 
 										<a href="{{ path('voir_vetement', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
@@ -240,7 +240,7 @@
 									{% if searchResult.className == 'Media' %}
 
 										<a href="{{ path('voir_media', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
@@ -274,7 +274,7 @@
 									{% if searchResult.className == 'Bijoux' %}
 
 										<a href="{{ path('voir_bijoux', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
@@ -308,7 +308,7 @@
 									{% if searchResult.className == 'Accessoires' %}
 
 										<a href="{{ path('voir_accessoires', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
@@ -342,7 +342,7 @@
 									{% if searchResult.className == 'VetementMerchandising' %}
 
 										<a href="{{ path('voir_vetement_merch', {"id": searchResult.id} ) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
@@ -376,7 +376,7 @@
 									{% if searchResult.className == 'AccessoiresMerchandising' %}
 
 										<a href="{{ path('voir_accessoires_merch', {"id": searchResult.id} ) }}"  class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 										<div class="card-body">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
