@@ -23,13 +23,12 @@ import './bootstrap';
     
 // });
 
+// document.getElementsByClassName('dropdown').addEventListener('mouseover', () => {
+//     var dropdownMenu = document.getElementsByClassName('dropdown').children('dropdown-menu');
+//     dropdownMenu.parentNode().classList.toggle('open');
+// })
 
-document.getElementById('dropdown').addEventListener('mouseover', () => {
-    var dropdownMenu = document.getElementById('dropdown').children('dropdown-menu');
-    dropdownMenu.parentNode().classList.toggle('open');
-})
-
-window.showDescription = function () {
+document.showDescription = function () {
     if(document.getElementById('description').style.cssText == 'display: none;'){
         document.getElementById('description').style.cssText = 'display: inline;';
         document.getElementById('fleche').classList.add('fa-minus');
@@ -42,13 +41,13 @@ window.showDescription = function () {
     }
 }
 
-window.imageSwap = function(smallImg) {
+document.imageSwap = function imageSwap(smallImg) {
     var fullImg = document.getElementById("imageBox");
     fullImg.src = smallImg.src;
 }
 
 // Bijoux filter
-window.showColorFilterBijoux = function() {
+document.showColorFilterBijoux = function() {
     if(document.getElementById('bijoux_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('bijoux_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -62,7 +61,7 @@ window.showColorFilterBijoux = function() {
 }
 
 // Chausures filter
-window.showColorFilterChaussures = function() {
+document.showColorFilterChaussures = function() {
     if(document.getElementById('chaussures_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('chaussures_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -75,7 +74,7 @@ window.showColorFilterChaussures = function() {
     }
 }
 
-window.showSizeFilterChaussures = function() {
+document.showSizeFilterChaussures = function() {
     if(document.getElementById('chaussures_filter_form_Size').style.cssText == 'display: none;'){
         document.getElementById('chaussures_filter_form_Size').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheSize').classList.add('fa-minus');
@@ -88,7 +87,7 @@ window.showSizeFilterChaussures = function() {
     }
 }
 
-window.showMaterialFilterChaussures = function() {
+document.showMaterialFilterChaussures = function() {
     if(document.getElementById('chaussures_filter_form_material').style.cssText == 'display: none;'){
         document.getElementById('chaussures_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMaterial').classList.add('fa-minus');
@@ -102,7 +101,7 @@ window.showMaterialFilterChaussures = function() {
 }
 
 // Accessories filter
-window.showColorFilterAccessoires = function() {
+document.showColorFilterAccessoires = function() {
     if(document.getElementById('accessoires_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('accessoires_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -115,7 +114,7 @@ window.showColorFilterAccessoires = function() {
     }
 }
 
-window.showMaterialFilterAccessoires = function() {
+document.showMaterialFilterAccessoires = function() {
     if(document.getElementById('accessoires_filter_form_material').style.cssText == 'display: none;'){
         document.getElementById('accessoires_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMaterial').classList.add('fa-minus');
@@ -129,7 +128,7 @@ window.showMaterialFilterAccessoires = function() {
 }
 
 // Accessories merchandising filter
-window.showColorFilterAccessoiresMerchandising = function() {
+document.showColorFilterAccessoiresMerchandising = function() {
     if(document.getElementById('accessoires_merchandising_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('accessoires_merchandising_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -142,7 +141,7 @@ window.showColorFilterAccessoiresMerchandising = function() {
     }
 }
 
-window.showMaterialFilterAccessoiresMerchandising = function() {
+document.showMaterialFilterAccessoiresMerchandising = function() {
     if(document.getElementById('accessoires_merchandising_filter_form_material').style.cssText == 'display: none;'){
         document.getElementById('accessoires_merchandising_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMaterial').classList.add('fa-minus');
@@ -156,7 +155,7 @@ window.showMaterialFilterAccessoiresMerchandising = function() {
 }
 
 // Vetement filter
-window.showColorFilterVetement = function() {
+document.showColorFilterVetement = function() {
     if(document.getElementById('vetement_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('vetement_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -169,7 +168,7 @@ window.showColorFilterVetement = function() {
     }
 }
 
-window.showSizeFilterVetement = function() {
+document.showSizeFilterVetement = function() {
     if(document.getElementById('vetement_filter_form_Size').style.cssText == 'display: none;'){
         document.getElementById('vetement_filter_form_Size').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheSize').classList.add('fa-minus');
@@ -182,7 +181,7 @@ window.showSizeFilterVetement = function() {
     }
 }
 
-window.showMaterialFilterVetement = function() {
+document.showMaterialFilterVetement = function() {
     if(document.getElementById('vetement_filter_form_material').style.cssText == 'display: none;'){
         document.getElementById('vetement_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMaterial').classList.add('fa-minus');
@@ -195,7 +194,7 @@ window.showMaterialFilterVetement = function() {
     }
 }
 
-window.showMarqueFilterVetement = function() {
+document.showMarqueFilterVetement = function() {
     if(document.getElementById('vetement_filter_form_marque').style.cssText == 'display: none;'){
         document.getElementById('vetement_filter_form_marque').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMarque').classList.add('fa-minus');
@@ -209,7 +208,7 @@ window.showMarqueFilterVetement = function() {
 }
 
 // Vetement mechandising filter
-window.showColorFilterVetementMerchandising = function() {
+document.showColorFilterVetementMerchandising = function() {
     if(document.getElementById('vetement_merchandising_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('vetement_merchandising_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -222,7 +221,7 @@ window.showColorFilterVetementMerchandising = function() {
     }
 }
 
-window.showSizeFilterVetementMerchandising = function() {
+document.showSizeFilterVetementMerchandising = function() {
     if(document.getElementById('vetement_merchandising_filter_form_Size').style.cssText == 'display: none;'){
         document.getElementById('vetement_merchandising_filter_form_Size').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheSize').classList.add('fa-minus');
@@ -235,7 +234,7 @@ window.showSizeFilterVetementMerchandising = function() {
     }
 }
 
-window.showMaterialFilterVetementMerchandising = function() {
+document.showMaterialFilterVetementMerchandising = function() {
     if(document.getElementById('vetement_merchandising_filter_form_material').style.cssText == 'display: none;'){
         document.getElementById('vetement_merchandising_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMaterial').classList.add('fa-minus');
@@ -248,7 +247,7 @@ window.showMaterialFilterVetementMerchandising = function() {
     }
 }
 
-window.showMarqueFilterVetementMerchandising = function() {
+document.showMarqueFilterVetementMerchandising = function() {
     if(document.getElementById('vetement_merchandising_filter_form_marque').style.cssText == 'display: none;'){
         document.getElementById('vetement_merchandising_filter_form_marque').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMarque').classList.add('fa-minus');
@@ -262,7 +261,7 @@ window.showMarqueFilterVetementMerchandising = function() {
 }
 
 // Media form type
-window.showMusicTypeFilterMedia = function() {
+document.showMusicTypeFilterMedia = function() {
     if(document.getElementById('media_filter_form_musicType').style.cssText == 'display: none;'){
         document.getElementById('media_filter_form_musicType').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMusicType').classList.add('fa-minus');
@@ -276,7 +275,7 @@ window.showMusicTypeFilterMedia = function() {
 }
 
 // Function pour le formtype al
-window.showColorFilterAllFormFilter = function() {
+document.showColorFilterAllFormFilter = function() {
     if(document.getElementById('all_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheCouleur').classList.add('fa-minus');
@@ -289,7 +288,7 @@ window.showColorFilterAllFormFilter = function() {
     }
 }
 
-window.showSizeFilterAllFormFilter = function() {
+document.showSizeFilterAllFormFilter = function() {
     if(document.getElementById('all_filter_form_Size').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_Size').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheSize').classList.add('fa-minus');
@@ -302,7 +301,7 @@ window.showSizeFilterAllFormFilter = function() {
     }
 }
 
-window.showMaterialFilterAllFormFilter = function() {
+document.showMaterialFilterAllFormFilter = function() {
     if(document.getElementById('all_filter_form_material').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_material').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMaterial').classList.add('fa-minus');
@@ -315,7 +314,7 @@ window.showMaterialFilterAllFormFilter = function() {
     }
 }
 
-window.showMusicTypeFilterAllFormFilter = function() {
+document.showMusicTypeFilterAllFormFilter = function() {
     if(document.getElementById('all_filter_form_musicType').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_musicType').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMusicType').classList.add('fa-minus');
@@ -328,7 +327,7 @@ window.showMusicTypeFilterAllFormFilter = function() {
     }
 }
 
-window.showMarqueFilterAllFormFilter = function() {
+document.showMarqueFilterAllFormFilter = function() {
     if(document.getElementById('all_filter_form_marque').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_marque').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
         document.getElementById('flecheMarque').classList.add('fa-minus');
