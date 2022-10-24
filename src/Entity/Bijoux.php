@@ -66,11 +66,15 @@ class Bijoux
     #[ORM\Column]
     private ?int $price = null;
 
+    #[ORM\OneToMany(mappedBy: 'bijoux', targetEntity: OrderProduct::class)]
+    private Collection $orderProducts;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
         $this->bijouxQuantities = new ArrayCollection();
         $this->favoriteProducts = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -330,6 +334,36 @@ class Bijoux
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderProduct>
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
+            $orderProduct->setBijoux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getBijoux() === $this) {
+                $orderProduct->setBijoux(null);
+            }
+        }
 
         return $this;
     }
