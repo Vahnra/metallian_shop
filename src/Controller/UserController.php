@@ -8,6 +8,7 @@ use App\Form\RegisterFormType;
 use App\Form\UserInfoFormType;
 use App\Form\UserMailFormType;
 use App\Entity\FavoriteProduct;
+use App\Entity\Order;
 use App\Entity\UserPostalAdress;
 use App\Form\UserAdressFormType;
 use Symfony\Component\Mime\Email;
@@ -219,9 +220,10 @@ class UserController extends AbstractController
     #[Route('/profile/mon-espace-perso-{id}/orders', name: 'show_profile_orders', methods:['GET', 'POST'])]
     public function showProfileOrders(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
-        
+        $orders = $entityManager->getRepository(Order::class)->findBy(['user' => $user]);
+
         return $this->render('user/show_profile_orders.html.twig', [
-            
+            'orders' => $orders
         ]);
     }
 

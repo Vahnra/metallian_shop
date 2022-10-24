@@ -46,7 +46,7 @@
         
         </div>
 
-        <div class="col-xl-8 mb-5" style="height: 1000px; background-color:white;">
+        <div class="col-xl-8 mb-5" style="background-color:white;">
 
             <div class="col-12">
             
@@ -56,13 +56,77 @@
 
             <div class="row">
             
-                <h5 class="col-11 mt-4" style="padding-left: 4rem">Gérer vos commandes ici<hr></h5>
+                <h5 class="col-xl-11 mt-4" style="padding-left: 4rem">Gérer vos commandes ici<hr></h5>
                 
-                <div class="col-11" style="padding-left: 4rem">
+                <div class="col-xl-11" style="padding-left: 4rem">
+
+                    {% for order in orders %}
                 
-                    
-                   
-                
+                        <div class="card mb-3">
+
+                            <div class="card-header">
+
+                                <div class="row">
+
+                                    <h5 class="col-8 align-middle mb-0">Commande numéro : {{ order.id }}</h5>
+
+                                    <div class="col-4 align-middle text-end"><a href="#">Voir détails</a></div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="row">
+                                
+                                    <div class="col-4 fw-bolder text-center">Date de commande</div>
+                                    <div class="col-2 fw-bolder text-center">Total</div>
+                                    <div class="col-2 fw-bolder text-center">Status</div>
+                                    <div class="col-4 fw-bolder text-center">Envoyé le</div>
+                                
+                                </div>
+
+                                <div class="row pb-4">
+                                
+                                    <div class="col-4 text-center">{{ order.createdAt|date("m/d/Y") }}</div>
+                                    <div class="col-2 text-center">{{ order.total/100 }} €</div>
+                                    <div class="col-2 text-center">{{ order.status }}</div>
+                                    <div class="col-4 text-center">12 avril 2012</div>
+                                
+                                </div>
+
+                                <div class="row">
+
+                                    {% for product in order.orderProducts %}                             
+                                
+                                        <div class="card g-0 mt-2 border-0 rounded-0" style="width: 15rem;">
+
+                                            <a href="" class="text-decoration-none text-black">
+
+                                                <img src="{{ asset('images/7a218379c474df6f3f0961d5fcdbcb91e0e86fbd.jpg') }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="" loading="lazy">
+                                                <div class="card-body">
+
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item fw-bold">{{ product.price }}
+                                                            €</li>
+                                                    </ul>
+
+                                                </div>
+
+                                            </a>
+
+                                        </div>
+
+                                    {% endfor %}
+                                
+                                </div>
+
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                        
                 </div>
             
             
