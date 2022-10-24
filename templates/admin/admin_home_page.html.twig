@@ -24,6 +24,14 @@
 
         </div>
 
+        <div class="col-10 mx-auto mt-5">
+
+            <h4 class="ms-4">Nombre total de commandes : <strong>{{ totalOrders }}</strong></h4>
+
+            {{ render_chart(totalOrderChart) }}
+
+        </div>
+
     </div>
 
 {% endblock %}

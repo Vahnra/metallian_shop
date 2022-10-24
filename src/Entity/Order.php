@@ -39,8 +39,8 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[ORM\Column]
-    private ?int $mobile = null;
+    #[ORM\Column(length: 255)]
+    private ?string $mobile = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -68,6 +68,9 @@ class Order
 
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderProduct::class, orphanRemoval: true)]
     private Collection $orderProducts;
+
+    #[ORM\Column(length: 255)]
+    private ?string $country = null;
 
     public function __construct()
     {
@@ -163,12 +166,12 @@ class Order
         return $this;
     }
 
-    public function getMobile(): ?int
+    public function getMobile(): ?string
     {
         return $this->mobile;
     }
 
-    public function setMobile(int $mobile): self
+    public function setMobile(string $mobile): self
     {
         $this->mobile = $mobile;
 
@@ -297,6 +300,18 @@ class Order
                 $orderProduct->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

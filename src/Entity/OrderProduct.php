@@ -71,6 +71,11 @@ class OrderProduct
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->title; 
+    }
+
     public function getVetement(): ?Vetement
     {
         return $this->vetement;

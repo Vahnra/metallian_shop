@@ -7,6 +7,7 @@ use App\Entity\Size;
 use App\Entity\User;
 use App\Entity\Color;
 use App\Entity\Media;
+use App\Entity\Order;
 use App\Entity\Artist;
 use App\Entity\Bijoux;
 use App\Entity\Slider;
@@ -25,34 +26,35 @@ use App\Entity\BijouxQuantity;
 use App\Entity\ReviewVetement;
 use App\Entity\VetementQuantity;
 use App\Entity\ChaussuresQuantity;
+use App\Repository\UserRepository;
 use App\Entity\AccessoiresQuantity;
+use App\Repository\MediaRepository;
+use App\Repository\OrderRepository;
+use Symfony\UX\Chartjs\Model\Chart;
+use App\Repository\BijouxRepository;
 use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
+use App\Repository\VetementRepository;
 use App\Entity\AccessoiresMerchandising;
+use App\Repository\ChaussuresRepository;
+use App\Repository\AccessoiresRepository;
 use App\Entity\SousCategorieMerchandising;
 use App\Controller\Admin\UserCrudController;
 use App\Entity\VetementMerchandisingQuantity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AccessoiresMerchandisingQuantity;
-use App\Repository\AccessoiresMerchandisingRepository;
-use App\Repository\AccessoiresRepository;
-use App\Repository\BijouxRepository;
-use App\Repository\ChaussuresRepository;
-use App\Repository\MediaRepository;
-use App\Repository\UserRepository;
-use App\Repository\VetementMerchandisingRepository;
-use App\Repository\VetementRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use App\Repository\VetementMerchandisingRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use App\Repository\AccessoiresMerchandisingRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -65,7 +67,8 @@ class DashboardController extends AbstractDashboardController
         BijouxRepository $bijouxRepository,
         VetementMerchandisingRepository $vetementMerchandisingRepository,
         AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository,
-        MediaRepository $mediaRepository
+        MediaRepository $mediaRepository,
+        OrderRepository $orderRepository
         )
     {
         $this->userRepository = $userRepository;
@@ -76,6 +79,7 @@ class DashboardController extends AbstractDashboardController
         $this->vetementMerchandisingRepository = $vetementMerchandisingRepository;
         $this->accessoiresMerchandisingRepository = $accessoiresMerchandisingRepository;
         $this->mediaRepository = $mediaRepository;
+        $this->orderRepository = $orderRepository;
         $this->chartBuilder = $chartBuilder;
     }
 
@@ -90,14 +94,17 @@ class DashboardController extends AbstractDashboardController
         $bijoux = count($this->bijouxRepository->findAll());
         $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
         $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
-
+        $totalOrders = count($this->orderRepository->findAll());
+        
         $totalArticles = $vetements + $accessoires + $chaussures + $bijoux + $vetementMerchandising + $accessoiresMerchandising;
 
         return $this->render('admin/admin_home_page.html.twig', [
             'usersChart' => $this->usersChart(),
             'totalArticlesChart' => $this->totalArticlesChart(),
             'totalRegisteredUser' => count($totalRegisteredUser),
-            'totalArticles' => $totalArticles
+            'totalArticles' => $totalArticles,
+            'totalOrderChart' => $this->OrderChart(),
+            'totalOrders' => $totalOrders
         ]);
     }
 
@@ -116,6 +123,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Gérer les utilisateurs')->setSubItems([
             MenuItem::linkToCrud('Voir les utilisateurs', 'fas fa-eye' ,User::class),
             MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW)
+        ]);
+
+        yield MenuItem::section('Commandes');
+        yield MenuItem::subMenu('Gérer les commandes')->setSubItems([
+            MenuItem::linkToCrud('Voir les commandes', 'fas fa-eye' ,Order::class),
+            MenuItem::linkToCrud('Ajouter une commande', 'fas fa-plus', Order::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         // Article en ventes
@@ -362,5 +375,46 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         return $totalArticlesChart;
+    }
+
+    public function orderChart(): Chart
+    {
+        $totalOrderChart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
+
+        $january = count($this->orderRepository->ordersByDate('01-01-2022', '01-02-2022'));
+        $february = count($this->orderRepository->ordersByDate('01-02-2022', '01-03-2022'));
+        $march = count($this->orderRepository->ordersByDate('01-03-2022', '01-04-2022'));
+        $april = count($this->orderRepository->ordersByDate('01-04-2022', '01-05-2022'));
+        $may = count($this->orderRepository->ordersByDate('01-05-2022', '01-06-2022'));
+        $june = count($this->orderRepository->ordersByDate('01-06-2022', '01-07-2022'));
+        $july = count($this->orderRepository->ordersByDate('01-07-2022', '01-08-2022'));
+        $august = count($this->orderRepository->ordersByDate('01-08-2022', '01-09-2022'));
+        $september = count($this->orderRepository->ordersByDate('01-09-2022', '01-10-2022'));
+        $october = count($this->orderRepository->ordersByDate('01-10-2022', '01-11-2022'));
+        $november = count($this->orderRepository->ordersByDate('01-11-2022', '01-12-2022'));
+        $december = count($this->orderRepository->ordersByDate('01-12-2022', '31-12-2022'));
+
+        $totalOrderChart->setData([
+            'labels' => ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            'datasets' => [
+                [
+                    'label' => 'Nombres d\'articles',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [$january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december],
+                ],
+            ],
+        ]);
+
+        $totalOrderChart->setOptions([
+            'scales' => [
+                'y' => [
+                   'suggestedMin' => 0,
+                   'suggestedMax' => 100,
+                ],
+            ],
+        ]);
+
+        return $totalOrderChart;
     }
 }
