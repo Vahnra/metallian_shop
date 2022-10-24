@@ -40,10 +40,13 @@ class OrderCrudController extends AbstractCrudController
         yield DateField::new('updatedAt', 'Mis à jour le')->onlyOnDetail();
         yield MoneyField::new('total', 'Prix total')->setCurrency('EUR');
         yield ChoiceField::new('status', 'Status')->setChoices([
-            'Payé' => 'paid',
             'En attente de paiement' => 'pending',
-            'Rembourser' => 'refunded',
+            'Payé' => 'paid',
+            'Remboursé' => 'refunded',
+            'Envoyé' => 'sent',
+            'Livré' => 'delivered',
         ]);
+        yield TextField::new('trackingNumber', 'Numéros de suivi');
 
         yield FormField::addPanel('Article(s) de la commande');
         yield ArrayField::new('orderProducts', 'Articles')->hideOnForm();

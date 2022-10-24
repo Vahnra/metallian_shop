@@ -72,6 +72,9 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $trackingNumber = null;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -312,6 +315,18 @@ class Order
     public function setCountry(string $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getTrackingNumber(): ?string
+    {
+        return $this->trackingNumber;
+    }
+
+    public function setTrackingNumber(?string $trackingNumber): self
+    {
+        $this->trackingNumber = $trackingNumber;
 
         return $this;
     }
