@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\FavoriteProduct;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,16 @@ class FavoriteProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function favorites($user)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('a.createdAt', 'DESC');
+
+        return $query->getQuery()->getResult();
     }
 
 //    /**

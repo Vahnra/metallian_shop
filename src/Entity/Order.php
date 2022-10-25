@@ -75,6 +75,9 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $trackingNumber = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $sentAt = null;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -327,6 +330,18 @@ class Order
     public function setTrackingNumber(?string $trackingNumber): self
     {
         $this->trackingNumber = $trackingNumber;
+
+        return $this;
+    }
+
+    public function getSentAt(): ?\DateTimeInterface
+    {
+        return $this->sentAt;
+    }
+
+    public function setSentAt(?\DateTimeInterface $sentAt): self
+    {
+        $this->sentAt = $sentAt;
 
         return $this;
     }

@@ -1,145 +1,160 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Mon espace perso{% endblock %}
+{% block title %}Vos adresses
+{% endblock %}
 
 {% block body %}
 
-    <div class="container-xl">
+	<div class="container-xl">
 
-        <div class="row my-5">
+		<div
+			class="row my-5">
 
-            {# <div class="col-1"></div> #}
+			{# <div class="col-1"></div> #}
 
-            <h1 class="col-10 ms-5">Mon espace personnel</h1>
+			<h1 class="col-10 ms-5">Mon espace personnel</h1>
 
-        </div>
+		</div>
 
-        <div class="row">
-    
-        {# <div class="col-1" style="height: 300px"></div> #}
+		<div
+			class="row">
 
-        <div class="col-xl-3 g-0" style="height: 300px">
-        
-            <div class="col-xl-9 ms-auto ps-5"  style="height: 100px">
-            
-                <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile', {"id": app.user.id}) }}" class="text-reset text-decoration-none"> Détails</a></h3>
+			{# <div class="col-1" style="height: 300px"></div> #}
 
-            </div>
+			<div class="col-xl-3 g-0" style="height: 300px">
 
-            <div class="col-xl-9 ms-auto ps-5" style="height: 100px">
-            
-                <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_profile_orders', {"id": app.user.id}) }}" class="text-reset text-decoration-none" >Commandes</a></h3>
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px">
 
-            </div>
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_profile', {"id": app.user.id}) }}" class="text-reset text-decoration-none">
+							Détails</a>
+					</h3>
 
-            <div class="col-xl-9 ms-auto ps-5" style="height: 100px;">
-            
-                <h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_favorite_products', {"id": app.user.id}) }}" class="text-reset text-decoration-none" >Vos favoris</a></h3>
+				</div>
 
-            </div>
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px">
 
-            <div class="col-xl-9 ms-auto ps-5" style="height: 100px; background-color:white;">
-            
-                <h3 class="align-middle" style="padding-top: 2rem"><a href="" class="text-reset text-decoration-none" >Adresses</a></h3>
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_profile_orders', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Commandes</a>
+					</h3>
 
-            </div>
-        
-        </div>
+				</div>
 
-        <div class="col-xl-8 mb-5" style="height: 1000px; background-color:white;">
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px;">
 
-            <div class="col-12">
-            
-                <h2 style="padding-top: 3rem; padding-left: 4rem"> Adresses</h2>
-            
-            </div>
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_favorite_products', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Vos favoris</a>
+					</h3>
 
-            <div class="row">
-            
-                <h5 class="col-11 mt-4" style="padding-left: 4rem">Ajouter ou modifier vos adresses ici<hr></h5>
-                
-                <div class="col-11" style="padding-left: 4rem">
+				</div>
 
-                <div class="mb-4">
-                    <i class="fa-solid fa-plus mx-1"></i>
-                    <!-- Button trigger modal -->
-					<button type="button" style="background-color: rgba(0,0,0,0);" class="border-0 card-link text-reset" data-bs-toggle="modal" data-bs-target="#modalAdd">Ajouter une adresse</button>
-                </div>
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px; background-color:white;">
 
-                    <div class="row">
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="" class="text-reset text-decoration-none">Adresses</a>
+					</h3>
 
-                    {% for userPostAdress in userPostAdresses %}                    
-                    
-                        <div class="card mx-auto my-2" style="width: 16rem;">
-                            <div class="card-body mx-auto" style="width: 13rem;">
-                                <h6 class="card-subtitle mb-2 text-muted">{{ userPostAdress.title }}</h6>
-                                <h5 class="card-title">{{ userPostAdress.firstName }} {{ userPostAdress.lastName }}</h5>
-                                <p class="card-text">{{ userPostAdress.adress }}</p>
-                                <p class="card-text">{{ userPostAdress.additionalAdress }}</p>
-                                <p class="card-text">{{ userPostAdress.postCode }}</p>
-                                <p class="card-text">{{ userPostAdress.city }}</p>
-                                <p class="card-text">{{ userPostAdress.country }}</p>
-                                <div class="row">
-                                    <div class="col-3 mx-auto border border-3 border-dark p-2 d-flex justify-content-center">
-                                        <a href="{{ path('hard_delete_adress', {"id": app.user.id, "id2": userPostAdress.id }) }}" ><i class="fa-regular fa-trash-can align-middle" style="color: black; font-size: 1.5em"></i></a>
-                                    </div>
-                                    <div class="col-7 mx-auto border border-3 border-dark p-2 text-center">
-                                        <button type="button" class="card-link text-reset text-decoration-none border-0" style="background-color: rgba(0,0,0,0);" data-bs-toggle="modal" data-bs-target="#modalUpdate">Modifier</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+				</div>
 
-                    {% endfor %}
+			</div>
 
-                    </div>
-                    
-                </div>
-            
-            
-            </div>
-        
-            
-        
-        </div>
+			<div class="col-xl-8 mb-5" style="min-height: 1000px; background-color:white;">
 
+				<div class="col-12">
 
-    </div>
+					<h2 style="padding-top: 3rem; padding-left: 4rem">
+						Adresses</h2>
 
-    </div>
+				</div>
 
-    <!-- Modal ajout adresse-->
-    <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ajout d'une adresse</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {{ form(formAdd) }}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            </div>
-            </div>
-        </div>
-    </div>
+				<div class="row">
 
-    <!-- Modal update adresse-->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modifier l'adresse</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {{ form(formUpdate) }}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
+					<h5 class="col-11 mt-4" style="padding-left: 4rem">Ajouter ou modifier vos adresses ici<hr></h5>
+
+					<div class="col-11" style="padding-left: 4rem">
+
+						<div class="mb-4">
+							<i class="fa-solid fa-plus mx-1"></i>
+							<!-- Button trigger modal -->
+							<button type="button" style="background-color: rgba(0,0,0,0);" class="border-0 card-link text-reset" data-bs-toggle="modal" data-bs-target="#modalAdd">Ajouter une adresse</button>
+						</div>
+
+						<div class="row">
+
+							{% for userPostAdress in userPostAdresses %}
+
+								<div class="card mx-auto my-2" style="width: 16rem;">
+									<div class="card-body mx-auto" style="width: 13rem;">
+										<h6 class="card-subtitle mb-2 text-muted">{{ userPostAdress.title }}</h6>
+										<h5 class="card-title">{{ userPostAdress.firstName }}
+											{{ userPostAdress.lastName }}</h5>
+										<p class="card-text">{{ userPostAdress.adress }}</p>
+										<p class="card-text">{{ userPostAdress.additionalAdress }}</p>
+										<p class="card-text">{{ userPostAdress.postCode }}</p>
+										<p class="card-text">{{ userPostAdress.city }}</p>
+										<p class="card-text">{{ userPostAdress.country }}</p>
+										<div class="row">
+											<div class="col-3 mx-auto border border-3 border-dark p-2 d-flex justify-content-center">
+												<a href="{{ path('hard_delete_adress', {"id": app.user.id, "id2": userPostAdress.id }) }}">
+													<i class="fa-regular fa-trash-can align-middle" style="color: black; font-size: 1.5em"></i>
+												</a>
+											</div>
+											<div class="col-7 mx-auto border border-3 border-dark p-2 text-center">
+												<button type="button" class="card-link text-reset text-decoration-none border-0" style="background-color: rgba(0,0,0,0);" data-bs-toggle="modal" data-bs-target="#modalUpdate">Modifier</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							{% endfor %}
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Modal ajout adresse-->
+	<div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ajout d'une adresse</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{{ form(formAdd) }}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal update adresse-->
+	<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modifier l'adresse</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{{ form(formUpdate) }}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

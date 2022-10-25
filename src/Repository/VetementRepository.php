@@ -54,7 +54,7 @@ class VetementRepository extends ServiceEntityRepository
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
             ->orderBy('v.createdAt', 'DESC')
-            ->setMaxResults(12)
+            ->setMaxResults(50)
             ->getQuery()
             ->getResult();
     }

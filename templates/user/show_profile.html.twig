@@ -41,10 +41,12 @@
 				</div>
 
 				<div class="col-xl-9 ms-auto ps-5" style="height: 100px;">
-            
-                	<h3 class="align-middle" style="padding-top: 2rem"><a href="{{ path('show_favorite_products', {"id": app.user.id}) }}" class="text-reset text-decoration-none" >Vos favoris</a></h3>
 
-            	</div>
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_favorite_products', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Vos favoris</a>
+					</h3>
+
+				</div>
 
 				<div class="col-xl-9 ms-auto ps-5" style="height: 100px">
 
@@ -56,7 +58,7 @@
 
 			</div>
 
-			<div class="col-xl-8 mb-5" style="height: 1000px; background-color:white;">
+			<div class="col-xl-8 mb-5" style="background-color:white;">
 
 				<div class="col-12">
 
@@ -111,10 +113,11 @@
 
 						<div class="col-xl-3 align-middle">
 
-							<div class="col-7 mx-auto mt-4 p-0 border border-3 border-dark p-2 text-center">
-                                <!-- Button trigger modal -->
+							<div
+								class="col-7 mx-auto mt-4 p-0 border border-3 border-dark p-2 text-center">
+								<!-- Button trigger modal -->
 								<button type="button" style="background-color: rgba(0,0,0,0); display: block; width: 100%;" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalInformation">Modifier</button>
-                                               
+
 							</div>
 
 						</div>
@@ -123,68 +126,66 @@
 
 					</div>
 
-                    <div class="col-11 row" style="padding-left: 4rem">
+					<div class="col-11 row" style="padding-left: 4rem">
 
-                        <div class="col-1">
+						<div class="col-1">
 
 							<i class="fa-regular fa-envelope" style="font-size: 3em"></i>
 
 						</div>
 
-                        <div class="col-4 ps-5">
+						<div class="col-4 ps-5">
 
 							<div class="fw-bold">Votre adresse e-mail</div>
 							<div>{{ app.user.email }}</div>
-		
+
 
 						</div>
 
-                        <div class="col-4 ps-5">
+						<div class="col-4 ps-5"></div>
 
-						</div>
+						<div class="col-xl-3 align-middle">
 
-                        <div class="col-xl-3 align-middle">
-
-							<div class="col-7 mx-auto mt-2 mb-2  border border-3 border-dark p-2 text-center">
+							<div
+								class="col-7 mx-auto mt-2 mb-2  border border-3 border-dark p-2 text-center">
 								<!-- Button trigger modal -->
 								<button type="button" style="background-color: rgba(0,0,0,0);" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalMail">Modifier</button>
 							</div>
 
 						</div>
 
-                        <hr class="mt-4 mb-4">
+						<hr class="mt-4 mb-4">
 
-                    </div>
+					</div>
 
-                    <div class="col-11 row" style="padding-left: 4rem">
+					<div class="col-11 row" style="padding-left: 4rem">
 
-                        <div class="col-1">
+						<div class="col-1">
 
 							<i class="fa-solid fa-lock" style="font-size: 3em"></i>
 
 						</div>
 
-                        <div class="col-4 ps-5">
+						<div class="col-4 ps-5">
 
 							<div class="fw-bold">Votre mot de passe</div>
 							<div>***************</div>
-		
-						</div>
-
-                        <div class="col-4 ps-5">
 
 						</div>
 
-                        <div class="col-xl-3 align-middle">
+						<div class="col-4 ps-5"></div>
 
-							<div class="col-7 mx-auto mt-2  border border-3 border-dark p-2 text-center">
+						<div class="col-xl-3 align-middle mb-5">
+
+							<div
+								class="col-7 mx-auto mt-2  border border-3 border-dark p-2 text-center">
 								<!-- Button trigger modal -->
 								<button type="button" style="background-color: rgba(0,0,0,0)" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalPassword">Modifier</button>
 							</div>
 
 						</div>
 
-                    </div>
+					</div>
 
 				</div>
 
@@ -194,66 +195,68 @@
 
 	</div>
 
-    <!-- Modal information-->
-    <div class="modal fade" id="modalInformation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Changement de vos informations</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {{ form_start(form) }}
-			{{ form_row(form.firstname) }}
-			{{ form_row(form.lastname) }}
-			{{ form_row(form.phoneNumber) }}
-			{{ form_row(form.birthdayDate) }}
-			{{ form_row(form.submit) }}
-			{{ form_end(form) }}
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            
-			
-        </div>
-        </div>
-    </div>
-    </div>
+	<!-- Modal information-->
+	<div class="modal fade" id="modalInformation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Changement de vos informations</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{{ form_start(form) }}
+					{{ form_row(form.firstname) }}
+					{{ form_row(form.lastname) }}
+					{{ form_row(form.phoneNumber) }}
+					{{ form_row(form.birthdayDate) }}
+					{{ form_row(form.submit) }}
+					{{ form_end(form) }}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 
-    <!-- Modal mail-->
-    <div class="modal fade" id="modalMail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Changement de votre mail</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {{ form(formMail) }}
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        </div>
-        </div>
-    </div>
-    </div>
 
-    <!-- Modal mot de passe-->
-    <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Changement de votre mot de passe</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {{ form(formPassword)}}
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        </div>
-        </div>
-    </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal mail-->
+	<div class="modal fade" id="modalMail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Changement de votre mail</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{{ form(formMail) }}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal mot de passe-->
+	<div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Changement de votre mot de passe</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{{ form(formPassword)}}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

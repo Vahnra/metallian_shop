@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Mon espace perso{% endblock %}
+{% block title %}Vos commandes{% endblock %}
 
 {% block body %}
 
@@ -46,7 +46,7 @@
         
         </div>
 
-        <div class="col-xl-8 mb-5" style="background-color:white;">
+        <div class="col-xl-8 mb-5" style="height: 1000px; background-color:white;">
 
             <div class="col-12">
             
@@ -70,7 +70,7 @@
 
                                     <h5 class="col-8 align-middle mb-0">Commande numéro : {{ order.id }}</h5>
 
-                                    <div class="col-4 align-middle text-end"><a href="#">Voir détails</a></div>
+                                    <div class="col-4 align-middle text-end"><a href="{{ path('order_detail', {'id': order.id }) }}">Voir détails</a></div>
 
                                 </div>
 
@@ -89,20 +89,44 @@
 
                                 <div class="row pb-4">
                                 
-                                    <div class="col-4 text-center">{{ order.createdAt|date("m/d/Y") }}</div>
+                                    <div class="col-4 text-center">{{ order.createdAt|date("d / m / Y") }}</div>
                                     <div class="col-2 text-center">{{ order.total/100 }} €</div>
                                     <div class="col-2 text-center">{{ order.status }}</div>
-                                    <div class="col-4 text-center">12 avril 2012</div>
+                                    
+                                    {% if order.sentAt is not null %}
+                                    
+                                        <div class="col-4 text-center">{{ order.sentAt|date("d / m / Y") }}</div>
+
+                                    {% endif %}
                                 
                                 </div>
 
                                 <div class="row">
 
-                                    {% for product in order.orderProducts %}                             
+                                    {% for product in order.orderProducts | slice(0,3) %}                             
                                 
                                         <div class="card g-0 mt-2 border-0 rounded-0" style="width: 15rem;">
 
-                                            <a href="" class="text-decoration-none text-black">
+                                            <a 
+                                            {% if product.vetement is not null %} 
+                                                href="{{ path('voir_vetement', {'id': product.vetement.id}) }}" 
+                                            {% endif %} 
+                                            {% if product.accessoires is not null %}
+                                                href="{{ path('voir_accessoires', {'id': product.accessoires.id}) }}"
+                                            {% endif %} 
+                                            {% if product.bijoux is not null %}
+                                                href="{{ path('voir_bijoux', {'id': product.bijoux.id}) }}"
+                                            {% endif %}
+                                            {% if product.chaussures is not null %}
+                                                href="{{ path('voir_chaussures', {'id': product.chaussures.id}) }}"
+                                            {% endif %}
+                                            {% if product.vetementMerchandising is not null %}
+                                                href="{{ path('voir_vetement_merch', {'id': product.vetementMerchandising.id}) }}"
+                                            {% endif %}
+                                            {% if product.accessoiresMerchandising is not null %}
+                                                href="{{ path('voir_accessoires_merch', {'id': product.accessoiresMerchandising.id}) }}" 
+                                            {% endif %} 
+                                            class="text-decoration-none text-black">
 
                                                 <img src="{{ asset('images/7a218379c474df6f3f0961d5fcdbcb91e0e86fbd.jpg') }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="" loading="lazy">
                                                 <div class="card-body">

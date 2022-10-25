@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
@@ -46,6 +47,7 @@ class OrderCrudController extends AbstractCrudController
             'Envoyé' => 'sent',
             'Livré' => 'delivered',
         ]);
+        yield DateField::new('sentAt', 'Envoyé le');
         yield TextField::new('trackingNumber', 'Numéros de suivi');
 
         yield FormField::addPanel('Article(s) de la commande');
@@ -90,6 +92,13 @@ class OrderCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
+        ->add(ChoiceFilter::new('status')->setChoices([
+            'En attente de paiement' => 'pending',
+            'Payé' => 'paid',
+            'Remboursé' => 'refunded',
+            'Envoyé' => 'sent',
+            'Livré' => 'delivered',
+        ]))
         ->add(TextFilter::new('firstName'))
         ->add(TextFilter::new('lastName'))
         ->add(NumericFilter::new('total'))

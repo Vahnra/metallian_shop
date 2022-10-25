@@ -255,7 +255,7 @@ class UserController extends AbstractController
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $searchResults = $paginator->paginate($favoriteProducts, $page, 6);
+        $searchResults = $paginator->paginate($favoriteProducts, $page, 6, array('defaultSortFieldName' => 'price', 'defaultSortDirection' => 'desc'));
 
         return $this->render('user/show_profile_favorites.html.twig',[
             'favoriteProducts' => $searchResults
