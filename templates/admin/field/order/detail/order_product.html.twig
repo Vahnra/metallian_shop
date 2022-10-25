@@ -1,0 +1,14 @@
+{% if field.value is not empty %}
+    {% for orderProduct in field.value %}
+        {% set orderProductDetailUrl = ea_url()
+            .setController('App\\Controller\\Admin\\OrderProductCrudController')
+            .setAction(constant('EasyCorp\\Bundle\\EasyAdminBundle\\Config\\Action::DETAIL'))
+            .setEntityId(orderProduct.id)
+        %}
+        <a href="{{ orderProductDetailUrl }}" style="display: block">
+            {{ orderProduct.title }} - {{ orderProduct.quantity }} 
+        </a>
+    {% endfor %}
+{% else %}
+    Pas d'articles
+{% endif %}

@@ -51,7 +51,8 @@ class OrderCrudController extends AbstractCrudController
         yield TextField::new('trackingNumber', 'Numéros de suivi');
 
         yield FormField::addPanel('Article(s) de la commande');
-        yield ArrayField::new('orderProducts', 'Articles')->hideOnForm();
+        // yield ArrayField::new('orderProducts', 'Articles')->hideOnForm();
+        yield AssociationField::new('orderProducts', 'Articles - Quantité')->setTemplatePath('admin/field/order/detail/order_product.html.twig');
 
         yield FormField::addPanel('Détails du client');
         yield NumberField::new('mobile', 'Numéro de téléphone');
@@ -61,13 +62,13 @@ class OrderCrudController extends AbstractCrudController
         yield AssociationField::new('user', 'Client');
 
         yield FormField::addPanel('Adresse');
-        yield TextField::new('firstName', 'Prénom');
-        yield TextField::new('lastName', 'Nom');
-        yield TextField::new('adress', 'Adresse');
-        yield TextField::new('additionalAdress', 'Complément d\'adresse');
-        yield NumberField::new('postCode', 'Code postale');
-        yield TextField::new('city', 'Ville');
-        yield TextField::new('country', 'Pays');
+        yield TextField::new('firstName', 'Prénom')->hideOnIndex();
+        yield TextField::new('lastName', 'Nom')->hideOnIndex();
+        yield TextField::new('adress', 'Adresse')->hideOnIndex();
+        yield TextField::new('additionalAdress', 'Complément d\'adresse')->hideOnIndex();
+        yield NumberField::new('postCode', 'Code postale')->hideOnIndex();
+        yield TextField::new('city', 'Ville')->hideOnIndex();
+        yield TextField::new('country', 'Pays')->hideOnIndex();
         
     }
 
