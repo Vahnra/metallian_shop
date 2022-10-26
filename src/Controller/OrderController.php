@@ -2,10 +2,20 @@
 
 namespace App\Controller;
 
+use DateTime;
+use App\Entity\Cart;
 use App\Entity\Order;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\OrderProduct;
+use App\Entity\UserPostalAdress;
+use Symfony\Component\Mime\Address;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Form\OrderTrackingInformationFormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderController extends AbstractController
 {
@@ -14,6 +24,151 @@ class OrderController extends AbstractController
     {
         return $this->render('user/show_profile_order_detail.html.twig', [
             'order' => $order
+        ]);
+    }
+
+    #[Route('/checkout/order-confirmation-{cart}', name: 'order_confirmation', methods:['GET'])]
+    public function orderConfirmation(
+        Cart $cart,
+        MailerInterface $mailer,
+        EntityManagerInterface $entityManager,
+        Request $request
+        ): Response
+    {
+        $user = $this->getUser();
+
+        $order = new Order;
+        $order->setStatus('pending');
+
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy([
+            'id' => $request->get('cart')
+        ]);
+
+        $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $this->getUser()]);
+
+        $cartProducts = null;
+
+        $numberOfItem = null;
+
+        if ($cart !== null) {
+            $numberOfItem = $cart->getCartProduct()->count();
+        }
+
+        if ($cart !== null) {
+            $cartProducts = $cart->getCartProduct()->toArray();
+        }
+
+        $totalPrice = 0;
+
+        // Boucle pour récuper le prix total de tout les produits du panier
+        if ($numberOfItem !== null) {
+            foreach ($cartProducts as $value) {
+                $totalPrice = $totalPrice + ($value->getPrice() * $value->getQuantity());
+            }
+        }
+
+        $totalPriceFinal = $cart->getTotalPrice();
+
+        $order->setCreatedAt(new DateTime());
+        $order->setUpdatedAt(new DateTime());
+        $order->setUser($user);
+        $order->setsubTotal($totalPrice);
+        $order->setTotal($totalPriceFinal + 500);
+        $order->setShipping(500);
+        $order->setFirstName($user->getFirstname());
+        $order->setLastName($user->getLastname());
+        $order->setMobile($user->getPhoneNumber());
+        $order->setEmail($user->getEmail());
+        $order->setAdress($userPostAdress->getAdress());
+        $order->setAdditionalAdress($userPostAdress->getAdditionalAdress());
+        $order->setPostCode($userPostAdress->getPostCode());
+        $order->setCity($userPostAdress->getCity());
+        $order->setCountry('France');
+
+        foreach ($cart->getCartProduct() as $cartProduct) {
+            $orderProduct = new OrderProduct;
+            $orderProduct->setCreatedAt(new DateTime());
+            $orderProduct->setUpdatedAt(new DateTime());
+            $orderProduct->setVetement($cartProduct->getVetement());
+            $orderProduct->setAccessoires($cartProduct->getAccessoires());
+            $orderProduct->setChaussures($cartProduct->getChaussures());
+            $orderProduct->setMedia($cartProduct->getMedia());
+            $orderProduct->setBijoux($cartProduct->getBijoux());
+            $orderProduct->setVetementMerchandising($cartProduct->getVetementMerchandising());
+            $orderProduct->setAccessoiresMerchandising($cartProduct->getAccessoiresMerchandising());
+            $orderProduct->setPhoto($cartProduct->getPhoto());
+            $orderProduct->setPrice($cartProduct->getPrice());
+            $orderProduct->setColor($cartProduct->getColor());
+            $orderProduct->setSize($cartProduct->getSize());
+            $orderProduct->setQuantity($cartProduct->getQuantity());
+            $orderProduct->setTitle($cartProduct->getTitle());
+            $orderProduct->setSku($cartProduct->getSku());
+            $orderProduct->setOrderId($order);
+
+            $entityManager->persist($orderProduct);
+
+        }
+
+        $cart->setStatus('archived');
+        $entityManager->persist($cart);
+        $entityManager->persist($order);
+        $entityManager->flush();
+
+        $confirmationMail = (new TemplatedEmail())
+            ->from(new Address('test@ornchanarong.com', 'Metallian Store'))
+            ->to($user->getEmail())
+            ->subject('Confirmation de votre commande Metallian Eshop')
+            ->htmlTemplate('email/order_confirmation_mail.html.twig')
+            ->context([
+                'user' => $user,
+                'cartProducts' => $cartProducts,
+                'totalPriceFinal' => $totalPriceFinal + 500
+        ]);
+
+        $newOrderEmail = (new TemplatedEmail())
+            ->from(new Address('test@ornchanarong.com', 'Metallian Store'))
+            ->to('vahnra@gmail.com')
+            ->subject('Nouvelle commande Metallian Eshop numéro : ' . $order->getId())
+            ->htmlTemplate('email/new_order_mail.html.twig')
+            ->context([
+                'user' => $user,
+                'order' => $order->getId(),
+                'cartProducts' => $cartProducts,
+                'totalPriceFinal' => $totalPriceFinal + 500
+        ]);
+
+        $mailer->send($confirmationMail);
+        $mailer->send($newOrderEmail);
+
+        return $this->render('order/order_confirmation.html.twig', [
+            'user' => $user,
+            'order' => $order,
+            'cartProducts' => $cartProducts
+        ]);
+    }
+
+    #[Route('/admin/order-information-{id}', name:'order_sent', methods:['GET', 'POST'])]
+    public function orderSent(Order $order, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $form = $this->createForm(OrderTrackingInformationFormType::class)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $order->setTrackingNumber($form->get('trackingNumber')->getData());
+            $order->setTrackingLink($form->get('trackingLink')->getData());
+            $order->setSentAt(new DateTime());
+            $order->setStatus('sent');
+            $entityManager->persist($order);
+            $entityManager->flush();
+
+            // return $this->redirectToRoute('order_sent', [
+            //     'id' => $order->getId()
+            // ]);
+            return $this->redirectToRoute('admin');
+        }
+
+        return $this->render('order/order_sent.html.twig', [
+            'order' => $order,
+            'form' => $form->createView()
         ]);
     }
 }

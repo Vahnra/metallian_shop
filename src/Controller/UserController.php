@@ -220,7 +220,7 @@ class UserController extends AbstractController
     #[Route('/profile/mon-espace-perso-{id}/orders', name: 'show_profile_orders', methods:['GET', 'POST'])]
     public function showProfileOrders(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $orders = $entityManager->getRepository(Order::class)->findBy(['user' => $user]);
+        $orders = $entityManager->getRepository(Order::class)->findBy(['user' => $user], ['createdAt' => 'DESC']);
 
         return $this->render('user/show_profile_orders.html.twig', [
             'orders' => $orders

@@ -57,6 +57,7 @@ class PaymentController extends AbstractController
             'totalPriceFinal' => $totalPriceFinal,
             'livraison' => $livraison,
             'totalPrice' => $totalPrice,
+            'cart' => $cart[0]
         ]);
     }
 }

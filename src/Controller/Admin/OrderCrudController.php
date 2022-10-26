@@ -49,6 +49,7 @@ class OrderCrudController extends AbstractCrudController
         ]);
         yield DateField::new('sentAt', 'Envoyé le');
         yield TextField::new('trackingNumber', 'Numéros de suivi');
+        yield TextField::new('trackingLink', 'Lien de suivi');
 
         yield FormField::addPanel('Article(s) de la commande');
         // yield ArrayField::new('orderProducts', 'Articles')->hideOnForm();
@@ -77,6 +78,7 @@ class OrderCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Commande')
             ->setEntityLabelInPlural('Commandes')
+            ->setDefaultSort(['id' => 'DESC'])
         ;
     }
 

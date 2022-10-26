@@ -87,6 +87,8 @@
                                             <h3 class="fw-bold mb-5 mt-2 pt-1">Paiement</h3>
 											<hr class="mt-4 mb-5">
 
+											<a href="{{ path('order_confirmation', {'cart': cart.id}) }}">Valiider</a>
+
 											<!-- Replace "test" with your own sandbox Business account app client ID -->
 
 											<script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR"></script>

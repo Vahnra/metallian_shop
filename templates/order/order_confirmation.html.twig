@@ -1,0 +1,118 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<div class="container-xl">
+
+	<div class="col-10 py-5 mx-auto">
+		<div class="card">
+			<div class="card-header" style="background-color: black;">
+                <div class="mx-auto col-5 justify-content-center">
+				    <img src="{{asset('static_images/LOGO_METALLIAN_ESHOP.png')}}" alt="..." style="margin: auto">
+                </div>
+			</div>
+			<div class="card-body">
+				<blockquote class="blockquote mb-0">
+                    <h3 class="py-3">Votre commande a été confirmée</h3>
+					<p class="m-0">Bonjour {{ user.firstName }},</p>
+                    <p>Votre commande a été confirmé et va bientôt être expédié.</p>
+                    <hr>
+                    <div class="row">
+                    
+                        <div class="col-4 ms-auto">
+                        
+                            <p class="text-muted m-0">Date de la commande</p>
+                            <p class="m-0">{{order.createdAt|date("d / m / Y")}}</p>
+                        
+                        </div>
+
+                        <div class="col-4">
+                        
+                            <p class="text-muted m-0">Numéro de commande</p>
+                            <p class="m-0">{{order.id}}</p>
+                        
+                        </div>
+
+                        <div class="col-3">
+                        
+                            <p class="text-muted m-0">Payment</p>
+                            <p class="m-0">Paypal</p>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    {% for cartProduct in cartProducts %}
+
+
+                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <a class="col-md-2 col-lg-2 col-xl-2">
+                                <img src="{{ asset('images/' ~ cartProduct.photo) }}" class="img-fluid rounded-3" alt="{{ cartProduct.title }}">
+                            </a>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <h6 class="text-muted">{{ cartProduct.subCategory }}</h6>
+                                <h5 class="text-black fw-bold mb-0">{{ cartProduct.title }}</h5>
+                                {% if cartProduct.color is not empty %}
+                                    <p class="text-black mb-0">Couleur :
+                                        {{ cartProduct.color }}</p>
+                                {% endif %}
+                                {% if cartProduct.size %}
+                                    <p class="text-black mb-0">Taille :
+                                        {{ cartProduct.size }}</p>
+                                {% endif %}
+
+                                <p class="text-black mb-0">Quantité :
+                                    {{ cartProduct.quantity }}</p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+
+                                </div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h6 class="mb-0 text-end">{{ cartProduct.price/100 * cartProduct.quantity }}
+                                        €</h6>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                        {% endfor %}
+
+                        <div class="row">
+                        
+                            <div class="col-6">Prix des articles</div>
+                            <div class="col-6 text-end">{{ order.subTotal/100 }} €</div>
+
+                            <div class="col-6">Livraison</div>
+                            <div class="col-6 text-end">{{ order.shipping/100 }} €</div>
+                        
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                        
+                            <div class="col-6 fw-bold">Total</div>
+                            <div class="col-6 text-end">{{ order.total/100 }} €</div>
+                        
+                        </div>
+
+                        <hr>
+
+                        <p>Nous vous informerons par email lorsque votre commande sera expédié. Merci de nous faire confiance et à bientôt.</p>
+                        <p>Merci !</p>
+                        <p>Votre équipe Metallian Store</p>
+
+				</blockquote>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+{% endblock %}
