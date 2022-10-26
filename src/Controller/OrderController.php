@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Cart;
+use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Entity\UserPostalAdress;
@@ -33,7 +34,7 @@ class OrderController extends AbstractController
         MailerInterface $mailer,
         EntityManagerInterface $entityManager,
         Request $request
-        ): Response
+        )
     {
         $user = $this->getUser();
 
@@ -97,6 +98,7 @@ class OrderController extends AbstractController
             $orderProduct->setVetementMerchandising($cartProduct->getVetementMerchandising());
             $orderProduct->setAccessoiresMerchandising($cartProduct->getAccessoiresMerchandising());
             $orderProduct->setPhoto($cartProduct->getPhoto());
+            $orderProduct->setSubCategory($cartProduct->getSubCategory());
             $orderProduct->setPrice($cartProduct->getPrice());
             $orderProduct->setColor($cartProduct->getColor());
             $orderProduct->setSize($cartProduct->getSize());
@@ -140,6 +142,18 @@ class OrderController extends AbstractController
         $mailer->send($confirmationMail);
         $mailer->send($newOrderEmail);
 
+        return $this->redirectToRoute('order_confirmation_message', [
+            'order' => $order->getId(),
+        ]);
+    }
+
+    #[Route('/checkout/confirmation-order-{order}', name:'order_confirmation_message', methods:['GET'])]
+    public function orderConfirmationMessage(Order $order, Request $request): Response
+    {
+        $user = $order->getUser();
+
+        $cartProducts = $order->getOrderProducts();
+
         return $this->render('order/order_confirmation.html.twig', [
             'user' => $user,
             'order' => $order,
@@ -148,7 +162,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/admin/order-information-{id}', name:'order_sent', methods:['GET', 'POST'])]
-    public function orderSent(Order $order, EntityManagerInterface $entityManager, Request $request): Response
+    public function orderSent(Order $order, MailerInterface $mailer, EntityManagerInterface $entityManager, Request $request): Response
     {
         $form = $this->createForm(OrderTrackingInformationFormType::class)->handleRequest($request);
 
@@ -160,9 +174,18 @@ class OrderController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            // return $this->redirectToRoute('order_sent', [
-            //     'id' => $order->getId()
-            // ]);
+            $orderDispatchEmail = (new TemplatedEmail())
+                ->from(new Address('test@ornchanarong.com', 'Metallian Store'))
+                ->to($order->getEmail())
+                ->subject('Votre commande Metallian Eshop a été expédié, numéro : ' . $order->getId())
+                ->htmlTemplate('email/order_dispatch_mail.html.twig')
+                ->context([
+                    'user' => $order->getUser(),
+                    'order' => $order,
+            ]);
+
+            $mailer->send($orderDispatchEmail);
+
             return $this->redirectToRoute('admin');
         }
 

@@ -66,6 +66,9 @@ class OrderProduct
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $subCategory = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -276,6 +279,18 @@ class OrderProduct
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSubCategory(): ?string
+    {
+        return $this->subCategory;
+    }
+
+    public function setSubCategory(string $subCategory): self
+    {
+        $this->subCategory = $subCategory;
 
         return $this;
     }
