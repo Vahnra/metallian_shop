@@ -106,7 +106,7 @@ class VetementRepository extends ServiceEntityRepository
     }
 
     // Query pour le filtre categorie
-    public function findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax): Query
+    public function findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax): Query
     {
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorie = :val')
@@ -140,6 +140,12 @@ class VetementRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('v.marques = :marques')
                 ->setParameter('marques', array($marque));
+        }
+
+        if ($artist  != null) {
+            $qb
+                ->andWhere('v.artist = :artist')
+                ->setParameter('artist', array($artist));
         }
 
         if (isset($priceMini)) {

@@ -21,9 +21,13 @@ class Artist
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Media::class)]
     private Collection $media;
 
+    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Vetement::class)]
+    private Collection $vetements;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->vetements = new ArrayCollection();
     }
 
     public function __toString()
@@ -72,6 +76,36 @@ class Artist
             // set the owning side to null (unless already changed)
             if ($medium->getArtist() === $this) {
                 $medium->setArtist(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vetement>
+     */
+    public function getVetements(): Collection
+    {
+        return $this->vetements;
+    }
+
+    public function addVetement(Vetement $vetement): self
+    {
+        if (!$this->vetements->contains($vetement)) {
+            $this->vetements->add($vetement);
+            $vetement->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVetement(Vetement $vetement): self
+    {
+        if ($this->vetements->removeElement($vetement)) {
+            // set the owning side to null (unless already changed)
+            if ($vetement->getArtist() === $this) {
+                $vetement->setArtist(null);
             }
         }
 

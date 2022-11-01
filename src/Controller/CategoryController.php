@@ -83,6 +83,8 @@ class CategoryController extends AbstractController
 
             $marque = $filterForm->get('marque')->getData();
 
+            $artist = $filterForm->get('artist')->getData();
+
             $priceMini = $filterForm->get('priceMini')->getData();
 
             $priceMax = $filterForm->get('priceMax')->getData();
@@ -94,7 +96,8 @@ class CategoryController extends AbstractController
                 $color, 
                 $size, 
                 $material, 
-                $marque, 
+                $marque,
+                $artist,
                 $priceMax, 
                 $priceMini
             );        

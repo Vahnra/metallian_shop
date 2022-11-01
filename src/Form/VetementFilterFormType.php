@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Artist;
 use App\Entity\Size;
 use App\Entity\Color;
 use App\Entity\Marques;
@@ -30,6 +31,8 @@ class VetementFilterFormType extends AbstractType
         $materials = $this->entityManager->getRepository(Material::class)->findAll();
 
         $sizes = $this->entityManager->getRepository(Size::class)->findAll();
+
+        $artist = $this->entityManager->getRepository(Artist::class)->findAll();
         
         $builder
             ->add('Couleur', ChoiceType::class, [
@@ -115,6 +118,28 @@ class VetementFilterFormType extends AbstractType
                     'id' => 'marque',
                     'class' => 'col-10',
                     'onclick' => 'showMarqueFilterVetement()',
+                    'style' => 'cursor: pointer;'
+                ],
+                'required' => false,
+            ])
+            ->add('artist', ChoiceType::class, [
+                'label' => 'Artistes',
+                'placeholder' => 'Choisir un artist',
+                'choices'  => $artist,
+                'choice_value' => 'id',
+                'choice_label' => function(?Artist $category) {
+                    return $category ? $category->getArtist() : '';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showArtistFilterVetement()',
                     'style' => 'cursor: pointer;'
                 ],
                 'required' => false,

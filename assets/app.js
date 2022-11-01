@@ -207,6 +207,19 @@ document.showMarqueFilterVetement = function() {
     }
 }
 
+document.showArtistFilterVetement = function() {
+    if(document.getElementById('vetement_filter_form_artist').style.cssText == 'display: none;'){
+        document.getElementById('vetement_filter_form_artist').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheArtist').classList.add('fa-minus');
+        document.getElementById('flecheArtist').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('vetement_filter_form_artist').style.cssText = 'display: none;';
+        document.getElementById('flecheArtist').classList.add('fa-plus');
+        document.getElementById('flecheArtist').classList.remove('fa-minus');
+    }
+}
+
 // Vetement mechandising filter
 document.showColorFilterVetementMerchandising = function() {
     if(document.getElementById('vetement_merchandising_filter_form_Couleur').style.cssText == 'display: none;'){

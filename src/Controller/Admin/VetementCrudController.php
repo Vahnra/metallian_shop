@@ -51,6 +51,7 @@ class VetementCrudController extends AbstractCrudController
         yield TextField::new('description', 'Description de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('marques', 'Marque de l\'article');
+        yield AssociationField::new('artist', 'Groupe associé');
         yield AssociationField::new('material', 'Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 

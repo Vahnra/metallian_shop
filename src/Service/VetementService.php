@@ -43,14 +43,14 @@ class VetementService
     }
 
     // Filtered pagination
-    public function getPaginatedVetementsFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax)
+    public function getPaginatedVetementsFilteredByColor($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax)
     {
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
         $limit = 50;
 
-        $vetementQuery = $this->vetementRepository->findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $priceMini, $priceMax);
+        $vetementQuery = $this->vetementRepository->findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax);
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }

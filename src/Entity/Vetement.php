@@ -80,6 +80,9 @@ class Vetement
     #[ORM\OneToMany(mappedBy: 'vetement', targetEntity: OrderProduct::class)]
     private Collection $orderProducts;
 
+    #[ORM\ManyToOne(inversedBy: 'vetements')]
+    private ?Artist $artist = null;
+
     public function __construct()
     {
         $this->reviewVetements = new ArrayCollection();
@@ -430,6 +433,18 @@ class Vetement
                 $orderProduct->setVetement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getArtist(): ?Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?Artist $artist): self
+    {
+        $this->artist = $artist;
 
         return $this;
     }
