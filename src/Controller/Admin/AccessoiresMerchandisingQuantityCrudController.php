@@ -26,7 +26,7 @@ class AccessoiresMerchandisingQuantityCrudController extends AbstractCrudControl
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('accessoiresMerchandising');
+        yield AssociationField::new('accessoiresMerchandising')->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');

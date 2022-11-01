@@ -26,7 +26,7 @@ class ChaussuresQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('chaussures', 'Chaussures');
+        yield AssociationField::new('chaussures', 'Chaussures')->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');

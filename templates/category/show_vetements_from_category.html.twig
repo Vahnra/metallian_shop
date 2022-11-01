@@ -88,7 +88,7 @@
                                                     {{ form_label(filterForm.Size) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheSize"></i>
                                                     </div>
 
                                                     {{ form_widget(filterForm.Size) }}
@@ -132,7 +132,7 @@
                                                     {{ form_label(filterForm.Couleur) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheCouleur"></i>
                                                     </div>
 
                                                     {{ form_widget(filterForm.Couleur) }}
@@ -144,7 +144,7 @@
                                                     {{ form_label(filterForm.Size) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheSize"></i>
                                                     </div>
 
                                                     {{ form_widget(filterForm.Size) }}
@@ -200,7 +200,7 @@
                                                     {{ form_label(filterForm.Size) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheSize"></i>
                                                     </div>
 
                                                     {{ form_widget(filterForm.Size) }}
@@ -244,7 +244,7 @@
                                                     {{ form_label(filterBijouxForm.Couleur) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheCouleur"></i>
                                                     </div>
 
                                                     {{ form_widget(filterBijouxForm.Couleur) }}
@@ -264,7 +264,7 @@
                                                     {{ form_label(filterChaussuresForm.Couleur) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheCouleur"></i>
                                                     </div>
 
                                                     {{ form_widget(filterChaussuresForm.Couleur) }}
@@ -276,7 +276,7 @@
                                                     {{ form_label(filterChaussuresForm.Size) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheSize"></i>
                                                     </div>
 
                                                     {{ form_widget(filterChaussuresForm.Size) }}
@@ -308,7 +308,7 @@
                                                     {{ form_label(filterAccessoiresForm.Couleur) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheCouleur"></i>
                                                     </div>
 
                                                     {{ form_widget(filterAccessoiresForm.Couleur) }}
@@ -340,7 +340,7 @@
                                                     {{ form_label(filterMediaForm.musicType) }}
                                     
                                                     <div class="col-2 ">
-                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMusicType"></i>
+                                                        <i class="fa-solid fa-minus d-flex justify-content-end" id="flecheMusicType"></i>
                                                     </div>
 
                                                     {{ form_widget(filterMediaForm.musicType) }}
@@ -595,9 +595,9 @@
                     
                         <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-                            <a href="{{ asset('images/image_placeholder.png') }}" class="text-decoration-none text-black">
+                            <a href="{{ path('voir_media', {"id": media.id} ) }}" class="text-decoration-none text-black">
 
-                                <img src="{{ asset('images/' ~ media.photo1) }}" id="article{{media.title}}{{media.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ media.title }}" loading="lazy">
+                                <img src="{{ asset('images/image_placeholder.png') }}" id="article{{media.title}}{{media.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ media.title }}" loading="lazy">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item fw-bold">{{ (media.price)/100 }} €</li>

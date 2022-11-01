@@ -26,7 +26,7 @@ class MediaQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('media', 'Médias');
+        yield AssociationField::new('media', 'Médias')->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('sku', 'Numéro de série');

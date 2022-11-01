@@ -52,7 +52,7 @@ class Media
     private ?string $releaseDate = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $photo1 = null;
+    private ?string $photo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo2 = null;
@@ -247,14 +247,14 @@ class Media
         return $this;
     }
 
-    public function getPhoto1(): ?string
+    public function getphoto(): ?string
     {
-        return $this->photo1;
+        return $this->photo;
     }
 
-    public function setPhoto1(string $photo1): self
+    public function setphoto(string $photo): self
     {
-        $this->photo1 = $photo1;
+        $this->photo = $photo;
 
         return $this;
     }

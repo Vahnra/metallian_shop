@@ -26,7 +26,7 @@ class BijouxQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('bijoux', 'Bijoux');
+        yield AssociationField::new('bijoux', 'Bijoux')->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');

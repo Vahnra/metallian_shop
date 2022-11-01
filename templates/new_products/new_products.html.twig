@@ -76,7 +76,7 @@
 												{{ form_label(filterForm.Couleur) }}
 
 												<div class="col-2 ">
-													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheCouleur"></i>
+													<i class="fa-solid fa-minus d-flex justify-content-end" id="flecheCouleur"></i>
 												</div>
 
 												{{ form_widget(filterForm.Couleur) }}
@@ -88,7 +88,7 @@
 												{{ form_label(filterForm.Size) }}
 
 												<div class="col-2 ">
-													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheSize"></i>
+													<i class="fa-solid fa-minus d-flex justify-content-end" id="flecheSize"></i>
 												</div>
 
 												{{ form_widget(filterForm.Size) }}
@@ -257,7 +257,7 @@
 											</ul>
 											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
-												{% set colors = {} %}
+												{# {% set colors = {} %}
 												{% for variations in searchResult.mediaQuantities.values %}
 
 													{% if variations.color.code not in colors %}
@@ -274,7 +274,7 @@
 														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
 													</div>
 													
-												{% endfor %}
+												{% endfor %} #}
 
 										</div>
 

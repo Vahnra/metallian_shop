@@ -65,7 +65,7 @@ class VetementFilterFormType extends AbstractType
                 'expanded' => true,
                 'attr' => [
                     'class' => 'no-border-radius col-12',
-                    'style' => 'display: none;'
+                    'style' => 'display: block; height: 10em; overflow-y: scroll'
                 ],
                 'label_attr' => [
                     'id' => 'size',

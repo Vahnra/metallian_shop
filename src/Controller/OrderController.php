@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\AccessoiresQuantity;
 use DateTime;
 use App\Entity\Cart;
+use App\Entity\ChaussuresQuantity;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Entity\UserPostalAdress;
+use App\Entity\Vetement;
+use App\Entity\VetementQuantity;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -39,7 +43,7 @@ class OrderController extends AbstractController
         $user = $this->getUser();
 
         $order = new Order;
-        $order->setStatus('pending');
+        $order->setStatus('paid');
 
         $cart = $entityManager->getRepository(Cart::class)->findOneBy([
             'id' => $request->get('cart')
@@ -100,13 +104,160 @@ class OrderController extends AbstractController
             $orderProduct->setPhoto($cartProduct->getPhoto());
             $orderProduct->setSubCategory($cartProduct->getSubCategory());
             $orderProduct->setPrice($cartProduct->getPrice());
-            $orderProduct->setColor($cartProduct->getColor());
+            $orderProduct->setColor($cartProduct->getColor());  
             $orderProduct->setSize($cartProduct->getSize());
             $orderProduct->setQuantity($cartProduct->getQuantity());
             $orderProduct->setTitle($cartProduct->getTitle());
             $orderProduct->setSku($cartProduct->getSku());
             $orderProduct->setOrderId($order);
 
+            if ($orderProduct->getVetement() != null) {
+                $product = $entityManager->getRepository(VetementQuantity::class)->findOneBy(['vetement' => $orderProduct->getVetement()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+
+            if ($orderProduct->getAccessoires() != null) {
+                $product = $entityManager->getRepository(AccessoiresQuantity::class)->findOneBy(['accessoires' => $orderProduct->getAccessoires()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+
+            if ($orderProduct->getChaussures() != null) {
+                $product = $entityManager->getRepository(ChaussuresQuantity::class)->findOneBy(['chaussures' => $orderProduct->getChaussures()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+
+            if ($orderProduct->getMedia() != null) {
+                $product = $entityManager->getRepository(MediaQuantity::class)->findOneBy(['media' => $orderProduct->getMedia()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+
+            if ($orderProduct->getBijoux() != null) {
+                $product = $entityManager->getRepository(BijouxQuantity::class)->findOneBy(['media' => $orderProduct->getBijoux()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+
+            if ($orderProduct->getVetementMerchandising() != null) {
+                $product = $entityManager->getRepository(VetementMerchandisingQuantity::class)->findOneBy(['vetementMerchandising' => $orderProduct->getVetementMerchandising()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+
+            if ($orderProduct->getAccessoiresMerchandising() != null) {
+                $product = $entityManager->getRepository(VetementMerchandisingQuantity::class)->findOneBy(['accessoiresMerchandising' => $orderProduct->getAccessoiresMerchandising()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('default_home');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('default_home');
+                }
+                
+            }
+            
             $entityManager->persist($orderProduct);
 
         }

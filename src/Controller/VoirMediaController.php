@@ -116,7 +116,7 @@ class VoirMediaController extends AbstractController
             $cartProduct->setQuantity($quantity);
             $cartProduct->setPrice($media->getPrice());
             $cartProduct->setTitle($media->getTitle());
-            $cartProduct->setPhoto($media->getPhoto1());
+            $cartProduct->setPhoto($media->getPhoto());
             $cartProduct->setSubCategory($media->getSousCategorie());
 
             $sku = $entityManager->getRepository(MediaQuantity::class)->findOneBy([

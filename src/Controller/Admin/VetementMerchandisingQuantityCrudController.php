@@ -27,7 +27,7 @@ class VetementMerchandisingQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('vetementMerchandising', 'Vêtement merchandising');
+        yield AssociationField::new('vetementMerchandising', 'Vêtement merchandising')->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
