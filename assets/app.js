@@ -154,6 +154,19 @@ document.showMaterialFilterAccessoiresMerchandising = function() {
     }
 }
 
+document.showArtistFilterAccessoiresMerchandising = function() {
+    if(document.getElementById('accessoires_merchandising_filter_form_artist').style.cssText == 'display: none;'){
+        document.getElementById('accessoires_merchandising_filter_form_artist').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheArtist').classList.add('fa-minus');
+        document.getElementById('flecheArtist').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('accessoires_merchandising_filter_form_artist').style.cssText = 'display: none;';
+        document.getElementById('flecheArtist').classList.add('fa-plus');
+        document.getElementById('flecheArtist').classList.remove('fa-minus');
+    }
+}
+
 // Vetement filter
 document.showColorFilterVetement = function() {
     if(document.getElementById('vetement_filter_form_Couleur').style.cssText == 'display: none;'){
@@ -273,6 +286,19 @@ document.showMarqueFilterVetementMerchandising = function() {
     }
 }
 
+document.showArtistFilterVetementMerchandising = function() {
+    if(document.getElementById('vetement_merchandising_filter_form_artist').style.cssText == 'display: none;'){
+        document.getElementById('vetement_merchandising_filter_form_artist').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheArtist').classList.add('fa-minus');
+        document.getElementById('flecheArtist').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('vetement_merchandising_filter_form_artist').style.cssText = 'display: none;';
+        document.getElementById('flecheArtist').classList.add('fa-plus');
+        document.getElementById('flecheArtist').classList.remove('fa-minus');
+    }
+}
+
 // Media form type
 document.showMusicTypeFilterMedia = function() {
     if(document.getElementById('media_filter_form_musicType').style.cssText == 'display: none;'){
@@ -287,7 +313,7 @@ document.showMusicTypeFilterMedia = function() {
     }
 }
 
-// Function pour le formtype al
+// Function pour le formtype all
 document.showColorFilterAllFormFilter = function() {
     if(document.getElementById('all_filter_form_Couleur').style.cssText == 'display: none;'){
         document.getElementById('all_filter_form_Couleur').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
@@ -350,6 +376,19 @@ document.showMarqueFilterAllFormFilter = function() {
         document.getElementById('all_filter_form_marque').style.cssText = 'display: none;';
         document.getElementById('flecheMarque').classList.add('fa-plus');
         document.getElementById('flecheMarque').classList.remove('fa-minus');
+    }
+}
+
+document.showArtistFilterAllFormFilter = function() {
+    if(document.getElementById('all_filter_form_artist').style.cssText == 'display: none;'){
+        document.getElementById('all_filter_form_artist').style.cssText = 'display: block; height: 10em; overflow-y: scroll';
+        document.getElementById('flecheArtist').classList.add('fa-minus');
+        document.getElementById('flecheArtist').classList.remove('fa-plus');    
+    }
+    else {
+        document.getElementById('all_filter_form_artist').style.cssText = 'display: none;';
+        document.getElementById('flecheArtist').classList.add('fa-plus');
+        document.getElementById('flecheArtist').classList.remove('fa-minus');
     }
 }
 

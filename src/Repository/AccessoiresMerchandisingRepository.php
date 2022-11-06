@@ -89,7 +89,7 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
     }
 
     //    Query pour le filtre categorie
-    public function findForPaginationFiltered($value, $color, $material, $priceMini, $priceMax): Query
+    public function findForPaginationFiltered($value, $color, $material, $artist, $priceMini, $priceMax): Query
     {
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorieMerchandising = :val')
@@ -110,6 +110,12 @@ class AccessoiresMerchandisingRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('v.material = :material')
                 ->setParameter('material', array($material));
+        }
+
+        if ($artist != null) {
+            $qb
+                ->andWhere('v.artist = :artist')
+                ->setParameter('artist', array($artist));
         }
 
         if (isset($priceMini)) {

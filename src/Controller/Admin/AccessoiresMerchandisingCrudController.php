@@ -51,6 +51,7 @@ class AccessoiresMerchandisingCrudController extends AbstractCrudController
         yield TextField::new('title', 'Titre');
         yield TextField::new('description', 'Description');
         yield TextEditorField::new('longDescription', 'Description complète');
+        yield AssociationField::new('artist', 'Artiste associé');
         yield AssociationField::new('material', 'Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 

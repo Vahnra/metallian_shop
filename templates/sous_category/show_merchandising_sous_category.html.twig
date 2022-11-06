@@ -12,7 +12,7 @@
         
             <div class="row">
             
-                <div class="col-2">
+                <div class="col-lg-2">
 
                     <p class="mt-2">Catégories</p>
 
@@ -164,7 +164,7 @@
                                                 
                                                 </div>
 
-                                                <div class="row align-items-center mb-2">
+                                                <div class="row align-items-center">
 
                                                     {{ form_label(filterForm.marque) }}
                                     
@@ -174,6 +174,18 @@
 
                                                     {{ form_widget(filterForm.marque) }}
                                                 
+                                                </div>
+
+                                                <div class="row align-items-center mb-2">
+
+                                                    {{ form_label(filterForm.artist) }}
+                                        
+                                                    <div class="col-2 ">
+                                                        <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheArtist"></i>
+                                                    </div>
+
+                                                    {{ form_widget(filterForm.artist) }}
+                                                    
                                                 </div>
 
                                                 {{ form_end(filterForm) }}
@@ -190,7 +202,7 @@
                     </div>
                 </div>
 
-                <div class="col-10">
+                <div class="col-lg-10">
 
                     <div class="row mb-3">   
 

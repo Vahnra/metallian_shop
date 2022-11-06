@@ -88,7 +88,7 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
     }
 
     //    Query pour le filtre categorie
-    public function findForPaginationFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax): Query
+    public function findForPaginationFiltered($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax): Query
     {
         $qb = $this->createQueryBuilder('v')
             ->andWhere('v.categorieMerchandising = :val')
@@ -122,6 +122,12 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('v.marques = :marques')
                 ->setParameter('marques', array($marque));
+        }
+
+        if ($artist != null) {
+            $qb
+                ->andWhere('v.artist = :artist')
+                ->setParameter('artist', array($artist));
         }
 
         if (isset($priceMini)) {
@@ -360,7 +366,7 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findForPaginationFilteredNewProducts($color, $size, $material, $marque, $priceMini, $priceMax)
+    public function findForPaginationFilteredNewProducts($color, $size, $material, $marque, $artist, $priceMini, $priceMax)
     {
         $qb = $this->createQueryBuilder('v')
             ->leftJoin('v.vetementMerchandisingQuantities', 'vqcs')
@@ -392,6 +398,13 @@ class VetementMerchandisingRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('v.marques = :marques')
                 ->setParameter('marques', array($marque));
+        }
+
+
+        if ($artist != null) {
+            $qb
+                ->andWhere('v.artist = :artist')
+                ->setParameter('artist', array($artist));
         }
 
         if (isset($priceMini)) {

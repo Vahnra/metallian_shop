@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegisterFormType extends AbstractType
 {
@@ -19,13 +20,28 @@ class RegisterFormType extends AbstractType
     {
         $builder
             ->add('lastname', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas être vide'
+                    ])
+                ]
             ])
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas être vide'
+                    ])
+                ]
             ])
             ->add('email', EmailType::class, [
-                'label' => 'E-mail'
+                'label' => 'E-mail',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas être vide'
+                    ])
+                ]
             ])
             ->add('gender', ChoiceType::class, [
                 'label' => 'Civilité',
@@ -37,6 +53,11 @@ class RegisterFormType extends AbstractType
                 'choice_attr' => [
                     "Homme" => ['selected' => true],
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas être vide'
+                    ])
+                ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -55,7 +76,12 @@ class RegisterFormType extends AbstractType
                     ],
                 ],
                 'invalid_message' => 'Les mots de passe ne sont pas identiques',
-                'mapped' => false
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas être vide'
+                    ])
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'S\'inscrire',

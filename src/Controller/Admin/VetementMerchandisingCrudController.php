@@ -48,6 +48,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield TextField::new('description', 'Description de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('marques', 'Marque de l\'article');
+        yield AssociationField::new('artist', 'Artiste associé');
         yield AssociationField::new('material', 'Matière de l\'article');
         // yield AssociationField::new('material', '1 Matière de l\'article');
         // yield AssociationField::new('material', '2 Matière de l\'article');

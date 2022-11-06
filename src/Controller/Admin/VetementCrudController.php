@@ -81,10 +81,10 @@ class VetementCrudController extends AbstractCrudController
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if(!$entityInstance instanceof Vetement) return;
-        // DateTimeImmutable - creat the date in the createdAt 
+       
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
-        // creat the date
+    
         parent::persistEntity($entityManager, $entityInstance);
     }
 

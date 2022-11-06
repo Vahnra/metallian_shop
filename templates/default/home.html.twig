@@ -57,7 +57,7 @@
             <h3>Femmes</h3>     
             <div class="row text-center">
 
-                <div id="carouselFemme" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div id="carouselFemme" class="carousel carousel-dark slide d-xl-block d-md-block d-none sm-none md-none" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
 
@@ -165,6 +165,87 @@
                     </button>
                 </div>
 
+                <div id="carouselFemmeMobile" class="carousel carousel-dark slide d-xl-none d-md-none d-block sm-block md-block" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+
+                            <div class="row">
+                            
+                            {% for vetement in nouveautesFemme  | slice(0, 1) %}
+                                    
+                                    {% if vetement.categorie.title == 'Femme' %}
+
+                                            <div class="card g-0 mx-auto my-2 border-0" style="width: 15rem;">
+
+                                                <a href="{{ path('voir_vetement', {"id": vetement.id}) }}" class="text-decoration-none text-black">
+
+                                                    <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
+                                                    <div class="card-body">
+                                                        <ul class="list-group list-group-flush ">
+                                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                        </ul>
+                                                        <h5 class="card-title">{{ vetement.title }}</h5>
+                                                    </div>      
+
+                                                </a>
+
+                                            </div>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        {% for vetement in nouveautesFemme  | slice(1, 11) %}
+
+                            {% if vetement.categorie.title == 'Femme' %}
+
+                                <div class="carousel-item">
+
+                                    <div class="row">
+
+
+                                        <div class="card g-0 mx-auto my-2 border-0" style="width: 15rem;">
+
+                                            <a href="{{ path('voir_vetement', {"id": vetement.id}) }}" class="text-decoration-none text-black">
+
+                                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
+                                                <div class="card-body">
+                                                    <ul class="list-group list-group-flush ">
+                                                        <li class="list-group-item fw-bold">{{ (vetement.price)/100 }}
+                                                            €</li>
+                                                    </ul>
+                                                    <h5 class="card-title">{{ vetement.title }}</h5>
+                                                </div>
+
+                                            </a>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                    </div>
+                    <button class="carousel-control-prev" style="width: 4em" type="button" data-bs-target="#carouselFemmeMobile" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" style="width: 4em" type="button" data-bs-target="#carouselFemmeMobile" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -175,7 +256,7 @@
 
             <div class="row text-center">
 
-                <div id="carouselHomme" class="carousel slide" data-bs-ride="carousel">
+                <div id="carouselHomme" class="carousel slide d-xl-block d-md-block d-none sm-none md-none" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" data-bs-interval="30000">
 
@@ -291,6 +372,85 @@
                     </button>
                 </div>
 
+                <div id="carouselHommeMobile" class="carousel slide d-xl-none d-md-none d-block sm-block md-block" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="30000">
+
+                            <div class="row">
+                            
+                            {% for vetement in nouveautesHomme  | slice(0, 1) %}
+                                    
+                                    {% if vetement.categorie.title == 'Homme' %}
+
+                                            <div class="card g-0 mx-auto my-2 border-0 bg-dark" style="width: 15rem;">
+
+                                                <a href="{{ path('voir_vetement', {"id": vetement.id}) }}" class="text-decoration-none text-black">
+
+                                                    <img src="{{ asset('images/' ~ vetement.photo) }}" id="image{{vetement.id}}" style="height: 300px; width: 240px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
+                                                    <div class="card-body">
+                                                        <ul class="list-group list-group-flush ">
+                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                        </ul>
+                                                        <h5 class="card-title text-white">{{ vetement.title }}</h5>
+                                                    </div>      
+
+                                                </a>
+
+                                            </div>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        {% for vetement in nouveautesHomme  | slice(1, 11) %}
+
+                            {% if vetement.categorie.title == 'Homme' %}
+
+                                <div class="carousel-item" data-bs-interval="30000">
+
+                                    <div class="row">
+
+
+                                        <div class="card g-0 mx-auto my-2 border-0 bg-dark" style="width: 15rem;">
+
+                                            <a href="{{ path('voir_vetement', {"id": vetement.id}) }}" class="text-decoration-none text-black">
+
+                                                <img src="{{ asset('images/' ~ vetement.photo) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
+                                                <div class="card-body">
+                                                    <ul class="list-group list-group-flush ">
+                                                        <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }}
+                                                            €</li>
+                                                    </ul>
+                                                    <h5 class="card-title text-white">{{ vetement.title }}</h5>
+                                                </div>
+
+                                            </a>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    <button class="carousel-control-prev" style="width: 4em" type="button" data-bs-target="#carouselHommeMobile" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" style="width: 4em" type="button" data-bs-target="#carouselHommeMobile" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -323,6 +483,7 @@
         </div>
     </div>
     
+</div>
 </div>
 
 

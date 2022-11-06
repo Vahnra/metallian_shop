@@ -54,6 +54,8 @@ class MerchandisingController extends AbstractController
 
             $marque = $filterForm->get('marque')->getData();
 
+            $artist = $filterForm->get('artist')->getData();
+
             $priceMini = $filterForm->get('priceMini')->getData();
 
             $priceMax = $filterForm->get('priceMax')->getData();
@@ -65,7 +67,8 @@ class MerchandisingController extends AbstractController
                 $color, 
                 $size, 
                 $material, 
-                $marque, 
+                $marque,
+                $artist,
                 $priceMini, 
                 $priceMax
             );        
@@ -87,6 +90,7 @@ class MerchandisingController extends AbstractController
                 $categorieMerchandising, 
                 $color, 
                 $material, 
+                $artist, 
                 $priceMini, 
                 $priceMax
             );        

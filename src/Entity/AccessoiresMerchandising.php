@@ -72,6 +72,9 @@ class AccessoiresMerchandising
     #[ORM\OneToMany(mappedBy: 'accessoiresMerchandising', targetEntity: OrderProduct::class)]
     private Collection $orderProducts;
 
+    #[ORM\ManyToOne(inversedBy: 'accessoiresMerchandisings')]
+    private ?Artist $artist = null;
+
     public function __construct()
     {
         $this->accessoiresMerchandisingQuantities = new ArrayCollection();
@@ -379,6 +382,18 @@ class AccessoiresMerchandising
                 $orderProduct->setAccessoiresMerchandising(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getArtist(): ?Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?Artist $artist): self
+    {
+        $this->artist = $artist;
 
         return $this;
     }

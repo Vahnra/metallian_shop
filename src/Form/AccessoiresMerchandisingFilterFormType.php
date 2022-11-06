@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Color;
+use App\Entity\Artist;
 use App\Entity\Material;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -24,6 +25,8 @@ class AccessoiresMerchandisingFilterFormType extends AbstractType
         $colors = $this->entityManager->getRepository(Color::class)->findAll();
 
         $materials = $this->entityManager->getRepository(Material::class)->findAll();
+
+        $artist = $this->entityManager->getRepository(Artist::class)->findAll();
         
         $builder
             ->add('Couleur', ChoiceType::class, [
@@ -65,6 +68,28 @@ class AccessoiresMerchandisingFilterFormType extends AbstractType
                     'id' => 'material',
                     'class' => 'col-10',
                     'onclick' => 'showMaterialFilterAccessoiresMerchandising()',
+                    'style' => 'cursor: pointer;'
+                ],
+                'required' => false,
+            ])
+            ->add('artist', ChoiceType::class, [
+                'label' => 'Artistes',
+                'placeholder' => 'Choisir un artist',
+                'choices'  => $artist,
+                'choice_value' => 'id',
+                'choice_label' => function(?Artist $category) {
+                    return $category ? $category->getArtist() : '';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'no-border-radius col-12',
+                    'style' => 'display: none;'
+                ],
+                'label_attr' => [
+                    'id' => 'marque',
+                    'class' => 'col-10',
+                    'onclick' => 'showArtistFilterVetementMerchandising()',
                     'style' => 'cursor: pointer;'
                 ],
                 'required' => false,

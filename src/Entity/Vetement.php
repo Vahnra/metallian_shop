@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ORM\Index;
 use ReflectionClass;
 use App\Entity\Categorie;
 use Doctrine\DBAL\Types\Types;

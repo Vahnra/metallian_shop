@@ -40,7 +40,7 @@
 											{% for categorieMerchandising in categoriesMerchandising %}
 
 												<li>
-													<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
+													<a class="text-underline-hover text-black" href="{{ path('show_from_category_merchandising', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
 												</li>
 
 											{% endfor %}
@@ -118,6 +118,19 @@
 												{{ form_widget(filterForm.marque) }}
 
 											</div>
+
+											
+                                            <div class="row align-items-center">
+
+                                                {{ form_label(filterForm.artist) }}
+                                    
+                                                <div class="col-2 ">
+                                                    <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheArtist"></i>
+                                                </div>
+
+                                                {{ form_widget(filterForm.artist) }}
+                                                
+                                            </div>
 
 											<div class="row align-items-center mb-2">
 

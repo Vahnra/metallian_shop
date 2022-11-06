@@ -42,14 +42,14 @@ class AccessoiresMerchandisingService
     }
 
     // Filtered pagination
-    public function getPaginatedAccessoiresFiltered($value, $color, $material, $priceMini, $priceMax)
+    public function getPaginatedAccessoiresFiltered($value, $color, $material, $artist, $priceMini, $priceMax)
     {
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
         $limit = 50;
 
-        $vetementQuery = $this->bijouxRepository->findForPaginationFiltered($value, $color, $material, $priceMini, $priceMax);
+        $vetementQuery = $this->bijouxRepository->findForPaginationFiltered($value, $color, $material, $artist, $priceMini, $priceMax);
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }

@@ -1,15 +1,12 @@
 $( document ).ready(function() {
   let deviceBrande = $('#Vetement_categorie');
-  // console.log(deviceBrande)
+
   deviceBrande.change(function() {
       // ... retrieve the corresponding form.
       var form = $(this).closest('form');
-      
-      // Simulate form data, but only include the selected sport value.
-      var data = {};
-      
-      data[deviceBrande.attr('name')] = deviceBrande.val();
-   
+      // Simulate form data, but only include the selected value.
+      var data = {};  
+      data[deviceBrande.attr('name')] = deviceBrande.val();   
       // Submit data via AJAX to the form's action path.
       $.ajax({
           url : form.attr('action'),
@@ -21,13 +18,10 @@ $( document ).ready(function() {
               // ... with the returned one from the AJAX response.
               $(html.responseText).find('#Vetement_sousCategorie')
           );
-
           // Position field now displays the appropriate positions.
           }
-      });
-      
+      });  
   });
-
 });
 
 $( document ).ready(function() {

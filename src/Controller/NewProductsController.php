@@ -63,6 +63,8 @@ class NewProductsController extends AbstractController
 
             $marque = $filterForm->get('marque')->getData();
 
+            $artist = $filterForm->get('artist')->getData();
+
             $musicType = $filterForm->get('musicType')->getData();
 
             $priceMini = $filterForm->get('priceMini')->getData();
@@ -84,6 +86,7 @@ class NewProductsController extends AbstractController
                 $size,
                 $material,
                 $marque,
+                $artist,
                 $priceMini,
                 $priceMax
             );

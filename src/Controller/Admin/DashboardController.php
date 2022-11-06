@@ -219,9 +219,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un vêtement', 'fas fa-plus', VetementMerchandising::class)->setAction(Crud::PAGE_NEW),
         ]);
 
-        yield MenuItem::subMenu('Accesoires')->setSubItems([
-            MenuItem::linkToCrud('Voir les accesoires', 'fas fa-eye', AccessoiresMerchandising::class),
-            MenuItem::linkToCrud('Ajouter un accesoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW),
+        yield MenuItem::subMenu('Accessoires')->setSubItems([
+            MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', AccessoiresMerchandising::class),
+            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW),
         ]);
 
         yield MenuItem::section('Marques');
@@ -283,8 +283,6 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Soldes');
     }
-
-    
 
     public function configureActions(): Actions
     {
