@@ -2,20 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Size;
-use App\Entity\Color;
-use App\Entity\Marques;
-use App\Entity\Material;
 use App\Entity\Categorie;
-use App\Entity\MusicType;
 use App\Entity\SousCategorie;
-use App\Service\MediaService;
-use App\Service\BijouxService;
-use App\Service\VetementService;
+use App\Service\ProductsService;
 use App\Form\MediaFilterFormType;
 use App\Form\BijouxFilterFormType;
-use App\Service\ChaussuresService;
-use App\Service\AccessoiresService;
 use App\Form\VetementFilterFormType;
 use App\Form\ChaussuresFilterFormType;
 use App\Form\AccessoiresFilterFormType;
@@ -23,9 +14,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SousCategoryController extends AbstractController
@@ -34,11 +22,7 @@ class SousCategoryController extends AbstractController
     public function showSousCategorie(
         SousCategorie $souscategories,
         EntityManagerInterface $entityManager,
-        VetementService $vetementService,
-        BijouxService $bijouxService,
-        MediaService $mediaService,
-        ChaussuresService $chaussuresService,
-        AccessoiresService $accessoiresService,
+        ProductsService $productsService,
         Request $request
     ): Response 
     {
@@ -63,15 +47,7 @@ class SousCategoryController extends AbstractController
         $filterMediaForm = $this->createForm(MediaFilterFormType::class)->handleRequest($request);
 
         // Par défaut on utilise la fonction pour pagination
-        $vetements = $vetementService->getPaginatedVetementsSousCategorie($souscategories);
-
-        $bijoux = $bijouxService->getPaginatedBijouxSousCategorie($souscategories);
-
-        $medias = $mediaService->getPaginatedMediasSousCategorie($souscategories);
-
-        $chaussures = $chaussuresService->getPaginatedChaussuresSousCategorie($souscategories);
-
-        $accessoires = $accessoiresService->getPaginatedAccessoiresSousCategorie($souscategories);
+        $products = $productsService->getPaginatedProductsSousCategorie($souscategories);
 
         // Si le formulair de filtre est soumit, il filtre
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
@@ -90,7 +66,7 @@ class SousCategoryController extends AbstractController
 
             // on insert et utilise le qb de filtre
     
-            $vetements = $vetementService->getPaginatedVetementsSousCategoriesFiltered(
+            $products = $productsService->getPaginatedVetementsSousCategoriesFiltered(
                 $souscategories, 
                 $color, 
                 $size, 
@@ -111,7 +87,7 @@ class SousCategoryController extends AbstractController
 
             // on insert et utilise le qb de filtre
     
-            $bijoux = $bijouxService->getPaginatedBijouxSousCategoriesFiltered(
+            $products = $productsService->getPaginatedBijouxSousCategoriesFiltered(
                 $souscategories, 
                 $color, 
                 $priceMax, 
@@ -131,7 +107,7 @@ class SousCategoryController extends AbstractController
 
             // on insert et utilise le qb de filtre
     
-            $accessoires = $accessoiresService->getPaginatedAccessoiresSousCategoriesFiltered(
+            $products = $productsService->getPaginatedAccessoiresSousCategoriesFiltered(
                 $souscategories, 
                 $color, 
                 $material, 
@@ -140,7 +116,7 @@ class SousCategoryController extends AbstractController
             );        
         }
 
-        if ($filterAccessoiresForm->isSubmitted() && $filterChaussuresForm->isValid()) {
+        if ($filterChaussuresForm->isSubmitted() && $filterChaussuresForm->isValid()) {
             // on prend les valeurs du formulaire
             $color = $filterChaussuresForm->get('Couleur')->getData();
 
@@ -154,7 +130,7 @@ class SousCategoryController extends AbstractController
 
             // on insert et utilise le qb de filtre
     
-            $chaussures = $chaussuresService->getPaginatedChaussuresSousCategoriesFiltered(
+            $products = $productsService->getPaginatedChaussuresSousCategoriesFiltered(
                 $souscategories, 
                 $color, 
                 $size, 
@@ -174,7 +150,7 @@ class SousCategoryController extends AbstractController
 
             // on insert et utilise le qb de filtre
     
-            $medias = $mediaService->getPaginatedMediaSousCategoriesFiltered(
+            $products = $productsService->getPaginatedMediaSousCategoriesFiltered(
                 $souscategories, 
                 $musicType,
                 $priceMax, 
@@ -188,11 +164,7 @@ class SousCategoryController extends AbstractController
             'categories' => $categories,
             'souscategories' => $souscategories,
             'allsouscategories' => $allsouscategories,
-            'vetements' => $vetements,
-            'bijoux' => $bijoux,
-            'medias' => $medias,
-            'chaussures' => $chaussures,
-            'accessoires' => $accessoires,
+            'products' => $products,
             'filterForm' => $filterForm->createView(),
             'filterBijouxForm' => $filterBijouxForm->createView(),
             'filterChaussuresForm' => $filterChaussuresForm->createView(),

@@ -11,6 +11,7 @@ use App\Entity\Accessoires;
 use App\Entity\FavoriteProduct;
 use App\Entity\VetementMerchandising;
 use App\Entity\AccessoiresMerchandising;
+use App\Entity\Products;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,31 @@ class FavoriteProductController extends AbstractController
     
     }
 
+    #[Route('/add-favorite/product-{id}', name: 'add_favorite_product', methods:['GET', 'POST'])]
+    public function addFavoriteProduct(
+        Products $products,
+        EntityManagerInterface $entityManager,
+        Request $request
+        )
+    {
+        $favorite = new FavoriteProduct();
+
+        $favorite->setCreatedAt(new DateTime());
+
+        $favorite->setUser($this->getUser());
+
+        $favorite->setProducts($products);
+
+        $entityManager->persist($favorite);
+
+        $entityManager->flush();
+
+        $route = $request->headers->get('referer');
+
+        return $this->redirect($route);
+    
+    }
+
     #[Route('/remove-favorite/vetement-{id}', name: 'remove_favorite_vetement', methods:['GET', 'POST'])]
     public function removeFavoriteVetement(
         Vetement $vetement,
@@ -52,6 +78,24 @@ class FavoriteProductController extends AbstractController
         )
     {
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findOneBy(['user' => $this->getUser(), 'vetement' => $vetement]);
+
+        $entityManager->remove($userFavorites);
+        $entityManager->flush();
+
+        $route = $request->headers->get('referer');
+
+        return $this->redirect($route);
+    
+    }
+
+    #[Route('/remove-favorite/product-{id}', name: 'remove_favorite_product', methods:['GET', 'POST'])]
+    public function removeFavoriteProduct(
+        Products $products,
+        EntityManagerInterface $entityManager,
+        Request $request
+        )
+    {
+        $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findOneBy(['user' => $this->getUser(), 'products' => $products]);
 
         $entityManager->remove($userFavorites);
         $entityManager->flush();

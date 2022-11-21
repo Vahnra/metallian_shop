@@ -18,6 +18,7 @@ use App\Form\AllFilterFormType;
 use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
 use App\Entity\AccessoiresMerchandising;
+use App\Entity\Products;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,13 +43,14 @@ class NewProductsController extends AbstractController
 
         $categoriesMerchandising = $entityManager->getRepository(CategorieMerchandising::class)->findAll();
 
-        $newVetements = $entityManager->getRepository(Vetement::class)->newProducts();
-        $newVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->newProducts();
-        $newMedias = $entityManager->getRepository(Media::class)->newProducts();
-        $newChaussures = $entityManager->getRepository(Chaussures::class)->newProducts();
-        $newBijoux = $entityManager->getRepository(Bijoux::class)->newProducts();
-        $newAccessoires = $entityManager->getRepository(Accessoires::class)->newProducts();
-        $newAccessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->newProducts();
+        $newProducts = $entityManager->getRepository(Products::class)->newProducts();
+        // $newVetements = $entityManager->getRepository(Vetement::class)->newProducts();
+        // $newVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->newProducts();
+        // $newMedias = $entityManager->getRepository(Media::class)->newProducts();
+        // $newChaussures = $entityManager->getRepository(Chaussures::class)->newProducts();
+        // $newBijoux = $entityManager->getRepository(Bijoux::class)->newProducts();
+        // $newAccessoires = $entityManager->getRepository(Accessoires::class)->newProducts();
+        // $newAccessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->newProducts();
 
         $filterForm = $this->createForm(AllFilterFormType::class)->handleRequest($request);
 
@@ -72,62 +74,73 @@ class NewProductsController extends AbstractController
             $priceMax = $filterForm->get('priceMax')->getData();
 
             // On fait appelle au qb par les repo
-            $newVetements = $entityManager->getRepository(Vetement::class)->findForPaginationFilteredNewProducts(
-                $color,
-                $size,
-                $material,
-                $marque,
-                $priceMini,
-                $priceMax
-            );
-
-            $newVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->findForPaginationFilteredNewProducts(
+            $newProducts = $entityManager->getRepository(Products::class)->findForPaginationFilteredNewProducts(
                 $color,
                 $size,
                 $material,
                 $marque,
                 $artist,
-                $priceMini,
-                $priceMax
-            );
-
-            $newMedias = $entityManager->getRepository(Media::class)->findForPaginationFilteredNewProducts(
                 $musicType,
                 $priceMini,
                 $priceMax
             );
 
-            $newChaussures = $entityManager->getRepository(Chaussures::class)->findForPaginationFilteredNewProducts(
-                $color,
-                $size,
-                $material,
-                $marque,
-                $priceMini,
-                $priceMax
-            );
+            // $newVetements = $entityManager->getRepository(Vetement::class)->findForPaginationFilteredNewProducts(
+            //     $color,
+            //     $size,
+            //     $material,
+            //     $marque,
+            //     $priceMini,
+            //     $priceMax
+            // );
 
-            $newBijoux = $entityManager->getRepository(Bijoux::class)->findForPaginationFilteredNewProducts(
-                $color,
-                $priceMini,
-                $priceMax
-            );
+            // $newVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->findForPaginationFilteredNewProducts(
+            //     $color,
+            //     $size,
+            //     $material,
+            //     $marque,
+            //     $artist,
+            //     $priceMini,
+            //     $priceMax
+            // );
 
-            $newAccessoires = $entityManager->getRepository(Accessoires::class)->findForPaginationFilteredNewProducts(
-                $color,
-                $material,
-                $priceMini,
-                $priceMax
-            );
+            // $newMedias = $entityManager->getRepository(Media::class)->findForPaginationFilteredNewProducts(
+            //     $musicType,
+            //     $priceMini,
+            //     $priceMax
+            // );
 
-            $newAccessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->findForPaginationFilteredNewProducts(
-                $color,
-                $material,
-                $priceMini,
-                $priceMax
-            );
+            // $newChaussures = $entityManager->getRepository(Chaussures::class)->findForPaginationFilteredNewProducts(
+            //     $color,
+            //     $size,
+            //     $material,
+            //     $marque,
+            //     $priceMini,
+            //     $priceMax
+            // );
+
+            // $newBijoux = $entityManager->getRepository(Bijoux::class)->findForPaginationFilteredNewProducts(
+            //     $color,
+            //     $priceMini,
+            //     $priceMax
+            // );
+
+            // $newAccessoires = $entityManager->getRepository(Accessoires::class)->findForPaginationFilteredNewProducts(
+            //     $color,
+            //     $material,
+            //     $priceMini,
+            //     $priceMax
+            // );
+
+            // $newAccessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->findForPaginationFilteredNewProducts(
+            //     $color,
+            //     $material,
+            //     $priceMini,
+            //     $priceMax
+            // );
         }
 
-        $newProducts = array_merge($newVetements, $newVetementsMerchandising, $newMedias, $newChaussures, $newBijoux, $newAccessoires, $newAccessoiresMerchandising);
+        // $newProducts = array_merge($newVetements, $newVetementsMerchandising, $newMedias, $newChaussures, $newBijoux, $newAccessoires, $newAccessoiresMerchandising);
 
         $requestStack = $requestStack->getMainRequest();
 

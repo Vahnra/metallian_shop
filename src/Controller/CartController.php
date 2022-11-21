@@ -254,6 +254,12 @@ class CartController extends AbstractController
         $lastProducts = $cartProducts[array_key_last($cartProducts)];
 
         // Condition pour chaque type de prodruit pour former la route précédent
+        if ($lastProducts->getProducts() !== null) {
+            return $this->redirectToRoute('view_products', [
+                'id' => $lastProducts->getProducts()->getId()
+            ]);
+        }
+
         if ($lastProducts->getVetement() !== null) {
             return $this->redirectToRoute('voir_vetement', [
                 'id' => $lastProducts->getVetement()->getId()

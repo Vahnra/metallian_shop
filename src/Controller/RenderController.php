@@ -16,6 +16,7 @@ use App\Entity\VetementMerchandising;
 use App\Entity\CategorieMerchandising;
 use App\Repository\VetementRepository;
 use App\Entity\AccessoiresMerchandising;
+use App\Entity\Products;
 use App\Repository\ChaussuresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AccessoiresRepository;
@@ -27,6 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
 use App\Repository\VetementMerchandisingRepository;
 use App\Repository\AccessoiresMerchandisingRepository;
+use App\Repository\ProductsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RenderController extends AbstractController
@@ -81,13 +83,7 @@ class RenderController extends AbstractController
 
     #[Route('/search', name: 'render_search_article', methods:['GET', 'POST'])]
     public function renderSearchArticle(
-        VetementRepository $vetementRepository, 
-        ChaussuresRepository $chaussuresRepository, 
-        MediaRepository $mediaRepository,
-        AccessoiresRepository $accessoiresRepository,
-        BijouxRepository $bijouxRepository,
-        VetementMerchandisingRepository $vetementMerchandisingRepository,
-        AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository,
+        ProductsRepository $productsRepository,
         EntityManagerInterface $entityManager,
         RequestStack $requestStack,
         PaginatorInterface $paginator,
@@ -102,19 +98,7 @@ class RenderController extends AbstractController
         // query de filtre pour chaque tables
         $search = $request->get('search');
 
-        $vetements = $vetementRepository->search($search);
-
-        $chaussures = $chaussuresRepository->search($search);
-
-        $medias = $mediaRepository->search($search);
-
-        $accessoires = $accessoiresRepository->search($search);
-
-        $bijoux = $bijouxRepository->search($search);
-
-        $vetementMerchandising = $vetementMerchandisingRepository->search($search);
-
-        $accessoiresMerchandising = $accessoiresMerchandisingRepository->search($search);
+        $products = $productsRepository->search($search);
 
         $filterForm = $this->createForm(AllFilterFormType::class)->handleRequest($request);
 
@@ -129,6 +113,8 @@ class RenderController extends AbstractController
 
             $marque = $filterForm->get('marque')->getData();
 
+            $artist = $filterForm->get('artist')->getData();
+
             $musicType = $filterForm->get('musicType')->getData();
 
             $priceMini = $filterForm->get('priceMini')->getData();
@@ -136,76 +122,26 @@ class RenderController extends AbstractController
             $priceMax = $filterForm->get('priceMax')->getData();
 
             // On fait appelle au qb par les repo
-            $vetements = $entityManager->getRepository(Vetement::class)->searchFilter(
+            $products = $entityManager->getRepository(Products::class)->searchFilter(
                 $search,
                 $color,
                 $size,
                 $material,
                 $marque,
-                $priceMini,
-                $priceMax
-            );
-
-            $vetementMerchandising = $entityManager->getRepository(VetementMerchandising::class)->searchFilter(
-                $search,
-                $color,
-                $size,
-                $material,
-                $marque,
-                $priceMini,
-                $priceMax
-            );
-
-            $medias = $entityManager->getRepository(Media::class)->searchFilter(
-                $search,
+                $artist,
                 $musicType,
                 $priceMini,
                 $priceMax
             );
 
-            $chaussures = $entityManager->getRepository(Chaussures::class)->searchFilter(
-                $search,
-                $color,
-                $size,
-                $material,
-                $marque,
-                $priceMini,
-                $priceMax
-            );
-
-            $bijoux = $entityManager->getRepository(Bijoux::class)->searchFilter(
-                $search,
-                $color,
-                $priceMini,
-                $priceMax
-            );
-
-            $accessoires = $entityManager->getRepository(Accessoires::class)->searchFilter(
-                $search,
-                $color,
-                $material,
-                $priceMini,
-                $priceMax
-            );
-
-            $accessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->searchFilter(
-                $search,
-                $color,
-                $material,
-                $priceMini,
-                $priceMax
-            );
         }
-
-        // On merge les resultats dans un meme tableau
-        $searchResult = array_merge($chaussures, $vetements, $medias, $accessoires, $bijoux, $vetementMerchandising, $accessoiresMerchandising);
 
         // Partie pour la pagination 
         $requestStack = $requestStack->getMainRequest();   
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $searchResults = $paginator->paginate($searchResult, $page, 50, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
+        $searchResults = $paginator->paginate($products, $page, 50, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
 
         return $this->render('search_result/search_result.html.twig', [
             'searchResults' => $searchResults,

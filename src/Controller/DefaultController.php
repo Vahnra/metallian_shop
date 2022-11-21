@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\Products;
 use App\Entity\Slider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +25,9 @@ class DefaultController extends AbstractController
             'title' => 'Homme'
         ]);
 
-        $nouveautesFemme = $entityManager->getRepository(Vetement::class)->findByTwelveVetements($femme);
+        $nouveautesFemme = $entityManager->getRepository(Products::class)->findByTwelveVetements($femme);
 
-        $nouveautesHomme = $entityManager->getRepository(Vetement::class)->findByTwelveVetements($homme);
+        $nouveautesHomme = $entityManager->getRepository(Products::class)->findByTwelveVetements($homme);
 
         $slider = $entityManager->getRepository(Slider::class)->findAll();
 

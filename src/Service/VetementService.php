@@ -67,4 +67,6 @@ class VetementService
 
         return $this->paginator->paginate($vetementQuery, $page, $limit);
     }
+
+    
 }

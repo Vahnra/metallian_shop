@@ -8,6 +8,7 @@ use App\Entity\Marques;
 use App\Entity\Material;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\Products;
 use App\Service\VetementService;
 use App\Entity\VetementMerchandising;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,9 +34,7 @@ class BrandsController extends AbstractController
     {
         $brandsArticles = $entityManager->getRepository(Marques::class)->findAll();
 
-        $vetements = $entityManager->getRepository(Vetement::class)->brandsProducts();
-
-        $vetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->brandsProducts();
+        $products = $entityManager->getRepository(Products::class)->brandsProducts();
 
         // On récupère les info a mettre dans le filtre form
         $marques = $entityManager->getRepository(Marques::class)->findAll();
@@ -147,8 +146,7 @@ class BrandsController extends AbstractController
             $priceMax = $filterForm->get('priceMax')->getData();
         
             // on insert et utilise le qb de filtre
-    
-            $vetements = $entityManager->getRepository(Vetement::class)->findForPaginationFilteredBrands(
+            $products = $entityManager->getRepository(Products::class)->findForPaginationFilteredBrands(
                 $color, 
                 $size, 
                 $material, 
@@ -156,24 +154,14 @@ class BrandsController extends AbstractController
                 $priceMini, 
                 $priceMax
             );    
-
-            $vetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->findForPaginationFilteredBrands(
-                $color, 
-                $size, 
-                $material, 
-                $marque, 
-                $priceMini, 
-                $priceMax
-            );        
+     
         }
-
-        $allArticlesArray = array_merge($vetements, $vetementsMerchandising,);
 
         $requestStack = $requestStack->getMainRequest();   
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $allArticles = $paginator->paginate($allArticlesArray, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
+        $allArticles = $paginator->paginate($products, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
 
         return $this->render('brands/show_brands.html.twig', [
             'brandsArticles' => $brandsArticles,
@@ -193,9 +181,7 @@ class BrandsController extends AbstractController
     {
         $brandsArticles = $entityManager->getRepository(Marques::class)->findAll();
 
-        $brandVetements = $entityManager->getRepository(Vetement::class)->specificBrandsProducts($brand);
-
-        $brandVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->specificBrandsProducts($brand);
+        $brandProducts = $entityManager->getRepository(Products::class)->specificBrandsProducts($brand);
 
         // On récupère les info a mettre dans le filtre form
         $marques = $entityManager->getRepository(Marques::class)->findAll();
@@ -289,9 +275,8 @@ class BrandsController extends AbstractController
 
             $priceMax = $filterForm->get('priceMax')->getData();
 
-            // on insert et utilise le qb de filtre
-    
-            $brandVetements = $entityManager->getRepository(Vetement::class)->findForPaginationFilteredSpecificBrands(
+            // on insert et utilise le qb de filtre  
+            $brandProducts = $entityManager->getRepository(Products::class)->findForPaginationFilteredSpecificBrands(
                 $brand,
                 $color, 
                 $size, 
@@ -299,24 +284,14 @@ class BrandsController extends AbstractController
                 $priceMini, 
                 $priceMax
             );    
-
-            $brandVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->findForPaginationFilteredSpecificBrands(
-                $brand,
-                $color, 
-                $size, 
-                $material,
-                $priceMini, 
-                $priceMax
-            );        
+   
         }
-
-        $allArticlesArray = array_merge($brandVetements, $brandVetementsMerchandising,);
 
         $requestStack = $requestStack->getMainRequest();   
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $allArticles = $paginator->paginate($allArticlesArray, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
+        $allArticles = $paginator->paginate($brandProducts, $page, 5, array('defaultSortFieldName' => 'a.createdAt', 'defaultSortDirection' => 'desc'));
 
         return $this->render('brands/show_specific_brands.html.twig', [
             'brandsArticles' => $brandsArticles,

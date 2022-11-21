@@ -81,8 +81,8 @@
                                     <select class="form-select no-border-radius" onchange="window.location=this.value;">
                                         <option disabled selected hidden>Trier par</option>
                                         {{ knp_pagination_sortable(favoriteProducts, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
-                                        {{ knp_pagination_sortable(favoriteProducts, 'Du moins cher au plus cher', 'favoriteProduct.price', {}, {'direction': 'asc'}) }}
-                                        {{ knp_pagination_sortable(favoriteProducts, 'Du plus cher au moins cher', 'favoriteProduct.price', {}, {'direction': 'desc'}) }}
+                                        {{ knp_pagination_sortable(favoriteProducts, 'Du moins cher au plus cher', 'favoriteProduct.products.price', {}, {'direction': 'asc'}) }}
+                                        {{ knp_pagination_sortable(favoriteProducts, 'Du plus cher au moins cher', 'favoriteProduct.products.price', {}, {'direction': 'desc'}) }}
                                     </select>
 
                                 </div>
@@ -99,28 +99,23 @@
 
 						{% for favoriteProduct in favoriteProducts %}
 
-                            {% if favoriteProduct.vetement is not empty %}
-                            
-
 							<div class="card g-0 mx-auto mt-4 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-								<a href="{{ path('voir_vetement', {'id': favoriteProduct.vetement.id}) }}" class="text-decoration-none text-black">
+								<a href="{{ path('view_products', {'id': favoriteProduct.products.id}) }}" class="text-decoration-none text-black">
 
-									<img src="{{ asset('images/' ~ favoriteProduct.vetement.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+									<img src="{{ asset('images/' ~ favoriteProduct.products.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 									<div class="card-body">
 										<ul class="list-group list-group-flush">
-											<li class="list-group-item">{{ (favoriteProduct.vetement.price)/100 }}
+											<li class="list-group-item">{{ (favoriteProduct.products.price)/100 }}
 												€</li>
 										</ul>
-										<h5 class="card-title">{{ favoriteProduct.vetement.title }}</h5>
-                                        <a href="{{ path('remove_favorite_vetement', {'id': favoriteProduct.vetement.id})}}" class="card-link">Enlever de vos favoris</a>
+										<h5 class="card-title">{{ favoriteProduct.products.title }}</h5>
+                                        <a href="{{ path('remove_favorite_product', {'id': favoriteProduct.products.id})}}" class="card-link">Enlever de vos favoris</a>
 									</div>
 
 								</a>
 
 							</div>
-
-                            {% endif %}
 
                             {% if favoriteProduct.bijoux is not empty %}
                             

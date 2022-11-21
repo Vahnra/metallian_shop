@@ -112,11 +112,9 @@
 
                     {% for article in allArticles %}
 
-                        {% if article.className == 'Vetement' %}
-
                         <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-                            <a href="{{ path('voir_vetement', {'id': article.id}) }}" class="text-decoration-none text-black">
+                            <a href="{{ path('view_products', {'id': article.id}) }}" class="text-decoration-none text-black">
 
                                 <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}" loading="lazy">
                                 <div class="card-body">
@@ -128,7 +126,7 @@
                                     <h5 class="card-title text-muted">{{ article.title }}</h5>
                                     
                                     {% set colors = {} %}
-                                    {% for variations in article.vetementQuantities.values %}
+                                    {% for variations in article.productsQuantities.values %}
 
                                         {% if variations.color.code not in colors %}
 
@@ -172,70 +170,6 @@
                         document.getElementById("article" + "{{ article.title }}{{ article.id }}").addEventListener("mouseenter", functionImageEnter);
                         document.getElementById("article" + "{{ article.title }}{{ article.id }}").addEventListener("mouseleave", functionImageLeave);
                         </script>
-
-                        {% endif %}
-
-                        {% if article.className == 'VetementMerchandising' %}
-
-                        <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
-
-                            <a href="{{ path('voir_vetement_merch', {'id': article.id}) }}" class="text-decoration-none text-black">
-
-                                <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" id="article{{article.title}}{{article.id}}" class="card-img-top" alt="{{ article.title }}" loading="lazy">
-
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item fw-bold">{{ (article.price)/100 }}
-                                            €</li>
-                                    </ul>
-                                    <h5 class="card-title text-muted">{{ article.title }}</h5>
-
-                                    {% set colors = {} %}
-                                    {% for variations in article.vetementMerchandisingQuantities.values %}
-
-                                        {% if variations.color.code not in colors %}
-
-                                            {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-
-                                        {% endif %}
-
-
-                                    {% endfor %}
-
-                                    {% for color in colors %}
-                                        <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-                                            <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-                                        </div>
-
-                                    {% endfor %}        
-                                   
-                                </div>
-
-                            </a>
-
-                        </div>
-
-                        <script>
-
-                        document.addEventListener("DOMContentLoaded", () => {
-                        document.getElementById("article" + "{{ article.title }}{{ article.id }}").src = "{{ asset('images/' ~ article.photo) }}";
-                        });
-
-                        function functionImageEnter() {
-                        var image = document.getElementById("article" + "{{ article.title }}{{ article.id }}");
-                        image.src = "{{ asset('images/' ~ article.photo2) }}";
-                        }
-
-                        function functionImageLeave() {
-                        var image = document.getElementById("article" + "{{ article.title }}{{ article.id }}");
-                        image.src = "{{ asset('images/' ~ article.photo) }}";
-                        }
-
-                        document.getElementById("article" + "{{ article.title }}{{ article.id }}").addEventListener("mouseenter", functionImageEnter);
-                        document.getElementById("article" + "{{ article.title }}{{ article.id }}").addEventListener("mouseleave", functionImageLeave);
-                        </script>
-
-                        {% endif %}
 
                     {% endfor %}
 

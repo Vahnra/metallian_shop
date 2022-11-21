@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ search }}{% endblock %}
+{% block title %}
+	{{ search }}
+{% endblock %}
 
 {% block body %}
 
@@ -121,15 +123,15 @@
 
 											<div class="row align-items-center">
 
-                                                {{ form_label(filterForm.artist) }}
-                                    
-                                                <div class="col-2 ">
-                                                    <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheArtist"></i>
-                                                </div>
+												{{ form_label(filterForm.artist) }}
 
-                                                {{ form_widget(filterForm.artist) }}
-                                                
-                                            </div>
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheArtist"></i>
+												</div>
+
+												{{ form_widget(filterForm.artist) }}
+
+											</div>
 
 											<div class="row align-items-center mb-2">
 
@@ -160,317 +162,102 @@
 
 					<div class="row mb-3">
 
-					<h3 class="mb-4 col-8">Résultat de la recherche "{{ search }}"</h3>
+						<h3 class="mb-4 col-8">Résultat de la recherche "{{ search }}"</h3>
 
-					{# Select pour trier #}
-					<div class="col-3 ms-auto mb-4">
+						{# Select pour trier #}
+						<div class="col-3 ms-auto mb-4">
 
-						<select class="form-select no-border-radius" onchange="window.location=this.value;">
-							<option disabled selected hidden>Trier par</option>
-							{{ knp_pagination_sortable(searchResults, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
-							{{ knp_pagination_sortable(searchResults, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
-							{{ knp_pagination_sortable(searchResults, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}
+							<select class="form-select no-border-radius" onchange="window.location=this.value;">
+								<option disabled selected hidden>Trier par</option>
+								{{ knp_pagination_sortable(searchResults, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
+								{{ knp_pagination_sortable(searchResults, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
+								{{ knp_pagination_sortable(searchResults, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}
 
-						</select>
+							</select>
 
-					</div>
-
-					<div class="row">		
-
-							{% for searchResult in searchResults %}
-
-								<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;"> 
-
-									{% if searchResult.className == 'Chaussures' %}
-
-										<a href="{{ path('voir_chaussures', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{% set colors = {} %}
-												{% for variations in searchResult.chaussuresQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %}
-
-										</div>
-
-									{% endif %}
-
-									{% if searchResult.className == 'Vetement' %}
-
-										<a href="{{ path('voir_vetement', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{% set colors = {} %}
-												{% for variations in searchResult.vetementQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %}
-
-										</div>
-
-									{% endif %}
-
-									{% if searchResult.className == 'Media' %}
-
-										<a href="{{ path('voir_media', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{# {% set colors = {} %}
-												{% for variations in searchResult.mediaQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %} #}
-
-										</div>
-
-									{% endif %}
-
-									{% if searchResult.className == 'Bijoux' %}
-
-										<a href="{{ path('voir_bijoux', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{% set colors = {} %}
-												{% for variations in searchResult.bijouxQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %}
-
-										</div>
-
-									{% endif %}
-
-									{% if searchResult.className == 'Accessoires' %}
-
-										<a href="{{ path('voir_accessoires', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{% set colors = {} %}
-												{% for variations in searchResult.accessoiresQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %}
-
-										</div>
-
-									{% endif %}
-
-									{% if searchResult.className == 'VetementMerchandising' %}
-
-										<a href="{{ path('voir_vetement_merch', {"id": searchResult.id} ) }}" class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{% set colors = {} %}
-												{% for variations in searchResult.vetementMerchandisingQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %}
-
-										</div>
-
-									{% endif %}
-
-									{% if searchResult.className == 'AccessoiresMerchandising' %}
-
-										<a href="{{ path('voir_accessoires_merch', {"id": searchResult.id} ) }}"  class="text-decoration-none text-black">
-										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
-										<div class="card-body">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-													€</li>
-											</ul>
-											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
-
-												{% set colors = {} %}
-												{% for variations in searchResult.accessoiresMerchandisingQuantities.values %}
-
-													{% if variations.color.code not in colors %}
-													
-														{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-													
-													{% endif %}
-													
-
-												{% endfor %}
-
-												{% for color in colors %}
-													<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-														<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-													</div>
-													
-												{% endfor %}
-
-										</div>
-
-									{% endif %}
-
-									
-
-								</a>
-
-							</div>
-
-							<script>
-
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").src = "{{ asset('images/' ~ searchResult.photo) }}";
-                                });                                                 
-                                            
-                                function functionImageEnter(){
-                                    var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
-                                    image.src = "{{ asset('images/' ~ searchResult.photo2) }}";
-                                }
-
-                                function functionImageLeave(){
-                                    var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
-                                    image.src = "{{ asset('images/' ~ searchResult.photo) }}";
-                                }
-
-                                document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseenter", functionImageEnter);
-                                document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseleave", functionImageLeave);
-         
-                            </script>
-
-						{% endfor %}
-
-						{# Pagination #}
-
-
-					</div>
-
-					<div class="container mt-3">
+						</div>
 
 						<div class="row">
 
-							<div class="col-3 ms-auto me-2">
-                                
-								{{ knp_pagination_render(searchResults) }}
-									
+							{% for searchResult in searchResults %}
+
+								<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+									<a href="{{ path('view_products', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+										<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
+										<div class="card-body">
+											<ul class="list-group list-group-flush">
+												<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
+													€</li>
+											</ul>
+											<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
+
+											{% set colors = {} %}
+											{% for variations in searchResult.productsQuantities.values %}
+
+												{% if variations.color.code not in colors %}
+
+													{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+
+												{% endif %}
+
+											{% endfor %}
+
+											{% for color in colors %}
+												<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+													<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+												</div>
+
+											{% endfor %}
+
+										</div>
+
+									</a>
+
+								</div>
+
+								<script>
+									document.addEventListener("DOMContentLoaded", () => {
+										document.getElementById("article" + "{{ searchResult.title }}{{ searchResult.id }}").src = "{{ asset('images/' ~ searchResult.photo) }}";
+									});
+
+									function functionImageEnter() {
+										var image = document.getElementById("article" + "{{ searchResult.title }}{{ searchResult.id }}");
+										image.src = "{{ asset('images/' ~ searchResult.photo2) }}";
+									}
+
+									function functionImageLeave() {
+										var image = document.getElementById("article" + "{{ searchResult.title }}{{ searchResult.id }}");
+										image.src = "{{ asset('images/' ~ searchResult.photo) }}";
+									}
+
+									document.getElementById("article" + "{{ searchResult.title }}{{ searchResult.id }}").addEventListener("mouseenter", functionImageEnter);
+									document.getElementById("article" + "{{ searchResult.title }}{{ searchResult.id }}").addEventListener("mouseleave", functionImageLeave);
+								</script>
+
+							{% endfor %}
+
+							{# Pagination #}
+
+						</div>
+
+						<div class="container mt-3">
+
+							<div class="row">
+
+								<div class="col-3 ms-auto me-2">
+
+									{{ knp_pagination_render(searchResults) }}
+
+								</div>
+
 							</div>
 
 						</div>
 
 					</div>
 
-
 				</div>
-
-			</div>
 			</div>
 
 
