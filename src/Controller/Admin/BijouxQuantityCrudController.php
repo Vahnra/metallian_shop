@@ -3,8 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BijouxQuantity;
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\ProductsQuantities;
+use App\Controller\Admin\BijouxCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -13,10 +17,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class BijouxQuantityCrudController extends AbstractCrudController
 {
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
+            ->leftJoin('entity.products', 'vqcs')
+            ->andWhere('vqcs.type = :bijou')
+            ->setParameter('bijou', 'bijou');
+    }
+    
     public static function getEntityFqcn(): string
     {
         return ProductsQuantities::class;
