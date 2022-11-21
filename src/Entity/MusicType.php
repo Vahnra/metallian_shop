@@ -21,9 +21,13 @@ class MusicType
     #[ORM\OneToMany(mappedBy: 'genre', targetEntity: Media::class)]
     private Collection $media;
 
+    #[ORM\OneToMany(mappedBy: 'genre', targetEntity: Products::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -72,6 +76,36 @@ class MusicType
             // set the owning side to null (unless already changed)
             if ($medium->getGenre() === $this) {
                 $medium->setGenre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Products>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Products $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setGenre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Products $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getGenre() === $this) {
+                $product->setGenre(null);
             }
         }
 

@@ -39,6 +39,9 @@ class SousCategorie
     #[ORM\Column(length: 255)]
     private ?string $position = null;
 
+    #[ORM\OneToMany(mappedBy: 'sousCategorie', targetEntity: Products::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -46,6 +49,7 @@ class SousCategorie
         $this->accessoires = new ArrayCollection();
         $this->chaussures = new ArrayCollection();
         $this->bijouxes = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -240,6 +244,36 @@ class SousCategorie
     public function setPosition(string $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Products>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Products $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setSousCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Products $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getSousCategorie() === $this) {
+                $product->setSousCategorie(null);
+            }
+        }
 
         return $this;
     }

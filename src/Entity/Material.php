@@ -33,6 +33,9 @@ class Material
     #[ORM\OneToMany(mappedBy: 'material', targetEntity: AccessoiresMerchandising::class)]
     private Collection $accessoiresMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'material', targetEntity: Products::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -40,6 +43,7 @@ class Material
         $this->chaussures = new ArrayCollection();
         $this->vetementMerchandisings = new ArrayCollection();
         $this->accessoiresMerchandisings = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -208,6 +212,36 @@ class Material
             // set the owning side to null (unless already changed)
             if ($accessoiresMerchandising->getMaterial() === $this) {
                 $accessoiresMerchandising->setMaterial(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Products>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Products $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setMaterial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Products $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getMaterial() === $this) {
+                $product->setMaterial(null);
             }
         }
 

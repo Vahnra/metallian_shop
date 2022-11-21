@@ -30,12 +30,16 @@ class Artist
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: AccessoiresMerchandising::class)]
     private Collection $accessoiresMerchandisings;
 
+    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Products::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
         $this->vetements = new ArrayCollection();
         $this->vetementMerchandisings = new ArrayCollection();
         $this->accessoiresMerchandisings = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -174,6 +178,36 @@ class Artist
             // set the owning side to null (unless already changed)
             if ($accessoiresMerchandising->getArtist() === $this) {
                 $accessoiresMerchandising->setArtist(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Products>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Products $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Products $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getArtist() === $this) {
+                $product->setArtist(null);
             }
         }
 

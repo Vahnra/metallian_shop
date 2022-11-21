@@ -24,10 +24,14 @@ class Marques
     #[ORM\OneToMany(mappedBy: 'marques', targetEntity: Vetement::class)]
     private Collection $vetements;
 
+    #[ORM\OneToMany(mappedBy: 'marques', targetEntity: Products::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->vetementMerchandisings = new ArrayCollection();
         $this->vetements = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -106,6 +110,36 @@ class Marques
             // set the owning side to null (unless already changed)
             if ($vetement->getMarques() === $this) {
                 $vetement->setMarques(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Products>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Products $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setMarques($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Products $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getMarques() === $this) {
+                $product->setMarques(null);
             }
         }
 
