@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductsQuantitiesRepository;
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProductsQuantitiesRepository;
 
 #[ORM\Entity(repositoryClass: ProductsQuantitiesRepository::class)]
-class ProductsQuantities
+class ProductsQuantities implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -92,5 +93,12 @@ class ProductsQuantities
         $this->sku = $sku;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+
+        return $vars;
     }
 }

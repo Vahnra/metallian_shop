@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\MediaQuantity;
+use App\Entity\ProductsQuantities;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -18,7 +19,7 @@ class MediaQuantityCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return MediaQuantity::class;
+        return ProductsQuantities::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -26,7 +27,7 @@ class MediaQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('media', 'Médias')->autocomplete();
+        yield AssociationField::new('products', 'Médias')->setCrudController(MediaCrudController::class)->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('sku', 'Numéro de série');
@@ -46,7 +47,7 @@ class MediaQuantityCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(EntityFilter::new('media'))
+            ->add(EntityFilter::new('products'))
             ->add(TextFilter::new('sku'))
             ->add(TextFilter::new('stock'));
     }

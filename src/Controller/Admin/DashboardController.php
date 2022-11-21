@@ -45,6 +45,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AccessoiresMerchandisingQuantity;
 use App\Entity\Products;
+use App\Entity\ProductsQuantities;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -136,32 +137,32 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Articles en ventes');
 
         yield MenuItem::subMenu('Vêtements')->setSubItems([
-            MenuItem::linkToCrud('Voire les vêtements en vente', 'fas fa-eye', VetementQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente un vêtement', 'fas fa-plus', VetementQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les vêtements en vente', 'fas fa-eye', ProductsQuantities::class)->setController(VetementQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un vêtement', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(VetementQuantityCrudController::class)
         ]);
         yield MenuItem::subMenu('Accessoires')->setSubItems([
-            MenuItem::linkToCrud('Voire les accessoires en vente', 'fas fa-eye', AccessoiresQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente un accessoire', 'fas fa-plus', AccessoiresQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les accessoires en vente', 'fas fa-eye', ProductsQuantities::class)->setController(AccessoiresQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un accessoire', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(AccessoiresQuantityCrudController::class)
         ]);
         yield MenuItem::subMenu('Médias')->setSubItems([
-            MenuItem::linkToCrud('Voire les médias en vente', 'fas fa-eye', MediaQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente un média', 'fas fa-plus', MediaQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les médias en vente', 'fas fa-eye', ProductsQuantities::class)->setController(MediaQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un média', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(MediaQuantityCrudController::class)
         ]);
         yield MenuItem::subMenu('Chaussures')->setSubItems([
-            MenuItem::linkToCrud('Voire les chaussures en vente', 'fas fa-eye', ChaussuresQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente une chaussure', 'fas fa-plus', ChaussuresQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les chaussures en vente', 'fas fa-eye', ProductsQuantities::class)->setController(ChaussuresQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente une chaussure', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(ChaussuresQuantityCrudController::class)
         ]);
         yield MenuItem::subMenu('Bijoux')->setSubItems([
-            MenuItem::linkToCrud('Voire les bijoux en vente', 'fas fa-eye', BijouxQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente un bijoux', 'fas fa-plus', BijouxQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les bijoux en vente', 'fas fa-eye', ProductsQuantities::class)->setController(BijouxQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un bijoux', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(BijouxQuantityCrudController::class)
         ]);
         yield MenuItem::subMenu('Vêtements Merch')->setSubItems([
-            MenuItem::linkToCrud('Voire les vêtements merchandising en vente', 'fas fa-eye', VetementMerchandisingQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente un vêtement merchandising', 'fas fa-plus', VetementMerchandisingQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les vêtements merchandising en vente', 'fas fa-eye', ProductsQuantities::class)->setController(VetementMerchandisingQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un vêtement merchandising', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingQuantityCrudController::class)
         ]);
         yield MenuItem::subMenu('Accesoires Merch')->setSubItems([
-            MenuItem::linkToCrud('Voire les accessoires merchandising en vente', 'fas fa-eye', AccessoiresMerchandisingQuantity::class),
-            MenuItem::linkToCrud('Mettre en vente un accessoires merchandising', 'fas fa-plus', AccessoiresMerchandisingQuantity::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voire les accessoires merchandising en vente', 'fas fa-eye', ProductsQuantities::class)->setController(AccessoiresMerchandisingQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un accessoires merchandising', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(AccessoiresMerchandisingQuantityCrudController::class)
         ]);
 
         // Catégorie normal

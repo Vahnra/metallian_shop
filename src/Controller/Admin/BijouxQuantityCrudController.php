@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BijouxQuantity;
+use App\Entity\ProductsQuantities;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -18,7 +19,7 @@ class BijouxQuantityCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return BijouxQuantity::class;
+        return ProductsQuantities::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -26,7 +27,7 @@ class BijouxQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('bijoux', 'Bijoux')->autocomplete();
+        yield AssociationField::new('products', 'Bijoux')->setCrudController(BijouxCrudController::class)->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
@@ -47,7 +48,7 @@ class BijouxQuantityCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(EntityFilter::new('bijoux'))
+            ->add(EntityFilter::new('products'))
             ->add(EntityFilter::new('color'))
             ->add(TextFilter::new('sku'))
             ->add(TextFilter::new('stock'));

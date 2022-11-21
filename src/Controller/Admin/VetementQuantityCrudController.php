@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\VetementQuantity;
+use App\Entity\ProductsQuantities;
+use App\Controller\Admin\VetementCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -19,7 +21,7 @@ class VetementQuantityCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return VetementQuantity::class;
+        return ProductsQuantities::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -28,7 +30,7 @@ class VetementQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('vetement', 'Vêtement')->autocomplete();
+        yield AssociationField::new('products', 'Vêtement')->setCrudController(VetementCrudController::class)->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
@@ -52,7 +54,7 @@ class VetementQuantityCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(EntityFilter::new('vetement'))
+            ->add(EntityFilter::new('products'))
             ->add(EntityFilter::new('color'))
             ->add(EntityFilter::new('size'))
             ->add(TextFilter::new('sku'))
