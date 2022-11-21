@@ -42,6 +42,9 @@ class FavoriteProduct
     #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
     private ?AccessoiresMerchandising $accessoiresMerchandising = null;
 
+    #[ORM\ManyToOne(inversedBy: 'favoriteProducts')]
+    private ?Products $products = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -151,6 +154,18 @@ class FavoriteProduct
     public function setAccessoiresMerchandising(?AccessoiresMerchandising $accessoiresMerchandising): self
     {
         $this->accessoiresMerchandising = $accessoiresMerchandising;
+
+        return $this;
+    }
+
+    public function getProducts(): ?Products
+    {
+        return $this->products;
+    }
+
+    public function setProducts(?Products $products): self
+    {
+        $this->products = $products;
 
         return $this;
     }

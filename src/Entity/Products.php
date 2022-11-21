@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,11 +23,9 @@ class Products
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?SousCategorie $sousCategorie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -66,6 +66,30 @@ class Products
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductsQuantities::class, orphanRemoval: true)]
+    private Collection $productsQuantities;
+
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: FavoriteProduct::class, orphanRemoval: true)]
+    private Collection $favoriteProducts;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $releaseDate = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?CategorieMerchandising $categorieMerchandising = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?SousCategorieMerchandising $sousCategorieMerchandising = null;
+
+    public function __construct()
+    {
+        $this->productsQuantities = new ArrayCollection();
+        $this->favoriteProducts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -272,6 +296,114 @@ class Products
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductsQuantities>
+     */
+    public function getProductsQuantities(): Collection
+    {
+        return $this->productsQuantities;
+    }
+
+    public function addProductsQuantity(ProductsQuantities $productsQuantity): self
+    {
+        if (!$this->productsQuantities->contains($productsQuantity)) {
+            $this->productsQuantities->add($productsQuantity);
+            $productsQuantity->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductsQuantity(ProductsQuantities $productsQuantity): self
+    {
+        if ($this->productsQuantities->removeElement($productsQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($productsQuantity->getProducts() === $this) {
+                $productsQuantity->setProducts(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteProduct>
+     */
+    public function getFavoriteProducts(): Collection
+    {
+        return $this->favoriteProducts;
+    }
+
+    public function addFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if (!$this->favoriteProducts->contains($favoriteProduct)) {
+            $this->favoriteProducts->add($favoriteProduct);
+            $favoriteProduct->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteProduct(FavoriteProduct $favoriteProduct): self
+    {
+        if ($this->favoriteProducts->removeElement($favoriteProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteProduct->getProducts() === $this) {
+                $favoriteProduct->setProducts(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getReleaseDate(): ?string
+    {
+        return $this->releaseDate;
+    }
+
+    public function setReleaseDate(?string $releaseDate): self
+    {
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    public function getCategorieMerchandising(): ?CategorieMerchandising
+    {
+        return $this->categorieMerchandising;
+    }
+
+    public function setCategorieMerchandising(?CategorieMerchandising $categorieMerchandising): self
+    {
+        $this->categorieMerchandising = $categorieMerchandising;
+
+        return $this;
+    }
+
+    public function getSousCategorieMerchandising(): ?SousCategorieMerchandising
+    {
+        return $this->sousCategorieMerchandising;
+    }
+
+    public function setSousCategorieMerchandising(?SousCategorieMerchandising $sousCategorieMerchandising): self
+    {
+        $this->sousCategorieMerchandising = $sousCategorieMerchandising;
 
         return $this;
     }

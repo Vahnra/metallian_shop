@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use DateTimeImmutable;
 use App\Entity\Marques;
+use App\Entity\Products;
 use App\Entity\Vetement;
 use App\Entity\SousCategorie;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -33,13 +36,22 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class VetementCrudController extends AbstractCrudController
 {
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
+            ->andWhere('entity.type = :vetement')
+            ->setParameter('vetement', 'vetement');
+    }
+    
     public static function getEntityFqcn(): string
     {
-        return Vetement::class;
+        return Products::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -63,8 +75,8 @@ class VetementCrudController extends AbstractCrudController
         yield ImageField::new('photo5', 'Photo 5')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
 
         yield FormField::addPanel('Catégorie de l\'article');
-        yield AssociationField::new('categorie');
-        yield AssociationField::new('sousCategorie')->hideOnForm();
+        yield AssociationField::new('categorie', 'Catégorie');
+        yield AssociationField::new('sousCategorie', 'Sous-catégorie')->hideOnForm();
 
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
@@ -80,11 +92,11 @@ class VetementCrudController extends AbstractCrudController
     
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if(!$entityInstance instanceof Vetement) return;
+        if(!$entityInstance instanceof Products) return;
        
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
-    
+        $entityInstance->setType('vetement');
         parent::persistEntity($entityManager, $entityInstance);
     }
 

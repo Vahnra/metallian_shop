@@ -33,6 +33,9 @@ class Size implements \JsonSerializable
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: AccessoiresMerchandisingQuantity::class, orphanRemoval: true)]
     private Collection $accessoiresMerchandisingQuantities;
 
+    #[ORM\OneToMany(mappedBy: 'size', targetEntity: ProductsQuantities::class)]
+    private Collection $productsQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -45,6 +48,7 @@ class Size implements \JsonSerializable
         $this->chaussuresQuantities = new ArrayCollection();
         $this->vetementMerchandisingQuantities = new ArrayCollection();
         $this->accessoiresMerchandisingQuantities = new ArrayCollection();
+        $this->productsQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -220,6 +224,36 @@ class Size implements \JsonSerializable
             // set the owning side to null (unless already changed)
             if ($accessoiresMerchandisingQuantity->getSize() === $this) {
                 $accessoiresMerchandisingQuantity->setSize(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductsQuantities>
+     */
+    public function getProductsQuantities(): Collection
+    {
+        return $this->productsQuantities;
+    }
+
+    public function addProductsQuantity(ProductsQuantities $productsQuantity): self
+    {
+        if (!$this->productsQuantities->contains($productsQuantity)) {
+            $this->productsQuantities->add($productsQuantity);
+            $productsQuantity->setSize($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductsQuantity(ProductsQuantities $productsQuantity): self
+    {
+        if ($this->productsQuantities->removeElement($productsQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($productsQuantity->getSize() === $this) {
+                $productsQuantity->setSize(null);
             }
         }
 

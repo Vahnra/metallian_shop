@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-  let deviceBrande = $('#Vetement_categorie');
+  let deviceBrande = $('#Products_categorie');
 
   deviceBrande.change(function() {
       // ... retrieve the corresponding form.
@@ -14,9 +14,9 @@ $( document ).ready(function() {
           data : data,
           complete: function(html) {
           // Replace current position field ...
-          $('#Vetement_sousCategorie').replaceWith(
+          $('#Products_sousCategorie').replaceWith(
               // ... with the returned one from the AJAX response.
-              $(html.responseText).find('#Vetement_sousCategorie')
+              $(html.responseText).find('#Products_sousCategorie')
           );
           // Position field now displays the appropriate positions.
           }
@@ -25,7 +25,7 @@ $( document ).ready(function() {
 });
 
 $( document ).ready(function() {
-  let deviceBrande = $('#VetementMerchandising_categorieMerchandising');
+  let deviceBrande = $('#Products_categorieMerchandising');
   // console.log(deviceBrande)
   deviceBrande.change(function() {
       // ... retrieve the corresponding form.
@@ -43,9 +43,9 @@ $( document ).ready(function() {
           data : data,
           complete: function(html) {
           // Replace current position field ...
-          $('#VetementMerchandising_sousCategorieMerchandising').replaceWith(
+          $('#Products_sousCategorieMerchandising').replaceWith(
               // ... with the returned one from the AJAX response.
-              $(html.responseText).find('#VetementMerchandising_sousCategorieMerchandising')
+              $(html.responseText).find('#Products_sousCategorieMerchandising')
           );
 
           // Position field now displays the appropriate positions.
@@ -56,148 +56,148 @@ $( document ).ready(function() {
 
 });
 
-$( document ).ready(function() {
-  let deviceBrande = $('#Media_categorie');
+// $( document ).ready(function() {
+//   let deviceBrande = $('#Media_categorie');
 
-  deviceBrande.change(function() {
+//   deviceBrande.change(function() {
     
-      var form = $(this).closest('form');
+//       var form = $(this).closest('form');
        
-      var data = {};
+//       var data = {};
       
-      data[deviceBrande.attr('name')] = deviceBrande.val();
+//       data[deviceBrande.attr('name')] = deviceBrande.val();
    
-      $.ajax({
-          url : form.attr('action'),
-          type: form.attr('method'),
-          data : data,
-          complete: function(html) {
+//       $.ajax({
+//           url : form.attr('action'),
+//           type: form.attr('method'),
+//           data : data,
+//           complete: function(html) {
        
-          $('#Media_sousCategorie').replaceWith(
+//           $('#Media_sousCategorie').replaceWith(
       
-              $(html.responseText).find('#Media_sousCategorie')
-          );
+//               $(html.responseText).find('#Media_sousCategorie')
+//           );
 
-          }
-      });
+//           }
+//       });
       
-  });
+//   });
 
-});
+// });
 
-$( document ).ready(function() {
-  let deviceBrande = $('#Bijoux_categorie');
+// $( document ).ready(function() {
+//   let deviceBrande = $('#Bijoux_categorie');
 
-  deviceBrande.change(function() {
+//   deviceBrande.change(function() {
     
-      var form = $(this).closest('form');
+//       var form = $(this).closest('form');
        
-      var data = {};
+//       var data = {};
       
-      data[deviceBrande.attr('name')] = deviceBrande.val();
+//       data[deviceBrande.attr('name')] = deviceBrande.val();
    
-      $.ajax({
-          url : form.attr('action'),
-          type: form.attr('method'),
-          data : data,
-          complete: function(html) {
+//       $.ajax({
+//           url : form.attr('action'),
+//           type: form.attr('method'),
+//           data : data,
+//           complete: function(html) {
        
-          $('#Bijoux_sousCategorie').replaceWith(
+//           $('#Bijoux_sousCategorie').replaceWith(
       
-              $(html.responseText).find('#Bijoux_sousCategorie')
-          );
+//               $(html.responseText).find('#Bijoux_sousCategorie')
+//           );
 
-          }
-      });
+//           }
+//       });
       
-  });
+//   });
 
-});
+// });
 
-$( document ).ready(function() {
-  let deviceBrande = $('#Chaussures_categorie');
+// $( document ).ready(function() {
+//   let deviceBrande = $('#Chaussures_categorie');
 
-  deviceBrande.change(function() {
+//   deviceBrande.change(function() {
     
-      var form = $(this).closest('form');
+//       var form = $(this).closest('form');
        
-      var data = {};
+//       var data = {};
       
-      data[deviceBrande.attr('name')] = deviceBrande.val();
+//       data[deviceBrande.attr('name')] = deviceBrande.val();
    
-      $.ajax({
-          url : form.attr('action'),
-          type: form.attr('method'),
-          data : data,
-          complete: function(html) {
+//       $.ajax({
+//           url : form.attr('action'),
+//           type: form.attr('method'),
+//           data : data,
+//           complete: function(html) {
        
-          $('#Chaussures_sousCategorie').replaceWith(
+//           $('#Chaussures_sousCategorie').replaceWith(
       
-              $(html.responseText).find('#Chaussures_sousCategorie')
-          );
+//               $(html.responseText).find('#Chaussures_sousCategorie')
+//           );
 
-          }
-      });
+//           }
+//       });
       
-  });
+//   });
 
-});
+// });
 
-$( document ).ready(function() {
-  let deviceBrande = $('#Accessoires_categorie');
+// $( document ).ready(function() {
+//   let deviceBrande = $('#Accessoires_categorie');
 
-  deviceBrande.change(function() {
+//   deviceBrande.change(function() {
     
-      var form = $(this).closest('form');
+//       var form = $(this).closest('form');
        
-      var data = {};
+//       var data = {};
       
-      data[deviceBrande.attr('name')] = deviceBrande.val();
+//       data[deviceBrande.attr('name')] = deviceBrande.val();
    
-      $.ajax({
-          url : form.attr('action'),
-          type: form.attr('method'),
-          data : data,
-          complete: function(html) {
+//       $.ajax({
+//           url : form.attr('action'),
+//           type: form.attr('method'),
+//           data : data,
+//           complete: function(html) {
        
-          $('#Accessoires_sousCategorie').replaceWith(
+//           $('#Accessoires_sousCategorie').replaceWith(
       
-              $(html.responseText).find('#Accessoires_sousCategorie')
-          );
+//               $(html.responseText).find('#Accessoires_sousCategorie')
+//           );
 
-          }
-      });
+//           }
+//       });
       
-  });
+//   });
 
-});
+// });
 
-$( document ).ready(function() {
-  let deviceBrande = $('#AccessoiresMerchandising_categorieMerchandising');
+// $( document ).ready(function() {
+//   let deviceBrande = $('#AccessoiresMerchandising_categorieMerchandising');
 
-  deviceBrande.change(function() {
+//   deviceBrande.change(function() {
     
-      var form = $(this).closest('form');
+//       var form = $(this).closest('form');
        
-      var data = {};
+//       var data = {};
       
-      data[deviceBrande.attr('name')] = deviceBrande.val();
+//       data[deviceBrande.attr('name')] = deviceBrande.val();
    
-      $.ajax({
-          url : form.attr('action'),
-          type: form.attr('method'),
-          data : data,
-          complete: function(html) {
+//       $.ajax({
+//           url : form.attr('action'),
+//           type: form.attr('method'),
+//           data : data,
+//           complete: function(html) {
        
-          $('#AccessoiresMerchandising_sousCategorieMerchandising').replaceWith(
+//           $('#AccessoiresMerchandising_sousCategorieMerchandising').replaceWith(
       
-              $(html.responseText).find('#AccessoiresMerchandising_sousCategorieMerchandising')
-          );
+//               $(html.responseText).find('#AccessoiresMerchandising_sousCategorieMerchandising')
+//           );
 
-          }
-      });
+//           }
+//       });
       
-  });
+//   });
 
-});
+// });
 

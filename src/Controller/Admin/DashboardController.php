@@ -44,6 +44,7 @@ use App\Entity\VetementMerchandisingQuantity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AccessoiresMerchandisingQuantity;
+use App\Entity\Products;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -177,28 +178,28 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::subMenu('Vêtements')->setSubItems([
-            MenuItem::linkToCrud('Voir les vêtements', 'fas fa-eye', Vetement::class),
-            MenuItem::linkToCrud('Ajouter un vêtement', 'fas fa-plus', Vetement::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les vêtements', 'fas fa-eye', Products::class)->setController(VetementCrudController::class),
+            MenuItem::linkToCrud('Ajouter un vêtement', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementCrudController::class),
         ]);
 
         yield MenuItem::subMenu('Accessoires')->setSubItems([
-            MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', Accessoires::class),
-            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Accessoires::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', Products::class)->setController(AccessoiresCrudController::class),
+            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(AccessoiresCrudController::class),
         ]);
 
         yield MenuItem::subMenu('Média')->setSubItems([
-            MenuItem::linkToCrud('Voir les média', 'fas fa-eye', Media::class),
-            MenuItem::linkToCrud('Ajouter un média', 'fas fa-plus', Media::class)->setAction(Crud::PAGE_NEW)
+            MenuItem::linkToCrud('Voir les média', 'fas fa-eye', Products::class)->setController(MediaCrudController::class),
+            MenuItem::linkToCrud('Ajouter un média', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(MediaCrudController::class),
         ]);
 
         yield MenuItem::subMenu('Chaussures')->setSubItems([
-            MenuItem::linkToCrud('Voir les chaussures', 'fas fa-eye', Chaussures::class),
-            MenuItem::linkToCrud('Ajouter des chaussures', 'fas fa-plus', Chaussures::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les chaussures', 'fas fa-eye', Products::class)->setController(ChaussuresCrudController::class),
+            MenuItem::linkToCrud('Ajouter des chaussures', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(ChaussuresCrudController::class),
         ]);
 
         yield MenuItem::subMenu('Bijoux')->setSubItems([
-            MenuItem::linkToCrud('Voir les bijoux', 'fas fa-eye', Bijoux::class),
-            MenuItem::linkToCrud('Ajouter des bijoux', 'fas fa-plus', Bijoux::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les bijoux', 'fas fa-eye', Products::class)->setController(BijouxCrudController::class),
+            MenuItem::linkToCrud('Ajouter des bijoux', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(BijouxCrudController::class),
         ]);
 
         // Catégories merch
@@ -215,13 +216,13 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::subMenu('Vêtements')->setSubItems([
-            MenuItem::linkToCrud('Voir les vêtements', 'fas fa-eye', VetementMerchandising::class),
-            MenuItem::linkToCrud('Ajouter un vêtement', 'fas fa-plus', VetementMerchandising::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les vêtements', 'fas fa-eye', Products::class)->setController(VetementMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Ajouter un vêtement', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingCrudController::class),
         ]);
 
         yield MenuItem::subMenu('Accessoires')->setSubItems([
-            MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', AccessoiresMerchandising::class),
-            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', AccessoiresMerchandising::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les accessoires', 'fas fa-eye', Products::class)->setController(AccessoiresMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(AccessoiresMerchandisingCrudController::class),
         ]);
 
         yield MenuItem::section('Marques');

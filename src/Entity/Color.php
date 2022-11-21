@@ -39,6 +39,9 @@ class Color implements \JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
+    #[ORM\OneToMany(mappedBy: 'color', targetEntity: ProductsQuantities::class)]
+    private Collection $productsQuantities;
+
     public function __construct()
     {
         $this->vetements = new ArrayCollection();
@@ -53,6 +56,7 @@ class Color implements \JsonSerializable
         $this->chaussuresQuantities = new ArrayCollection();
         $this->vetementMerchandisingQuantities = new ArrayCollection();
         $this->accessoiresMerchandisingQuantities = new ArrayCollection();
+        $this->productsQuantities = new ArrayCollection();
     }
 
     public function __toString()
@@ -272,6 +276,36 @@ class Color implements \JsonSerializable
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductsQuantities>
+     */
+    public function getProductsQuantities(): Collection
+    {
+        return $this->productsQuantities;
+    }
+
+    public function addProductsQuantity(ProductsQuantities $productsQuantity): self
+    {
+        if (!$this->productsQuantities->contains($productsQuantity)) {
+            $this->productsQuantities->add($productsQuantity);
+            $productsQuantity->setColor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductsQuantity(ProductsQuantities $productsQuantity): self
+    {
+        if ($this->productsQuantities->removeElement($productsQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($productsQuantity->getColor() === $this) {
+                $productsQuantity->setColor(null);
+            }
+        }
 
         return $this;
     }
