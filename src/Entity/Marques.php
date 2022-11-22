@@ -18,19 +18,11 @@ class Marques
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\OneToMany(mappedBy: 'marques', targetEntity: VetementMerchandising::class)]
-    private Collection $vetementMerchandisings;
-
-    #[ORM\OneToMany(mappedBy: 'marques', targetEntity: Vetement::class)]
-    private Collection $vetements;
-
     #[ORM\OneToMany(mappedBy: 'marques', targetEntity: Products::class)]
     private Collection $products;
 
     public function __construct()
     {
-        $this->vetementMerchandisings = new ArrayCollection();
-        $this->vetements = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -52,66 +44,6 @@ class Marques
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, VetementMerchandising>
-     */
-    public function getVetementMerchandisings(): Collection
-    {
-        return $this->vetementMerchandisings;
-    }
-
-    public function addVetementMerchandising(VetementMerchandising $vetementMerchandising): self
-    {
-        if (!$this->vetementMerchandisings->contains($vetementMerchandising)) {
-            $this->vetementMerchandisings->add($vetementMerchandising);
-            $vetementMerchandising->setMarques($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVetementMerchandising(VetementMerchandising $vetementMerchandising): self
-    {
-        if ($this->vetementMerchandisings->removeElement($vetementMerchandising)) {
-            // set the owning side to null (unless already changed)
-            if ($vetementMerchandising->getMarques() === $this) {
-                $vetementMerchandising->setMarques(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Vetement>
-     */
-    public function getVetements(): Collection
-    {
-        return $this->vetements;
-    }
-
-    public function addVetement(Vetement $vetement): self
-    {
-        if (!$this->vetements->contains($vetement)) {
-            $this->vetements->add($vetement);
-            $vetement->setMarques($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVetement(Vetement $vetement): self
-    {
-        if ($this->vetements->removeElement($vetement)) {
-            // set the owning side to null (unless already changed)
-            if ($vetement->getMarques() === $this) {
-                $vetement->setMarques(null);
-            }
-        }
 
         return $this;
     }

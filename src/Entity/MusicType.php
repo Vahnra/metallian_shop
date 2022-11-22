@@ -18,15 +18,11 @@ class MusicType
     #[ORM\Column(length: 255)]
     private ?string $genre = null;
 
-    #[ORM\OneToMany(mappedBy: 'genre', targetEntity: Media::class)]
-    private Collection $media;
-
     #[ORM\OneToMany(mappedBy: 'genre', targetEntity: Products::class)]
     private Collection $products;
 
     public function __construct()
     {
-        $this->media = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -48,36 +44,6 @@ class MusicType
     public function setGenre(string $genre): self
     {
         $this->genre = $genre;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Media>
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
-            $medium->setGenre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->removeElement($medium)) {
-            // set the owning side to null (unless already changed)
-            if ($medium->getGenre() === $this) {
-                $medium->setGenre(null);
-            }
-        }
 
         return $this;
     }

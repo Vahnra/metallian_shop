@@ -18,27 +18,11 @@ class Artist
     #[ORM\Column(length: 255)]
     private ?string $artist = null;
 
-    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Media::class)]
-    private Collection $media;
-
-    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Vetement::class)]
-    private Collection $vetements;
-
-    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: VetementMerchandising::class)]
-    private Collection $vetementMerchandisings;
-
-    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: AccessoiresMerchandising::class)]
-    private Collection $accessoiresMerchandisings;
-
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Products::class)]
     private Collection $products;
 
     public function __construct()
     {
-        $this->media = new ArrayCollection();
-        $this->vetements = new ArrayCollection();
-        $this->vetementMerchandisings = new ArrayCollection();
-        $this->accessoiresMerchandisings = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -60,126 +44,6 @@ class Artist
     public function setArtist(string $artist): self
     {
         $this->artist = $artist;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Media>
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
-            $medium->setArtist($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->removeElement($medium)) {
-            // set the owning side to null (unless already changed)
-            if ($medium->getArtist() === $this) {
-                $medium->setArtist(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Vetement>
-     */
-    public function getVetements(): Collection
-    {
-        return $this->vetements;
-    }
-
-    public function addVetement(Vetement $vetement): self
-    {
-        if (!$this->vetements->contains($vetement)) {
-            $this->vetements->add($vetement);
-            $vetement->setArtist($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVetement(Vetement $vetement): self
-    {
-        if ($this->vetements->removeElement($vetement)) {
-            // set the owning side to null (unless already changed)
-            if ($vetement->getArtist() === $this) {
-                $vetement->setArtist(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, VetementMerchandising>
-     */
-    public function getVetementMerchandisings(): Collection
-    {
-        return $this->vetementMerchandisings;
-    }
-
-    public function addVetementMerchandising(VetementMerchandising $vetementMerchandising): self
-    {
-        if (!$this->vetementMerchandisings->contains($vetementMerchandising)) {
-            $this->vetementMerchandisings->add($vetementMerchandising);
-            $vetementMerchandising->setArtist($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVetementMerchandising(VetementMerchandising $vetementMerchandising): self
-    {
-        if ($this->vetementMerchandisings->removeElement($vetementMerchandising)) {
-            // set the owning side to null (unless already changed)
-            if ($vetementMerchandising->getArtist() === $this) {
-                $vetementMerchandising->setArtist(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, AccessoiresMerchandising>
-     */
-    public function getAccessoiresMerchandisings(): Collection
-    {
-        return $this->accessoiresMerchandisings;
-    }
-
-    public function addAccessoiresMerchandising(AccessoiresMerchandising $accessoiresMerchandising): self
-    {
-        if (!$this->accessoiresMerchandisings->contains($accessoiresMerchandising)) {
-            $this->accessoiresMerchandisings->add($accessoiresMerchandising);
-            $accessoiresMerchandising->setArtist($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAccessoiresMerchandising(AccessoiresMerchandising $accessoiresMerchandising): self
-    {
-        if ($this->accessoiresMerchandisings->removeElement($accessoiresMerchandising)) {
-            // set the owning side to null (unless already changed)
-            if ($accessoiresMerchandising->getArtist() === $this) {
-                $accessoiresMerchandising->setArtist(null);
-            }
-        }
 
         return $this;
     }
