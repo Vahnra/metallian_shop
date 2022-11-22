@@ -21,32 +21,12 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: SousCategorie::class)]
     private Collection $sousCategories;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Vetement::class)]
-    private Collection $vetements;
-
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Media::class)]
-    private Collection $media;
-
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Accessoires::class)]
-    private Collection $accessoires;
-
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Chaussures::class)]
-    private Collection $chaussures;
-
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Bijoux::class)]
-    private Collection $bijouxes;
-
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Products::class)]
     private Collection $products;
 
     public function __construct()
     {
         $this->sousCategories = new ArrayCollection();
-        $this->vetements = new ArrayCollection();
-        $this->media = new ArrayCollection();
-        $this->accessoires = new ArrayCollection();
-        $this->chaussures = new ArrayCollection();
-        $this->bijouxes = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -96,156 +76,6 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($sousCategory->getCategorie() === $this) {
                 $sousCategory->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Vetement>
-     */
-    public function getVetements(): Collection
-    {
-        return $this->vetements;
-    }
-
-    public function addVetement(Vetement $vetement): self
-    {
-        if (!$this->vetements->contains($vetement)) {
-            $this->vetements->add($vetement);
-            $vetement->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVetement(Vetement $vetement): self
-    {
-        if ($this->vetements->removeElement($vetement)) {
-            // set the owning side to null (unless already changed)
-            if ($vetement->getCategorie() === $this) {
-                $vetement->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Media>
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
-            $medium->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->removeElement($medium)) {
-            // set the owning side to null (unless already changed)
-            if ($medium->getCategorie() === $this) {
-                $medium->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Accessoires>
-     */
-    public function getAccessoires(): Collection
-    {
-        return $this->accessoires;
-    }
-
-    public function addAccessoire(Accessoires $accessoire): self
-    {
-        if (!$this->accessoires->contains($accessoire)) {
-            $this->accessoires->add($accessoire);
-            $accessoire->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAccessoire(Accessoires $accessoire): self
-    {
-        if ($this->accessoires->removeElement($accessoire)) {
-            // set the owning side to null (unless already changed)
-            if ($accessoire->getCategorie() === $this) {
-                $accessoire->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Chaussures>
-     */
-    public function getChaussures(): Collection
-    {
-        return $this->chaussures;
-    }
-
-    public function addChaussure(Chaussures $chaussure): self
-    {
-        if (!$this->chaussures->contains($chaussure)) {
-            $this->chaussures->add($chaussure);
-            $chaussure->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChaussure(Chaussures $chaussure): self
-    {
-        if ($this->chaussures->removeElement($chaussure)) {
-            // set the owning side to null (unless already changed)
-            if ($chaussure->getCategorie() === $this) {
-                $chaussure->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Bijoux>
-     */
-    public function getBijouxes(): Collection
-    {
-        return $this->bijouxes;
-    }
-
-    public function addBijoux(Bijoux $bijoux): self
-    {
-        if (!$this->bijouxes->contains($bijoux)) {
-            $this->bijouxes->add($bijoux);
-            $bijoux->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBijoux(Bijoux $bijoux): self
-    {
-        if ($this->bijouxes->removeElement($bijoux)) {
-            // set the owning side to null (unless already changed)
-            if ($bijoux->getCategorie() === $this) {
-                $bijoux->setCategorie(null);
             }
         }
 
