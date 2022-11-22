@@ -58,11 +58,6 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('additionalAdress', TextType::class, [
                 'label' => 'Complément d\'addresse',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne doit pas être vide'
-                    ])
-                ]
             ])
             ->add('postCode', TextType::class, [
                 'label' => 'Code Postal',

@@ -219,9 +219,9 @@
 
                             <select class="form-select no-border-radius" onchange="window.location=this.value;">
                                 <option disabled selected hidden>Trier par</option>
-                                {{ knp_pagination_sortable(vetements, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
-                                {{ knp_pagination_sortable(vetements, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
-                                {{ knp_pagination_sortable(vetements, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+                                {{ knp_pagination_sortable(products, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                {{ knp_pagination_sortable(products, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                {{ knp_pagination_sortable(products, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
 
                             </select>
 
@@ -233,13 +233,11 @@
 
                         {# For pour afficher tout les vetements en forme de carte #}
 
-                        {# {% if categories.title == 'Femme' %} #}
-
-                            {% for vetement in vetements %}
+                            {% for vetement in products %}
                         
                             <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-                                <a href="{{ path('voir_vetement_merch', {'id': vetement.id}) }}" class="text-decoration-none text-black">
+                                <a href="{{ path('view_products', {'id': vetement.id}) }}" class="text-decoration-none text-black">
 
                                     <img src="{{ asset('images/image_placeholder.png') }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 
@@ -249,7 +247,7 @@
                                         </ul>
                                         <h5 class="card-title text-muted">{{ vetement.title }}</h5>
                                             {% set colors = {} %}
-                                            {% for variations in vetement.vetementMerchandisingQuantities.values %}
+                                            {% for variations in vetement.productsQuantities.values %}
 
                                                 {% if variations.color.code not in colors %}
 
@@ -297,129 +295,21 @@
                         
                             {% endfor %}
 
-                        {# {% endif %} #}
-
-                        {% if categories.title == 'Bijoux' %}
-
-                            {% for bijou in bijoux %}
-                        
-                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
-
-                                <a href="{{ path('voir_bijoux', {"id": bijou.id} ) }}" class="text-decoration-none text-black">
-
-                                    <img src="{{ asset('images/' ~ bijou.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item fw-bold">{{ (bijou.price)/100 }} €</li>
-                                        </ul>
-                                        <h5 class="card-title text-muted">{{ bijou.title }}</h5>
-                                            
-                                    </div>      
-
-                                </a>
-
-                            </div>
-                        
-                            {% endfor %}
-
-                        {% endif %}
-
-                        {% for accessoire in accessoires %}
-                        
-                            <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
-
-                                <a href="{{ path('voir_accessoires_merch', {"id": accessoire.id} ) }}" class="text-decoration-none text-black">
-
-                                    <img src="{{ asset('images/image_placeholder.png') }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
-                                        </ul>
-                                        <h5 class="card-title text-muted">{{ accessoire.title }}</h5>
-                                            {% set colors = {} %}
-                                                {% for variations in accessoire.accessoiresMerchandisingQuantities.values %}
-
-                                                    {% if variations.color.code not in colors %}
-                                                    
-                                                        {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-                                                    
-                                                    {% endif %}
-                                                    
-
-                                                {% endfor %}
-
-                                                {% for color in colors %}
-                                                    <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-                                                        <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-                                                    </div>
-                                                
-                                                {% endfor %}
-                                    </div>      
-
-                                </a>
-
-                            </div>
-
-                            <script>
-
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").src = "{{ asset('images/' ~ accessoire.photo) }}";
-                                });
-                                
-                                function functionImageEnter(){
-                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
-                                    image.src = "{{ asset('images/' ~ accessoire.photo2) }}";
-                                }
-
-                                function functionImageLeave(){
-                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
-                                    image.src = "{{ asset('images/' ~ accessoire.photo) }}";
-                                }
-
-                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseenter", functionImageEnter);
-                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseleave", functionImageLeave);
-                
-                            </script>
-                        
-                        {% endfor %}
-
                         {# Pagination #}
 
-                        {% if vetements is not null %}
-
-                            <div class="container mt-3">
+                        <div class="container mt-3">
                         
-                                <div class="row">
+                            <div class="row">
                             
-                                    <div class="col-3 ms-auto me-2">
+                                <div class="col-3 ms-auto me-2">
                                 
-                                        {{ knp_pagination_render(vetements) }}
+                                    {{ knp_pagination_render(products) }}
                                 
-                                    </div>
-                            
                                 </div>
-
+                            
                             </div>
-                            
-                        {% endif %}
 
-                        {% if accessoires is not null %}
-
-                            <div class="container mt-3">
-                        
-                                <div class="row">
-                            
-                                    <div class="col-3 ms-auto me-2">
-                                
-                                        {{ knp_pagination_render(accessoires) }}
-                                
-                                    </div>
-                            
-                                </div>
-
-                            </div>
-                            
-                        {% endif %}
+                        </div>
 
                     </div>
         

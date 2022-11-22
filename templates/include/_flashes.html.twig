@@ -6,10 +6,11 @@
                 <span class="alert-inner--icon"></span>
             {% elseif label == 'Mail Vérification' %}
                 <span class="alert-inner--icon"></span>
+            {% elseif label == 'Attention' %}
+                <span class="alert-inner--text" style="color: red"><strong>{{ label | title }} : </strong> {{ message | raw }}</span>
             {% else %}
                 <span class="alert-inner--icon" style="color: red"></span>
             {% endif %}
-            <span class="alert-inner--text"><strong>{{ label | title }} : </strong> {{ message | raw }}</span>
         </div>
 
     {% endfor %}

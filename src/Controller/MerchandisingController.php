@@ -2,11 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Size;
-use App\Entity\Color;
-use App\Entity\Marques;
-use App\Entity\Material;
-use App\Entity\MusicType;
 use App\Entity\CategorieMerchandising;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\SousCategorieMerchandising;
@@ -16,12 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AccessoiresMerchandisingService;
 use App\Form\VetementMerchandisingFilterFormType;
-use App\Form\AccessoiresMerchandisingFilterFormType;
-use App\Repository\ProductsRepository;
 use App\Service\ProductsService;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MerchandisingController extends AbstractController
@@ -84,8 +74,6 @@ class MerchandisingController extends AbstractController
     public function showMerchandisingSousCategorie(
         SousCategorieMerchandising $souscategories,
         ProductsService $productsService,
-        VetementMerchandisingService $vetementMerchandisingService,
-        AccessoiresMerchandisingService $accessoiresService,
         EntityManagerInterface $entityManager,
         Request $request
         ): Response 
@@ -96,9 +84,7 @@ class MerchandisingController extends AbstractController
         $filterForm = $this->createForm(VetementMerchandisingFilterFormType::class)->handleRequest($request);
 
         // Par défaut la pagination renvoit tout
-        $vetements = $vetementMerchandisingService->getPaginatedVetementsSousCategorie($souscategories);
-
-        $accessoires = $accessoiresService->getPaginatedAccessoiresSousCategorie($souscategories);
+        $products = $productsService->getPaginatedProductsSousCategorieMerchandising($souscategories);
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             // on prend les valeurs du formulaire
@@ -115,8 +101,7 @@ class MerchandisingController extends AbstractController
             $priceMax = $filterForm->get('priceMax')->getData();
 
             // on insert et utilise le qb de filtre
-    
-            $vetements = $vetementMerchandisingService->getPaginatedVetementsSousCategoriesFiltered(
+            $products = $productsService->getPaginatedProductsSousCategoriesMerchandisingFiltered(
                 $souscategories, 
                 $color, 
                 $size, 
@@ -134,8 +119,7 @@ class MerchandisingController extends AbstractController
             'categories' => $categorieMerchandising,
             'souscategories' => $souscategories,
             'allsouscategories' => $allsouscategories,
-            'vetements' => $vetements,
-            'accessoires' => $accessoires,
+            'products' => $products,
             'filterForm' => $filterForm->createView(),
         ]);
     }
