@@ -11,6 +11,7 @@ use App\Entity\Products;
 use App\Entity\Expedition;
 use App\Entity\CartProduct;
 use App\Entity\FavoriteProduct;
+use App\Entity\Images;
 use App\Form\CartProductFormType;
 use App\Entity\ProductsQuantities;
 use Doctrine\ORM\EntityManagerInterface;
@@ -183,8 +184,11 @@ class ViewProductsController extends AbstractController
 
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'products' => $products]);
 
+        $images = $entityManager->getRepository(Images::class)->findby(['product' => $products]);
+
         return $this->render('view_products/view_products.html.twig', [
             'vetement' => $products,
+            'images' => $images,
             'vetementVariations' => $productsVariations,
             'vetementVariationsJs' => json_encode($productsVariations),
             'couleurs' => $couleurs,

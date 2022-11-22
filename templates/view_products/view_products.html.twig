@@ -35,7 +35,13 @@
     
         <div class="col-1 d-sm-none d-none d-md-none d-lg-block p-0 text-center bg-dark">
 
-            <a href="{{ asset('images/'~vetement.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+            {% for image in images %}
+                <a href="{{ asset('images/' ~ image.image) }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src="{{ asset('images/' ~ image.image) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}" />
+                </a>
+            {% endfor %}
+            
+            {# <a href="{{ asset('images/'~vetement.photo) }}" data-toggle="lightbox" data-gallery="gallery">
                 <img src="{{ asset('images/'~vetement.photo) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}" />
             </a>
 
@@ -53,15 +59,15 @@
 
             <a href="{{ asset('images/'~vetement.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
                 <img src={{ asset('images/'~vetement.photo5) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
-            </a>
+            </a> #}
 
         </div>
 
         <div class="col-md-7 pt-3 text-center" style="background-color: white;">
 
-            <a href="{{ asset('images/'~vetement.photo) }}" data-toggle="lightbox" data-gallery="gallery">
+            <a href="{{ asset('images/'~images.0.image) }}" data-toggle="lightbox" data-gallery="gallery">
         
-                <img id="imageBox" src="{{ asset('images/'~vetement.photo) }}" class="img-fluid p-2" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
+                <img id="imageBox" src="{{ asset('images/'~images.0.image) }}" class="img-fluid p-2" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
 
             </a>
        

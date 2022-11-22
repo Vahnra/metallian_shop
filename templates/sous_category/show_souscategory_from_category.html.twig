@@ -433,18 +433,18 @@
                             <script>
 
                                 document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").src = "{{ asset('images/' ~ vetement.photo) }}";
+                                    document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").src = "{{ asset('images/' ~ vetement.images.values.0.image) }}";
                                 });
                                 
                                 function functionImageEnter(){
                                     var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
-                                    image.src = "{{ asset('images/' ~ vetement.photo2) }}";
+                                    image.src = "{{ asset('images/' ~ vetement.images.values.1.image) }}";
                                     
                                 }
 
                                 function functionImageLeave(){
                                     var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
-                                    image.src = "{{ asset('images/' ~ vetement.photo) }}";
+                                    image.src = "{{ asset('images/' ~ vetement.images.values.0.image) }}";
                                 }
 
                                 document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseenter", functionImageEnter);

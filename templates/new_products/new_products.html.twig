@@ -227,17 +227,17 @@
 							<script>
 
                                 document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").src = "{{ asset('images/' ~ searchResult.photo) }}";
+                                    document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").src = "{{ asset('images/' ~ searchResult.images.values.0.image) }}";
                                 });                                                 
                                             
                                 function functionImageEnter(){
                                     var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
-                                    image.src = "{{ asset('images/' ~ searchResult.photo2) }}";
+                                    image.src = "{{ asset('images/' ~ searchResult.images.values.1.image) }}";
                                 }
 
                                 function functionImageLeave(){
                                     var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
-                                    image.src = "{{ asset('images/' ~ searchResult.photo) }}";
+                                    image.src = "{{ asset('images/' ~ searchResult.images.values.0.image) }}";
                                 }
 
                                 document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseenter", functionImageEnter);
