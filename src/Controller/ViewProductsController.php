@@ -152,7 +152,12 @@ class ViewProductsController extends AbstractController
             $cartProduct->setPhoto($products->getImages()->getValues()[0]->getImage());
             $cartProduct->setColor($choosedColor);
             $cartProduct->setSize($choosedSize);
-            $cartProduct->setSubCategory($products->getSousCategorie() || $products->getSousCategorieMerchandising());
+            if ($products->getSousCategorie() != null) {
+                $cartProduct->setSubCategory($products->getSousCategorie());
+            } else {
+                $cartProduct->setSubCategory($products->getSousCategorieMerchandising());
+            }
+            
 
             $sku = $entityManager->getRepository(ProductsQuantities::class)->findOneBy([
                 'products' => $products->getId(), 

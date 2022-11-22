@@ -45,8 +45,6 @@ class CartController extends AbstractController
         $user = $this->getUser();
 
         $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
-
-        // dd($request->getSession()->get('id'));
         
         if ($user !== null && $cart == null) {
             $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
@@ -179,87 +177,87 @@ class CartController extends AbstractController
         return $this->redirectToRoute('added_product');
     }
     
-    #[Route('/cart/added-product', name:'added_product', methods:['GET', 'POST'])]
-    public function addedProduct(
-        EntityManagerInterface $entityManager,
-        Request $request
-        ): Response
-    {
-        $user = $this->getUser();
+    // #[Route('/cart/added-product', name:'added_product', methods:['GET', 'POST'])]
+    // public function addedProduct(
+    //     EntityManagerInterface $entityManager,
+    //     Request $request
+    //     ): Response
+    // {
+    //     $user = $this->getUser();
 
-        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+    //     $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
         
-        if ($user !== null && $cart == null) {
-            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
-        }
+    //     if ($user !== null && $cart == null) {
+    //         $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
+    //     }
 
-        $cartProducts = null;
+    //     $cartProducts = null;
 
-        $numberOfItem = null;
+    //     $numberOfItem = null;
 
-        if ($cart !== null) {
-            $numberOfItem = $cart->getCartProduct()->count();
-        }
+    //     if ($cart !== null) {
+    //         $numberOfItem = $cart->getCartProduct()->count();
+    //     }
 
-        if ($cart !== null) {
-            $cartProducts = $entityManager->getRepository(CartProduct::class)->findBy(['cart'=>$cart], ['updatedAt'=>'ASC']);
-        }
+    //     if ($cart !== null) {
+    //         $cartProducts = $entityManager->getRepository(CartProduct::class)->findBy(['cart'=>$cart], ['updatedAt'=>'ASC']);
+    //     }
 
-        $totalPrice = 0;
+    //     $totalPrice = 0;
 
-        // Boucle pour récuper le prix total de tout les produits du panier
-        if ($numberOfItem !== null) {
-            foreach ($cartProducts as $value) {
-                $totalPrice = $totalPrice + ($value->getPrice() * $value->getQuantity());
-            }
-        }
+    //     // Boucle pour récuper le prix total de tout les produits du panier
+    //     if ($numberOfItem !== null) {
+    //         foreach ($cartProducts as $value) {
+    //             $totalPrice = $totalPrice + ($value->getPrice() * $value->getQuantity());
+    //         }
+    //     }
 
-        // On récupère le dernier produit du panier
-        if ($cartProducts == null) {
-            $lastProduct = null;
-        }
-        if ($cartProducts != null) {
-            $lastProduct = $cartProducts[array_key_last($cartProducts)];
-        }
+    //     // On récupère le dernier produit du panier
+    //     if ($cartProducts == null) {
+    //         $lastProduct = null;
+    //     }
+    //     if ($cartProducts != null) {
+    //         $lastProduct = $cartProducts[array_key_last($cartProducts)];
+    //     }
 
-        return $this->render('cart/added_product.html.twig', [
-            'numberOfItem' => $numberOfItem,
-            'totalPrice' => $totalPrice,
-            'cartProducts' => $cartProducts,
-            'lastProduct' => $lastProduct
-        ]);
-    }
+    //     return $this->render('cart/added_product.html.twig', [
+    //         'numberOfItem' => $numberOfItem,
+    //         'totalPrice' => $totalPrice,
+    //         'cartProducts' => $cartProducts,
+    //         'lastProduct' => $lastProduct
+    //     ]);
+    // }
 
-    #[Route('/return', name:'return', methods:['GET', 'POST'])]
-    public function return(
-        EntityManagerInterface $entityManager,
-        Request $request
-        ): Response
-    {
-        $user = $this->getUser();
+    // #[Route('/return', name:'return', methods:['GET', 'POST'])]
+    // public function return(
+    //     EntityManagerInterface $entityManager,
+    //     Request $request
+    //     ): Response
+    // {
+    //     $user = $this->getUser();
 
-        $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
+    //     $cart = $entityManager->getRepository(Cart::class)->findOneBy(['token'=>$request->getSession()->get('id'), 'status'=>'active']);
         
-        if ($user !== null  && $cart == null) {
-            $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
-        }
+    //     if ($user !== null  && $cart == null) {
+    //         $cart = $entityManager->getRepository(Cart::class)->findOneBy(['user'=>$user, 'status'=>'active'], ['updatedAt'=>'DESC']);
+    //     }
 
-        $cartProducts = null;
+    //     $cartProducts = null;
 
-        if ($cart !== null) {
-            $cartProducts = $cart->getCartProduct()->toArray();
-        }
+    //     if ($cart !== null) {
+    //         $cartProducts = $cart->getCartProduct()->toArray();
+    //     }
 
-        // Boucle pour récuper le prix total de tout les produits du panier
-        $lastProducts = $cartProducts[array_key_last($cartProducts)];
+    //     // Boucle pour récuper le prix total de tout les produits du panier
+    //     $lastProducts = $cartProducts[array_key_last($cartProducts)];
 
-        // Condition pour chaque type de prodruit pour former la route précédent
-        if ($lastProducts->getProducts() !== null) {
-            return $this->redirectToRoute('view_products', [
-                'id' => $lastProducts->getProducts()->getId()
-            ]);
-        }
+    //     // Condition pour chaque type de prodruit pour former la route précédent
+    //     if ($lastProducts->getProducts() !== null) {
+    //         return $this->redirectToRoute('view_products', [
+    //             'id' => $lastProducts->getProducts()->getId()
+    //         ]);
+    //     }
 
-        return $this->redirectToRoute('default_home');
-    }
+    //     return $this->redirectToRoute('default_home');
+    // }
 }
