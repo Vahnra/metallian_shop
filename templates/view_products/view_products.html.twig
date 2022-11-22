@@ -11,11 +11,21 @@
                 <div class="col-1"></div>
                 <div class="col-11 pt-1">
                     <h1>
+                        {% if vetement.categorie is not null %}
                         <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': vetement.categorie}) }}">{{ vetement.categorie }}
                         </a> / 
                         <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': vetement.categorie, 'title': vetement.souscategorie}) }}">{{ vetement.souscategorie }}
                         </a>
                          / {{ vetement.title }}
+                        {% endif %}
+
+                        {% if vetement.categorieMerchandising is not null %}
+                        <a class="text-decoration-none text-white" href="{{ path('show_from_category_merchandising', {'title': vetement.categorieMerchandising}) }}">{{ vetement.categorieMerchandising }}
+                        </a> / 
+                        <a class="text-decoration-none text-white" href="{{ path('show_merchandising_sous_categorie', {'title1': vetement.categorieMerchandising, 'title': vetement.souscategorieMerchandising}) }}">{{ vetement.souscategorieMerchandising }}
+                        </a>
+                         / {{ vetement.title }}
+                        {% endif %}
                     </h1>
                 </div>
             </div>

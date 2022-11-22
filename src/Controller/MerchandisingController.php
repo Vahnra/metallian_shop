@@ -17,6 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AccessoiresMerchandisingService;
 use App\Form\VetementMerchandisingFilterFormType;
 use App\Form\AccessoiresMerchandisingFilterFormType;
+use App\Repository\ProductsRepository;
+use App\Service\ProductsService;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,8 +29,7 @@ class MerchandisingController extends AbstractController
     #[Route('/merchandising-{title}', name: 'show_from_category_merchandising', methods:['GET', 'POST'])]
     public function showFromCategoryMerchandising(
         CategorieMerchandising $categorieMerchandising,
-        VetementMerchandisingService $vetementMerchandisingService,
-        AccessoiresMerchandisingService $accessoiresService,
+        ProductsService $productsService,
         EntityManagerInterface $entityManager,
         Request $request
         ): Response
@@ -36,13 +37,8 @@ class MerchandisingController extends AbstractController
         // Form pour le filtre vetement merchandising
         $filterForm = $this->createForm(VetementMerchandisingFilterFormType::class)->handleRequest($request);
 
-        // Form pour le filter accessoires
-        $filterAccessoiresForm = $this->createForm(AccessoiresMerchandisingFilterFormType::class)->handleRequest($request);
-
         // Par défaut la pagination renvoit tout
-        $vetements = $vetementMerchandisingService->getPaginatedVetements($categorieMerchandising);
-
-        $accessoires = $accessoiresService->getPaginatedAccessoires($categorieMerchandising);
+        $products = $productsService->getPaginatedProductsMerchandising($categorieMerchandising);
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             // on prend les valeurs du formulaire
@@ -61,36 +57,13 @@ class MerchandisingController extends AbstractController
             $priceMax = $filterForm->get('priceMax')->getData();
 
             // on insert et utilise le qb de filtre
-    
-            $vetements = $vetementMerchandisingService->getPaginatedVetementsFiltered(
+            $products = $productsService->getPaginatedProductsMerchandisingFiltered(
                 $categorieMerchandising, 
                 $color, 
                 $size, 
                 $material, 
                 $marque,
                 $artist,
-                $priceMini, 
-                $priceMax
-            );        
-        }
-
-        if ($filterAccessoiresForm->isSubmitted() && $filterAccessoiresForm->isValid()) {
-            // on prend les valeurs du formulaire
-            $color = $filterAccessoiresForm->get('Couleur')->getData();
-
-            $material = $filterAccessoiresForm->get('material')->getData();
-
-            $priceMini = $filterAccessoiresForm->get('priceMini')->getData();
-
-            $priceMax = $filterAccessoiresForm->get('priceMax')->getData();
-
-            // on insert et utilise le qb de filtre
-    
-            $accessoires = $accessoiresService->getPaginatedAccessoiresFiltered(
-                $categorieMerchandising, 
-                $color, 
-                $material, 
-                $artist, 
                 $priceMini, 
                 $priceMax
             );        
@@ -102,16 +75,15 @@ class MerchandisingController extends AbstractController
         return $this->render('category/show_from_category_merchandising.html.twig', [
             'categories' => $categorieMerchandising,
             'souscategories' => $souscategories,
-            'vetements' => $vetements,
-            'accessoires' => $accessoires,
+            'products' => $products,
             'filterForm' => $filterForm->createView(),
-            'filterAccessoiresForm' => $filterAccessoiresForm->createView(),
         ]);
     }
 
     #[Route('/merchandising-{title1}/{title}', name:'show_merchandising_sous_categorie', methods:['GET', 'POST'])]
     public function showMerchandisingSousCategorie(
         SousCategorieMerchandising $souscategories,
+        ProductsService $productsService,
         VetementMerchandisingService $vetementMerchandisingService,
         AccessoiresMerchandisingService $accessoiresService,
         EntityManagerInterface $entityManager,
@@ -122,9 +94,6 @@ class MerchandisingController extends AbstractController
 
         // Form pour le filtre vetement merchandising
         $filterForm = $this->createForm(VetementMerchandisingFilterFormType::class)->handleRequest($request);
-
-        // Form pour le filter accessoires
-        $filterAccessoiresForm = $this->createForm(AccessoiresMerchandisingFilterFormType::class)->handleRequest($request);
 
         // Par défaut la pagination renvoit tout
         $vetements = $vetementMerchandisingService->getPaginatedVetementsSousCategorie($souscategories);
@@ -159,27 +128,6 @@ class MerchandisingController extends AbstractController
 
         }
 
-        if ($filterAccessoiresForm->isSubmitted() && $filterAccessoiresForm->isValid()) {
-            // on prend les valeurs du formulaire
-            $color = $filterAccessoiresForm->get('Couleur')->getData();
-
-            $material = $filterAccessoiresForm->get('material')->getData();
-
-            $priceMini = $filterAccessoiresForm->get('priceMini')->getData();
-
-            $priceMax = $filterAccessoiresForm->get('priceMax')->getData();
-
-            // on insert et utilise le qb de filtre
-    
-            $accessoires = $accessoiresService->getPaginatedAccessoiresSousCategoriesFiltered(
-                $souscategories, 
-                $color, 
-                $material, 
-                $priceMax, 
-                $priceMini
-            );        
-        }
-
         $allsouscategories = $entityManager->getRepository(SousCategorieMerchandising::class)->findAll();
 
         return $this->render("sous_category/show_merchandising_sous_category.html.twig", [
@@ -189,7 +137,6 @@ class MerchandisingController extends AbstractController
             'vetements' => $vetements,
             'accessoires' => $accessoires,
             'filterForm' => $filterForm->createView(),
-            'filterAccessoiresForm' => $filterAccessoiresForm->createView(),
         ]);
     }
 }

@@ -159,4 +159,28 @@ class ProductsService
 
         return $this->paginator->paginate($productQuery, $page, $limit);
     }
+
+    public function getPaginatedProductsMerchandising($value)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 50;
+
+        $productQuery = $this->productsRepository->findForPaginationMerchandising($value);
+
+        return $this->paginator->paginate($productQuery, $page, $limit);
+    }
+
+    public function getPaginatedProductsMerchandisingFiltered($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 50;
+
+        $productQuery = $this->productsRepository->findForPaginationMerchandisingFiltered($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax);
+
+        return $this->paginator->paginate($productQuery, $page, $limit);
+    }
 }

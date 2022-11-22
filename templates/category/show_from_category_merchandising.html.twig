@@ -236,9 +236,9 @@
 
                             <select class="form-select no-border-radius" onchange="window.location=this.value;">
                                 <option disabled selected hidden>Trier par</option>
-                                {{ knp_pagination_sortable(vetements, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
-                                {{ knp_pagination_sortable(vetements, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
-                                {{ knp_pagination_sortable(vetements, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
+                                {{ knp_pagination_sortable(products, 'Nouveaux arrivage', 'v.createdAt', {}, {'direction': 'desc'}) }}
+                                {{ knp_pagination_sortable(products, 'Du moins cher au plus cher', 'v.price', {}, {'direction': 'asc'}) }}
+                                {{ knp_pagination_sortable(products, 'Du plus cher au moins cher', 'v.price', {}, {'direction': 'desc'}) }}
 
                             </select>
 
@@ -247,27 +247,23 @@
                     </div>    
 
                     <div class="row">
-
-                        
+            
                         {# For pour afficher les vetements en forme de cartes #}
-
-                        {# {% if categories.title == 'Femme' %} #}
                         
-
-                            {% for vetement in vetements %}
+                            {% for product in products %}
                         
                                 <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
 
-                                    <a href="{{ path('voir_vetement_merch', {'id': vetement.id}) }}" class="text-decoration-none text-black">
+                                    <a href="{{ path('view_products', {'id': product.id}) }}" class="text-decoration-none text-black">
 
-                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{vetement.title}}{{vetement.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ vetement.title }}" loading="lazy">
+                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{product.title}}{{product.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ product.title }}" loading="lazy">
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                <li class="list-group-item fw-bold">{{ (product.price)/100 }} €</li>
                                             </ul>
-                                            <h5 class="card-title text-muted">{{ vetement.title }}</h5>
+                                            <h5 class="card-title text-muted">{{ product.title }}</h5>
                                                 {% set colors = {} %}
-                                                {% for variations in vetement.vetementMerchandisingQuantities.values %}
+                                                {% for variations in product.productsQuantities.values %}
 
                                                     {% if variations.color.code not in colors %}
                                                     
@@ -294,126 +290,42 @@
                             <script>
 
                                 document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").src = "{{ asset('images/' ~ vetement.photo) }}";
+                                    document.getElementById("article" + "{{product.title}}{{product.id}}").src = "{{ asset('images/' ~ product.photo) }}";
                                 });
                                 
                                 function functionImageEnter(){
-                                    var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
-                                    image.src = "{{ asset('images/' ~ vetement.photo2) }}";
+                                    var image = document.getElementById("article" + "{{product.title}}{{product.id}}");
+                                    image.src = "{{ asset('images/' ~ product.photo2) }}";
                                     
                                 }
 
                                 function functionImageLeave(){
-                                    var image = document.getElementById("article" + "{{vetement.title}}{{vetement.id}}");
-                                    image.src = "{{ asset('images/' ~ vetement.photo) }}";
+                                    var image = document.getElementById("article" + "{{product.title}}{{product.id}}");
+                                    image.src = "{{ asset('images/' ~ product.photo) }}";
                                 }
 
-                                document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseenter", functionImageEnter);
-                                document.getElementById("article" + "{{vetement.title}}{{vetement.id}}").addEventListener("mouseleave", functionImageLeave);
+                                document.getElementById("article" + "{{product.title}}{{product.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{product.title}}{{product.id}}").addEventListener("mouseleave", functionImageLeave);
          
                             </script>
 
                             {% endfor %}
-
-                            {% for accessoire in accessoires %}
-                    
-                                <div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
-
-                                    <a href="{{ path('voir_accessoires_merch', {"id": accessoire.id} ) }}" class="text-decoration-none text-black">
-
-                                        <img src="{{ asset('images/image_placeholder.png') }}" id="article{{accessoire.title}}{{accessoire.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{ accessoire.title }}" loading="lazy">
-                                        <div class="card-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item fw-bold">{{ (accessoire.price)/100 }} €</li>
-                                            </ul>
-                                            <h5 class="card-title text-muted">{{ accessoire.title }}</h5>
-                                                {% set colors = {} %}
-                                                {% for variations in accessoire.accessoiresMerchandisingQuantities.values %}
-
-                                                    {% if variations.color.code not in colors %}
-                                                    
-                                                        {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-                                                    
-                                                    {% endif %}
-                                                    
-
-                                                {% endfor %}
-
-                                                {% for color in colors %}
-                                                    <div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
-                                                        <div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
-                                                    </div>
-                                                
-                                                {% endfor %}
-                                        </div>      
-
-                                    </a>
-
-                                </div>
-
-                            <script>
-
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").src = "{{ asset('images/' ~ accessoire.photo) }}";
-                                });
-                                
-                                function functionImageEnter(){
-                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
-                                    image.src = "{{ asset('images/' ~ accessoire.photo2) }}";
-                                }
-
-                                function functionImageLeave(){
-                                    var image = document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}");
-                                    image.src = "{{ asset('images/' ~ accessoire.photo) }}";
-                                }
-
-                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseenter", functionImageEnter);
-                                document.getElementById("article" + "{{accessoire.title}}{{accessoire.id}}").addEventListener("mouseleave", functionImageLeave);
-                
-                            </script>
-                        
-                            {% endfor %}
-
-                        {# {% endif %} #}
-
                         
                         {# Pagination #}
 
-                        {% if vetements is not null %}
-
-                            <div class="container mt-3">
+                        <div class="container mt-3">
                         
-                                <div class="row">
+                            <div class="row">
                             
-                                    <div class="col-3 ms-auto me-2">
+                                <div class="col-3 ms-auto me-2">
                                 
-                                        {{ knp_pagination_render(vetements) }}
+                                    {{ knp_pagination_render(products) }}
                                 
-                                    </div>
-                            
                                 </div>
-
+                            
                             </div>
-                            
-                        {% endif %}
 
-                        {% if accessoires is not null %}
-
-                            <div class="container mt-3">
-                        
-                                <div class="row">
-                            
-                                    <div class="col-3 ms-auto me-2">
-                                
-                                        {{ knp_pagination_render(accessoires) }}
-                                
-                                    </div>
-                            
-                                </div>
-
-                            </div>
-                            
-                        {% endif %}
+                        </div>
 
                     </div>
                 
