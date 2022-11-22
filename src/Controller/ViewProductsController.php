@@ -127,7 +127,14 @@ class ViewProductsController extends AbstractController
                             $entityManager->persist($cart);
                             $entityManager->flush();
 
-                            return $this->redirectToRoute('added_product');
+                            return $this->redirectToRoute('view_products',[
+                                'id' => $products->getId(),
+                                'colorAdded' => $cartProduct->getColor(),
+                                'sizeAdded' => $cartProduct->getSize(),
+                                'quantityAdded' => $cartProduct->getQuantity(),
+                                'totalPrice' => $cartProduct->getPrice(),
+                                'success' => 'success'
+                            ]);
                         }
                     }
                 }
@@ -142,10 +149,10 @@ class ViewProductsController extends AbstractController
             $cartProduct->setQuantity($quantity);
             $cartProduct->setPrice($products->getPrice());
             $cartProduct->setTitle($products->getTitle());
-            $cartProduct->setPhoto($products->getPhoto());
+            $cartProduct->setPhoto($products->getImages()->getValues()[0]->getImage());
             $cartProduct->setColor($choosedColor);
             $cartProduct->setSize($choosedSize);
-            $cartProduct->setSubCategory($products->getSousCategorie());         
+            $cartProduct->setSubCategory($products->getSousCategorie() || $products->getSousCategorieMerchandising());
 
             $sku = $entityManager->getRepository(ProductsQuantities::class)->findOneBy([
                 'products' => $products->getId(), 
@@ -173,7 +180,14 @@ class ViewProductsController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
-            return $this->redirectToRoute('added_product');
+            return $this->redirectToRoute('view_products',[
+                'id' => $products->getId(),
+                'colorAdded' => $cartProduct->getColor(),
+                'sizeAdded' => $cartProduct->getSize(),
+                'quantityAdded' => $cartProduct->getQuantity(),
+                'totalPrice' => $cartProduct->getPrice(),
+                'success' => 'success'
+            ]);
         }
 
         $categorie = $products->getCategorie();
@@ -187,6 +201,7 @@ class ViewProductsController extends AbstractController
         $images = $entityManager->getRepository(Images::class)->findby(['product' => $products]);
 
         return $this->render('view_products/view_products.html.twig', [
+            'success' => 0,
             'vetement' => $products,
             'images' => $images,
             'vetementVariations' => $productsVariations,

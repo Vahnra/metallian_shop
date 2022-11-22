@@ -41,26 +41,6 @@
                 </a>
             {% endfor %}
             
-            {# <a href="{{ asset('images/'~vetement.photo) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src="{{ asset('images/'~vetement.photo) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}" />
-            </a>
-
-            <a href="{{ asset('images/'~vetement.photo2) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src="{{ asset('images/'~vetement.photo2) }}" onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
-            </a>
-
-            <a href="{{ asset('images/'~vetement.photo3) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.photo3) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
-            </a>
-
-            <a href="{{ asset('images/'~vetement.photo4) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.photo4) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
-            </a>
-
-            <a href="{{ asset('images/'~vetement.photo5) }}" data-toggle="lightbox" data-gallery="gallery">
-                <img src={{ asset('images/'~vetement.photo5) }} onmouseover="imageSwap(this)" class="img-fluid ps-2 pe-2 pt-0 pb-1" title="{{ vetement.title }}" alt="{{ vetement.title }}"/>
-            </a> #}
-
         </div>
 
         <div class="col-md-7 pt-3 text-center" style="background-color: white;">
@@ -80,6 +60,14 @@
                 <div class="col-8">
                     <h2>{{ vetement.description }}</h2>
                 </div>
+
+                {% if app.request.get('success') == 'success' %}
+                    <script>
+                        $(function() {
+                            $('#cartModal').modal('show');
+                        });
+                    </script>
+                {% endif %}
                 
                 <div class="col-4 my-auto justify-content-end d-flex">
                     <h3 class="my-auto fw-bold">{{ vetement.price/100 }}€</h3>
@@ -240,6 +228,8 @@
 
     </div>
 </div>
+
+
 {# ------------------------------------------------------------------------------------ #}
 <div class="container-xl py-3">
     <div class="row pt-2" style="background-color: white;">
@@ -288,5 +278,54 @@
             </div>
         </div>
     </div>
+
+<!-- Modal -->
+<div class="modal rounded-0" id="cartModal" tabindex="-1" aria-labelledby="addedArticleModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered rounded-0 modal-lg">
+		<div class="modal-content rounded-0">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">Article ajouté a votre panier</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+
+				<div class="row mb-4 d-flex justify-content-between align-items-center">
+					<div class="col-md-2 col-lg-2 col-xl-2">
+						<img src="{{ asset('images/' ~ images.0.image) }}" class="img-fluid rounded-3" alt="Cotton T-shirt">
+					</div>
+					<div class="col-md-3 col-lg-3 col-xl-3">
+                        {% if vetement.sousCategorie is not null %}
+                        
+						    <h6 class="text-muted">{{ vetement.sousCategorie }}</h6>
+
+                        {% endif %}
+                        {% if vetement.sousCategorieMerchandising is not null %}
+                        
+						    <h6 class="text-muted">{{ vetement.sousCategorieMerchandising }}</h6>
+
+                        {% endif %}
+						<h5 class="text-black fw-bold mb-0">{{ vetement.title }}</h5>
+						<p class="text-black mb-0">Couleur : {{ app.request.get('colorAdded') }}</p>
+						<p class="text-black mb-0">Taille : {{ app.request.get('sizeAdded') }}</p>
+					</div>
+					<div class="col-md-3 mx-auto col-lg-3 col-xl-2 d-flex justify-content-center">
+
+						<div class="col-6 text-center mt-1 border-2 border" style="border-radius: 5px">{{ app.request.get('quantityAdded') }}</div>
+					
+					</div>
+					<div class="col-md-3 justify-content-center ms-auto col-lg-2 col-xl-2 offset-lg-1">
+						<h6 class="mb-0 text-center">{{ app.request.get('totalPrice')/100 }} €</h6>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button rounded-0 no-border-radius" class="btn" data-bs-dismiss="modal" style="background-color: rgb(10, 19, 32); color: white">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 
 {% endblock %}
