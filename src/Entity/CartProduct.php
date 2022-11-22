@@ -28,12 +28,6 @@ class CartProduct
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?Vetement $vetement = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?Bijoux $bijoux = null;
-
     #[ORM\ManyToOne(inversedBy: 'cartProduct')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cart $cart = null;
@@ -47,15 +41,6 @@ class CartProduct
     #[ORM\Column(length: 255)]
     private ?string $subCategory = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?Accessoires $accessoires = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?Chaussures $chaussures = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?Media $media = null;
-
     #[ORM\Column(length: 255)]
     private ?string $sku = null;
 
@@ -64,12 +49,6 @@ class CartProduct
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $size = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?VetementMerchandising $vetementMerchandising = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cartProducts')]
-    private ?AccessoiresMerchandising $accessoiresMerchandising = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartProducts')]
     private ?Products $products = null;
@@ -132,30 +111,6 @@ class CartProduct
         return $this;
     }
 
-    public function getVetement(): ?Vetement
-    {
-        return $this->vetement;
-    }
-
-    public function setVetement(?Vetement $vetement): self
-    {
-        $this->vetement = $vetement;
-
-        return $this;
-    }
-
-    public function getBijoux(): ?Bijoux
-    {
-        return $this->bijoux;
-    }
-
-    public function setBijoux(?Bijoux $bijoux): self
-    {
-        $this->bijoux = $bijoux;
-
-        return $this;
-    }
-
     public function getCart(): ?Cart
     {
         return $this->cart;
@@ -204,42 +159,6 @@ class CartProduct
         return $this;
     }
 
-    public function getAccessoires(): ?Accessoires
-    {
-        return $this->accessoires;
-    }
-
-    public function setAccessoires(?Accessoires $accessoires): self
-    {
-        $this->accessoires = $accessoires;
-
-        return $this;
-    }
-
-    public function getChaussures(): ?Chaussures
-    {
-        return $this->chaussures;
-    }
-
-    public function setChaussures(?Chaussures $chaussures): self
-    {
-        $this->chaussures = $chaussures;
-
-        return $this;
-    }
-
-    public function getMedia(): ?Media
-    {
-        return $this->media;
-    }
-
-    public function setMedia(?Media $media): self
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
     public function getSku(): ?string
     {
         return $this->sku;
@@ -272,30 +191,6 @@ class CartProduct
     public function setSize(string $size): self
     {
         $this->size = $size;
-
-        return $this;
-    }
-
-    public function getVetementMerchandising(): ?VetementMerchandising
-    {
-        return $this->vetementMerchandising;
-    }
-
-    public function setVetementMerchandising(?VetementMerchandising $vetementMerchandising): self
-    {
-        $this->vetementMerchandising = $vetementMerchandising;
-
-        return $this;
-    }
-
-    public function getAccessoiresMerchandising(): ?AccessoiresMerchandising
-    {
-        return $this->accessoiresMerchandising;
-    }
-
-    public function setAccessoiresMerchandising(?AccessoiresMerchandising $accessoiresMerchandising): self
-    {
-        $this->accessoiresMerchandising = $accessoiresMerchandising;
 
         return $this;
     }

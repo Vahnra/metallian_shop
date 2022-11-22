@@ -14,21 +14,6 @@ class OrderProduct
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?Vetement $vetement = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?Accessoires $accessoires = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?Chaussures $chaussures = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?Media $media = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?Bijoux $bijoux = null;
-
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
@@ -41,13 +26,7 @@ class OrderProduct
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $size = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?VetementMerchandising $vetementMerchandising = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
-    private ?AccessoiresMerchandising $accessoiresMerchandising = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
+    #[ORM\ManyToOne(inversedBy: 'orderProducts', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $orderId = null;
 
@@ -69,6 +48,9 @@ class OrderProduct
     #[ORM\Column(length: 255)]
     private ?string $subCategory = null;
 
+    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
+    private ?Products $products = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,65 +61,65 @@ class OrderProduct
         return $this->title; 
     }
 
-    public function getVetement(): ?Vetement
-    {
-        return $this->vetement;
-    }
+    // public function getVetement(): ?Vetement
+    // {
+    //     return $this->vetement;
+    // }
 
-    public function setVetement(?Vetement $vetement): self
-    {
-        $this->vetement = $vetement;
+    // public function setVetement(?Vetement $vetement): self
+    // {
+    //     $this->vetement = $vetement;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getAccessoires(): ?Accessoires
-    {
-        return $this->accessoires;
-    }
+    // public function getAccessoires(): ?Accessoires
+    // {
+    //     return $this->accessoires;
+    // }
 
-    public function setAccessoires(?Accessoires $accessoires): self
-    {
-        $this->accessoires = $accessoires;
+    // public function setAccessoires(?Accessoires $accessoires): self
+    // {
+    //     $this->accessoires = $accessoires;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getChaussures(): ?Chaussures
-    {
-        return $this->chaussures;
-    }
+    // public function getChaussures(): ?Chaussures
+    // {
+    //     return $this->chaussures;
+    // }
 
-    public function setChaussures(?Chaussures $chaussures): self
-    {
-        $this->chaussures = $chaussures;
+    // public function setChaussures(?Chaussures $chaussures): self
+    // {
+    //     $this->chaussures = $chaussures;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getMedia(): ?Media
-    {
-        return $this->media;
-    }
+    // public function getMedia(): ?Media
+    // {
+    //     return $this->media;
+    // }
 
-    public function setMedia(?Media $media): self
-    {
-        $this->media = $media;
+    // public function setMedia(?Media $media): self
+    // {
+    //     $this->media = $media;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getBijoux(): ?Bijoux
-    {
-        return $this->bijoux;
-    }
+    // public function getBijoux(): ?Bijoux
+    // {
+    //     return $this->bijoux;
+    // }
 
-    public function setBijoux(?Bijoux $bijoux): self
-    {
-        $this->bijoux = $bijoux;
+    // public function setBijoux(?Bijoux $bijoux): self
+    // {
+    //     $this->bijoux = $bijoux;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getPhoto(): ?string
     {
@@ -187,29 +169,29 @@ class OrderProduct
         return $this;
     }
 
-    public function getVetementMerchandising(): ?VetementMerchandising
-    {
-        return $this->vetementMerchandising;
-    }
+    // public function getVetementMerchandising(): ?VetementMerchandising
+    // {
+    //     return $this->vetementMerchandising;
+    // }
 
-    public function setVetementMerchandising(?VetementMerchandising $vetementMerchandising): self
-    {
-        $this->vetementMerchandising = $vetementMerchandising;
+    // public function setVetementMerchandising(?VetementMerchandising $vetementMerchandising): self
+    // {
+    //     $this->vetementMerchandising = $vetementMerchandising;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getAccessoiresMerchandising(): ?AccessoiresMerchandising
-    {
-        return $this->accessoiresMerchandising;
-    }
+    // public function getAccessoiresMerchandising(): ?AccessoiresMerchandising
+    // {
+    //     return $this->accessoiresMerchandising;
+    // }
 
-    public function setAccessoiresMerchandising(?AccessoiresMerchandising $accessoiresMerchandising): self
-    {
-        $this->accessoiresMerchandising = $accessoiresMerchandising;
+    // public function setAccessoiresMerchandising(?AccessoiresMerchandising $accessoiresMerchandising): self
+    // {
+    //     $this->accessoiresMerchandising = $accessoiresMerchandising;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getOrderId(): ?Order
     {
@@ -291,6 +273,18 @@ class OrderProduct
     public function setSubCategory(string $subCategory): self
     {
         $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    public function getProducts(): ?Products
+    {
+        return $this->products;
+    }
+
+    public function setProducts(?Products $products): self
+    {
+        $this->products = $products;
 
         return $this;
     }

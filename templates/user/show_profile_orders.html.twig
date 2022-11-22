@@ -107,26 +107,7 @@
                                 
                                         <div class="card g-0 mt-2 border-0 rounded-0" style="width: 15rem;">
 
-                                            <a 
-                                            {% if product.vetement is not null %} 
-                                                href="{{ path('voir_vetement', {'id': product.vetement.id}) }}" 
-                                            {% endif %} 
-                                            {% if product.accessoires is not null %}
-                                                href="{{ path('voir_accessoires', {'id': product.accessoires.id}) }}"
-                                            {% endif %} 
-                                            {% if product.bijoux is not null %}
-                                                href="{{ path('voir_bijoux', {'id': product.bijoux.id}) }}"
-                                            {% endif %}
-                                            {% if product.chaussures is not null %}
-                                                href="{{ path('voir_chaussures', {'id': product.chaussures.id}) }}"
-                                            {% endif %}
-                                            {% if product.vetementMerchandising is not null %}
-                                                href="{{ path('voir_vetement_merch', {'id': product.vetementMerchandising.id}) }}"
-                                            {% endif %}
-                                            {% if product.accessoiresMerchandising is not null %}
-                                                href="{{ path('voir_accessoires_merch', {'id': product.accessoiresMerchandising.id}) }}" 
-                                            {% endif %} 
-                                            class="text-decoration-none text-black">
+                                            <a href="{{ path('view_products', {'id': product.products.id}) }}" class="text-decoration-none text-black">
 
                                                 <img src="{{ asset('images/7a218379c474df6f3f0961d5fcdbcb91e0e86fbd.jpg') }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="" loading="lazy">
                                                 <div class="card-body">

@@ -89,11 +89,15 @@ class Products
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: OrderProduct::class)]
+    private Collection $orderProducts;
+
     public function __construct()
     {
         $this->productsQuantities = new ArrayCollection();
         $this->favoriteProducts = new ArrayCollection();
         $this->cartProducts = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -442,6 +446,36 @@ class Products
             // set the owning side to null (unless already changed)
             if ($cartProduct->getProducts() === $this) {
                 $cartProduct->setProducts(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderProduct>
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
+            $orderProduct->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getProducts() === $this) {
+                $orderProduct->setProducts(null);
             }
         }
 

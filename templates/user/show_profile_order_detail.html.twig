@@ -87,7 +87,7 @@
 
 							<div class="row mb-4 d-flex justify-content-between align-items-center">
 
-								<a {% if product.vetement is not null %} href="{{ path('voir_vetement', {'id': product.vetement.id}) }}" {% endif %} {% if product.accessoires is not null %} href="{{ path('voir_accessoires', {'id': product.accessoires.id}) }}" {% endif %} {% if product.bijoux is not null %} href="{{ path('voir_bijoux', {'id': product.bijoux.id}) }}" {% endif %} {% if product.chaussures is not null %} href="{{ path('voir_chaussures', {'id': product.chaussures.id}) }}" {% endif %} {% if product.vetementMerchandising is not null %} href="{{ path('voir_vetement_merch', {'id': product.vetementMerchandising.id}) }}" {% endif %} {% if product.accessoiresMerchandising is not null %} href="{{ path('voir_accessoires_merch', {'id': product.accessoiresMerchandising.id}) }}" {% endif %} class="col-md-2 col-lg-2 col-xl-2">
+								<a href="{{ path('view_products', {'id': product.products.id}) }}" class="col-md-2 col-lg-2 col-xl-2">
 									<img src="{{ asset('images/' ~ product.photo) }}" class="img-fluid rounded-3" alt="{{ product.title }}">
 								</a>
 
