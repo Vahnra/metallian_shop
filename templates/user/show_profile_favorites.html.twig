@@ -103,7 +103,7 @@
 
 								<a href="{{ path('view_products', {'id': favoriteProduct.products.id}) }}" class="text-decoration-none text-black">
 
-									<img src="{{ asset('images/' ~ favoriteProduct.products.photo) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
+									<img src="{{ asset('images/' ~ favoriteProduct.products.images.values.1.image) }}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="...">
 									<div class="card-body">
 										<ul class="list-group list-group-flush">
 											<li class="list-group-item">{{ (favoriteProduct.products.price)/100 }}

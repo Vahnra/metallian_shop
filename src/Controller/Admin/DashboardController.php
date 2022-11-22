@@ -63,24 +63,10 @@ class DashboardController extends AbstractDashboardController
     public function __construct(
         ChartBuilderInterface $chartBuilder,
         UserRepository $userRepository,
-        VetementRepository $vetementRepository,
-        ChaussuresRepository $chaussuresRepository,
-        AccessoiresRepository $accessoiresRepository,
-        BijouxRepository $bijouxRepository,
-        VetementMerchandisingRepository $vetementMerchandisingRepository,
-        AccessoiresMerchandisingRepository $accessoiresMerchandisingRepository,
-        MediaRepository $mediaRepository,
         OrderRepository $orderRepository
         )
     {
         $this->userRepository = $userRepository;
-        $this->vetementRepository = $vetementRepository;
-        $this->accessoiresRepository = $accessoiresRepository;
-        $this->chaussuresRepository = $chaussuresRepository;
-        $this->bijouxRepository = $bijouxRepository;
-        $this->vetementMerchandisingRepository = $vetementMerchandisingRepository;
-        $this->accessoiresMerchandisingRepository = $accessoiresMerchandisingRepository;
-        $this->mediaRepository = $mediaRepository;
         $this->orderRepository = $orderRepository;
         $this->chartBuilder = $chartBuilder;
     }
@@ -90,15 +76,9 @@ class DashboardController extends AbstractDashboardController
     {
         $totalRegisteredUser = $this->userRepository->findAll();
 
-        $vetements = count($this->vetementRepository->findAll());
-        $accessoires = count($this->accessoiresRepository->findAll());
-        $chaussures = count($this->chaussuresRepository->findAll());
-        $bijoux = count($this->bijouxRepository->findAll());
-        $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
-        $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
         $totalOrders = count($this->orderRepository->findAll());
         
-        $totalArticles = $vetements + $accessoires + $chaussures + $bijoux + $vetementMerchandising + $accessoiresMerchandising;
+        $totalArticles = 0;
 
         return $this->render('admin/admin_home_page.html.twig', [
             'usersChart' => $this->usersChart(),
@@ -345,13 +325,13 @@ class DashboardController extends AbstractDashboardController
     {
         $totalArticlesChart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
 
-        $vetements = count($this->vetementRepository->findAll());
-        $accessoires = count($this->accessoiresRepository->findAll());
-        $chaussures = count($this->chaussuresRepository->findAll());
-        $bijoux = count($this->bijouxRepository->findAll());
-        $media = count($this->mediaRepository->findAll());
-        $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
-        $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
+        // $vetements = count($this->vetementRepository->findAll());
+        // $accessoires = count($this->accessoiresRepository->findAll());
+        // $chaussures = count($this->chaussuresRepository->findAll());
+        // $bijoux = count($this->bijouxRepository->findAll());
+        // $media = count($this->mediaRepository->findAll());
+        // $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
+        // $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
 
         $totalArticlesChart->setData([
             'labels' => ['Vêtements', 'Accessoires', 'Chaussures', 'Bijoux', 'Médias', 'Vêtements Merch', 'Accessoires Merch'],
@@ -360,7 +340,7 @@ class DashboardController extends AbstractDashboardController
                     'label' => 'Nombres d\'articles',
                     'backgroundColor' => 'rgb(255, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [$vetements, $accessoires, $chaussures, $bijoux, $media, $vetementMerchandising, $accessoiresMerchandising],
+                    // 'data' => [$vetements, $accessoires, $chaussures, $bijoux, $media, $vetementMerchandising, $accessoiresMerchandising],
                 ],
             ],
         ]);
