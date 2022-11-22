@@ -3,8 +3,9 @@
 namespace App\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
+use App\Entity\VetementQuantity;
 use App\Entity\ProductsQuantities;
-use App\Entity\VetementMerchandisingQuantity;
+use App\Controller\Admin\VetementCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -16,22 +17,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\PercentField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class VetementMerchandisingQuantityCrudController extends AbstractCrudController
+class ArticlesQuantityCrudController extends AbstractCrudController
 {
-    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
-    {
-        return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
-            ->leftJoin('entity.products', 'vqcs')
-            ->andWhere('vqcs.type = :vetementMerchandising')
-            ->setParameter('vetementMerchandising', 'vetementMerchandising');
-    }
-    
     public static function getEntityFqcn(): string
     {
         return ProductsQuantities::class;
@@ -43,7 +38,7 @@ class VetementMerchandisingQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'Vêtement merchandising')->setCrudController(VetementMerchandisingCrudController::class)->autocomplete();
+        yield AssociationField::new('products', 'Vêtement')->setCrudController(ProductsCrudController::class)->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
@@ -52,20 +47,20 @@ class VetementMerchandisingQuantityCrudController extends AbstractCrudController
 
         yield FormField::addPanel('Stock');
         yield NumberField::new('stock', 'Nombre en stock');
-        
+
         yield FormField::addPanel('Soldes');
-        yield ChoiceField::new('solde', 'Mettre en solde ?')->renderExpanded()->allowMultipleChoices()->setChoices([
+        yield ChoiceField::new('solde', 'Mettre en solde ?')->renderExpanded()->setChoices([
             'Oui' => 'yes',
         ]);
         yield PercentField::new('discount', 'Pourcentage')->setColumns(3);
-        
+
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Vêtement merch en vente')
-            ->setEntityLabelInPlural('Vêtements merch en vente')
+            ->setEntityLabelInSingular('Article en vente')
+            ->setEntityLabelInPlural('Articles en vente')
         ;
     }
 
@@ -76,6 +71,9 @@ class VetementMerchandisingQuantityCrudController extends AbstractCrudController
             ->add(EntityFilter::new('color'))
             ->add(EntityFilter::new('size'))
             ->add(TextFilter::new('sku'))
-            ->add(TextFilter::new('stock'));
+            ->add(ChoiceFilter::new('solde')->setChoices([
+                'Oui' => 'yes',
+            ]))
+            ->add(NumericFilter::new('stock'));
     }
 }

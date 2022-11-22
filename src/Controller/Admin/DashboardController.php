@@ -116,6 +116,10 @@ class DashboardController extends AbstractDashboardController
         // Article en ventes
         yield MenuItem::section('Articles en ventes');
 
+        yield MenuItem::subMenu('Tous les articles')->setSubItems([
+            MenuItem::linkToCrud('Voire les articles en vente', 'fas fa-eye', ProductsQuantities::class)->setController(ArticlesQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en vente un article', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(ArticlesQuantityCrudController::class)
+        ]);
         yield MenuItem::subMenu('Vêtements')->setSubItems([
             MenuItem::linkToCrud('Voire les vêtements en vente', 'fas fa-eye', ProductsQuantities::class)->setController(VetementQuantityCrudController::class),
             MenuItem::linkToCrud('Mettre en vente un vêtement', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(VetementQuantityCrudController::class)
@@ -206,6 +210,13 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un accessoire', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(AccessoiresMerchandisingCrudController::class),
         ]);
 
+        yield MenuItem::section('Soldes');
+
+        yield MenuItem::subMenu('Articles en solde')->setSubItems([
+            MenuItem::linkToCrud('Voire les articles en solde', 'fas fa-eye', ProductsQuantities::class)->setController(SoldesQuantityCrudController::class),
+            MenuItem::linkToCrud('Mettre en solde un article', 'fas fa-plus', ProductsQuantities::class)->setAction(Crud::PAGE_NEW)->setController(SoldesQuantityCrudController::class)
+        ]);
+
         yield MenuItem::section('Marques');
 
         yield MenuItem::subMenu('Les marques')->setSubItems([
@@ -241,16 +252,6 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un genres', 'fas fa-plus', MusicType::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        // yield MenuItem::section('Les commentaires');
-
-        // yield MenuItem::subMenu('Les commentaires sur les vêtements')->setSubItems([
-        //     MenuItem::linkToCrud('Voir les commentaires', 'fas fa-eye', ReviewVetement::class),
-        // ]);
-
-        // yield MenuItem::subMenu('Les commentaires sur les médias')->setSubItems([
-        //     MenuItem::linkToCrud('Voir les commentaires', 'fas fa-eye', ReviewMedia::class),
-        // ]);
-
         yield MenuItem::section('Politique d\'expédition');
         yield MenuItem::subMenu('Expedition')->setSubItems([
             MenuItem::linkToCrud('Voir le Politique d\'expédition', 'fas fa-eye', Expedition::class),
@@ -263,7 +264,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter une bannière', 'fas fa-plus', Slider::class)->setAction(Crud::PAGE_NEW)
         ]);
 
-        yield MenuItem::section('Soldes');
+        
     }
 
     public function configureActions(): Actions

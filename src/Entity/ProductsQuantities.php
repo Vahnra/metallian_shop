@@ -30,6 +30,12 @@ class ProductsQuantities implements JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $sku = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $solde = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $discount = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,5 +106,29 @@ class ProductsQuantities implements JsonSerializable
         $vars = get_object_vars($this);
 
         return $vars;
+    }
+
+    public function getSolde(): ?string
+    {
+        return $this->solde;
+    }
+
+    public function setSolde(?string $solde): self
+    {
+        $this->solde = $solde;
+
+        return $this;
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(?int $discount): self
+    {
+        $this->discount = $discount;
+
+        return $this;
     }
 }
