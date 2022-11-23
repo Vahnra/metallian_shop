@@ -220,6 +220,18 @@ class ProductsService
         return $this->paginator->paginate($productQuery, $page, $limit);
     }
 
+    public function getPaginatedSoldesProductsCategory($category)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 50;
+
+        $productQuery = $this->productsRepository->findForPaginationSoldesProductsCategory($category);
+
+        return $this->paginator->paginate($productQuery, $page, $limit);
+    }
+
     public function getPaginatedSoldesProductsFiltered($color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax)
     {
         $request = $this->requestStack->getMainRequest();
@@ -228,6 +240,18 @@ class ProductsService
         $limit = 50;
 
         $productQuery = $this->productsRepository->findForPaginationSoldesProductsFiltered($color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax);
+
+        return $this->paginator->paginate($productQuery, $page, $limit);
+    }
+
+    public function getPaginatedSoldesProductsCategoryFiltered($category, $color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 50;
+
+        $productQuery = $this->productsRepository->findForPaginationSoldesProductsCategoryFiltered($category, $color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax);
 
         return $this->paginator->paginate($productQuery, $page, $limit);
     }

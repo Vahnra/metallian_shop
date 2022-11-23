@@ -22,7 +22,7 @@
 								</button>
 								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSubCategories" aria-labelledby="offcanvasSubCategories">
 									<div class="offcanvas-header">
-										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Les marques</h5>
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Soldes</h5>
 										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 									</div>
 									<div class="offcanvas-body">
@@ -30,16 +30,22 @@
 										<ul class="ps-1" style="list-style-type: none">
 
 											{% for categorie in categories %}
-												<li>
-													<a class="text-underline-hover text-black" href="{{ path('show_solde_products_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
-												</li>
+												{% if categorie.title == category.title %}
+													<li>
+														<a class="text-underline-hover text-black fw-bold" href="{{ path('show_solde_products_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+													</li>
+												{% else %}
+													<li>
+														<a class="text-underline-hover text-black" href="{{ path('show_solde_products_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+													</li>
+												{% endif %}
 
 											{% endfor %}
 
 											{% for categorieMerchandising in categoriesMerchandising %}
 
 												<li>
-													<a class="text-underline-hover text-black" href="{{ path('show_solde_products_category', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
+													<a class="text-underline-hover text-black" href="{{ path('show_from_category_merchandising', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
 												</li>
 
 											{% endfor %}
@@ -166,7 +172,10 @@
                             <li class="breadcrumb-item text-underline-hover">
                                 <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
                             </li>
-                            <li class="breadcrumb-item active">Soldes</li>
+                            <li class="breadcrumb-item text-underline-hover">
+								<a class="text-decoration-none text-muted" href="{{ path('show_solde_products') }}">Soldes</a>
+							</li>
+                            <li class="breadcrumb-item active">{{ category.title }}</li>
                         </ol>
                     </h3>
 

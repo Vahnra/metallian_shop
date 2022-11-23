@@ -80,9 +80,9 @@
 
                                     <select class="form-select no-border-radius" onchange="window.location=this.value;">
                                         <option disabled selected hidden>Trier par</option>
-                                        {{ knp_pagination_sortable(favoriteProducts, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
-                                        {{ knp_pagination_sortable(favoriteProducts, 'Du moins cher au plus cher', 'favoriteProduct.products.price', {}, {'direction': 'asc'}) }}
-                                        {{ knp_pagination_sortable(favoriteProducts, 'Du plus cher au moins cher', 'favoriteProduct.products.price', {}, {'direction': 'desc'}) }}
+                                        {{ knp_pagination_sortable(favoriteProducts, 'Derniers ajouté', 'id', {}, {'direction': 'desc'}) }}
+                                        {{ knp_pagination_sortable(favoriteProducts, 'Du moins cher au plus cher', 'products.price', {}, {'direction': 'asc'}) }}
+                                        {{ knp_pagination_sortable(favoriteProducts, 'Du plus cher au moins cher', 'products.price', {}, {'direction': 'desc'}) }}
                                     </select>
 
                                 </div>

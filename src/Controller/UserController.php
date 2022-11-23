@@ -249,13 +249,13 @@ class UserController extends AbstractController
         PaginatorInterface $paginator,
         ): Response
     {
-        $favoriteProducts = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser()]);
+        $favoriteProducts = $entityManager->getRepository(FavoriteProduct::class)->favorites($this->getUser());
 
         $requestStack = $requestStack->getMainRequest();
 
         $page = $requestStack->query->getInt('page', 1);
 
-        $searchResults = $paginator->paginate($favoriteProducts, $page, 6, array('defaultSortFieldName' => 'price', 'defaultSortDirection' => 'desc'));
+        $searchResults = $paginator->paginate($favoriteProducts, $page, 6, array('defaultSortFieldName' => 'id', 'defaultSortDirection' => 'desc'));
 
         return $this->render('user/show_profile_favorites.html.twig',[
             'favoriteProducts' => $searchResults

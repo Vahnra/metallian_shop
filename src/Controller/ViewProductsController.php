@@ -221,7 +221,7 @@ class ViewProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/soldes/article-{id}', name: 'view_solded_products', methods:['GET', 'POST'])]
+    #[Route('/soldes/article/{id}', name: 'view_solded_products', methods:['GET', 'POST'])]
     public function viewSoldedProducts(
         Products $products,
         EntityManagerInterface $entityManager,

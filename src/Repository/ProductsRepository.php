@@ -1038,9 +1038,96 @@ class ProductsRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    public function findForPaginationSoldesProductsCategory($category): Query
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :category')
+            ->setParameter('category', $category)
+            ->leftJoin('v.productsQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->andWhere('vqc.solde = :value')
+            ->setParameter('value', 'yes')
+            ->orderBy('v.createdAt', 'DESC');
+
+        return $qb->getQuery();
+    }
+
     public function findForPaginationSoldesProductsFiltered($color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax)
     {
         $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.productsQuantities', 'vqcs')
+            ->andWhere('vqcs.stock IS NOT NULL')
+            ->andWhere('vqcs.stock != 0')
+            ->andWhere('vqcs.solde = :value')
+            ->setParameter('value', 'yes')
+            ->orderBy('a.createdAt', 'DESC');
+
+        if ($color != null) {
+            $qb
+                ->leftJoin('a.productsQuantities', 'vqc')
+                ->andWhere('vqc.color = :color')
+                ->setParameter('color', array($color));
+        }
+
+        if ($size != null) {
+            $qb
+                ->leftJoin('a.productsQuantities', 'vqs')
+                ->andWhere('vqs.size = :size')
+                ->setParameter('size', array($size));
+        }
+
+        if ($material != null) {
+            $qb
+                ->andWhere('a.material = :material')
+                ->setParameter('material', array($material));
+        }
+
+        if ($marque != null) {
+            $qb
+                ->andWhere('a.marques = :marques')
+                ->setParameter('marques', array($marque));
+        }
+
+        if ($artist != null) {
+            $qb
+                ->andWhere('a.artist = :artist')
+                ->setParameter('artist', array($artist));
+        }
+
+        if ($musicType != null) {
+            $qb
+                ->andWhere('a.genre = :genre')
+                ->setParameter('genre', array($musicType));
+        }
+
+        if (isset($priceMini)) {
+            $qb
+                ->andWhere('a.price > :priceMini')
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        if (isset($priceMax)) {
+            $qb
+                ->andWhere('a.price < :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        if (isset($priceMini) && isset($priceMax)) {
+            $qb
+                ->andWhere('a.price BETWEEN :priceMax AND :priceMini')
+                ->setParameter('priceMax', $priceMax)
+                ->setParameter('priceMini', $priceMini);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findForPaginationSoldesProductsCategoryFiltered($category, $color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.categorie = :category')
+            ->setParameter('category', $category)
             ->leftJoin('a.productsQuantities', 'vqcs')
             ->andWhere('vqcs.stock IS NOT NULL')
             ->andWhere('vqcs.stock != 0')
