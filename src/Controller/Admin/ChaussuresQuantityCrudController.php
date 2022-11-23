@@ -56,7 +56,7 @@ class ChaussuresQuantityCrudController extends AbstractCrudController
         yield NumberField::new('stock', 'Nombre en stock');
 
         yield FormField::addPanel('Soldes');
-        yield ChoiceField::new('solde', 'Mettre en solde ?')->renderExpanded()->allowMultipleChoices()->setChoices([
+        yield ChoiceField::new('solde', 'Mettre en solde ?')->renderExpanded()->setChoices([
             'Oui' => 'yes',
         ]);
         yield MoneyField::new('products.price', 'Prix')->hideOnForm()->setCurrency('EUR');

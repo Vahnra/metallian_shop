@@ -194,15 +194,23 @@
 									<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
 									<div class="card-body">
 										<ul class="list-group list-group-flush">
-											<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
-												€</li>
+										
+											{% set break = false %}
+											{% for variations in searchResult.productsQuantities.values %}
+												{% if variations.solde is not null and break == false %}
+													<li class="list-group-item fw-bold">{{ (variations.discount)/100 }}
+													€</li>
+													{% set break = true %}
+												{% endif %}
+											{% endfor %}
+											
 										</ul>
 										<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 										{% set colors = {} %}
 										{% for variations in searchResult.productsQuantities.values %}
 
-											{% if variations.color.code not in colors %}
+											{% if variations.color.code not in colors and variations.solde == 'yes' %}
 
 												{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
 
