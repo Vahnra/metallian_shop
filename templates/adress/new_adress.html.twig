@@ -23,9 +23,25 @@
 
 											<hr class="my-4">
 
-                                            <div class="col-lg-8 mx-auto">         
-                                                
-                                                {{ form(formAdd) }}    
+                                            <div class="col-lg-8 mx-auto">
+
+												{{ form_start(formAdd) }}
+
+													<div class="row"> 													
+
+														<div class="col-12">{{ form_row(formAdd.title) }}</div>
+														<div class="col-12">{{ form_row(formAdd.country) }}</div>
+														<div class="col-6">{{ form_row(formAdd.firstName) }}</div>
+														<div class="col-6">{{ form_row(formAdd.lastName) }}</div>
+														<div class="col-12">{{ form_row(formAdd.adress) }}</div>
+														<div class="col-12">{{ form_row(formAdd.additionalAdress) }}</div>
+														<div class="col-6">{{ form_row(formAdd.postCode) }}</div>
+														<div class="col-6">{{ form_row(formAdd.city) }}</div>
+														<div class="col-12">{{ form_row(formAdd.submit) }}</div>
+																												
+													</div> 
+
+												{{ form_end(formAdd) }}
                                             
                                             </div>
 

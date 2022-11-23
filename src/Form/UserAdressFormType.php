@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserAdressFormType extends AbstractType
@@ -18,6 +19,11 @@ class UserAdressFormType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Intitulé de l\'adresse',
                 'empty_data' => 'Domicile',
+                'empty_data' => 'Maison',
+                'attr' => array(
+                    'placeholder' => 'Maison',
+                    'class' => 'no-border-radius',
+                ),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
@@ -26,6 +32,9 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
@@ -34,14 +43,23 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
                     ])
                 ]
             ])
-            ->add('country', TextType::class, [
+            ->add('country', ChoiceType::class, [
                 'label' => 'Pays',
+                'choices' => [
+                    'France' => 'France',
+                ],
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
@@ -50,6 +68,9 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('adress', TextType::class, [
                 'label' => 'Adresse',
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
@@ -58,9 +79,15 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('additionalAdress', TextType::class, [
                 'label' => 'Complément d\'addresse',
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
             ])
             ->add('postCode', TextType::class, [
                 'label' => 'Code Postal',
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
@@ -69,6 +96,9 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
+                'attr' => [
+                    'class' => 'no-border-radius',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas être vide'
@@ -77,9 +107,10 @@ class UserAdressFormType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter cette adresse',
-                'validate' => true,
+                'validate' => false,
                 'attr' => [
-                    'class' => 'd-block my-3 col-6 btn btn-success'
+                    'class' => 'd-block my-3 mx-auto col-6 btn btn-success btn no-border-radius border-0',
+                    'style' => 'color: white; background-color: #cd0019'
                 ],
             ])
         ;

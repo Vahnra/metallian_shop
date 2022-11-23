@@ -54,12 +54,16 @@ class CartController extends AbstractController
 
         $numberOfItem = null;
 
-        if ($cart !== null) {
-            $numberOfItem = $cart->getCartProduct()->count();
-        }
+        // if ($cart !== null) {
+        //     $numberOfItem = $cart->getCartProduct()->count();
+        // }
 
         if ($cart !== null) {
             $cartProducts = $cart->getCartProduct()->toArray();
+
+            foreach ($cartProducts as $value) {
+                $numberOfItem = $numberOfItem + $value->getQuantity();
+            }
         }
 
         $totalPrice = 0;
