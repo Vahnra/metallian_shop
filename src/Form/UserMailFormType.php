@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,6 +28,11 @@ class UserMailFormType extends AbstractType
                 'required' => true,
                 'first_options'  => ['label' => 'Mail'],
                 'second_options' => ['label' => 'Répétez le mail'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas être vide'
+                    ])
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier votre mail',
