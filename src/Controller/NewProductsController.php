@@ -84,60 +84,6 @@ class NewProductsController extends AbstractController
                 $priceMini,
                 $priceMax
             );
-
-            // $newVetements = $entityManager->getRepository(Vetement::class)->findForPaginationFilteredNewProducts(
-            //     $color,
-            //     $size,
-            //     $material,
-            //     $marque,
-            //     $priceMini,
-            //     $priceMax
-            // );
-
-            // $newVetementsMerchandising = $entityManager->getRepository(VetementMerchandising::class)->findForPaginationFilteredNewProducts(
-            //     $color,
-            //     $size,
-            //     $material,
-            //     $marque,
-            //     $artist,
-            //     $priceMini,
-            //     $priceMax
-            // );
-
-            // $newMedias = $entityManager->getRepository(Media::class)->findForPaginationFilteredNewProducts(
-            //     $musicType,
-            //     $priceMini,
-            //     $priceMax
-            // );
-
-            // $newChaussures = $entityManager->getRepository(Chaussures::class)->findForPaginationFilteredNewProducts(
-            //     $color,
-            //     $size,
-            //     $material,
-            //     $marque,
-            //     $priceMini,
-            //     $priceMax
-            // );
-
-            // $newBijoux = $entityManager->getRepository(Bijoux::class)->findForPaginationFilteredNewProducts(
-            //     $color,
-            //     $priceMini,
-            //     $priceMax
-            // );
-
-            // $newAccessoires = $entityManager->getRepository(Accessoires::class)->findForPaginationFilteredNewProducts(
-            //     $color,
-            //     $material,
-            //     $priceMini,
-            //     $priceMax
-            // );
-
-            // $newAccessoiresMerchandising = $entityManager->getRepository(AccessoiresMerchandising::class)->findForPaginationFilteredNewProducts(
-            //     $color,
-            //     $material,
-            //     $priceMini,
-            //     $priceMax
-            // );
         }
 
         // $newProducts = array_merge($newVetements, $newVetementsMerchandising, $newMedias, $newChaussures, $newBijoux, $newAccessoires, $newAccessoiresMerchandising);

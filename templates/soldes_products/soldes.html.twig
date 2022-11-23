@@ -1,0 +1,271 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Soldes{% endblock %}
+
+{% block body %}
+<div class="container-xl bg-white">
+
+		<div class="container-fluid py-4">
+
+			<div class="row">
+
+				<div class="col-xl-2">
+
+					<p class="mt-2">Catégories</p>
+
+					<div class="row">
+
+						<nav class="navbar navbar-expand-lg">
+							<div class="container-fluid" style="flex-direction: column">
+								<button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSubCategories" aria-controls="offcanvasNavbar">
+									<span class="">Marques</span>
+								</button>
+								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSubCategories" aria-labelledby="offcanvasSubCategories">
+									<div class="offcanvas-header">
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Les marques</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<ul class="ps-1" style="list-style-type: none">
+
+											{% for categorie in categories %}
+												<li>
+													<a class="text-underline-hover text-black" href="{{ path('show_vetements_from_category', {"title": categorie.title}) }}">{{ categorie.title }}</a>
+												</li>
+
+											{% endfor %}
+
+											{% for categorieMerchandising in categoriesMerchandising %}
+
+												<li>
+													<a class="text-underline-hover text-black" href="{{ path('show_from_category_merchandising', {"title": categorieMerchandising.title}) }}">{{ categorieMerchandising.title }}</a>
+												</li>
+
+											{% endfor %}
+
+										</ul>
+
+									</div>
+								</div>
+							</div>
+						</nav>
+
+						{# Partie filtres #}
+						<nav class="navbar navbar-expand-lg">
+							<div class="container-fluid" style="flex-direction: column">
+								<button class="navbar-toggler mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasNavbar">
+									<span class="">Filtres</span>
+								</button>
+								<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasNavbarLabel">
+									<div class="offcanvas-header">
+										<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<div class="pt-3 border-top">
+
+											<h4>Filtres</h4>
+
+											{{ form_start(filterForm) }}
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.Couleur) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-minus d-flex justify-content-end" id="flecheCouleur"></i>
+												</div>
+
+												{{ form_widget(filterForm.Couleur) }}
+
+											</div>
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.Size) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-minus d-flex justify-content-end" id="flecheSize"></i>
+												</div>
+
+												{{ form_widget(filterForm.Size) }}
+
+											</div>
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.material) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMaterial"></i>
+												</div>
+
+												{{ form_widget(filterForm.material) }}
+
+											</div>
+
+											<div class="row align-items-center">
+
+												{{ form_label(filterForm.marque) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMarque"></i>
+												</div>
+
+												{{ form_widget(filterForm.marque) }}
+
+											</div>
+
+											
+                                            <div class="row align-items-center">
+
+                                                {{ form_label(filterForm.artist) }}
+                                    
+                                                <div class="col-2 ">
+                                                    <i class="fa-solid fa-plus d-flex justify-content-end" id="flecheArtist"></i>
+                                                </div>
+
+                                                {{ form_widget(filterForm.artist) }}
+                                                
+                                            </div>
+
+											<div class="row align-items-center mb-2">
+
+												{{ form_label(filterForm.musicType) }}
+
+												<div class="col-2 ">
+													<i class="fa-solid fa-plus d-flex justify-content-end" id="flecheMusicType"></i>
+												</div>
+
+												{{ form_widget(filterForm.musicType) }}
+
+											</div>
+
+											{{ form_end(filterForm) }}
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</nav>
+
+					</div>
+					
+				</div>
+
+				<div class="col-xl-10">
+
+					<div class="row mb-3">
+
+					{# <h3 class="mb-4 col-8">Les Nouveautés</h3> #}
+					<h3 class="col-8" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item text-underline-hover">
+                                <a class="text-decoration-none text-muted" href="{{ path('default_home') }}">Accueil</a>
+                            </li>
+                            <li class="breadcrumb-item active">Soldes</li>
+                        </ol>
+                    </h3>
+
+					{# Select pour trier #}
+					<div class="col-3 ms-auto mb-4">
+
+						<select class="form-select no-border-radius" onchange="window.location=this.value;">
+							<option disabled selected hidden>Trier par</option>
+							{{ knp_pagination_sortable(newProducts, 'Nouveaux arrivage', 'title', {}, {'direction': 'desc'}) }}
+							{{ knp_pagination_sortable(newProducts, 'Du moins cher au plus cher', 'price', {}, {'direction': 'asc'}) }}
+							{{ knp_pagination_sortable(newProducts, 'Du plus cher au moins cher', 'price', {}, {'direction': 'desc'}) }}
+
+						</select>
+
+					</div>
+
+					<div class="row">		
+
+						{# For pour afficher les vetements en forme de cartes #}
+						{% for searchResult in newProducts %}
+
+							<div class="card g-0 mx-auto my-2 border-0 border-bottom rounded-0" style="width: 15rem;">
+
+								<a href="{{ path('view_solded_products', {"id": searchResult.id}) }}" class="text-decoration-none text-black">
+									<img src="{{ asset('images/image_placeholder.png') }}" id="article{{searchResult.title}}{{searchResult.id}}" style="height: 200px; object-fit: contain;" class="card-img-top" alt="{{searchResult.title}}" loading="lazy">
+									<div class="card-body">
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
+												€</li>
+										</ul>
+										<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
+
+										{% set colors = {} %}
+										{% for variations in searchResult.productsQuantities.values %}
+
+											{% if variations.color.code not in colors %}
+
+												{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+
+											{% endif %}
+
+										{% endfor %}
+
+										{% for color in colors %}
+											<div class="border" style="height: 24px; width: 24px; background-color: white; border-radius: 50%; display: inline-block;">
+												<div class="mx-auto" style="height: 16px; width: 16px; background-color: {{ color}}; border-radius: 50%; margin-top: 3px;"></div>
+											</div>
+
+										{% endfor %}
+
+									</div>
+
+								</a>
+
+							</div>
+
+							<script>
+
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").src = "{{ asset('images/' ~ searchResult.images.values.0.image) }}";
+                                });                                                 
+                                            
+                                function functionImageEnter(){
+                                    var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
+                                    image.src = "{{ asset('images/' ~ searchResult.images.values.1.image) }}";
+                                }
+
+                                function functionImageLeave(){
+                                    var image = document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}");
+                                    image.src = "{{ asset('images/' ~ searchResult.images.values.0.image) }}";
+                                }
+
+                                document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseenter", functionImageEnter);
+                                document.getElementById("article" + "{{searchResult.title}}{{searchResult.id}}").addEventListener("mouseleave", functionImageLeave);
+         
+                            </script>
+
+						{% endfor %}
+		
+					</div>
+
+					{# Pagination page#}
+					<div class="container mt-3">
+    
+                        <div class="col-3 ms-auto me-2">
+                                
+                            {{ knp_pagination_render(newProducts) }}
+                                
+                        </div>
+
+					</div>
+
+
+				</div>
+
+			</div>
+
+
+		</div>
+	</div>
+	</div>
+{% endblock %}

@@ -207,4 +207,28 @@ class ProductsService
 
         return $this->paginator->paginate($productQuery, $page, $limit);
     }
+
+    public function getPaginatedSoldesProducts()
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 50;
+
+        $productQuery = $this->productsRepository->findForPaginationSoldesProducts();
+
+        return $this->paginator->paginate($productQuery, $page, $limit);
+    }
+
+    public function getPaginatedSoldesProductsFiltered($color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax)
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 50;
+
+        $productQuery = $this->productsRepository->findForPaginationSoldesProductsFiltered($color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax);
+
+        return $this->paginator->paginate($productQuery, $page, $limit);
+    }
 }

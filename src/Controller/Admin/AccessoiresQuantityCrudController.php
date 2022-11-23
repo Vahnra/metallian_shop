@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\PercentField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -58,7 +59,11 @@ class AccessoiresQuantityCrudController extends AbstractCrudController
         yield ChoiceField::new('solde', 'Mettre en solde ?')->renderExpanded()->allowMultipleChoices()->setChoices([
             'Oui' => 'yes',
         ]);
-        yield PercentField::new('discount', 'Pourcentage')->setColumns(3);
+        yield MoneyField::new('products.price', 'Prix')->hideOnForm()->setCurrency('EUR');
+        yield MoneyField::new('discount', 'Prix soldé')->setColumns(3)->setCurrency('EUR');
+
+        yield FormField::addPanel('Photos');
+        yield CollectionField::new('products.images', 'Images')->setTemplatePath('admin\field\images\images.html.twig')->onlyOnDetail();
         
     }
 

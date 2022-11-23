@@ -160,6 +160,17 @@
 
 					{{ render(url('render_categories_merchandising_in_nav')) }}
 
+					<li class="nav-item">
+						<div class="navigation-color">
+							<a class="nav-link text-white" href="{{ path('show_solde_products') }}" aria-expanded="false">
+
+								SOLDES
+
+							</a>
+						</div>
+						
+					</li>
+
 				</ul>
 
 			</div>
@@ -168,20 +179,20 @@
 	</div>
 </nav>
 
-	<script>
+<script>
 
-		var x = window.matchMedia("(max-width: 1000px)")
-		myFunction(x)
-		x.addListener(myFunction)
+var x = window.matchMedia("(max-width: 1000px)")
+myFunction(x)
+x.addListener(myFunction)
 
-		function myFunction(x) {
-			if (x.matches) { 
-				document.getElementById('mainLogo').classList.add('mx-auto');
-				document.getElementById('mainNav').classList.add('mx-auto');
-			} else {
-				document.getElementById('mainLogo').classList.remove('mx-auto');
-				document.getElementById('mainNav').classList.remove('mx-auto');
-			}
-		}
+function myFunction(x) {
+	if (x.matches) { 
+		document.getElementById('mainLogo').classList.add('mx-auto');
+		document.getElementById('mainNav').classList.add('mx-auto');
+	} else {
+		document.getElementById('mainLogo').classList.remove('mx-auto');
+		document.getElementById('mainNav').classList.remove('mx-auto');
+	}
+}
 
-	</script>
+</script>

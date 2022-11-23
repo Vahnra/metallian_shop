@@ -69,7 +69,9 @@
                 {% endif %}
                 
                 <div class="col-4 my-auto justify-content-end d-flex">
-                    <h3 class="my-auto fw-bold">{{ vetement.price/100 }}€</h3>
+                    <h5 class="my-auto fw-bold me-2" style="color: white; background-color: black; width: 100%; height: 100%; padding: 0.3vw">-{{ (100-vetementVariations.0.discount/vetement.price*100)|round }}%</h5>
+                    <h5 class="my-auto fw-bold me-2 text-muted"><s>{{ vetement.price/100 }}€</s></h5>
+                    <h3 class="my-auto fw-bold text-danger">{{ vetementVariations.0.discount/100 }}€</h3>
                     
                 </div>
 
