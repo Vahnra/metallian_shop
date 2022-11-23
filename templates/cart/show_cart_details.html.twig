@@ -68,7 +68,11 @@
 																	<script>
 																	function minusOne() {
 																		var tmp = document.getElementById('form' + {{cartProduct.id}} + '_quantity');
-																		tmp.value = tmp.value - 1;
+																		
+																		if (tmp.value > 1) {
+																			tmp.value = tmp.value - 1;
+																		}
+																		
 																	}
 
 																	function plusOne() {
@@ -82,6 +86,7 @@
 																	document.getElementById('plusOne' + {{cartProduct.id}}).addEventListener("click", plusOne);
 										
 																	</script>
+
 																</button> 
 
 															</form> 
@@ -141,26 +146,26 @@
 
 												{% if userPostAdress is not empty %}
 
-													{% if cart is not null %}
+													{% if numberOfItem > 0 %}
 												
-														<a href="{{ path('choose_adress', {"user": app.user.id, "cart": cart.id}) }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+														<a href="{{ path('choose_adress', {"user": app.user.id, "cart": cart.id}) }}" class="col-12 btn btn-dark btn-block btn-lg no-border-radius" data-mdb-ripple-color="dark">Valider</a>
 
 													{% else %}
 														
-														<a href="#" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+														<a href="#" class="col-12 btn btn-dark btn-block btn-lg no-border-radius" data-mdb-ripple-color="dark">Valider</a>
 
 													{% endif %}
 
 												{% else %}
 
-													{% if cart is not null %}
+													{% if numberOfItem > 0 %}
 													
 													
-														<a href="{{ path('new_adress', {"user": app.user.id, "cart": cart.id}) }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+														<a href="{{ path('new_adress', {"user": app.user.id, "cart": cart.id}) }}" class="col-12 btn btn-dark btn-block btn-lg no-border-radius" data-mdb-ripple-color="dark">Valider</a>
 
 													{% else %}
 														
-														<a href="#" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</a>
+														<a href="#" class="col-12 btn btn-dark btn-block btn-lg no-border-radius" data-mdb-ripple-color="dark">Valider</a>
 
 													{% endif %}
 
@@ -168,7 +173,7 @@
 
 											{% else %}
 											
-												<a href="{{ path('app_login') }}" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Continuer</a>
+												<a href="{{ path('app_login') }}" class="col-12 btn btn-dark btn-block btn-lg no-border-radius" data-mdb-ripple-color="dark">Continuer</a>
 
 											{% endif %}
 										</div>

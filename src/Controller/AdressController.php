@@ -22,6 +22,12 @@ class AdressController extends AbstractController
             'id' => $request->get('cart')
         ]);
 
+        if ($cart[0]->getCartProduct()->getValues() == null || $this->getUser() == null) {
+            return $this->redirectToRoute('show_cart_details', [
+     
+            ]);
+        }
+
         $cartProducts = null;
 
         $numberOfItem = null;
@@ -73,9 +79,15 @@ class AdressController extends AbstractController
     #[Route('/checkout/new-adress-{user}-{cart}', name: 'new_adress', methods:['GET', 'POST'])]
     public function newAdress(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $cart = $entityManager->getRepository(Cart::class)->findBy([
+        $cart = $entityManager->getRepository(Cart::class)->findOneBy([
             'id' => $request->get('cart')
         ]);
+
+        if ($cart->getCartProduct()->getValues() == null || $this->getUser() == null) {
+            return $this->redirectToRoute('show_cart_details', [
+     
+            ]);
+        }
 
         $adress = new UserPostalAdress();
 

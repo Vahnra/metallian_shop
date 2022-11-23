@@ -6,6 +6,7 @@ use App\Repository\CartProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartProductRepository::class)]
@@ -19,6 +20,7 @@ class CartProduct
     #[ORM\Column(length: 255)]
     private ?string $price = null;
 
+    #[Assert\GreaterThan(0)]
     #[ORM\Column]
     private ?int $quantity = null;
 
