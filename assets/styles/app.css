@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+       url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+       url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+       url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+       url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+}
 
 body {
   background-color: rgb(245, 245, 245);

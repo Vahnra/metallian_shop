@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -130,15 +131,24 @@ class UserController extends AbstractController
         $formMail = $this->createForm(UserMailFormType::class)->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            $password = $formMail->get('oldPassword')->getData();
+
+            if ($passwordHasher->isPasswordValid($user, $password)) {
+
+                $user->setUpdatedAt(new DateTime());
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('show_profile', [
+                    'id' => $user->getId()
+                ]);
+
+            } else {
+                $formMail->addError(new FormError('Mauvais mot de passe'));
+            };
             
-            $user->setUpdatedAt(new DateTime());
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('show_profile', [
-                'id' => $user->getId()
-            ]);
         }
 
         // Form pour le nouveau mot de passe
@@ -146,23 +156,32 @@ class UserController extends AbstractController
         $formPassword = $this->createForm(UserPasswordFormType::class)->handleRequest($request);
 
         if($formPassword->isSubmitted() && $formPassword->isValid()) {
+
+            $password = $formPassword->get('oldPassword')->getData();
+
+            if ($passwordHasher->isPasswordValid($user, $password)) {
+
+                $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $this->getUser()]);
+
+                $user->setUpdatedAt(new DateTime());
+
+                $user->setPassword($passwordHasher->hashPassword(
+                    $user, $formPassword->get('password')->getData()
+                    )
+                );
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', "Votre mot de passe a bien été changé");
+                return $this->redirectToRoute('show_profile', [
+                    'id' => $user->getId()
+                ]);
+
+            } else {
+                $formPassword->addError(new FormError('Mauvais mot de passe'));
+            };
             
-            $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $this->getUser()]);
-
-            $user->setUpdatedAt(new DateTime());
-
-            $user->setPassword($passwordHasher->hashPassword(
-                $user, $formPassword->get('password')->getData()
-                )
-            );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash('success', "Votre mot de passe a bien été changé");
-            return $this->redirectToRoute('show_profile', [
-                'id' => $user->getId()
-            ]);
         }
         
         return $this->render('user/show_profile.html.twig', [
@@ -220,7 +239,25 @@ class UserController extends AbstractController
     #[Route('/profile/mon-espace-perso-{id}/orders', name: 'show_profile_orders', methods:['GET', 'POST'])]
     public function showProfileOrders(User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $orders = $entityManager->getRepository(Order::class)->findBy(['user' => $user], ['createdAt' => 'DESC']);
+        $year = $request->get('year');
+
+        $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '01-01-2022', '01-01-2023');
+  
+        if ($year == null) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2022-01-01', '2023-01-01');
+        };  
+
+        if ($year == 2021) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2021-01-01', '2022-01-01');
+        };
+
+        if ($year == 2022) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2022-01-01', '2023-01-01');
+        };
+
+        if ($year == 2023) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2023-01-01', '2024-01-01');
+        };  
 
         return $this->render('user/show_profile_orders.html.twig', [
             'orders' => $orders

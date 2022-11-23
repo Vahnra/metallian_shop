@@ -15,19 +15,24 @@ class UserPasswordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('oldPassword',PasswordType::class, [
+                'label' => 'Votre ancien mot de passe',
+                'mapped' => false
+            ])
             ->add('password', RepeatedType::class, [
                 'label' => 'Votre nouveau mot',
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit être le même.',
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
+                'first_options'  => ['label' => 'Votre nouveau mot de passe'],
                 'second_options' => ['label' => 'Répétez le mot de passe'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier votre mot de passe',
                 'validate' => False,
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn no-border-radius',
+                    'style' => 'color: white; background-color: #cd0019'
                 ],
             ])
         

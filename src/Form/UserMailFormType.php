@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserMailFormType extends AbstractType
@@ -15,6 +16,10 @@ class UserMailFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('oldPassword', PasswordType::class, [
+                'label' => 'Votre mot de passe',
+                'mapped' => false
+            ])
             ->add('email', RepeatedType::class, [
                 'label' => 'Votre nouveau mail',
                 'type' => EmailType::class,
@@ -27,7 +32,8 @@ class UserMailFormType extends AbstractType
                 'label' => 'Modifier votre mail',
                 'validate' => False,
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn no-border-radius',
+                    'style' => 'color: white; background-color: #cd0019'
                 ],
             ])
         ;

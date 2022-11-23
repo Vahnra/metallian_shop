@@ -346,7 +346,10 @@ class ViewProductsController extends AbstractController
             $cartProduct->setProducts($products);
             $quantity = $form->get('quantity')->getData();
             $cartProduct->setQuantity($quantity);
-            $cartProduct->setPrice($products->getPrice());
+
+            $choosedArticle = $entityManager->getRepository(ProductsQuantities::class)->findOneBy(['color' => $choosedColor, 'size' => $choosedSize, 'solde' => 'yes']);
+
+            $cartProduct->setPrice($choosedArticle->getDiscount());
             $cartProduct->setTitle($products->getTitle());
             $cartProduct->setPhoto($products->getImages()->getValues()[0]->getImage());
             $cartProduct->setColor($choosedColor);

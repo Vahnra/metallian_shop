@@ -60,6 +60,18 @@
                 
                 <div class="col-xl-11" style="padding-left: 4rem">
 
+                    <div class="col-6 mb-4">
+                        <form action="{{ path('show_profile_orders', {"id": app.user.id})}}" id="yearChosen" method="GET">
+                            <select class="form-select no-border-radius" name="year" onchange="document.getElementById('yearChosen').submit()">
+                                <option disabled selected>Année</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                            </select>
+                        </form>
+
+                    </div>
+
                     {% for order in orders %}
                 
                         <div class="card mb-3">
