@@ -6,6 +6,7 @@ use App\Entity\Cart;
 use App\Entity\User;
 use App\Entity\UserPostalAdress;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,12 +53,176 @@ class PaymentController extends AbstractController
         $entityManager->persist($cart[0]);
         $entityManager->flush();
 
+        // Partie paypal
+        $totalPriceFinal2 = $totalPriceFinal / 100;
+
+        $order = json_encode([
+            'purchase_units' => [[
+                'description' => 'Panier Metallian Eshop',
+                'items' => array_map(function($product) {
+                    return [
+                        'name' => $product->getTitle(),
+                        'quantity' => $product->getQuantity(),
+                        'unit_amount' => [
+                            'value' => $product->getPrice() / 100,
+                            'currency_code' => 'EUR',
+                        ],
+                    ];                  
+                }, $cartProducts),
+                'amount' => [
+                    'currency_code' => 'EUR',
+                    'value' => $totalPriceFinal2,
+                    'breakdown' => [
+                        'item_total' => [
+                            'currency_code' => 'EUR',
+                            'value' => $totalPrice / 100,
+                        ],
+                        'shipping' => [
+                            'currency_code' => 'EUR',
+                            'value' => $livraison / 100,
+                        ],
+                    ]
+                ],
+                'shipping' => [
+                    'address' => [
+                        'country_code' => 'FR',
+                        'address_line_1' => $userPostAdress->getAdress(),
+                        'admin_area_2' => $userPostAdress->getCity(),
+                        'postal_code' => $userPostAdress->getPostCode(),
+                    ],
+                    'name' => [
+                        'full_name' => $user->getFirstname() . ' ' . $user->getLastname(),
+                    ]
+                ]
+            ]]
+        ]);
+
+        $paypal = <<<HTML
+      
+
+            <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR"></script>
+
+            <!-- Set up a container element for the button -->
+
+            <div id="paypal-button-container" class="col-12 mt-4"></div>
+
+            <script>
+
+            paypal.Buttons({
+
+                // Sets up the transaction when a payment button is clicked
+
+                createOrder: (data, actions) => {
+
+                return actions.order.create({$order});
+
+                },
+
+                // Finalize the transaction after payer approval
+
+                onApprove: (data, actions) => {
+
+                return actions.order.capture().then(function(orderData) {
+
+                    // Successful capture! For dev/demo purposes:
+
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                    const transaction = orderData.purchase_units[0].payments.captures[0];
+
+                    alert(`Transaction \${transaction.status}: \${transaction.id}\n\nSee console for all available details`);
+
+                    // When ready to go live, remove the alert and show a success message within this page. For example:
+
+                    // const element = document.getElementById('paypal-button-container');
+
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+
+                });
+
+                }
+
+            }).render('#paypal-button-container');
+
+            </script>
+        HTML;
+
         return $this->render('payment/payment.html.twig', [
             'userPostAdress' => $userPostAdress,
             'totalPriceFinal' => $totalPriceFinal,
             'livraison' => $livraison,
             'totalPrice' => $totalPrice,
-            'cart' => $cart[0]
+            'cart' => $cart[0],
+            'paypal' => $paypal
         ]);
+    }
+
+    public function paypalUi()
+    {
+        return <<<HTML
+      
+
+                <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR"></script>
+
+                <!-- Set up a container element for the button -->
+
+                <div id="paypal-button-container" class="col-12 mt-4"></div>
+
+                <script>
+
+                paypal.Buttons({
+
+                    // Sets up the transaction when a payment button is clicked
+
+                    createOrder: (data, actions) => {
+
+                    return actions.order.create({
+
+                        purchase_units: [{
+
+                        amount: {
+
+                            value: '77.44' // Can also reference a variable or function
+
+                        }
+
+                        }]
+
+                    });
+
+                    },
+
+                    // Finalize the transaction after payer approval
+
+                    onApprove: (data, actions) => {
+
+                    return actions.order.capture().then(function(orderData) {
+
+                        // Successful capture! For dev/demo purposes:
+
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                        const transaction = orderData.purchase_units[0].payments.captures[0];
+
+                        alert(`Transaction \${transaction.status}: \${transaction.id}\n\nSee console for all available details`);
+
+                        // When ready to go live, remove the alert and show a success message within this page. For example:
+
+                        // const element = document.getElementById('paypal-button-container');
+
+                        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                        // Or go to another URL:  actions.redirect('thank_you.html');
+
+                    });
+
+                    }
+
+                }).render('#paypal-button-container');
+
+            </script>
+HTML;
     }
 }
