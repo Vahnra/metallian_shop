@@ -4,12 +4,24 @@ namespace App\Controller;
 
 use App\Entity\Cart;
 use App\Entity\User;
+use App\Entity\Order;
+use App\Entity\CartProduct;
 use App\Entity\UserPostalAdress;
+use App\Entity\ProductsQuantities;
+use App\Exception\NotInCartException;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\String_;
+use App\Exception\NotEnoughInStockException;
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use Symfony\Component\HttpFoundation\Request;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Exception\PaymentNotCompletedException;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Exception\PaymentAmountMissmatchException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use PayPalCheckoutSdk\Payments\AuthorizationsGetRequest;
+use PayPalCheckoutSdk\Payments\AuthorizationsCaptureRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PaymentController extends AbstractController
@@ -48,7 +60,7 @@ class PaymentController extends AbstractController
 
         $totalPriceFinal = $totalPrice + $livraison;
 
-        $cart[0]->setTotalPrice($totalPrice);
+        $cart[0]->setTotalPrice($totalPriceFinal);
 
         $entityManager->persist($cart[0]);
         $entityManager->flush();
@@ -67,6 +79,7 @@ class PaymentController extends AbstractController
                             'value' => $product->getPrice() / 100,
                             'currency_code' => 'EUR',
                         ],
+                        'sku' => $product->getSku(),
                     ];                  
                 }, $cartProducts),
                 'amount' => [
@@ -123,9 +136,9 @@ class PaymentController extends AbstractController
                 onApprove: (data, actions) => {
                     actions.order.authorize().then(function(authorization) {
                         const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
-                        let route = '{{ path('default_home') }}';
 
-                        // return window.location.replace(route);
+                        let route = '{{ path('paypal', {'cart': cart.id}) }}';
+
                         return fetch(route, {
                             method: 'POST',
                             redirect: 'manual',
@@ -134,6 +147,13 @@ class PaymentController extends AbstractController
                             },
                             body: JSON.stringify({authorizationId}),
                         })
+                    }).then((response) => response.json())
+                    .then((responseCompleted) => {
+                        if (responseCompleted.status == "SUCCESS") {
+                            alert("it worked");
+                        }else{
+                             alert("it didn't work");
+                        }
                     })
                 }
 
@@ -152,70 +172,69 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    public function paypalUi()
+    #[Route('/checkout/paypal-{cart}', name: 'paypal', methods:['GET', 'POST'])]
+    public function paypal(Request $request, Cart $cart, EntityManagerInterface $entityManager): JsonResponse
     {
-        return <<<HTML
-      
+        $clientId = 'AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-';
+        $secret = 'EL-kbarXbZIu8ZlxqrTjLROtH44Yw8SrNd8Jz7zxsPUpLGrNITAhWZevnv0gtHBZB0LAh2ixst5ph115';
 
-                <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR"></script>
+        $environment = new SandboxEnvironment($clientId, $secret);
 
-                <!-- Set up a container element for the button -->
+        $client = new PayPalHttpClient($environment);
 
-                <div id="paypal-button-container" class="col-12 mt-4"></div>
+        $test = json_decode($request->getContent(), true);
 
-                <script>
+        $requestPaypal = new AuthorizationsGetRequest($test['authorizationId']);
+        
+        $authorizationResponse = $client->execute($requestPaypal);
 
-                paypal.Buttons({
+        $amount = (int)(floatval($authorizationResponse->result->amount->value) * 100);
 
-                    // Sets up the transaction when a payment button is clicked
+        if ($amount !== $cart->getTotalPrice()) {
+            throw new PaymentAmountMissmatchException();
+        }
 
-                    createOrder: (data, actions) => {
+        // Vérifier si le stock est dispo
+        $orderId = $authorizationResponse->result->supplementary_data->related_ids->order_id;
+        $requestOrder = new OrdersGetRequest($orderId);
+        $orderResponse = $client->execute($requestOrder);
 
-                    return actions.order.create({
+        foreach ($orderResponse->result->purchase_units[0]->items as $value) {
 
-                        purchase_units: [{
+            if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku]) == null) {
+                throw new NotInCartException();
+            }
 
-                        amount: {
+            if (($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getStock() - $value->quantity) < 0) {
+                throw new NotEnoughInStockException();
+            }
 
-                            value: '77.44' // Can also reference a variable or function
+            if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->gtDiscount()  == null) {
 
-                        }
+                if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getProducts()->getPrice() !== ($value->unit_amount->value) * 100) {
+                    throw new NotEnoughInStockException();
+                }
 
-                        }]
+            } else {
 
-                    });
+                if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getDiscount() !== ($value->unit_amount->value) * 100) {
+                    throw new NotEnoughInStockException();
+                }
+            }
+        }
 
-                    },
+        // Sauvegarder les informations de l'utilisateur
+        $user = $this->getUser();
+        $order = new Order;
+        $order->setStatus('paid');
 
-                    // Finalize the transaction after payer approval
+        // Capturer le paiement
+        $requestCapture = new AuthorizationsCaptureRequest($test['authorizationId']);
+        $responseCapture = $client->execute($requestCapture);
+        if ($responseCapture->result->status !== 'COMPLETED') {
+            throw new PaymentNotCompletedException();
+        }
 
-                    onApprove: (data, actions) => {
-
-                    return actions.order.capture().then(function(orderData) {
-
-                        // Successful capture! For dev/demo purposes:
-
-                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-                        const transaction = orderData.purchase_units[0].payments.captures[0];
-
-                        alert(`Transaction \${transaction.status}: \${transaction.id}\n\nSee console for all available details`);
-
-                        // When ready to go live, remove the alert and show a success message within this page. For example:
-
-                        // const element = document.getElementById('paypal-button-container');
-
-                        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-                        // Or go to another URL:  actions.redirect('thank_you.html');
-
-                    });
-
-                    }
-
-                }).render('#paypal-button-container');
-
-            </script>
-HTML;
+        return new JsonResponse(['status' => 'SUCCESS']);
     }
 }

@@ -21,8 +21,6 @@ class DefaultController extends AbstractController
         $femme = $entityManager->getRepository(Categorie::class)->findBy([
             'title' => 'Femme'
         ]);
-    $test = json_decode($request->getContent(), true);
-        return $this->redirectToRoute('default_home');
 
         $homme = $entityManager->getRepository(Categorie::class)->findBy([
             'title' => 'Homme'

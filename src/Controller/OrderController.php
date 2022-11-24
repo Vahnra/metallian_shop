@@ -42,7 +42,6 @@ class OrderController extends AbstractController
         )
     {
         $user = $this->getUser();
-
         $order = new Order;
         $order->setStatus('paid');
 
@@ -79,7 +78,7 @@ class OrderController extends AbstractController
         $order->setUpdatedAt(new DateTime());
         $order->setUser($user);
         $order->setsubTotal($totalPrice);
-        $order->setTotal($totalPriceFinal + 500);
+        $order->setTotal($totalPriceFinal);
         $order->setShipping(500);
         $order->setFirstName($user->getFirstname());
         $order->setLastName($user->getLastname());
