@@ -100,7 +100,7 @@ class PaymentController extends AbstractController
         $paypal = <<<HTML
       
 
-            <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR"></script>
+            <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR&intent=authorize"></script>
 
             <!-- Set up a container element for the button -->
 
@@ -121,27 +121,20 @@ class PaymentController extends AbstractController
                 // Finalize the transaction after payer approval
 
                 onApprove: (data, actions) => {
+                    actions.order.authorize().then(function(authorization) {
+                        const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
+                        let route = '{{ path('default_home') }}';
 
-                return actions.order.capture().then(function(orderData) {
-
-                    // Successful capture! For dev/demo purposes:
-
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-                    const transaction = orderData.purchase_units[0].payments.captures[0];
-
-                    alert(`Transaction \${transaction.status}: \${transaction.id}\n\nSee console for all available details`);
-
-                    // When ready to go live, remove the alert and show a success message within this page. For example:
-
-                    // const element = document.getElementById('paypal-button-container');
-
-                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-                    // Or go to another URL:  actions.redirect('thank_you.html');
-
-                });
-
+                        // return window.location.replace(route);
+                        return fetch(route, {
+                            method: 'POST',
+                            redirect: 'manual',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify({authorizationId}),
+                        })
+                    })
                 }
 
             }).render('#paypal-button-container');
