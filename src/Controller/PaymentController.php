@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Exception\PaymentNotCompletedException;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Exception\PaymentAmountMissmatchException;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use PayPalCheckoutSdk\Payments\AuthorizationsGetRequest;
 use PayPalCheckoutSdk\Payments\AuthorizationsCaptureRequest;
@@ -124,7 +125,6 @@ class PaymentController extends AbstractController
             <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR&intent=authorize&components=buttons,funding-eligibility"></script>
 
             <!-- Set up a container element for the button -->
-
             <div id="paypal-button-container" class="col-12 mt-4"></div>
 
             <script>
@@ -137,15 +137,17 @@ class PaymentController extends AbstractController
 
                         fundingSource: fundingSource,
 
-                        // Sets up the transaction when a payment button is clicked
-                        createOrder: (data, actions) => {
-
-                        return actions.order.create({$order});
-
+                        createOrder: function(data, actions) {
+                            return fetch('{{ path('create_paypal_order', {'total': totalPrice, 'shipping': livraison}) }}', {
+                                method: 'post'
+                            }).then(function(res) {
+                                return res.json()
+                            }).then(function(orderData) {
+                                return orderData.result.id;
+                            });
                         },
 
                         // Finalize the transaction after payer approval
-
                         onApprove: (data, actions) => {
                             actions.order.authorize().then(function(authorization) {
                                 const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id;
@@ -168,12 +170,14 @@ class PaymentController extends AbstractController
                                     
                                     window.location.href = responseCompleted.orderId;
         
-                                }elseif(responseCompleted.status == "payment failed"){
+                                }else if(responseCompleted.status == "payment failed"){
                                     alert("Paiement échoué");
-                                }elseif(responseCompleted.status == "not enough in stock"){
+                                }else if(responseCompleted.status == "not enough in stock"){
                                     alert("Pas assez en stock");
-                                }elseif(responseCompleted.status == "not in stock"){
+                                }else if(responseCompleted.status == "not in stock"){
                                     alert("Un ou plusieurs produits ne sont plus en stock");
+                                }else if(responseCompleted.status == "Erreur dans le paiement"){
+                                    alert("Erreur dans le paiement");
                                 }
                             })
                         }
@@ -214,7 +218,8 @@ class PaymentController extends AbstractController
         $amount = (int)(floatval($authorizationResponse->result->amount->value) * 100);
 
         if ($amount !== $cart->getTotalPrice() + $request->get('livraison')) {
-            throw new PaymentAmountMissmatchException();
+            // throw new PaymentAmountMissmatchException();
+            return new JsonResponse(["status" => "Erreur dans le paiement"]);
         }
 
         // Vérifier si le stock est dispo
@@ -320,7 +325,10 @@ class PaymentController extends AbstractController
             $orderProduct->setOrderId($order);
 
             if ($orderProduct->getProducts() != null) {
-                $product = $entityManager->getRepository(ProductsQuantities::class)->findOneBy(['products' => $orderProduct->getProducts()]);
+                $product = $entityManager->getRepository(ProductsQuantities::class)->findOneBy([
+                    'products' => $orderProduct->getProducts(),
+                    'sku' => $orderProduct->getSku(),
+                ]);
 
                 if ($product->getStock() >= 1) {
                     
@@ -378,5 +386,61 @@ class PaymentController extends AbstractController
         
 
         return new JsonResponse(["status" => "SUCCESS", "orderId" => "confirmation-order-" . $order->getId() . ""]);
+    }
+
+    #[Route('/checkout/create-paypal-order-{total}-{shipping}', name: 'create_paypal_order', methods:['GET', 'POST'])]
+    public function createPaypalOrder(EntityManagerInterface $entityManager, Request $request, Paypal $paypal)
+    {
+        $totalPrice = $request->get('total');
+        $shipping = $request->get('shipping');
+
+        
+
+        $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $this->getUser()]);
+
+        $clientId = 'AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-';
+        $secret = 'EL-kbarXbZIu8ZlxqrTjLROtH44Yw8SrNd8Jz7zxsPUpLGrNITAhWZevnv0gtHBZB0LAh2ixst5ph115';
+
+        $environment = new SandboxEnvironment($clientId, $secret);
+
+        $client = new PayPalHttpClient($environment);
+
+        $createOrder = new OrdersCreateRequest;
+        $createOrder->prefer('return=representation');
+        $createOrder->body = array(
+            'intent' => 'AUTHORIZE',
+            'purchase_units' => [[
+                'description' => 'Panier Metallian Eshop',
+                'amount' => [
+                    'currency_code' => 'EUR',
+                    'value' => ($totalPrice + $shipping) / 100,
+                    'breakdown' => [
+                        'item_total' => [
+                            'currency_code' => 'EUR',
+                            'value' => $totalPrice / 100,
+                        ],
+                        'shipping' => [
+                            'currency_code' => 'EUR',
+                            'value' => $shipping / 100,
+                        ],
+                    ]
+                ],
+                'shipping' => [
+                    'address' => [
+                        'country_code' => 'FR',
+                        'address_line_1' => $userPostAdress->getAdress(),
+                        'admin_area_2' => $userPostAdress->getCity(),
+                        'postal_code' => $userPostAdress->getPostCode(),
+                    ],
+                    'name' => [
+                        'full_name' => $this->getUser()->getFirstname() . ' ' . $this->getUser()->getLastname(),
+                    ]
+                ]
+            ]]
+        );
+
+        $response = $client->execute($createOrder);
+    
+        return new JsonResponse($response);
     }
 }

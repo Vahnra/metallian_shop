@@ -326,7 +326,7 @@ class ViewProductsController extends AbstractController
                             $entityManager->persist($cart);
                             $entityManager->flush();
 
-                            return $this->redirectToRoute('view_products',[
+                            return $this->redirectToRoute('view_solded_products',[
                                 'id' => $products->getId(),
                                 'colorAdded' => $cartProduct->getColor(),
                                 'sizeAdded' => $cartProduct->getSize(),
@@ -387,7 +387,7 @@ class ViewProductsController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
-            return $this->redirectToRoute('view_products',[
+            return $this->redirectToRoute('view_solded_products',[
                 'id' => $products->getId(),
                 'colorAdded' => $cartProduct->getColor(),
                 'sizeAdded' => $cartProduct->getSize(),
