@@ -443,7 +443,7 @@
                                         {% set colors = {} %}
                                         {% for variations in product.productsQuantities.values %}
 
-                                            {% if variations.color.code not in colors %}
+                                            {% if variations.color.code not in colors and variations.solde == null %}
                                             
                                                 {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
                                             

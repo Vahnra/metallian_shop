@@ -35,7 +35,7 @@ class ViewProductsController extends AbstractController
 
         $products = $entityManager->getRepository(Products::class)->findOneBy(['id' => $products->getId()]);
 
-        $productsVariations = $entityManager->getRepository(ProductsQuantities::class)->findBy(['products' => $products->getId()]);
+        $productsVariations = $entityManager->getRepository(ProductsQuantities::class)->findBy(['products' => $products->getId(), 'solde' => null]);
 
         $couleurs = [];
 
