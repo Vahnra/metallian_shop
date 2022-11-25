@@ -121,55 +121,62 @@ class PaymentController extends AbstractController
         $paypal = <<<HTML
       
 
-            <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR&intent=authorize"></script>
+            <script src="https://www.paypal.com/sdk/js?client-id=AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-&currency=EUR&locale=fr_FR&intent=authorize&components=buttons,funding-eligibility"></script>
 
             <!-- Set up a container element for the button -->
 
             <div id="paypal-button-container" class="col-12 mt-4"></div>
 
             <script>
+                var FUNDING_SOURCES = [
+                paypal.FUNDING.PAYPAL,
+                ]
+            
+                FUNDING_SOURCES.forEach(function (fundingSource) {
+                    paypal.Buttons({
 
-            paypal.Buttons({
+                        fundingSource: fundingSource,
 
-                // Sets up the transaction when a payment button is clicked
+                        // Sets up the transaction when a payment button is clicked
+                        createOrder: (data, actions) => {
 
-                createOrder: (data, actions) => {
+                        return actions.order.create({$order});
 
-                return actions.order.create({$order});
+                        },
 
-                },
+                        // Finalize the transaction after payer approval
 
-                // Finalize the transaction after payer approval
+                        onApprove: (data, actions) => {
+                            actions.order.authorize().then(function(authorization) {
+                                const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id;
 
-                onApprove: (data, actions) => {
-                    actions.order.authorize().then(function(authorization) {
-                        const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id;
+                                document.getElementById('loadingPage').style.cssText = 'position: fixed; top: 0; left: 0; z-index: 111; background-color: black; min-height: 100%; width: 100%; height: auto; visibility: visible; opacity: 0.80';
 
-                        document.getElementById('loadingPage').style.cssText = 'position: fixed; top: 0; left: 0; z-index: 111; background-color: black; min-height: 100%; width: 100%; height: auto; visibility: visible; opacity: 0.80';
+                                let route = '{{ path('paypal', {'cart': cart.id, 'livraison': livraison}) }}';
 
-                        let route = '{{ path('paypal', {'cart': cart.id, 'livraison': livraison}) }}';
-
-                        return fetch(route, {
-                            method: 'POST',
-                            redirect: 'manual',
-                            headers: {
-                                'content-type': 'application/json'
-                            },
-                            body: JSON.stringify({authorizationId}),
-                        })
-                    }).then((response) => response.json())
-                    .then((responseCompleted) => {
-                        if (responseCompleted.status == "SUCCESS") {
-                            
-                            window.location.href = responseCompleted.orderId;
-  
-                        }else{
-                             alert("it didn't work");
+                                return fetch(route, {
+                                    method: 'POST',
+                                    redirect: 'manual',
+                                    headers: {
+                                        'content-type': 'application/json'
+                                    },
+                                    body: JSON.stringify({authorizationId}),
+                                })
+                            }).then((response) => response.json())
+                            .then((responseCompleted) => {
+                                if (responseCompleted.status == "SUCCESS") {
+                                    
+                                    window.location.href = responseCompleted.orderId;
+        
+                                }else{
+                                    alert("it didn't work");
+                                }
+                            })
                         }
-                    })
-                }
 
-            }).render('#paypal-button-container');
+                    }).render('#paypal-button-container')
+                    
+                });
 
             </script>
         HTML;

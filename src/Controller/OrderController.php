@@ -177,7 +177,7 @@ class OrderController extends AbstractController
         $user = $order->getUser();
 
         if ($order->getUser() !== $this->getUser()) {
-            $this->redirectToRoute('default_home');
+            return $this->redirectToRoute('default_home');
         }
 
         $cartProducts = $order->getOrderProducts();
