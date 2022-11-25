@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Cart;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\CartProduct;
+use App\Entity\OrderProduct;
 use App\Entity\UserPostalAdress;
 use App\Entity\ProductsQuantities;
+use Symfony\Component\Mime\Address;
 use App\Exception\NotInCartException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Exception\NotEnoughInStockException;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,7 +65,7 @@ class PaymentController extends AbstractController
 
         $totalPriceFinal = $totalPrice + $livraison;
 
-        $cart[0]->setTotalPrice($totalPriceFinal);
+        $cart[0]->setTotalPrice($totalPrice);
 
         $entityManager->persist($cart[0]);
         $entityManager->flush();
@@ -137,7 +142,7 @@ class PaymentController extends AbstractController
                     actions.order.authorize().then(function(authorization) {
                         const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
 
-                        let route = '{{ path('paypal', {'cart': cart.id}) }}';
+                        let route = '{{ path('paypal', {'cart': cart.id, 'livraison': livraison}) }}';
 
                         return fetch(route, {
                             method: 'POST',
@@ -150,7 +155,10 @@ class PaymentController extends AbstractController
                     }).then((response) => response.json())
                     .then((responseCompleted) => {
                         if (responseCompleted.status == "SUCCESS") {
-                            alert("it worked");
+                            let orderId = JSON.parse(responseCompleted.orderId);
+                            let confirmation = '{{ path("order_confirmation_message", {'order': 'orderId' }) }}';
+                            console.log(confirmation);
+  
                         }else{
                              alert("it didn't work");
                         }
@@ -172,8 +180,8 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    #[Route('/checkout/paypal-{cart}', name: 'paypal', methods:['GET', 'POST'])]
-    public function paypal(Request $request, Cart $cart, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/checkout/paypal-{cart}-{livraison}', name: 'paypal', methods:['GET', 'POST'])]
+    public function paypal(Request $request, Cart $cart, MailerInterface $mailer, EntityManagerInterface $entityManager): JsonResponse
     {
         $clientId = 'AdNolTxLQnuKJE036RC3Beg75EhBX7ZDv0mlIK4P5Rc98MjanzAIBJhAg2IyhD0z4lkqT9Ob5wyJC39-';
         $secret = 'EL-kbarXbZIu8ZlxqrTjLROtH44Yw8SrNd8Jz7zxsPUpLGrNITAhWZevnv0gtHBZB0LAh2ixst5ph115';
@@ -190,7 +198,7 @@ class PaymentController extends AbstractController
 
         $amount = (int)(floatval($authorizationResponse->result->amount->value) * 100);
 
-        if ($amount !== $cart->getTotalPrice()) {
+        if ($amount !== $cart->getTotalPrice() + $request->get('livraison')) {
             throw new PaymentAmountMissmatchException();
         }
 
@@ -199,34 +207,29 @@ class PaymentController extends AbstractController
         $requestOrder = new OrdersGetRequest($orderId);
         $orderResponse = $client->execute($requestOrder);
 
-        foreach ($orderResponse->result->purchase_units[0]->items as $value) {
+        // foreach ($orderResponse->result->purchase_units[0]->items as $value) {
 
-            if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku]) == null) {
-                throw new NotInCartException();
-            }
+        //     if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku]) == null) {
+        //         throw new NotInCartException();
+        //     }
 
-            if (($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getStock() - $value->quantity) < 0) {
-                throw new NotEnoughInStockException();
-            }
+        //     if (($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getStock() - $value->quantity) < 0) {
+        //         throw new NotEnoughInStockException();
+        //     }
 
-            if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->gtDiscount()  == null) {
+        //     if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getDiscount()  == null) {
 
-                if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getProducts()->getPrice() !== ($value->unit_amount->value) * 100) {
-                    throw new NotEnoughInStockException();
-                }
+        //         if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getProducts()->getPrice() !== (($value->unit_amount->value) * 100)) {
+        //             throw new NotEnoughInStockException();
+        //         }
 
-            } else {
+        //     } else {
 
-                if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getDiscount() !== ($value->unit_amount->value) * 100) {
-                    throw new NotEnoughInStockException();
-                }
-            }
-        }
-
-        // Sauvegarder les informations de l'utilisateur
-        $user = $this->getUser();
-        $order = new Order;
-        $order->setStatus('paid');
+        //         if ($entityManager->getRepository(ProductsQuantities::class)->findOneBy(['sku' => $value->sku])->getDiscount() !== ($value->unit_amount->value) * 100) {
+        //             throw new NotEnoughInStockException();
+        //         }
+        //     }
+        // }
 
         // Capturer le paiement
         $requestCapture = new AuthorizationsCaptureRequest($test['authorizationId']);
@@ -235,6 +238,124 @@ class PaymentController extends AbstractController
             throw new PaymentNotCompletedException();
         }
 
-        return new JsonResponse(['status' => 'SUCCESS']);
+        // Sauvegarder les informations de l'utilisateur et new Order
+        $user = $this->getUser();
+
+        $order = new Order;
+        $order->setStatus('paid');
+
+        $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $this->getUser()]);
+
+        $cartProducts = null;
+
+        $numberOfItem = null;
+
+        if ($cart !== null) {
+            $numberOfItem = $cart->getCartProduct()->count();
+        }
+
+        if ($cart !== null) {
+            $cartProducts = $cart->getCartProduct()->toArray();
+        }
+
+        $totalPrice = 0;
+
+        // Boucle pour récuper le prix total de tout les produits du panier
+        if ($numberOfItem !== null) {
+            foreach ($cartProducts as $value) {
+                $totalPrice = $totalPrice + ($value->getPrice() * $value->getQuantity());
+            }
+        }
+
+        $totalPriceFinal = $cart->getTotalPrice();
+
+        $order->setCreatedAt(new DateTime());
+        $order->setUpdatedAt(new DateTime());
+        $order->setUser($user);
+        $order->setsubTotal($totalPrice);
+        $order->setTotal($totalPriceFinal);
+        $order->setShipping(500);
+        $order->setFirstName($user->getFirstname());
+        $order->setLastName($user->getLastname());
+        $order->setMobile($user->getPhoneNumber());
+        $order->setEmail($user->getEmail());
+        $order->setAdress($userPostAdress->getAdress());
+        $order->setAdditionalAdress($userPostAdress->getAdditionalAdress());
+        $order->setPostCode($userPostAdress->getPostCode());
+        $order->setCity($userPostAdress->getCity());
+        $order->setCountry('France');
+
+        foreach ($cart->getCartProduct() as $cartProduct) {
+            $orderProduct = new OrderProduct;
+            $orderProduct->setCreatedAt(new DateTime());
+            $orderProduct->setUpdatedAt(new DateTime());
+            $orderProduct->setProducts($cartProduct->getProducts());
+            $orderProduct->setPhoto($cartProduct->getPhoto());
+            $orderProduct->setSubCategory($cartProduct->getSubCategory());
+            $orderProduct->setPrice($cartProduct->getPrice());
+            $orderProduct->setColor($cartProduct->getColor());  
+            $orderProduct->setSize($cartProduct->getSize());
+            $orderProduct->setQuantity($cartProduct->getQuantity());
+            $orderProduct->setTitle($cartProduct->getTitle());
+            $orderProduct->setSku($cartProduct->getSku());
+            $orderProduct->setOrderId($order);
+
+            if ($orderProduct->getProducts() != null) {
+                $product = $entityManager->getRepository(ProductsQuantities::class)->findOneBy(['products' => $orderProduct->getProducts()]);
+
+                if ($product->getStock() >= 1) {
+                    
+                    if ($product->getStock() - $orderProduct->getQuantity() >= 0) {
+
+                        $product->setStock($product->getStock() - $orderProduct->getQuantity());
+                        $entityManager->persist($product);
+                        $entityManager->flush();
+
+                    } else {
+                        return $this->redirectToRoute('show_cart_details');
+                    }
+                    
+                } else {
+                    return $this->redirectToRoute('show_cart_details');
+                }
+                
+            }
+            
+            $entityManager->persist($orderProduct);
+
+        }
+
+        $cart->setStatus('archived');
+        $entityManager->persist($cart);
+        $entityManager->persist($order);
+        $entityManager->flush();
+
+        $confirmationMail = (new TemplatedEmail())
+            ->from(new Address('test@ornchanarong.com', 'Metallian Store'))
+            ->to($user->getEmail())
+            ->subject('Confirmation de votre commande Metallian Eshop')
+            ->htmlTemplate('email/order_confirmation_mail.html.twig')
+            ->context([
+                'user' => $user,
+                'cartProducts' => $cartProducts,
+                'totalPriceFinal' => $totalPriceFinal + 500
+        ]);
+
+        $newOrderEmail = (new TemplatedEmail())
+            ->from(new Address('test@ornchanarong.com', 'Metallian Store'))
+            ->to('vahnra@gmail.com')
+            ->subject('Nouvelle commande Metallian Eshop numéro : ' . $order->getId())
+            ->htmlTemplate('email/new_order_mail.html.twig')
+            ->context([
+                'user' => $user,
+                'order' => $order->getId(),
+                'cartProducts' => $cartProducts,
+                'totalPriceFinal' => $totalPriceFinal + 500
+        ]);
+
+        $mailer->send($confirmationMail);
+        $mailer->send($newOrderEmail);
+
+        return new JsonResponse(['status' => 'SUCCESS', 'orderId' => $order->getId()]);
     }
 }

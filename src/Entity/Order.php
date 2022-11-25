@@ -81,6 +81,15 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $trackingLink = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paymentMethod = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paypalAuthorizationId = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paypalOrderId = null;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -357,6 +366,42 @@ class Order
     public function setTrackingLink(?string $trackingLink): self
     {
         $this->trackingLink = $trackingLink;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(?string $paymentMethod): self
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getPaypalAuthorizationId(): ?string
+    {
+        return $this->paypalAuthorizationId;
+    }
+
+    public function setPaypalAuthorizationId(?string $paypalAuthorizationId): self
+    {
+        $this->paypalAuthorizationId = $paypalAuthorizationId;
+
+        return $this;
+    }
+
+    public function getPaypalOrderId(): ?string
+    {
+        return $this->paypalOrderId;
+    }
+
+    public function setPaypalOrderId(string $paypalOrderId): self
+    {
+        $this->paypalOrderId = $paypalOrderId;
 
         return $this;
     }

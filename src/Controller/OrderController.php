@@ -42,6 +42,7 @@ class OrderController extends AbstractController
         )
     {
         $user = $this->getUser();
+
         $order = new Order;
         $order->setStatus('paid');
 
@@ -125,8 +126,6 @@ class OrderController extends AbstractController
                 }
                 
             }
-
-            
             
             $entityManager->persist($orderProduct);
 
