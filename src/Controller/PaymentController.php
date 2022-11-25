@@ -168,8 +168,12 @@ class PaymentController extends AbstractController
                                     
                                     window.location.href = responseCompleted.orderId;
         
-                                }else{
-                                    alert("it didn't work");
+                                }elseif(responseCompleted.status == "payment failed"){
+                                    alert("Paiement échoué");
+                                }elseif(responseCompleted.status == "not enough in stock"){
+                                    alert("Pas assez en stock");
+                                }elseif(responseCompleted.status == "not in stock"){
+                                    alert("Un ou plusieurs produits ne sont plus en stock");
                                 }
                             })
                         }
@@ -246,7 +250,8 @@ class PaymentController extends AbstractController
         $requestCapture = new AuthorizationsCaptureRequest($test['authorizationId']);
         $responseCapture = $client->execute($requestCapture);
         if ($responseCapture->result->status !== 'COMPLETED') {
-            throw new PaymentNotCompletedException();
+            // throw new PaymentNotCompletedException();
+            return new JsonResponse(["status" => "payment failed"]);
         }
 
         // Sauvegarder les informations de l'utilisateur et new Order
@@ -326,11 +331,11 @@ class PaymentController extends AbstractController
                         $entityManager->flush();
 
                     } else {
-                        return $this->redirectToRoute('show_cart_details');
+                        return new JsonResponse(["status" => "not enough in stock"]);
                     }
                     
                 } else {
-                    return $this->redirectToRoute('show_cart_details');
+                    return new JsonResponse(["status" => "not in stock"]);
                 }
                 
             }

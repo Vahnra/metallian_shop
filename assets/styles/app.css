@@ -5,6 +5,7 @@
        url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
        url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
        url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+  font-display: swap;
 }
 
 body {
