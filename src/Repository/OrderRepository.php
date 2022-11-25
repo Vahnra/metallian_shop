@@ -59,7 +59,8 @@ class OrderRepository extends ServiceEntityRepository
                 ->andWhere('o.createdAt > :firstDate')
                 ->andWhere('o.createdAt < :secondDate')
                 ->setParameter('firstDate', $date1)
-                ->setParameter('secondDate', $date2);
+                ->setParameter('secondDate', $date2)
+                ->orderBy('o.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
