@@ -40,6 +40,9 @@ class PaymentController extends AbstractController
             'id' => $request->get('cart')
         ]);
 
+        if ($cart[0]->getCartProduct() == null) {
+            $this->redirectToRoute('default_home');
+        }
         $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $user->getId()]);
 
         $cartProducts = null;
@@ -155,9 +158,8 @@ class PaymentController extends AbstractController
                     }).then((response) => response.json())
                     .then((responseCompleted) => {
                         if (responseCompleted.status == "SUCCESS") {
-                            let orderId = JSON.parse(responseCompleted.orderId);
-                            let confirmation = '{{ path("order_confirmation_message", {'order': 'orderId' }) }}';
-                            console.log(confirmation);
+                            
+                            window.location.href = responseCompleted.orderId;
   
                         }else{
                              alert("it didn't work");
@@ -243,6 +245,9 @@ class PaymentController extends AbstractController
 
         $order = new Order;
         $order->setStatus('paid');
+        $order->setPaymentMethod('Paypal');
+        $order->setPaypalAuthorizationId($test['authorizationId']);
+        $order->setPaypalOrderId($orderId);
 
         $userPostAdress = $entityManager->getRepository(UserPostalAdress::class)->findOneBy(['user' => $this->getUser()]);
 
@@ -356,6 +361,8 @@ class PaymentController extends AbstractController
         $mailer->send($confirmationMail);
         $mailer->send($newOrderEmail);
 
-        return new JsonResponse(['status' => 'SUCCESS', 'orderId' => $order->getId()]);
+        
+
+        return new JsonResponse(["status" => "SUCCESS", "orderId" => "confirmation-order-" . $order->getId() . ""]);
     }
 }

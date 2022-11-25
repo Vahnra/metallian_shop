@@ -28,6 +28,10 @@ class OrderController extends AbstractController
     #[Route('/profile/order-{id}', name: 'order_detail')]
     public function orderDetail(Order $order): Response
     {
+        if ($order->getUser() !== $this->getUser()) {
+            $this->redirectToRoute('default_home');
+        }
+        
         return $this->render('user/show_profile_order_detail.html.twig', [
             'order' => $order
         ]);
@@ -171,6 +175,10 @@ class OrderController extends AbstractController
     public function orderConfirmationMessage(Order $order, Request $request): Response
     {
         $user = $order->getUser();
+
+        if ($order->getUser() !== $this->getUser()) {
+            $this->redirectToRoute('default_home');
+        }
 
         $cartProducts = $order->getOrderProducts();
 
