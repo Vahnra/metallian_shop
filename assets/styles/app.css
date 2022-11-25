@@ -564,3 +564,26 @@ margin: 50px;
 .no-border-radius {
   border-radius: 0%;
 }
+
+/* Loading payement */
+.loading {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 5px solid #6ba2ec;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: rotation 2s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: .5; 
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

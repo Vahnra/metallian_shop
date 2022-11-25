@@ -143,7 +143,9 @@ class PaymentController extends AbstractController
 
                 onApprove: (data, actions) => {
                     actions.order.authorize().then(function(authorization) {
-                        const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id
+                        const authorizationId = authorization.purchase_units[0].payments.authorizations[0].id;
+
+                        document.getElementById('loadingPage').style.cssText = 'position: fixed; top: 0; left: 0; z-index: 111; background-color: black; min-height: 100%; width: 100%; height: auto; visibility: visible; opacity: 0.80';
 
                         let route = '{{ path('paypal', {'cart': cart.id, 'livraison': livraison}) }}';
 

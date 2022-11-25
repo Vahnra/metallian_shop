@@ -106,15 +106,13 @@
 
 	</div>
 
-	<div style="position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 111;
-        background-color: #FFF;
-        min-height: 100%;
-        width: 100%;
-        height: auto;
-		visibility: hidden;
-		"></div>
+	<div id="loadingPage" style="position: fixed; top: 0; left: 0; z-index: 111; background-color: black; min-height: 100%; width: 100%; height: auto; visibility: hidden; opacity: 0.80">
+
+		<div class="mx-auto" style="max-width: 10vw; max-height: 50px; margin-top: 40vh">
+			<div class="loading mx-auto"></div>
+			<div class="text-center mt-4" style="color: white">Merci de patienter</div>
+		</div>
+
+	</div>
 
 {% endblock %}
