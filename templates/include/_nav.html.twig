@@ -6,7 +6,7 @@
 
 		</a>
 
-		<div class="m-0 mx-auto row">
+		<div class="m-0 mx-auto row" id="center-div">
 
 			<div class="row mx-auto " style="heigth: 3em; color: white">
 
@@ -30,40 +30,39 @@
 
 			{% if is_granted("ROLE_ADMIN") %}
 
-				<div class="nav-item col-3">
-					<a class="nav-link text-white" style="padding-top: 0.38em" title="Page admin" href="{{ path('admin') }}">
-						<i class="fa-solid fa-screwdriver-wrench mx-2"></i>
+				<div class="nav-item col-3 orange-hover p-0 text-center" style="width: 4rem">
+					<a class="nav-link white-icon" style="display: inline-block; line-height: 85px;" title="Page admin" href="{{ path('admin') }}">
+						<i class="fa-solid fa-screwdriver-wrench fa-xl mx-2"></i>
 					</a>
 				</div>
 
 			{% endif %}
 
-			<div class="nav-item col-3">
+			<div class="nav-item col-3 orange-hover p-0 text-center" style="width: 4rem">
 
 				{% if app.user %}
-					<a class="nav-link text-white" style="padding-top: 0.38em" title="Vos favoris" href="{{ path('show_favorite_products', {"id": app.user.id}) }}">
-						<i class="fa-solid fa-heart mx-2"></i>
+					<a class="nav-link white-icon" style="display: inline-block; line-height: 85px; width: 4rem" title="Vos favoris" href="{{ path('show_favorite_products', {"id": app.user.id}) }}">
+						<i class="fa-solid fa-heart fa-xl mx-2"></i>
 					</a>
 
 				{% else %}
 
-					<a class="nav-link text-white" style="padding-top: 0.38em" title="Vos favoris" href="{{ path('app_login') }}">
-						<i class="fa-solid fa-heart mx-2"></i>
+					<a class="nav-link white-icon" style="display: inline-block; line-height: 85px; width: 4rem" title="Vos favoris" href="{{ path('app_login') }}">
+						<i class="fa-solid fa-heart fa-xl mx-2"></i>
 					</a>
 
 				{% endif %}
 
 			</div>
 
-			<div class="dropdown col-3">
+			<div class="dropdown col-3 orange-hover p-0 text-center" style="width: 4rem">
 				{% if app.user %}
-					<a class="btn btn-secondary dropdown-toggle border-0" title="Profile" style="background-color: black" href="{{ path('show_profile', {"id": app.user.id}) }}" aria-expanded="false">
-						<i class="fa-solid fa-user"></i>
+					<a class="btn btn-secondary dropdown-toggle border-0 p-0"  title="Profile" style="display: inline-block; line-height: 85px;background-color: black; width: 4rem" href="{{ path('show_profile', {"id": app.user.id}) }}" aria-expanded="false">
+						<i class="fa-solid fa-user fa-xl"></i>
 					</a>
 				{% else %}
-					<a class="btn btn-secondary dropdown-toggle border-0" title="Profile" style="background-color: black" href="{{ path('app_login') }}" aria-expanded="false">
-						<i class="fa-solid fa-user"></i>
-					</a>
+					<a class="btn btn-secondary dropdown-toggle border-0 p-0" title="Profile" style="display: inline-block; line-height: 85px;background-color: black; width: 4rem" href="{{ path('app_login') }}" aria-expanded="false">
+						<i class="fa-solid fa-user fa-xl"></i></a>
 				{% endif %}
 
 				<ul class="dropdown-menu rounded-0">
@@ -81,7 +80,7 @@
 						<li><hr class="dropdown-divider"></li>
 						<li>
 							<a class="dropdown-item text-underline-hover mb-3" href="{{ path('app_logout') }}">
-								<i class="fa-solid fa-right-from-bracket mx-2"></i>
+								<i class="fa-solid fa-right-from-bracket fa-xl mx-2"></i>
 								Se Déconnecter
 							</a>
 						</li>
@@ -103,9 +102,11 @@
 				</ul>
 			</div>
 
-			<div class="dropdown col-3">
-				<a class="btn btn-secondary dropdown-toggle border-0" title="Voir votre panier" style="background-color: black" href="{{ path('show_cart_details') }}" aria-expanded="false">
-					<i class="fa-solid fa-basket-shopping"></i>
+			<div class="dropdown col-3 orange-hover p-0 text-center" style="width: 4rem">
+				<a class="btn btn-secondary dropdown-toggle border-0 p-0" title="Voir votre panier" style="display: inline-block; line-height: 85px;background-color: black; width: 4rem" href="{{ path('show_cart_details') }}" aria-expanded="false">
+				
+					<i class="fa-solid fa-basket-shopping fa-xl"></i>
+				
 				</a>
 
 				<ul class="dropdown-menu rounded-0">
@@ -189,9 +190,11 @@ function myFunction(x) {
 	if (x.matches) { 
 		document.getElementById('mainLogo').classList.add('mx-auto');
 		document.getElementById('mainNav').classList.add('mx-auto');
+		document.getElementById('center-div').classList.add('mx-auto');
 	} else {
 		document.getElementById('mainLogo').classList.remove('mx-auto');
 		document.getElementById('mainNav').classList.remove('mx-auto');
+		document.getElementById('center-div').classList.remove('mx-auto');
 	}
 }
 

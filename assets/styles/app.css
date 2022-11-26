@@ -588,3 +588,11 @@ margin: 50px;
     transform: rotate(360deg);
   }
 }
+
+.orange-hover:hover > a > i{
+  color: rgb(205, 0, 25)
+}
+
+.white-icon {
+  color: white
+}

@@ -264,6 +264,34 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/profile/mon-espace-perso-{id}/retour', name: 'show_profile_orders_retour', methods:['GET', 'POST'])]
+    public function showProfileOrdersRetour(User $user, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $year = $request->get('year');
+
+        $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '01-01-2022', '01-01-2023');
+  
+        if ($year == null) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2022-01-01', '2023-01-01');
+        };  
+
+        if ($year == 2021) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2021-01-01', '2022-01-01');
+        };
+
+        if ($year == 2022) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2022-01-01', '2023-01-01');
+        };
+
+        if ($year == 2023) {
+            $orders = $entityManager->getRepository(Order::class)->userOrdersByDate($this->getUser(), '2023-01-01', '2024-01-01');
+        };  
+
+        return $this->render('user/show_profile_orders_retour.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
     #[Route('/profile/mon-espace-perso-{id}/delete-adress-{id2}', name: 'hard_delete_adress', methods:['GET', 'POST'])]
     public function hardDeleteAdress(User $user, EntityManagerInterface $entityManager, Request $request)
     {
