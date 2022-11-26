@@ -77,128 +77,139 @@
 
 				<div class="row">
 
-					<h5 class="col-11 mt-4" style="padding-left: 4rem">Voir et mêttre à jour vos informations ici.
+					<h5 class="col-12 mt-4">Voir et mêttre à jour vos informations ici.
 						<hr></h5>
 
-					<div class="col-11 row" style="padding-left: 4rem">
+					<div class="col-12">
 
-						<div class="col-1">
+						<div class="row">
 
-							<i class="fa-regular fa-user" style="font-size: 3em"></i>
+							<div class="col-1 ps-5">
 
+								<i class="fa-regular fa-user" style="font-size: 3em"></i>
+
+							</div>
+
+							<div class="col-4 ps-5">
+
+								<div class="fw-bold">Nom</div>
+								<div>{{ app.user.firstname }}</div>
+								<div class="fw-bold pt-4">Prénom</div>
+								<div>{{ app.user.lastname }}</div>
+
+							</div>
+
+							<div class="col-4 ps-5">
+
+								<div class="fw-bold">Téléphone mobile</div>
+								<div>
+									{% if app.user.phoneNumber is not null %}
+										{{ app.user.phoneNumber }}
+									{% else %}
+										Non renseigné
+									{% endif %}
+								</div>
+								<div class="fw-bold pt-4">
+									Date de naissance
+								</div>
+								<div>
+									{% if app.user.birthdayDate is not null %}
+										{{ app.user.birthdayDate|date("d/m/Y") }}
+									{% else %}
+										Non renseigné
+									{% endif %}
+								</div>
+							</div>
+
+							<div class="col-xl-3 align-middle">
+
+								<div
+									class="col-7 mx-auto mt-4 p-0 border border-3 border-dark p-2 text-center">
+									<!-- Button trigger modal -->
+									<button type="button" style="background-color: rgba(0,0,0,0); display: block; width: 100%;" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalInformation">Modifier</button>
+
+								</div>
+
+							</div>
 						</div>
 
-						<div class="col-4 ps-5">
+						<hr class="mt-4 mb-4">
 
-							<div class="fw-bold">Nom</div>
-							<div>{{ app.user.firstname }}</div>
-							<div class="fw-bold pt-4">Prénom</div>
-							<div>{{ app.user.lastname }}</div>
 
-						</div>
+					</div>
 
-						<div class="col-4 ps-5">
+					<div class="col-12">
 
-							<div class="fw-bold">Téléphone mobile</div>
-							<div>
-								{% if app.user.phoneNumber is not null %}
-									{{ app.user.phoneNumber }}
-								{% else %}
-									Non renseigné
-								{% endif %}
-							</div>
-							<div class="fw-bold pt-4">
-								Date de naissance
-							</div>
-							<div>
-								{% if app.user.birthdayDate is not null %}
-									{{ app.user.birthdayDate|date("d/m/Y") }}
-								{% else %}
-									Non renseigné
-								{% endif %}
-							</div>
-						</div>
+						<div class="row">
 
-						<div class="col-xl-3 align-middle">
+							<div class="col-1 ps-5">
 
-							<div
-								class="col-7 mx-auto mt-4 p-0 border border-3 border-dark p-2 text-center">
-								<!-- Button trigger modal -->
-								<button type="button" style="background-color: rgba(0,0,0,0); display: block; width: 100%;" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalInformation">Modifier</button>
+								<i class="fa-regular fa-envelope" style="font-size: 3em"></i>
 
 							</div>
 
+							<div class="col-4 ps-5">
+
+								<div class="fw-bold">Votre adresse e-mail</div>
+								<div>{{ app.user.email }}</div>
+
+
+							</div>
+
+							<div class="col-4 ps-5"></div>
+
+							<div class="col-xl-3 align-middle">
+
+								<div
+									class="col-7 mx-auto mt-2 mb-2  border border-3 border-dark p-2 text-center">
+									<!-- Button trigger modal -->
+									<button type="button" style="background-color: rgba(0,0,0,0);" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalMail">Modifier</button>
+								</div>
+
+							</div>
 						</div>
 
 						<hr class="mt-4 mb-4">
 
 					</div>
 
-					<div class="col-11 row" style="padding-left: 4rem">
+					<div class="col-12">
 
-						<div class="col-1">
+						<div class="row">
 
-							<i class="fa-regular fa-envelope" style="font-size: 3em"></i>
+							<div class="col-1 ps-5">
 
-						</div>
+								<i class="fa-solid fa-lock" style="font-size: 3em"></i>
 
-						<div class="col-4 ps-5">
-
-							<div class="fw-bold">Votre adresse e-mail</div>
-							<div>{{ app.user.email }}</div>
-
-
-						</div>
-
-						<div class="col-4 ps-5"></div>
-
-						<div class="col-xl-3 align-middle">
-
-							<div
-								class="col-7 mx-auto mt-2 mb-2  border border-3 border-dark p-2 text-center">
-								<!-- Button trigger modal -->
-								<button type="button" style="background-color: rgba(0,0,0,0);" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalMail">Modifier</button>
 							</div>
 
-						</div>
+							<div class="col-4 ps-5">
 
-						<hr class="mt-4 mb-4">
+								<div class="fw-bold">Votre mot de passe</div>
+								<div>***************</div>
 
-					</div>
+							</div>
 
-					<div class="col-11 row" style="padding-left: 4rem">
+							<div class="col-4 ps-5"></div>
 
-						<div class="col-1">
+							<div class="col-xl-3 align-middle mb-5">
 
-							<i class="fa-solid fa-lock" style="font-size: 3em"></i>
+								<div
+									class="col-7 mx-auto mt-2  border border-3 border-dark p-2 text-center">
+									<!-- Button trigger modal -->
+									<button type="button" style="background-color: rgba(0,0,0,0)" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalPassword">Modifier</button>
+								</div>
 
-						</div>
-
-						<div class="col-4 ps-5">
-
-							<div class="fw-bold">Votre mot de passe</div>
-							<div>***************</div>
-
-						</div>
-
-						<div class="col-4 ps-5"></div>
-
-						<div class="col-xl-3 align-middle mb-5">
-
-							<div
-								class="col-7 mx-auto mt-2  border border-3 border-dark p-2 text-center">
-								<!-- Button trigger modal -->
-								<button type="button" style="background-color: rgba(0,0,0,0)" class="border-0 card-link text-reset text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalPassword">Modifier</button>
 							</div>
 
 						</div>
 
 					</div>
+
 
 				</div>
 
 			</div>
-
 		</div>
 
 	</div>

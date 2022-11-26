@@ -19,6 +19,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use App\Form\OrderTrackingInformationFormType;
+use App\Form\SavFormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,14 +39,24 @@ class OrderController extends AbstractController
     }
 
     #[Route('/profile/retour-order-{id}', name: 'order_retour-detail')]
-    public function orderRetourDetail(Order $order): Response
+    public function orderRetourDetail(Order $order, Request $request): Response
     {
+        $form = $this->createForm(SavFormType::class)->handleRequest($request);
+
         if ($order->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('default_home');
         }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $request->get('reason');
+            $form->get('message')->getData();
+            
+        }
         
         return $this->render('user/show_profile_order_retour_detail.html.twig', [
-            'order' => $order
+            'order' => $order,
+            'form' => $form->createView()
         ]);
     }
 

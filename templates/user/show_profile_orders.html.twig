@@ -64,9 +64,9 @@
 
             <div class="row">
             
-                <h5 class="col-xl-11 mt-4" style="padding-left: 4rem">Gérer vos commandes ici<hr></h5>
+                <h5 class="col-xl-12 mt-4">Gérer vos commandes ici<hr></h5>
                 
-                <div class="col-xl-11" style="padding-left: 4rem">
+                <div class="col-xl-12">
 
                     <div class="col-6 mb-4">
                         <form action="{{ path('show_profile_orders', {"id": app.user.id})}}" id="yearChosen" method="GET">
@@ -111,7 +111,11 @@
                                 
                                     <div class="col-4 text-center">{{ order.createdAt|date("d / m / Y") }}</div>
                                     <div class="col-2 text-center">{{ order.total/100 }} €</div>
-                                    <div class="col-2 text-center">{{ order.status }}</div>
+                                    <div class="col-2 text-center">
+                                        {% if order.status == 'sent' %}
+                                            Envoyé
+                                        {% endif %}
+                                    </div>
                                     
                                     {% if order.sentAt is not null %}
                                     

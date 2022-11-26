@@ -64,9 +64,9 @@
 
             <div class="row">
             
-                <h5 class="col-xl-11 mt-4" style="padding-left: 4rem">Sélectionner la commande concernant votre demande<hr></h5>
+                <h5 class="col-xl-12 mt-4">Sélectionner la commande concernant votre demande<hr></h5>
                 
-                <div class="col-xl-11" style="padding-left: 4rem">
+                <div class="col-xl-12">
 
                     <div class="col-6 mb-4">
                         <form action="{{ path('show_profile_orders', {"id": app.user.id})}}" id="yearChosen" method="GET">
@@ -97,7 +97,11 @@
                                 <tr class="text-center">
                                     <th scope="row"><a href="{{ path('order_retour-detail', {'id': order.id }) }}" class="text-decoration-none">{{ order.id }}</a></th>
                                     <td>{{ order.createdAt|date("d / m / Y") }}</td>
-                                    <td>{{ order.status }}</td>
+                                    <td>
+                                        {% if order.status == 'sent' %}
+                                            Envoyé
+                                        {% endif %}
+                                    </td>
                                     <td>@mdo</td>
                                     <td>{{ order.total/100 }} €</td>
                                 </tr>

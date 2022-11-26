@@ -78,10 +78,10 @@
 
 				<div class="row">
 
-					<h5 class="col-xl-11 mt-4" style="padding-left: 4rem">Date de la commande :
+					<h5 class="col-xl-12 mt-4">Date de la commande :
 						{{ order.createdAt|date("d / m / Y") }}<hr></h5>
 
-					<div class="col-xl-11" style="padding-left: 4rem">
+					<div class="col-xl-12">
 
 						<h5 class="mb-4">Envoyée le
 
@@ -132,12 +132,12 @@
 
 							<div class="col-7"></div>
 							<div class="col-3 ms-auto">Sous-total:</div>
-							<div class="col-2 text-end">{{ order.total/100 }}
+							<div class="col-2 text-end">{{ order.subTotal/100 }}
 								€</div>
 
 							<div class="col-7"></div>
 							<div class="col-3 ms-auto">Mode de livraison:</div>
-							<div class="col-2 text-end">{{ order.total/100 }}
+							<div class="col-2 text-end">{{ order.shipping/100 }}
 								€</div>
 
 							<div class="col-7"></div>
