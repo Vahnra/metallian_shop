@@ -29,10 +29,22 @@ class OrderController extends AbstractController
     public function orderDetail(Order $order): Response
     {
         if ($order->getUser() !== $this->getUser()) {
-            $this->redirectToRoute('default_home');
+            return $this->redirectToRoute('default_home');
         }
         
         return $this->render('user/show_profile_order_detail.html.twig', [
+            'order' => $order
+        ]);
+    }
+
+    #[Route('/profile/retour-order-{id}', name: 'order_retour-detail')]
+    public function orderRetourDetail(Order $order): Response
+    {
+        if ($order->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('default_home');
+        }
+        
+        return $this->render('user/show_profile_order_retour_detail.html.twig', [
             'order' => $order
         ]);
     }

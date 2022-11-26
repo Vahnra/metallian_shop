@@ -590,7 +590,11 @@ margin: 50px;
 }
 
 .orange-hover:hover > a > i{
-  color: rgb(205, 0, 25)
+  color: rgb(205, 0, 25);
+}
+
+.orange-hover:hover{
+  color: rgb(205, 0, 25);
 }
 
 .white-icon {

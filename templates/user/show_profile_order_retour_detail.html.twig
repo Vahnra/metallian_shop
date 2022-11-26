@@ -1,0 +1,187 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Commande
+	{{ order.id }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-xl">
+
+		<div
+			class="row my-5">
+
+			{# <div class="col-1"></div> #}
+
+			<h1 class="col-10 ms-5">Mon espace personnel</h1>
+
+		</div>
+
+		<div
+			class="row">
+
+			{# <div class="col-1" style="height: 300px"></div> #}
+
+			<div class="col-xl-3 g-0" style="height: 300px">
+
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px">
+
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_profile', {"id": app.user.id}) }}" class="text-reset text-decoration-none">
+							Détails</a>
+					</h3>
+
+				</div>
+
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px;">
+
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_profile_orders', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Commandes</a>
+					</h3>
+
+				</div>
+
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px;">
+
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_favorite_products', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Vos favoris</a>
+					</h3>
+
+				</div>
+
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px">
+
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_profile_adress', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Adresses</a>
+					</h3>
+
+				</div>
+
+				<div class="col-xl-9 ms-auto ps-5" style="height: 100px; background-color:white;">
+
+					<h3 class="align-middle" style="padding-top: 2rem">
+						<a href="{{ path('show_profile_orders_retour', {"id": app.user.id}) }}" class="text-reset text-decoration-none">Retour</a>
+					</h3>
+
+				</div>
+
+			</div>
+
+			<div class="col-xl-8 mb-5" style="background-color:white;">
+
+				<div class="col-12">
+
+					<h2 style="padding-top: 3rem; padding-left: 4rem">Numéro de commande
+						{{ order.id }}</h2>
+
+				</div>
+
+				<div class="row">
+
+					<h5 class="col-xl-11 mt-4" style="padding-left: 4rem">Date de la commande :
+						{{ order.createdAt|date("d / m / Y") }}<hr></h5>
+
+					<div class="col-xl-11" style="padding-left: 4rem">
+
+						<h5 class="mb-4">Envoyée le
+
+                            {% if order.sentAt is not null %}
+							    {{ order.sentAt|date("d / m / Y") }}
+                            {% endif %}
+                            
+                        </h5>
+
+						{% for product in order.orderProducts %}
+
+							<div class="row mb-4 d-flex justify-content-between align-items-center">
+
+								<a href="{{ path('view_products', {'id': product.products.id}) }}" class="col-md-2 col-lg-2 col-xl-2">
+									<img src="{{ asset('images/' ~ product.photo) }}" class="img-fluid rounded-3" alt="{{ product.title }}">
+								</a>
+
+								<div
+									class="col-md-3 col-lg-3 col-xl-3">
+									{# <h6 class="text-muted">{{ product.subCategory }}</h6> #}
+									<h5 class="text-black fw-bold mb-0">{{ product.title }}</h5>
+									{% if product.color is not empty %}
+										<p class="text-black mb-0">Couleur :
+											{{ product.color }}</p>
+									{% endif %}
+									{% if product.size %}
+										<p class="text-black mb-0">Taille :
+											{{ product.size }}</p>
+									{% endif %}
+									<p class="text-black mb-0">Quantité :
+										{{ product.quantity }}</p>
+								</div>
+								<div class="col-md-3 col-lg-3 col-xl-2 d-flex"></div>
+								<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+									<h6 class="mb-0 text-end">{{ product.price/100 * product.quantity }}
+										€</h6>
+								</div>
+							</div>
+
+						{% endfor %}
+
+						<hr>
+
+						<div class="row">
+
+							<h3 class="col-6">Total</h3>
+							<a class="col-6 text-end">Télécharger la facture</a>
+
+							<div class="col-7"></div>
+							<div class="col-3 ms-auto">Sous-total:</div>
+							<div class="col-2 text-end">{{ order.total/100 }}
+								€</div>
+
+							<div class="col-7"></div>
+							<div class="col-3 ms-auto">Mode de livraison:</div>
+							<div class="col-2 text-end">{{ order.total/100 }}
+								€</div>
+
+							<div class="col-7"></div>
+							<div class="col-3 ms-auto fw-bold mt-3">Total:</div>
+							<div class="col-2 text-end fw-bold mt-3">{{ order.total/100 }}
+								€</div>
+
+						</div>
+
+                        <hr>
+
+                        <div>
+                        
+                            <h3>Adresse de livraison</h3>
+                            <p class="m-0">{{ order.firstName }} {{ order.lastName }}</p>
+                            <p class="m-0">{{ order.additionalAdress }}</p>
+                            <p class="m-0">{{ order.adress }}</p>
+                            <p class="">{{ order.postCode }}, {{ order.city }} {{ order.country }}</p>
+                        
+                        </div>
+
+						<hr>
+
+						<div>
+						
+							<select class="form-select no-border-radius" aria-label="Default select example">
+								<option default selected disabled>Ma demande concerne</option>
+								<option value="1">Une demande de rétractation pendant le délai légal</option>
+								<option value="2">Une demande de SAV sur un article de ma commande</option>
+							</select>
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+{% endblock %}
