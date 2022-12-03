@@ -13,6 +13,7 @@ use App\Entity\Bijoux;
 use App\Entity\Slider;
 use App\Entity\Marques;
 use App\Entity\Material;
+use App\Entity\Products;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
 use App\Entity\MusicType;
@@ -24,8 +25,10 @@ use App\Entity\MediaQuantity;
 use App\Entity\SousCategorie;
 use App\Entity\BijouxQuantity;
 use App\Entity\ReviewVetement;
+use App\Entity\OrderReclamation;
 use App\Entity\VetementQuantity;
 use App\Entity\ChaussuresQuantity;
+use App\Entity\ProductsQuantities;
 use App\Repository\UserRepository;
 use App\Entity\AccessoiresQuantity;
 use App\Repository\MediaRepository;
@@ -44,17 +47,17 @@ use App\Entity\VetementMerchandisingQuantity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\AccessoiresMerchandisingQuantity;
-use App\Entity\Products;
-use App\Entity\ProductsQuantities;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use App\Repository\VetementMerchandisingRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use App\Repository\AccessoiresMerchandisingRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
@@ -111,6 +114,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Gérer les commandes')->setSubItems([
             MenuItem::linkToCrud('Voir les commandes', 'fas fa-eye' ,Order::class),
             MenuItem::linkToCrud('Ajouter une commande', 'fas fa-plus', Order::class)->setAction(Crud::PAGE_NEW)
+        ]);
+        yield MenuItem::subMenu('Gérer les réclamations')->setSubItems([
+            MenuItem::linkToCrud('Voir les réclamations', 'fas fa-eye' ,OrderReclamation::class),
+            MenuItem::linkToCrud('Ajouter une réclamation', 'fas fa-plus', OrderReclamation::class)->setAction(Crud::PAGE_NEW)
         ]);
 
         // Article en ventes
@@ -265,6 +272,28 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        // Usually it's better to call the parent method because that gives you a
+        // user menu with some menu items already created ("sign out", "exit impersonation", etc.)
+        // if you prefer to create the user menu from scratch, use: return UserMenu::new()->...
+        return parent::configureUserMenu($user)
+            // use the given $user object to get the user name
+            ->setName($user->getFirstName())
+            // use this method if you don't want to display the name of the user
+            ->displayUserName(true)
+
+            // you can return an URL with the avatar image
+   
+            // use this method if you don't want to display the user image
+            ->displayUserAvatar(false)
+            // you can also pass an email address to use gravatar's service
+            ->setGravatarEmail($user->getEmail())
+
+            // you can use any type of menu item, except submenus
+            ;
     }
 
     public function configureActions(): Actions

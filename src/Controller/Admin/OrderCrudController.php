@@ -9,10 +9,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -34,9 +36,9 @@ class OrderCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         
+    
+        yield FormField::addTab('Détails de la commande')->collapsible();
         yield IdField::new('id', 'Commande')->hideOnForm();
-
-        yield FormField::addPanel('Détails de la commande');
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->onlyOnDetail();
         yield MoneyField::new('total', 'Prix total')->setCurrency('EUR');
@@ -55,14 +57,16 @@ class OrderCrudController extends AbstractCrudController
         // yield ArrayField::new('orderProducts', 'Articles')->hideOnForm();
         yield AssociationField::new('orderProducts', 'Articles - Quantité')->setTemplatePath('admin/field/order/detail/order_product.html.twig');
 
-        yield FormField::addPanel('Détails du client');
+        yield FormField::addTab('Détails du client')->collapsible();
         yield NumberField::new('mobile', 'Numéro de téléphone');
         yield TextField::new('email', 'Email');
         yield TextField::new('firstName', 'Prénom');
         yield TextField::new('lastName', 'Nom');
         yield AssociationField::new('user', 'Client');
+        yield UrlField::new('invoice', 'Facture');
+        yield AssociationField::new('orderReclamations', 'Réclamation')->hideOnForm();
 
-        yield FormField::addPanel('Adresse');
+        yield FormField::addTab('Adresse')->collapsible();
         yield TextField::new('firstName', 'Prénom')->hideOnIndex();
         yield TextField::new('lastName', 'Nom')->hideOnIndex();
         yield TextField::new('adress', 'Adresse')->hideOnIndex();

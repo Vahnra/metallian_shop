@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -28,6 +29,16 @@ class RegisterFormType extends AbstractType
                     ])
                 ]
             ])
+            ->addModelTransformer(new CallbackTransformer(
+                function ($tagsAsArray) {
+                    // transform the array to a string
+                    return implode(', ', $tagsAsArray);
+                },
+                function ($tagsAsString) {
+                    // transform the string back to an array
+                    return explode(', ', $tagsAsString);
+                }
+            ))
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'constraints' => [
@@ -95,6 +106,19 @@ class RegisterFormType extends AbstractType
                     'style' => 'padding-left: 2.5rem; padding-right: 2.5rem ;color: white; background-color: #cd0019'
                 ]
             ])
+        ;
+
+        $builder->get('lastname')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($tagsAsArray) {
+                    // transform the array to a string
+                    return implode(', ', $tagsAsArray);
+                },
+                function ($tagsAsString) {
+                    // transform the string back to an array
+                    return explode(', ', $tagsAsString);
+                }
+            ))
         ;
     }
 

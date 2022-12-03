@@ -70,17 +70,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
     private Collection $orders;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: OrderReclamation::class, orphanRemoval: true)]
+    private Collection $orderReclamations;
+
     public function __construct()
     {
         $this->postalAdress = new ArrayCollection();
         $this->carts = new ArrayCollection();
         $this->favoriteProducts = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->orderReclamations = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return $this->getId(); 
+        return $this->getLastname() . ' ' . $this->getFirstname(); 
     }
 
     public function getId(): ?int
@@ -375,6 +379,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($order->getUser() === $this) {
                 $order->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderReclamation>
+     */
+    public function getOrderReclamations(): Collection
+    {
+        return $this->orderReclamations;
+    }
+
+    public function addOrderReclamation(OrderReclamation $orderReclamation): self
+    {
+        if (!$this->orderReclamations->contains($orderReclamation)) {
+            $this->orderReclamations->add($orderReclamation);
+            $orderReclamation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderReclamation(OrderReclamation $orderReclamation): self
+    {
+        if ($this->orderReclamations->removeElement($orderReclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($orderReclamation->getUser() === $this) {
+                $orderReclamation->setUser(null);
             }
         }
 

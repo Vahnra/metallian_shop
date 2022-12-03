@@ -90,9 +90,21 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $paypalOrderId = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $invoice = null;
+
+    #[ORM\OneToMany(mappedBy: 'orderNumber', targetEntity: OrderReclamation::class, orphanRemoval: true)]
+    private Collection $orderReclamations;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
+        $this->orderReclamations = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getId(); 
     }
 
     public function getId(): ?int
@@ -402,6 +414,48 @@ class Order
     public function setPaypalOrderId(string $paypalOrderId): self
     {
         $this->paypalOrderId = $paypalOrderId;
+
+        return $this;
+    }
+
+    public function getInvoice(): ?string
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(?string $invoice): self
+    {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderReclamation>
+     */
+    public function getOrderReclamations(): Collection
+    {
+        return $this->orderReclamations;
+    }
+
+    public function addOrderReclamation(OrderReclamation $orderReclamation): self
+    {
+        if (!$this->orderReclamations->contains($orderReclamation)) {
+            $this->orderReclamations->add($orderReclamation);
+            $orderReclamation->setOrderNumber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderReclamation(OrderReclamation $orderReclamation): self
+    {
+        if ($this->orderReclamations->removeElement($orderReclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($orderReclamation->getOrderNumber() === $this) {
+                $orderReclamation->setOrderNumber(null);
+            }
+        }
 
         return $this;
     }
