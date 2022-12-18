@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Metallian Shop | Merchandising Musique, métal et punk{% endblock %}</title>
-        <meta name="description" content="Metallian Eshop affilié à METALLIAN Magazine - nouveau store pour acheter du merchandising Musique et Pop Culture | stock de plus de 8000 articles">
+        {% block metaTag %}{% endblock %}
+        {# <meta name="description" content="Metallian Eshop affilié à METALLIAN Magazine - nouveau store pour acheter du merchandising Musique et Pop Culture | stock de plus de 8000 articles"> #}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="canonical" href="https://www.ornchanarong.com/" />
         <link rel="icon" href="{{ asset('static_images/logo_svg.svg') }}">

@@ -1,6 +1,52 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Produits {{ categories.title }}{% endblock %}
+{% block title %}Metallian Eshop | Articles {{ categories.title }}{% endblock %}
+
+{% block metaTag %}
+
+    {% if categories.title == 'Homme' %}
+    
+        <meta name="description" content="La garde-robe d'un homme est essentielle pour son style personnel. Des costumes aux tenues décontractées, les choix vestimentaires d'un homme reflètent sa personnalité et ses intérêts. Cette catégorie explore les types de vêtements que chaque homme devrait avoir dans son placard et comment les mélanger et les assortir pour une garde-robe polyvalente et à la mode.">
+
+    {% endif %}
+
+    {% if categories.title == 'Femme' %}
+    
+        <meta name="description" content="La garde-robe d'une femme est le reflet de son style personnel et de son sens de la mode. Des robes et jupes élégantes aux jeans et t-shirts confortables, les choix vestimentaires d'une femme peuvent faire sensation et faire tourner les têtes. Dans cette catégorie, nous offrons les différents types de vêtements que chaque femme devrait avoir dans sa garde-robe pour créer une garde-robe polyvalente et à la mode. Que vous soyez une professionnelle, une étudiante ou une mère au foyer.">
+
+    {% endif %}
+
+    {% if categories.title == 'Enfant' %}
+    
+        <meta name="description" content="Les enfants et les adolescents grandissent et se développent constamment, et leurs vêtements doivent suivre l'évolution de leur corps et de leur style. Des uniformes scolaires aux vêtements de sport en passant par les robes de soirée et les tenues décontractées, la garde-robe d'un enfant doit être fonctionnelle, confortable et élégante. Dans cette catéroei, nous vous offrons les différents types de vêtements essentiels pour les enfants et les adolescents.">
+
+    {% endif %}
+
+    {% if categories.title == 'Accessoires' %}
+    
+        <meta name="description" content="Ajoutez une touche de style et d'élégance à votre tenue avec notre ligne exclusive d'accessoires. Des écharpes et chapeaux à la mode aux sacs à main et bijoux chics, nous avons quelque chose pour tous les goûts et toutes les occasions. Nos accessoires sont fabriqués avec des matériaux de haute qualité et une attention aux détails, garantissant que vous obtenez une pièce durable et unique qui complétera votre style personnel.">
+
+    {% endif %}
+
+    {% if categories.title == 'Médias' %}
+    
+        <meta name="description" content="Développez votre collection de divertissement avec notre large gamme de CD, DVD et disques Blu-ray. Que vous soyez un mélomane, un cinéphile ou un passionné de jeux, nous avons quelque chose pour vous. Nos CD, DVD et disques Blu-ray sont soigneusement sélectionnés pour offrir une gamme variée de genres et de titres, des derniers succès aux classiques intemporels. Avec un son et une vidéo de haute qualité, nos disques offrent une expérience d'écoute et de visionnage supérieure.">
+
+    {% endif %}
+
+    {% if categories.title == 'Chaussures' %}
+    
+        <meta name="description" content="Mettez en valeur vos chaussures grâce à notre collection de chaussures élégantes et confortables. Des baskets et bottes classiques aux sandales et talons à la mode, nous avons une grande variété de chaussures pour tous les goûts et tous les besoins. Nos chaussures sont faites de matériaux et de savoir-faire de haute qualité, assurant non seulement un bel aspect, mais aussi le support et la durabilité dont vous avez besoin. En outre, avec nos prix concurrentiels et nos ventes régulières, vous pouvez obtenir une paire de chaussures parfaite sans vous ruiner.">
+
+    {% endif %}
+
+    {% if categories.title == 'Bijoux' %}
+    
+        <meta name="description" content="Faites briller vos tenues avec notre magnifique et unique sélection de bijoux. Des bagues et boucles d'oreilles délicates aux colliers et bracelets audacieux, nous offrons une large gamme de styles et de conceptions. Nos bijoux sont fabriqués avec des matériaux de haute qualité, tels que l'argent sterling, l'or et les diamants, garantissant que vous obtenez une pièce durable et précieuse qui améliorera votre apparence. De plus, avec nos prix abordables et nos remises régulières, vous pouvez vous gâter ou offrir à quelqu'un de spécial un bijou sans casser la banque.">
+
+    {% endif %}
+
+{% endblock %}
 
 {% block body %}
 
