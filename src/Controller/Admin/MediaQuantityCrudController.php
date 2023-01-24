@@ -31,8 +31,8 @@ class MediaQuantityCrudController extends AbstractCrudController
     {
         return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->leftJoin('entity.products', 'vqcs')
-            ->andWhere('vqcs.type = :media')
-            ->setParameter('media', 'media');
+            ->andWhere('vqcs.type = :CDs')
+            ->setParameter('CDs', 'CDs');
     }
     
     public static function getEntityFqcn(): string
@@ -45,7 +45,7 @@ class MediaQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'Médias')->setCrudController(MediaCrudController::class)->autocomplete();
+        yield AssociationField::new('products', 'CDs')->setCrudController(MediaCrudController::class)->autocomplete();
 
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('sku', 'Numéro de série');
@@ -60,15 +60,15 @@ class MediaQuantityCrudController extends AbstractCrudController
         yield MoneyField::new('products.price', 'Prix')->hideOnForm()->setCurrency('EUR');
         yield MoneyField::new('discount', 'Prix soldé')->setColumns(3)->setCurrency('EUR');
 
-        yield FormField::addPanel('Photos');
+        yield FormField::addPanel('Photos')->onlyOnDetail();
         yield CollectionField::new('products.images', 'Images')->setTemplatePath('admin\field\images\images.html.twig')->onlyOnDetail();
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Média en vente')
-            ->setEntityLabelInPlural('Médias en vente')
+            ->setEntityLabelInSingular('CD en vente')
+            ->setEntityLabelInPlural('CDs en vente')
         ;
     }
 

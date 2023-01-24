@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\CategorieMerchandising;
 use DateTimeImmutable;
 use App\Entity\Products;
 use App\Form\ImagesFormType;
@@ -45,7 +46,10 @@ class VetementMerchandisingCrudController extends AbstractCrudController
     {
         return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->andWhere('entity.type = :vetementMerchandising')
-            ->setParameter('vetementMerchandising', 'vetementMerchandising');
+            ->setParameter('vetementMerchandising', 'vetementMerchandising')
+            ->leftJoin('entity.categorieMerchandising', 'categorie')
+            ->andWhere('categorie.title = :title')
+            ->setParameter('title', 'Merchandising Homme');
     }
 
     public static function getEntityFqcn(): string
@@ -62,7 +66,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield TextField::new('description', 'Description de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
         yield AssociationField::new('marques', 'Marque de l\'article');
-        yield AssociationField::new('artist', 'Artiste associé');
+        yield TextField::new('artist', 'Groupe associé');
         yield AssociationField::new('material', 'Matière de l\'article');
         // yield AssociationField::new('material', '1 Matière de l\'article');
         // yield AssociationField::new('material', '2 Matière de l\'article');
@@ -78,8 +82,12 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield CollectionField::new('images')->setTemplatePath('admin\field\images\images.html.twig')->onlyOnDetail();
 
         yield FormField::addPanel('Catégorie de l\'article');
-        yield AssociationField::new('categorieMerchandising');
-        yield AssociationField::new('sousCategorieMerchandising')->hideOnForm();
+        yield AssociationField::new('sousCategorieMerchandising', 'Sous-catégorie')->setQueryBuilder(function (QueryBuilder $qb) {     
+            $qb->leftJoin('entity.categorieMerchandising', 'categorie')
+            ->andWhere('categorie.title = :title')
+            ->setParameter('title', 'Merchandising Homme')
+            ->orderBy('entity.title', 'ASC');
+        });
 
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
@@ -92,6 +100,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         $entityInstance->setType('vetementMerchandising');
+        $entityInstance->setCategorieMerchandising($entityManager->getRepository(CategorieMerchandising::class)->findOneBy(['title' => 'Meechandising Homme']));
         // creat the date
         parent::persistEntity($entityManager, $entityInstance);
     }
@@ -117,34 +126,34 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         ->add(DateTimeFilter::new('updatedAt'));
     }
 
-    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
-        $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
+    // public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
+    //     $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
 
-        $formBuilder->get('categorieMerchandising')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $brande = $event->getForm()->getData();
-                $form = $event->getForm();
-                $form->getParent()->add('sousCategorieMerchandising', EntityType::class, [
-                    'class' => SousCategorieMerchandising::class,
-                    'placeholder' => '',
-                    'choices' => $brande ? $brande->getSousCategorieMerchandisings() : [],
-                ]);
-            }
-        );
+    //     $formBuilder->get('categorieMerchandising')->addEventListener(
+    //         FormEvents::POST_SUBMIT,
+    //         function (FormEvent $event) {
+    //             $brande = $event->getForm()->getData();
+    //             $form = $event->getForm();
+    //             $form->getParent()->add('sousCategorieMerchandising', EntityType::class, [
+    //                 'class' => SousCategorieMerchandising::class,
+    //                 'placeholder' => '',
+    //                 'choices' => $brande ? $brande->getSousCategorieMerchandisings() : [],
+    //             ]);
+    //         }
+    //     );
 
-        $formBuilder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $form->add('sousCategorieMerchandising', EntityType::class, [
-                    'class' => SousCategorieMerchandising::class,
-                    'placeholder' => '',
-                    'choices' => [],
-                ]);
-            }
-        );
+    //     $formBuilder->addEventListener(
+    //         FormEvents::POST_SET_DATA,
+    //         function (FormEvent $event) {
+    //             $form = $event->getForm();
+    //             $form->add('sousCategorieMerchandising', EntityType::class, [
+    //                 'class' => SousCategorieMerchandising::class,
+    //                 'placeholder' => '',
+    //                 'choices' => [],
+    //             ]);
+    //         }
+    //     );
 
-        return $formBuilder;
-    }
+    //     return $formBuilder;
+    // }
 }

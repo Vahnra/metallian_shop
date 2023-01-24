@@ -28,7 +28,7 @@
 
     {% endif %}
 
-    {% if categories.title == 'Médias' %}
+    {% if categories.title == 'CDs' %}
     
         <meta name="description" content="Développez votre collection de divertissement avec notre large gamme de CD, DVD et disques Blu-ray. Que vous soyez un mélomane, un cinéphile ou un passionné de jeux, nous avons quelque chose pour vous. Nos CD, DVD et disques Blu-ray sont soigneusement sélectionnés pour offrir une gamme variée de genres et de titres, des derniers succès aux classiques intemporels. Avec un son et une vidéo de haute qualité, nos disques offrent une expérience d'écoute et de visionnage supérieure.">
 
@@ -413,7 +413,7 @@
 
                                             {% endif %}
 
-                                            {% if categories.title == 'Médias' %}
+                                            {% if categories.title == 'CDs' or categories.title == 'Vinyles' %}
                                         
                                                 {{ form_start(filterMediaForm) }}
 
@@ -483,16 +483,25 @@
                                     <img src="{{ asset('images/image_placeholder.png') }}"  style="height: 200px; object-fit: contain;" id="article{{product.title}}{{product.id}}" class="card-img-top" alt="{{ product.title }}" loading="lazy">
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item fw-bold">{{ (product.price)/100 }} €</li>
+                                            <li class="list-group-item fw-bold">{{ ((product.price)/100) | number_format(2) }} €</li>
                                         </ul>
+                                        {% if product.artist is not null %}
+                                            <h4 class="card-title text-muted">{{ product.artist }}</h4>
+                                        {% endif %}
                                         <h5 class="card-title text-muted">{{ product.title }}</h5>
+
+                                        
                                         {% set colors = {} %}
                                         {% for variations in product.productsQuantities.values %}
 
-                                            {% if variations.color.code not in colors and variations.solde == null %}
-                                            
-                                                {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
-                                            
+                                            {% if variations.color is not null %}
+
+                                                {% if variations.color.code not in colors and variations.solde == null %}
+                                                
+                                                    {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                
+                                                {% endif %}
+
                                             {% endif %}
                                             
 
@@ -504,31 +513,19 @@
                                             </div>
                                             
                                         {% endfor %}
+                                        
                                 
                                     </div>      
 
                                 </a>
 
                             </div>
-
+                            
                             <script>
-
+                                
                                 document.addEventListener("DOMContentLoaded", () => {
                                     document.getElementById("article" + "{{product.title}}{{product.id}}").src = "{{ asset('images/' ~ product.images.values.0.image) }}";
-                                });                                                 
-                                            
-                                function functionImageEnter(){
-                                    var image = document.getElementById("article" + "{{product.title}}{{product.id}}");
-                                    image.src = "{{ asset('images/' ~ product.images.values.1.image) }}";
-                                }
-
-                                function functionImageLeave(){
-                                    var image = document.getElementById("article" + "{{product.title}}{{product.id}}");
-                                    image.src = "{{ asset('images/' ~ product.images.values.0.image) }}";
-                                }
-
-                                document.getElementById("article" + "{{product.title}}{{product.id}}").addEventListener("mouseenter", functionImageEnter);
-                                document.getElementById("article" + "{{product.title}}{{product.id}}").addEventListener("mouseleave", functionImageLeave);
+                                });                                                                         
          
                             </script>
 

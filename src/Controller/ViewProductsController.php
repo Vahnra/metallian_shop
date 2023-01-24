@@ -204,7 +204,7 @@ class ViewProductsController extends AbstractController
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'products' => $products]);
 
         $images = $entityManager->getRepository(Images::class)->findby(['product' => $products]);
-
+        
         return $this->render('view_products/view_products.html.twig', [
             'success' => 0,
             'vetement' => $products,

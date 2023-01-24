@@ -33,7 +33,10 @@ class VetementQuantityCrudController extends AbstractCrudController
         return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->leftJoin('entity.products', 'vqcs')
             ->andWhere('vqcs.type = :vetement')
-            ->setParameter('vetement', 'vetement');
+            ->setParameter('vetement', 'vetement')
+            ->leftJoin('vqcs.categorie', 'categorie')
+            ->andWhere('categorie.title = :title')
+            ->setParameter('title', 'Homme');
     }
     
     public static function getEntityFqcn(): string

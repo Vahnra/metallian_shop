@@ -14,9 +14,12 @@
                         {% if vetement.categorie is not null %}
                         <a class="text-decoration-none text-white" href="{{ path('show_vetements_from_category', {'title': vetement.categorie}) }}">{{ vetement.categorie }}
                         </a> / 
+                        {% if vetement.souscategorie is not null %}
+                        
                         <a class="text-decoration-none text-white" href="{{ path('show_souscategorie_from_category', {'title1': vetement.categorie, 'title': vetement.souscategorie}) }}">{{ vetement.souscategorie }}
                         </a>
-                         / {{ vetement.title }}
+                         / {% endif %}{% if vetement.artist is not null %}{{ vetement.artist }}{% else %}{{ vetement.title }}
+                            {% endif %}
                         {% endif %}
 
                         {% if vetement.categorieMerchandising is not null %}
@@ -57,7 +60,8 @@
         
             <div class="row">
                 <div class="col-8">
-                    <h2>{{ vetement.description }}</h2>
+                    <h2>{{ vetement.artist }}</h2>
+                    
                 </div>
 
                 {% if app.request.get('success') == 'success' %}
@@ -69,9 +73,10 @@
                 {% endif %}
                 
                 <div class="col-4 my-auto justify-content-end d-flex">
-                    <h3 class="my-auto fw-bold">{{ vetement.price/100 }}€</h3>
+                    <h3 class="my-auto fw-bold">{{ (vetement.price/100) | number_format(2)}}€</h3>
                     
                 </div>
+                <h4>{{ vetement.title }}</h3>
 
                 {% if vetement.marques is not null %}
                     <div class="col-8">
@@ -82,9 +87,14 @@
                 {% endif %}
             </div>
 
+            
+            
+
             <form method="post">
             
                     {% include "include/_flashes.html.twig" %}
+
+                    {% if vetement.categorie.title != 'CDs' %}
 
                     <div class="col-12 py-4">
 
@@ -159,12 +169,15 @@
                     });
                 
                     </script>
+
+                {% endif %}
       
                 <p>{{ vetement.sousCategorie }}</p>
 
                 {% if material is not empty %}
                     <p>{{ material.0.material }}</p>
                 {% endif %}
+                <p>{{ vetement.genre }}</p>
                 <div class="col-12 mb-1">
                     {{form_start(form)}}
                         <div class="col-2">
@@ -208,12 +221,12 @@
 
                     <h3 class="col-10">Description</h3>
                     <div class="col-2">
-                        <i class="fa-solid fa-plus d-flex justify-content-end" id="fleche"></i>
+                        <i class="fa-solid fa-minus d-flex justify-content-end" id="fleche"></i>
                     </div>
 
                 </div> 
 
-                <div id="description" style="display: none;">
+                <div id="description" style="display: inline;">
                  {{ vetement.longDescription | raw }}
                 </div>
 

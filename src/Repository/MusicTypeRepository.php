@@ -39,6 +39,14 @@ class MusicTypeRepository extends ServiceEntityRepository
         }
     }
 
+    public function all() {
+        return $this->createQueryBuilder('m')
+           ->orderBy('m.genre', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+    }
+
 //    /**
 //     * @return MusicType[] Returns an array of MusicType objects
 //     */

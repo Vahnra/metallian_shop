@@ -20,7 +20,7 @@ class MediaFilterFormType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $musicType = $this->entityManager->getRepository(MusicType::class)->findAll();
+        $musicType = $this->entityManager->getRepository(MusicType::class)->all();
 
         $builder
             ->add('musicType', ChoiceType::class, [

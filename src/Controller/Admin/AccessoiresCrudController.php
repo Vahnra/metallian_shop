@@ -76,8 +76,12 @@ class AccessoiresCrudController extends AbstractCrudController
         yield CollectionField::new('images')->setTemplatePath('admin\field\images\images.html.twig')->onlyOnDetail();
 
         yield FormField::addPanel('Catégorie de l\'article');
-        yield AssociationField::new('categorie', 'Catégorie');
-        yield AssociationField::new('sousCategorie', 'Sous-catégorie')->hideOnForm();
+        yield AssociationField::new('sousCategorie', 'Sous-catégorie')->setQueryBuilder(function (QueryBuilder $qb) {     
+            $qb->leftJoin('entity.categorie', 'categorie')
+            ->andWhere('categorie.title = :title')
+            ->setParameter('title', 'Accessoires')
+            ->orderBy('entity.title', 'ASC');
+        });
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Modifier le')->hideOnForm();
     }
@@ -112,35 +116,35 @@ class AccessoiresCrudController extends AbstractCrudController
             ->add(DateTimeFilter::new('updatedAt'));
     }
 
-    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
-        $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
+    // public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface {
+    //     $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
 
-        $formBuilder->get('categorie')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $brande = $event->getForm()->getData();
-                $form = $event->getForm();
-                $form->getParent()->add('sousCategorie', EntityType::class, [
-                    'class' => SousCategorie::class,
-                    'placeholder' => '',
-                    'choices' => $brande ? $brande->getSousCategories() : [],
-                ]);
-            }
-        );
+    //     $formBuilder->get('categorie')->addEventListener(
+    //         FormEvents::POST_SUBMIT,
+    //         function (FormEvent $event) {
+    //             $brande = $event->getForm()->getData();
+    //             $form = $event->getForm();
+    //             $form->getParent()->add('sousCategorie', EntityType::class, [
+    //                 'class' => SousCategorie::class,
+    //                 'placeholder' => '',
+    //                 'choices' => $brande ? $brande->getSousCategories() : [],
+    //             ]);
+    //         }
+    //     );
 
-        $formBuilder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $form->add('sousCategorie', EntityType::class, [
-                    'label' => 'Sous-catégorie',
-                    'class' => SousCategorie::class,
-                    'placeholder' => '',
-                    'choices' => [],
-                ]);
-            }
-        );
+    //     $formBuilder->addEventListener(
+    //         FormEvents::POST_SET_DATA,
+    //         function (FormEvent $event) {
+    //             $form = $event->getForm();
+    //             $form->add('sousCategorie', EntityType::class, [
+    //                 'label' => 'Sous-catégorie',
+    //                 'class' => SousCategorie::class,
+    //                 'placeholder' => '',
+    //                 'choices' => [],
+    //             ]);
+    //         }
+    //     );
 
-        return $formBuilder;
-    }
+    //     return $formBuilder;
+    // }
 }

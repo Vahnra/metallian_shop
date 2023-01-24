@@ -20,7 +20,7 @@ class Products
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -38,8 +38,8 @@ class Products
     #[ORM\Column(type: Types::TEXT)]
     private ?string $longDescription = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Artist $artist = null;
+    // #[ORM\ManyToOne(inversedBy: 'products')]
+    // private ?Artist $artist = null;
 
     #[ORM\Column]
     private ?int $price = null;
@@ -53,7 +53,7 @@ class Products
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductsQuantities::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductsQuantities::class, cascade: ['persist'] , orphanRemoval: true)]
     private Collection $productsQuantities;
 
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: FavoriteProduct::class, orphanRemoval: true)]
@@ -79,6 +79,9 @@ class Products
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Images::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $artist = null;
 
     public function __construct()
     {
@@ -183,17 +186,17 @@ class Products
         return $this;
     }
 
-    public function getArtist(): ?Artist
-    {
-        return $this->artist;
-    }
+    // public function getArtist(): ?Artist
+    // {
+    //     return $this->artist;
+    // }
 
-    public function setArtist(?Artist $artist): self
-    {
-        $this->artist = $artist;
+    // public function setArtist(?Artist $artist): self
+    // {
+    //     $this->artist = $artist;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getPrice(): ?int
     {
@@ -437,6 +440,18 @@ class Products
                 $image->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getArtist(): ?string
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?string $artist): self
+    {
+        $this->artist = $artist;
 
         return $this;
     }

@@ -204,16 +204,23 @@
 											<li class="list-group-item fw-bold">{{ (searchResult.price)/100 }}
 												€</li>
 										</ul>
+										{% if product.artist is not null %}
+                                            <h4 class="card-title text-muted">{{ product.artist }}</h4>
+                                        {% endif %}
 										<h5 class="card-title text-muted">{{ searchResult.title }}</h5>
 
 										{% set colors = {} %}
 										{% for variations in searchResult.productsQuantities.values %}
 
-											{% if variations.color.code not in colors and variations.solde == null %}
+											{% if variations.color is not null %}
 
-												{% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                {% if variations.color.code not in colors and variations.solde == null %}
+                                                
+                                                    {% set colors = colors | merge({ (variations.color.id): variations.color.code}) %}
+                                                
+                                                {% endif %}
 
-											{% endif %}
+                                            {% endif %}
 
 										{% endfor %}
 
