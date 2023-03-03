@@ -94,7 +94,7 @@
             
                     {% include "include/_flashes.html.twig" %}
 
-                    {% if vetement.categorie.title != 'CDs' %}
+                    {% if (vetement.categorie.title != 'CDs') and (vetement.categorie.title != 'Vinyles') %}
 
                     <div class="col-12 py-4">
 

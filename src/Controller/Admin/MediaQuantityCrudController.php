@@ -44,11 +44,13 @@ class MediaQuantityCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnForm();
 
-        yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'CDs')->setCrudController(MediaCrudController::class)->autocomplete();
+        yield FormField::addPanel('Détail de l\'article');
+        yield TextField::new('products.artist', 'Artist')->hideOnForm();
+        yield AssociationField::new('products', 'CDs')->setCrudController(MediaCrudController::class)->autocomplete()->hideOnDetail();
+        yield TextField::new('products.title', 'CDs')->onlyOnDetail();
 
         yield FormField::addPanel('Détail de l\'article');
-        yield TextField::new('sku', 'Numéro de série');
+        yield TextField::new('sku', 'Référence');
 
         yield FormField::addPanel('Stock');
         yield NumberField::new('stock', 'Nombre en stock');
@@ -69,13 +71,16 @@ class MediaQuantityCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('CD en vente')
             ->setEntityLabelInPlural('CDs en vente')
+            ->setDefaultSort(['products.artist' => 'ASC'])
+            ->setSearchFields(['products.artist', 'products.title', 'sku'])
+            ->setPaginatorPageSize(35)
         ;
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add(EntityFilter::new('products'))
+            ->add(EntityFilter::new('products'))        
             ->add(TextFilter::new('sku'))
             ->add(TextFilter::new('stock'));
     }

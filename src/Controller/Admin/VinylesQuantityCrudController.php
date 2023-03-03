@@ -45,7 +45,9 @@ class VinylesQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'Vinyles')->setCrudController(VinylesCrudController::class)->autocomplete();
+        yield TextField::new('products.artist', 'Artist')->hideOnForm();
+        yield AssociationField::new('products', 'Vinyles')->setCrudController(VinylesCrudController::class)->autocomplete()->hideOnDetail();
+        yield TextField::new('products.title', 'Vinyles')->onlyOnDetail();
 
         yield FormField::addPanel('Détail de l\'article');
         yield TextField::new('sku', 'Numéro de série');
@@ -69,6 +71,9 @@ class VinylesQuantityCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Vinyle en vente')
             ->setEntityLabelInPlural('Vinyles en vente')
+            ->setDefaultSort(['products.artist' => 'ASC'])
+            ->setSearchFields(['products.title', 'sku'])
+            ->setPaginatorPageSize(35)
         ;
     }
 

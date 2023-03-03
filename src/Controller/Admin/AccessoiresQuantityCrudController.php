@@ -45,7 +45,9 @@ class AccessoiresQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'Accessoire')->setCrudController(AccessoiresCrudController::class)->autocomplete();
+        yield AssociationField::new('products', 'Accessoire')->setCrudController(AccessoiresCrudController::class)->autocomplete()->hideOnIndex();
+        yield TextField::new('products.title', 'Accessoire')->onlyOnIndex();
+        
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
@@ -72,6 +74,9 @@ class AccessoiresQuantityCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Accessoire en vente')
             ->setEntityLabelInPlural('Accessoires en vente')
+            ->setDefaultSort(['products.title' => 'ASC'])
+            ->setSearchFields(['products.title', 'sku'])
+            ->setPaginatorPageSize(35)
         ;
     }
 

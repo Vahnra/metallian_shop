@@ -81,6 +81,10 @@ class BijouxCrudController extends AbstractCrudController
             ->setParameter('title', 'Bijoux')
             ->orderBy('entity.title', 'ASC');
         });
+
+        yield FormField::addPanel('Mettre en vente directement ?')->onlyOnForms();
+        yield CollectionField::new('productsQuantities', 'Remplir le formulaire')->useEntryCrudForm(BijouxQuantityNestedCrudController::class)->setRequired(false)->onlyOnForms();
+
         yield DateField::new('createdAt', 'Créez le')->hideOnForm();
         yield DateField::new('updatedAt', 'Modifié le')->hideOnForm();
     }
@@ -91,6 +95,7 @@ class BijouxCrudController extends AbstractCrudController
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         $entityInstance->setType('bijou');
+        $entityInstance->setCategorie($entityManager->getRepository(Categorie::class)->findOneBy(['title' => 'Bijoux']));
         parent::persistEntity($entityManager, $entityInstance);
     }
 
@@ -99,6 +104,7 @@ class BijouxCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Bijoux')
             ->setEntityLabelInPlural('Bijoux')
+            ->setDefaultSort(['title' => 'ASC'])
         ;
     }
 

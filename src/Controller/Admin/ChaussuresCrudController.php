@@ -80,6 +80,10 @@ class ChaussuresCrudController extends AbstractCrudController
             ->setParameter('title', 'Chaussures')
             ->orderBy('entity.title', 'ASC');
         });
+
+        yield FormField::addPanel('Mettre en vente directement ?')->onlyOnForms();
+        yield CollectionField::new('productsQuantities', 'Remplir le formulaire')->useEntryCrudForm(ChaussuresQuantityNestedCrudController::class)->setRequired(false)->onlyOnForms();
+
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Modifier le')->hideOnForm();
     }
@@ -90,6 +94,7 @@ class ChaussuresCrudController extends AbstractCrudController
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         $entityInstance->setType('chaussure');
+        $entityInstance->setCategorie($entityManager->getRepository(Categorie::class)->findOneBy(['title' => 'Chaussures']));
         parent::persistEntity($entityManager, $entityInstance);
     }
 
@@ -98,6 +103,7 @@ class ChaussuresCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Chaussure')
             ->setEntityLabelInPlural('Chaussures')
+            ->setDefaultSort(['title' => 'ASC'])
         ;
     }
     

@@ -21,7 +21,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPagination($value);
 
@@ -33,7 +33,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->productsRepository->findForPaginationSousCategorie($value);
 
@@ -45,7 +45,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationFilteredByColor($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax);
 
@@ -57,7 +57,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationFiltered($value, $color, $priceMini, $priceMax);
 
@@ -69,7 +69,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationFilteredAccessoires($value, $color, $material, $priceMini, $priceMax);
 
@@ -81,7 +81,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationFilteredChaussures($value, $color, $size, $material, $priceMini, $priceMax);
 
@@ -93,7 +93,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationFilteredMedias($value, $musicType, $priceMini, $priceMax);
 
@@ -105,7 +105,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSousCategoriesFiltered($value, $color, $size, $material, $marque, $priceMini, $priceMax);
 
@@ -117,7 +117,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSousCategoriesFilteredBijoux($value, $color, $priceMini, $priceMax);
 
@@ -129,7 +129,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationAccessoiresFilteredAccessoires($value, $color, $material, $priceMini, $priceMax);
 
@@ -141,7 +141,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSousCategoriesFilteredChaussures($value, $color, $size, $material, $priceMini, $priceMax);
 
@@ -153,7 +153,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSousCategoriesFilteredMedias($value, $musicType, $priceMini, $priceMax);
 
@@ -165,7 +165,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationMerchandising($value);
 
@@ -177,7 +177,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationMerchandisingFiltered($value, $color, $size, $material, $marque, $artist, $priceMini, $priceMax);
 
@@ -189,7 +189,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSousCategorieMerchandising($value);
 
@@ -201,7 +201,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSousCategoriesFilteredMerchandising($value, $color, $size, $material, $marque, $priceMini, $priceMax);
 
@@ -213,7 +213,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSoldesProducts();
 
@@ -225,7 +225,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSoldesProductsCategory($category);
 
@@ -237,7 +237,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSoldesProductsFiltered($color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax);
 
@@ -249,7 +249,7 @@ class ProductsService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $productQuery = $this->productsRepository->findForPaginationSoldesProductsCategoryFiltered($category, $color, $size, $material, $marque, $artist, $musicType, $priceMini, $priceMax);
 

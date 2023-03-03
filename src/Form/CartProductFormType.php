@@ -19,7 +19,8 @@ class CartProductFormType extends AbstractType
                 'label' => 'Quantité',
                 'data' => '1',
                 'attr' => [
-                    'min' => '1'
+                    'min' => '1',
+                    'max' => $options['data']['qty']
                 ],
             ])
             ->add('submit', SubmitType::class, [
@@ -35,7 +36,7 @@ class CartProductFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CartProduct::class,
+            
         ]);
     }
 }

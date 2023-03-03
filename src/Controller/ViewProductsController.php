@@ -57,15 +57,16 @@ class ViewProductsController extends AbstractController
 
         $expedition = $entityManager->getRepository(Expedition::class)->findAll();
 
-        $form = $this->createForm(CartProductFormType::class)->handleRequest($request);
+        $form = $this->createForm(CartProductFormType::class, ['qty' => $productsVariations[0]->getStock()])->handleRequest($request);
 
         $user = $this->getUser();
+
 
         if ($form->isSubmitted() && $form->isValid()) 
         {   
             $choosedColor = $entityManager->getRepository(Color::class)->findOneBy(['id'=>$color]);
 
-            if ($choosedColor == null) {
+            if ($choosedColor == null && $products->getCategorie()->getTitle() !== "CDs" && $products->getCategorie()->getTitle() !== "Vyniles") {
                 $this->addFlash('Attention', "Sélectionnez une couleur");
 
                 $route = $request->headers->get('referer');
@@ -75,7 +76,7 @@ class ViewProductsController extends AbstractController
 
             $choosedSize = $entityManager->getRepository(Size::class)->findOneBy(['id'=>$size]);
 
-            if ($choosedSize == null) {
+            if ($choosedColor == null && $products->getCategorie()->getTitle() !== "CDs" && $products->getCategorie()->getTitle() !== "Vyniles") {
                 $this->addFlash('Attention', "Sélectionnez une taille");
 
                 $route = $request->headers->get('referer');
@@ -150,14 +151,21 @@ class ViewProductsController extends AbstractController
             $cartProduct->setPrice($products->getPrice());
             $cartProduct->setTitle($products->getTitle());
             $cartProduct->setPhoto($products->getImages()->getValues()[0]->getImage());
-            $cartProduct->setColor($choosedColor);
-            $cartProduct->setSize($choosedSize);
-            if ($products->getSousCategorie() != null) {
-                $cartProduct->setSubCategory($products->getSousCategorie());
-            } else {
-                $cartProduct->setSubCategory($products->getSousCategorieMerchandising());
+            if ($choosedColor !== null) {
+                $cartProduct->setColor($choosedColor);
+            }
+            if ($choosedSize !== null) {
+                $cartProduct->setSize($choosedSize);
             }
             
+            if ($products->getCategorie()->getTitle() !== "CDs" && $products->getCategorie()->getTitle() !== "Vyniles") {
+
+                if ($products->getSousCategorie() != null) {
+                    $cartProduct->setSubCategory($products->getSousCategorie());
+                } else {
+                    $cartProduct->setSubCategory($products->getSousCategorieMerchandising());
+                }
+            }         
 
             $sku = $entityManager->getRepository(ProductsQuantities::class)->findOneBy([
                 'products' => $products->getId(), 

@@ -92,6 +92,7 @@ class AccessoiresMerchandisingCrudController extends AbstractCrudController
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         $entityInstance->setType('accessoireMerchandising');
+        $entityInstance->setCategorie($entityManager->getRepository(Categorie::class)->findOneBy(['title' => 'CDs']));
         // creat the date
         parent::persistEntity($entityManager, $entityInstance);
     }
@@ -101,6 +102,7 @@ class AccessoiresMerchandisingCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Accessoire merchandising')
             ->setEntityLabelInPlural('Accessoires merchandising')
+            ->setDefaultSort(['title' => 'ASC'])
         ;
     }
 

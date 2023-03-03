@@ -45,7 +45,8 @@ class ChaussuresQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'Chaussures')->setCrudController(ChaussuresCrudController::class)->autocomplete();
+        yield AssociationField::new('products', 'Chaussures')->setCrudController(ChaussuresCrudController::class)->autocomplete()->hideOnIndex();
+        yield TextField::new('products.title', 'Chaussures')->onlyOnIndex();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
@@ -71,6 +72,9 @@ class ChaussuresQuantityCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Chaussure en vente')
             ->setEntityLabelInPlural('Chaussures en vente')
+            ->setDefaultSort(['products.title' => 'ASC'])
+            ->setSearchFields(['products.title', 'sku'])
+            ->setPaginatorPageSize(35)
         ;
     }
 

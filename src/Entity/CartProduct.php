@@ -40,7 +40,7 @@ class CartProduct
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $subCategory = null;
 
     #[ORM\Column(length: 255)]

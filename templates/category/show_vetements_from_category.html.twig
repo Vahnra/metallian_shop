@@ -480,7 +480,9 @@
 
                                 <a href="{{ path('view_products', {'id': product.id}) }}" class="text-decoration-none text-black">
 
-                                    <img src="{{ asset('images/image_placeholder.png') }}"  style="height: 200px; object-fit: contain;" id="article{{product.title}}{{product.id}}" class="card-img-top" alt="{{ product.title }}" loading="lazy">
+                                    {% if product.images is not null %}
+                                        <img src="{{ asset('images/' ~ product.images.values.0.image) }}"  style="height: 200px; object-fit: contain;" id="article{{product.title}}{{product.id}}" class="card-img-top" alt="{{ product.title }}" loading="lazy">
+                                    {% endif %}
                                     <div class="card-body">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item fw-bold">{{ ((product.price)/100) | number_format(2) }} €</li>
@@ -523,9 +525,9 @@
                             
                             <script>
                                 
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    document.getElementById("article" + "{{product.title}}{{product.id}}").src = "{{ asset('images/' ~ product.images.values.0.image) }}";
-                                });                                                                         
+                                // document.addEventListener("DOMContentLoaded", () => {
+                                //     document.getElementById("article" + "{{product.title}}{{product.id}}").src = "{{ asset('images/' ~ product.images.values.0.image) }}";
+                                // });                                                                         
          
                             </script>
 
@@ -535,7 +537,7 @@
 
                         <div class="container mt-3">
                         
-                            <div class="col-3 ms-auto me-2">
+                            <div class="col-3">
                                 
                                 {{ knp_pagination_render(products) }}
                                 

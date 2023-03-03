@@ -45,7 +45,8 @@ class BijouxQuantityCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Nom de l\'article');
-        yield AssociationField::new('products', 'Bijoux')->setCrudController(BijouxCrudController::class)->autocomplete();
+        yield AssociationField::new('products', 'Bijoux')->setCrudController(BijouxCrudController::class)->autocomplete()->hideOnIndex();
+        yield TextField::new('products.title', 'Bijoux')->onlyOnIndex();
 
         yield FormField::addPanel('Détail de l\'article');
         yield AssociationField::new('color', 'Couleur');
@@ -70,6 +71,9 @@ class BijouxQuantityCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Bijoux en vente')
             ->setEntityLabelInPlural('Bijoux en vente')
+            ->setDefaultSort(['products.title' => 'ASC'])
+            ->setSearchFields(['products.title', 'sku'])
+            ->setPaginatorPageSize(35)
         ;
     }
 

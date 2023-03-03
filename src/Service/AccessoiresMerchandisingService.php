@@ -22,7 +22,7 @@ class AccessoiresMerchandisingService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->bijouxRepository->findForPagination($value);
 
@@ -34,7 +34,7 @@ class AccessoiresMerchandisingService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->bijouxRepository->findForPaginationSousCategorie($value);
 
@@ -47,7 +47,7 @@ class AccessoiresMerchandisingService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->bijouxRepository->findForPaginationFiltered($value, $color, $material, $artist, $priceMini, $priceMax);
 
@@ -60,7 +60,7 @@ class AccessoiresMerchandisingService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->bijouxRepository->findForPaginationSousCategoriesFiltered($value, $color, $material, $priceMini, $priceMax);
 

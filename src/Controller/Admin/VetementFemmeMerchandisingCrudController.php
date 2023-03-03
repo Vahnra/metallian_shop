@@ -62,32 +62,26 @@ class VetementFemmeMerchandisingCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Détail de l\'article');
+        yield TextField::new('artist', 'Groupe');
         yield TextField::new('title', 'Nom de l\'article');
-        // yield TextField::new('description', 'Description de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
-        yield AssociationField::new('marques', 'Marque de l\'article');
-        yield TextField::new('artist', 'Groupe associé');
         yield AssociationField::new('material', 'Matière de l\'article');
-        // yield AssociationField::new('material', '1 Matière de l\'article');
-        // yield AssociationField::new('material', '2 Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
-        // yield ImageField::new('photo', 'Photo 1')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        // yield ImageField::new('photo2', 'Photo 2')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        // yield ImageField::new('photo3', 'Photo 3')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        // yield ImageField::new('photo4', 'Photo 4')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
-        // yield ImageField::new('photo5', 'Photo 5')->setBasePath('images')->setUploadDir('public/images')->setUploadedFileNamePattern('[contenthash].[extension]')->setRequired(false);
         yield CollectionField::new('images')->setFormTypeOption('by_reference', false)->setEntryType(ImagesFormType::class)->onlyOnForms();
         yield CollectionField::new('images')->setTemplatePath('admin\field\images\images.html.twig')->onlyOnDetail();
 
-        yield FormField::addPanel('Catégorie de l\'article');
-        yield AssociationField::new('sousCategorieMerchandising', 'Sous-catégorie')->setQueryBuilder(function (QueryBuilder $qb) {     
-            $qb->leftJoin('entity.categorieMerchandising', 'categorie')
-            ->andWhere('categorie.title = :title')
-            ->setParameter('title', 'Merchandising Femme')
-            ->orderBy('entity.title', 'ASC');
-        });
+        // yield FormField::addPanel('Catégorie de l\'article');
+        // yield AssociationField::new('sousCategorieMerchandising', 'Sous-catégorie')->setQueryBuilder(function (QueryBuilder $qb) {     
+        //     $qb->leftJoin('entity.categorieMerchandising', 'categorie')
+        //     ->andWhere('categorie.title = :title')
+        //     ->setParameter('title', 'Merchandising Femme')
+        //     ->orderBy('entity.title', 'ASC');
+        // });
+
+        yield FormField::addPanel('Couleur, taille, stock')->onlyOnForms();
+        yield CollectionField::new('productsQuantities', 'Remplir le formulaire')->useEntryCrudForm(VetementFemmeMerchandisingQuantityNestedCrudController::class)->setRequired(false)->onlyOnForms();
 
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
@@ -100,6 +94,7 @@ class VetementFemmeMerchandisingCrudController extends AbstractCrudController
         $entityInstance->setCreatedAt(new DateTimeImmutable);
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         $entityInstance->setType('vetementMerchandising');
+        $entityInstance->setSousCategorieMerchandising($entityManager->getRepository(SousCategorieMerchandising::class)->findOneBy(['title' => 'Girlies', 'categorieMerchandising' => 5]));
         $entityInstance->setCategorieMerchandising($entityManager->getRepository(CategorieMerchandising::class)->findOneBy(['title' => 'Merchandising Femme']));
         // creat the date
         parent::persistEntity($entityManager, $entityInstance);
@@ -110,6 +105,7 @@ class VetementFemmeMerchandisingCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Vetement merchandising')
             ->setEntityLabelInPlural('Vetements merchandising')
+            ->setDefaultSort(['title' => 'ASC'])
         ;
     }
 

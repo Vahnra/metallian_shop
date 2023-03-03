@@ -28,6 +28,7 @@ class MarquesCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Marque')
             ->setEntityLabelInPlural('Marques')
+            ->setDefaultSort(['title' => 'ASC'])
         ;
     }
 

@@ -63,6 +63,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
+    private $userRepository = null;
+    private $orderRepository = null;
+    private $chartBuilder = null;
+
     public function __construct(
         ChartBuilderInterface $chartBuilder,
         UserRepository $userRepository,
@@ -236,13 +240,40 @@ class DashboardController extends AbstractDashboardController
         // ]);
 
         yield MenuItem::subMenu('Merchs Homme')->setSubItems([
-            MenuItem::linkToCrud('Voir les articles homme', 'fas fa-eye', Products::class)->setController(VetementMerchandisingCrudController::class),
-            MenuItem::linkToCrud('Ajouter un article homme', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Voir tous les articles', 'fas fa-eye', Products::class)->setController(VetementMerchandisingCrudController::class),
+            MenuItem::linkToCrud('T-shirt', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Sweats', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingSweatsCrudController::class),
+            MenuItem::linkToCrud('Shorts', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingShortsCrudController::class),
+            MenuItem::linkToCrud('Casquettes', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingCasquettesCrudController::class),
+            MenuItem::linkToCrud('Bonnets', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingBonnetsCrudController::class),
+            MenuItem::linkToCrud('Mugs', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingMugsCrudController::class),
+            MenuItem::linkToCrud('Puzzles', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingPuzzlesCrudController::class),
+            MenuItem::linkToCrud('Bijoux', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingBijouxCrudController::class),
+            MenuItem::linkToCrud('Maison et Décoration', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingMaisonEtDecorationsCrudController::class),
+            MenuItem::linkToCrud('Sacs et Portefeuilles', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingSacsEtPortefeuillesCrudController::class),
+            MenuItem::linkToCrud('Patchs', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingPatchsCrudController::class),
+            MenuItem::linkToCrud('Dossards', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingDossardsCrudController::class),
+            MenuItem::linkToCrud('Objects divers', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementMerchandisingObjetsDiversCrudController::class),
         ]);
 
         yield MenuItem::subMenu('Merchs Femme')->setSubItems([
-            MenuItem::linkToCrud('Voir les articles femmes', 'fas fa-eye', Products::class)->setController(VetementFemmeMerchandisingCrudController::class),
-            MenuItem::linkToCrud('Ajouter un article femme', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', Products::class)->setController(VetementFemmeMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Girlies', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Sweats', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingSweatsCrudController::class),
+            MenuItem::linkToCrud('Pantalons', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingPantalonsCrudController::class),
+            MenuItem::linkToCrud('Shorts', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingShortsCrudController::class),
+            MenuItem::linkToCrud('Jupes', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingJupesCrudController::class),
+            MenuItem::linkToCrud('Robes', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingRobesCrudController::class),
+            MenuItem::linkToCrud('Casquettes', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingCasquettesCrudController::class),
+            MenuItem::linkToCrud('Bonnets', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingBonnetsCrudController::class),
+            MenuItem::linkToCrud('Mugs', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingMugsCrudController::class),
+            MenuItem::linkToCrud('Puzzles', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingPuzzlesCrudController::class),
+            MenuItem::linkToCrud('Bijoux', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingBijouxCrudController::class),
+            MenuItem::linkToCrud('Maison et Décoration', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingMaisonEtDecorationCrudController::class),
+            MenuItem::linkToCrud('Sacs et Portefeuilles', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingCrudController::class),
+            MenuItem::linkToCrud('Patches', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingPatchesCrudController::class),
+            MenuItem::linkToCrud('Dossards', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingDossardsCrudController::class),
+            MenuItem::linkToCrud('Objects divers', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)->setController(VetementFemmeMerchandisingObjetsDiversCrudController::class),
         ]);
 
         // yield MenuItem::subMenu('Accessoires')->setSubItems([

@@ -89,6 +89,9 @@ class VetementEnfantCrudController extends AbstractCrudController
             ->orderBy('entity.title', 'ASC');
         });
 
+        yield FormField::addPanel('Mettre en vente directement ?')->onlyOnForms();
+        yield CollectionField::new('productsQuantities', 'Remplir le formulaire')->useEntryCrudForm(VetementEnfantNestedQuantityCrudController::class)->setRequired(false)->onlyOnForms();
+
         yield DateField::new('createdAt', 'Créer le')->hideOnForm();
         yield DateField::new('updatedAt', 'Mis à jour le')->hideOnForm();
     }
@@ -98,6 +101,7 @@ class VetementEnfantCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Vêtement')
             ->setEntityLabelInPlural('Vêtements')
+            ->setDefaultSort(['title' => 'ASC'])
         ;
     }
     

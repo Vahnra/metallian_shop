@@ -59,10 +59,10 @@ class VinylesCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
 
         yield FormField::addPanel('Détail de l\'article');
+        yield TextField::new('artist', 'Nom de l\'artiste');
         yield TextField::new('title', 'Titre de album');
         // yield TextField::new('description');
         yield TextEditorField::new('longDescription', 'Description complète');
-        yield TextField::new('artist', 'Nom de l\'artiste');
         yield AssociationField::new('genre', 'Genre musical')->setQueryBuilder(function (QueryBuilder $qb) {
             $qb->orderBy('entity.genre', 'ASC');
         });;
@@ -80,6 +80,10 @@ class VinylesCrudController extends AbstractCrudController
         // yield FormField::addPanel('Catégorie de l\'article');
         // yield AssociationField::new('categorie', 'Catégorie');
         // yield AssociationField::new('sousCategorie', 'Sous-catégorie')->hideOnForm();
+
+        yield FormField::addPanel('Mettre en vente directement ?')->onlyOnForms();
+        yield CollectionField::new('productsQuantities', 'Remplir le formulaire')->useEntryCrudForm(VinylesQuantityNestedCrudController::class)->setRequired(false)->onlyOnForms();
+
         yield DateField::new('createdAt', 'Créé le')->hideOnForm();
         yield DateField::new('updatedAt', 'Modifié le')->hideOnForm();
         
@@ -90,6 +94,7 @@ class VinylesCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Vinyle')
             ->setEntityLabelInPlural('Vinyles')
+            ->setDefaultSort(['artist' => 'ASC'])
         ;
     }
     

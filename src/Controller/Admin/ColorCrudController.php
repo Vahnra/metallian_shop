@@ -33,6 +33,7 @@ class ColorCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Couleur')
             ->setEntityLabelInPlural('Couleurs')
+            ->setDefaultSort(['color' => 'ASC'])
         ;
     }
 

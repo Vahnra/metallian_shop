@@ -23,7 +23,7 @@ class MediaService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->vetementRepository->findForPagination($value);
 
@@ -35,7 +35,7 @@ class MediaService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->vetementRepository->findForPaginationSousCategorie($value);
 
@@ -48,7 +48,7 @@ class MediaService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->vetementRepository->findForPaginationFiltered($value, $musicType, $priceMini, $priceMax);
 
@@ -61,7 +61,7 @@ class MediaService
         $request = $this->requestStack->getMainRequest();
 
         $page = $request->query->getInt('page', 1);
-        $limit = 50;
+        $limit = 52;
 
         $vetementQuery = $this->vetementRepository->findForPaginationSousCategoriesFiltered($value, $musicType, $priceMini, $priceMax);
 
