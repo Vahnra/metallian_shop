@@ -83,6 +83,9 @@ class Products
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $artist = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $materials = null;
+
     public function __construct()
     {
         $this->productsQuantities = new ArrayCollection();
@@ -452,6 +455,18 @@ class Products
     public function setArtist(?string $artist): self
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    public function getMaterials(): ?string
+    {
+        return $this->materials;
+    }
+
+    public function setMaterials(?string $materials): self
+    {
+        $this->materials = $materials;
 
         return $this;
     }

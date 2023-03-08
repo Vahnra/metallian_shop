@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CategorieMerchandising;
+use App\Entity\Products;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\SousCategorieMerchandising;
 use App\Service\VetementMerchandisingService;
@@ -16,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MerchandisingController extends AbstractController
 {
-    #[Route('/merchandising-{title}', name: 'show_from_category_merchandising', methods:['GET', 'POST'])]
+    #[Route('/merchandising/{title}', name: 'show_from_category_merchandising', methods:['GET', 'POST'])]
     public function showFromCategoryMerchandising(
         CategorieMerchandising $categorieMerchandising,
         ProductsService $productsService,
@@ -70,7 +71,7 @@ class MerchandisingController extends AbstractController
         ]);
     }
 
-    #[Route('/merchandising-{title1}/{title}', name:'show_merchandising_sous_categorie', methods:['GET', 'POST'])]
+    #[Route('/merchandising/{title1}/{title}', name:'show_merchandising_sous_categorie', methods:['GET', 'POST'])]
     public function showMerchandisingSousCategorie(
         SousCategorieMerchandising $souscategories,
         ProductsService $productsService,

@@ -67,7 +67,7 @@
                             
                             {% for vetement in nouveautesFemme  | slice(0, 4) %}
                                     
-                                    {% if vetement.categorie.title == 'Femme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Femme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0" style="width: 15rem;">
 
@@ -76,7 +76,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title">{{ vetement.title }}</h5>
                                                     </div>      
@@ -99,7 +99,7 @@
                             
                                 {% for vetement in nouveautesFemme  | slice(4, 4) %}
                                     
-                                    {% if vetement.categorie.title == 'Femme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Femme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0" style="width: 15rem;">
 
@@ -108,7 +108,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title">{{ vetement.title }}</h5>
                                                     </div>      
@@ -130,7 +130,7 @@
                             
                                 {% for vetement in nouveautesFemme  | slice(8, 4) %}
                                     
-                                    {% if vetement.categorie.title == 'Femme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Femme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0" style="width: 15rem;">
 
@@ -139,7 +139,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title ">{{ vetement.title }}</h5>
                                                     </div>      
@@ -175,7 +175,7 @@
                             
                             {% for vetement in nouveautesFemme  | slice(0, 1) %}
                                     
-                                    {% if vetement.categorie.title == 'Femme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Femme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0" style="width: 15rem;">
 
@@ -184,7 +184,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title">{{ vetement.title }}</h5>
                                                     </div>      
@@ -203,7 +203,7 @@
 
                         {% for vetement in nouveautesFemme  | slice(1, 11) %}
 
-                            {% if vetement.categorie.title == 'Femme' %}
+                            {% if vetement.categorieMerchandising.title == 'Merchandising Femme' %}
 
                                 <div class="carousel-item">
 
@@ -217,7 +217,7 @@
                                                 <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                 <div class="card-body">
                                                     <ul class="list-group list-group-flush ">
-                                                        <li class="list-group-item fw-bold">{{ (vetement.price)/100 }}
+                                                        <li class="list-group-item fw-bold">{{ ((vetement.price)/100) | number_format(2) }}
                                                             €</li>
                                                     </ul>
                                                     <h5 class="card-title">{{ vetement.title }}</h5>
@@ -266,7 +266,7 @@
                             
                             {% for vetement in nouveautesHomme  | slice(0, 4) %}
                                     
-                                    {% if vetement.categorie.title == 'Homme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Homme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0 bg-dark" style="width: 15rem;">
 
@@ -275,7 +275,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" id="image{{vetement.id}}" style="height: 300px; width: 240px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title text-white">{{ vetement.title }}</h5>
                                                     </div>      
@@ -298,16 +298,16 @@
                             
                                 {% for vetement in nouveautesHomme  | slice(4, 4) %}
                                     
-                                    {% if vetement.categorie.title == 'Homme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Homme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0 bg-dark" style="width: 15rem;">
 
                                                 <a href="{{ path('view_products', {"id": vetement.id}) }}" class="text-decoration-none text-black">
 
-                                                    <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
+                                                    <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top bg-dark" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title text-white">{{ vetement.title }}</h5>
                                                     </div>      
@@ -329,7 +329,7 @@
                             
                                 {% for vetement in nouveautesHomme  | slice(8, 4) %}
                                     
-                                    {% if vetement.categorie.title == 'Homme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Homme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0 bg-dark" style="width: 15rem;">
 
@@ -338,7 +338,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title text-white">{{ vetement.title }}</h5>
                                                     </div>      
@@ -350,7 +350,7 @@
                                             <script>
 
                                             $(document).ready(function () {
-                                                $('#image{{vetement.id}}').attr('src', '{{ asset('images/' ~ vetement.photo) }}');
+                                                $('#image{{vetement.id}}').attr('src', '{{ asset('images/' ~ vetement.images.values.0.image) }}');
                                             });                                                     
                                             
                                             </script>
@@ -382,7 +382,7 @@
                             
                             {% for vetement in nouveautesHomme  | slice(0, 1) %}
                                     
-                                    {% if vetement.categorie.title == 'Homme' %}
+                                    {% if vetement.categorieMerchandising.title == 'Merchandising Homme' %}
 
                                             <div class="card g-0 mx-auto my-2 border-0 bg-dark" style="width: 15rem;">
 
@@ -391,7 +391,7 @@
                                                     <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" id="image{{vetement.id}}" style="height: 300px; width: 240px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                     <div class="card-body">
                                                         <ul class="list-group list-group-flush ">
-                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }} €</li>
+                                                            <li class="list-group-item bg-dark text-white fw-bold">{{ ((vetement.price)/100) | number_format(2) }} €</li>
                                                         </ul>
                                                         <h5 class="card-title text-white">{{ vetement.title }}</h5>
                                                     </div>      
@@ -410,7 +410,7 @@
 
                         {% for vetement in nouveautesHomme  | slice(1, 11) %}
 
-                            {% if vetement.categorie.title == 'Homme' %}
+                            {% if vetement.categorieMerchandising.title == 'Merchandising Homme' %}
 
                                 <div class="carousel-item" data-bs-interval="30000">
 
@@ -424,7 +424,7 @@
                                                 <img src="{{ asset('images/' ~ vetement.images.values.0.image) }}" style="height: 300px; object-fit: contain;" class="card-img-top" title="{{ vetement.title }}" alt="{{ vetement.title }}" loading="lazy">
                                                 <div class="card-body">
                                                     <ul class="list-group list-group-flush ">
-                                                        <li class="list-group-item bg-dark text-white fw-bold">{{ (vetement.price)/100 }}
+                                                        <li class="list-group-item bg-dark text-white fw-bold">{{ ((vetement.price)/100) | number_format(2) }}
                                                             €</li>
                                                     </ul>
                                                     <h5 class="card-title text-white">{{ vetement.title }}</h5>

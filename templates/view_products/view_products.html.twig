@@ -94,88 +94,174 @@
             
                     {% include "include/_flashes.html.twig" %}
 
-                    {% if (vetement.categorie.title != 'CDs') and (vetement.categorie.title != 'Vinyles') %}
+                    {% if vetement.categorie != null %}       
 
-                    <div class="col-12 py-4">
+                        {% if (vetement.categorie.title != 'CDs') and (vetement.categorie.title != 'Vinyles') %}
 
-                        <p><span>Choisissez une couleur :</span></p>
+                            <div class="col-12 py-4">
 
-                        <div id="colorOption">
+                                <p><span>Choisissez une couleur :</span></p>
 
-                            {% for couleur in couleurs %}<label class="mx-2" style="cursor:pointer;">
-                            <input type="radio" id="" name="color" value="{{couleur.id}}" class="mx-auto test colorRadio" title="{{ couleur.color }}" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;" required="required">
-                                    <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+                                <div id="colorOption">
 
-                                        <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
+                                    {% for couleur in couleurs %}<label class="mx-2" style="cursor:pointer;">
+                                    <input type="radio" id="" name="color" value="{{couleur.id}}" class="mx-auto test colorRadio" title="{{ couleur.color }}" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;" required="required">
+                                            <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
 
-                                    </div>
-                                </input>
-                            </label>{% endfor %}
+                                                <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
 
-                        </div>
+                                            </div>
+                                        </input>
+                                    </label>{% endfor %}
 
-                    </div>
+                                </div>
 
-                    <div class="col-12 pt-3 pb-4">
+                            </div>
 
-                        <p><span>Choisissez une taille :</span></p>
+                            <div class="col-12 pt-3 pb-4">
 
-                        <div id="test3">
-                            {% for size in sizes %}<label class="mx-2 mb-2" title="{{size.size}}"><input type="radio" class="testRadio sizeOption" name="size" value="{{size.id}}" required="required"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
-                        </div>
+                                <p><span>Choisissez une taille :</span></p>
 
-                        <div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;">
-                            <i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles
-                        </div>
+                                <div id="test3">
+                                    {% for size in sizes %}<label class="mx-2 mb-2" title="{{size.size}}"><input type="radio" class="testRadio sizeOption" name="size" value="{{size.id}}" required="required"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
+                                </div>
 
-                    </div>
+                                <div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;">
+                                    <i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles
+                                </div>
 
-                    <script>
+                            </div>
 
-                    var test = {{ vetementVariations|json_encode(constant('JSON_HEX_TAG'))|raw }};
-        
-                    var options=""; 
-                    
-                    $(".test").on('click',function(){ 
-                        var value=$(this).val();
+                            <script>
 
-                        size=""
-
-                        for(let i = 0 ; i < test.length; i++) {
-                            if(value == test[i].color.id)
-                            {
-                                size+="<label class='mx-2 mb-2' title='" + test[i].size.size + "'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "' required='required'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
-
-                                $("#test3").html(size);
-
-                            }
-                        }
-                    });
-
-                    $(".sizeOption").on('click',function(){ 
-                        var value=$(this).val();
-
-                        color=""
-
-                        for(let i = 0 ; i < test.length; i++) {
-                            if(value == test[i].size.id)
-                            {
-                                color+="<label class='mx-2' style='cursor:pointer;'><input type='radio' title='" + test[i].color.color + "' name='color' value='" + test[i].color.id + "'  class='mx-auto test colorRadio' style='height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;' required='required'><div class='colorSelect' style='height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;'><div class='mx-auto colorDiv' style='height: 36px; width: 36px; background-color:" + test[i].color.code + "; border-radius: 50%; margin-top: 3px; cursor:pointer;'></div></div></input></label>"
-
-                                $("#colorOption").html(color);
-
-                            }
-                        }
-                    });
+                            var test = {{ vetementVariations|json_encode(constant('JSON_HEX_TAG'))|raw }};
                 
-                    </script>
+                            var options=""; 
+                            
+                            $(".test").on('click',function(){ 
+                                var value=$(this).val();
 
-                {% endif %}
+                                size=""
+
+                                for(let i = 0 ; i < test.length; i++) {
+                                    if(value == test[i].color.id)
+                                    {
+                                        size+="<label class='mx-2 mb-2' title='" + test[i].size.size + "'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "' required='required'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
+
+                                        $("#test3").html(size);
+
+                                    }
+                                }
+                            });
+
+                            $(".sizeOption").on('click',function(){ 
+                                var value=$(this).val();
+
+                                color=""
+
+                                for(let i = 0 ; i < test.length; i++) {
+                                    if(value == test[i].size.id)
+                                    {
+                                        color+="<label class='mx-2' style='cursor:pointer;'><input type='radio' title='" + test[i].color.color + "' name='color' value='" + test[i].color.id + "'  class='mx-auto test colorRadio' style='height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;' required='required'><div class='colorSelect' style='height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;'><div class='mx-auto colorDiv' style='height: 36px; width: 36px; background-color:" + test[i].color.code + "; border-radius: 50%; margin-top: 3px; cursor:pointer;'></div></div></input></label>"
+
+                                        $("#colorOption").html(color);
+
+                                    }
+                                }
+                            });
+                        
+                            </script>
+
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if vetement.categorieMerchandising != null %}       
+
+                            <div class="col-12 py-4">
+
+                                <p><span>Choisissez une couleur :</span></p>
+
+                                <div id="colorOption">
+
+                                    {% for couleur in couleurs %}<label class="mx-2" style="cursor:pointer;">
+                                    <input type="radio" id="" name="color" value="{{couleur.id}}" class="mx-auto test colorRadio" title="{{ couleur.color }}" style="height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;" required="required">
+                                            <div class="colorSelect" style="height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;">
+
+                                                <div class="mx-auto colorDiv" style="height: 36px; width: 36px; background-color: {{ couleur.code }}; border-radius: 50%; margin-top: 3px; cursor:pointer;"></div>
+
+                                            </div>
+                                        </input>
+                                    </label>{% endfor %}
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 pt-3 pb-4">
+
+                                <p><span>Choisissez une taille :</span></p>
+
+                                <div id="test3">
+                                    {% for size in sizes %}<label class="mx-2 mb-2" title="{{size.size}}"><input type="radio" class="testRadio sizeOption" name="size" value="{{size.id}}" required="required"><div class="text-center align-middle testSelect" alt="Option 1" style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>{{ size.size }}</div></label>{% endfor %}
+                                </div>
+
+                                <div class="pt-3 text-primary" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="cursor: pointer;">
+                                    <i class="fa-solid fa-ruler-horizontal"></i> Guide des tailles
+                                </div>
+
+                            </div>
+
+                            <script>
+
+                            var test = {{ vetementVariations|json_encode(constant('JSON_HEX_TAG'))|raw }};
+                
+                            var options=""; 
+                            
+                            $(".test").on('click',function(){ 
+                                var value=$(this).val();
+
+                                size=""
+
+                                for(let i = 0 ; i < test.length; i++) {
+                                    if(value == test[i].color.id)
+                                    {
+                                        size+="<label class='mx-2 mb-2' title='" + test[i].size.size + "'><input type='radio' name='size' class='testRadio' name='test' value='" + test[i].size.id + "' required='required'><div class='text-center align-middle testSelect' alt='Option 1' style='width: 3em; height: 2.4em; border-radius: 4px; border: solid 1px black; justify-content: center; align-items: center;display: flex;'>" + test[i].size.size + "</div></label>"
+
+                                        $("#test3").html(size);
+
+                                    }
+                                }
+                            });
+
+                            $(".sizeOption").on('click',function(){ 
+                                var value=$(this).val();
+
+                                color=""
+
+                                for(let i = 0 ; i < test.length; i++) {
+                                    if(value == test[i].size.id)
+                                    {
+                                        color+="<label class='mx-2' style='cursor:pointer;'><input type='radio' title='" + test[i].color.color + "' name='color' value='" + test[i].color.id + "'  class='mx-auto test colorRadio' style='height: 36px; width: 36px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;' required='required'><div class='colorSelect' style='height: 46px; width: 46px; background-color: white; border-radius: 50%; display: inline-block; cursor:pointer;'><div class='mx-auto colorDiv' style='height: 36px; width: 36px; background-color:" + test[i].color.code + "; border-radius: 50%; margin-top: 3px; cursor:pointer;'></div></div></input></label>"
+
+                                        $("#colorOption").html(color);
+
+                                    }
+                                }
+                            });
+                        
+                            </script>
+
+
+                    {% endif %}
       
                 <p>{{ vetement.sousCategorie }}</p>
 
                 {% if material is not empty %}
                     <p>{{ material.0.material }}</p>
+                {% endif %}
+                {% if vetement.materials is not empty %}
+                    <p>{{ vetement.materials }}</p>
                 {% endif %}
                 <p>{{ vetement.genre }}</p>
                 <div class="col-12 mb-1">

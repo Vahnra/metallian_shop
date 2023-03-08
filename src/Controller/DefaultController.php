@@ -6,6 +6,7 @@ use App\Entity\Slider;
 use App\Entity\Products;
 use App\Entity\Vetement;
 use App\Entity\Categorie;
+use App\Entity\CategorieMerchandising;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,12 @@ class DefaultController extends AbstractController
     #[Route('/', name: 'default_home', methods:['GET', 'POST'])]
     public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $femme = $entityManager->getRepository(Categorie::class)->findBy([
-            'title' => 'Femme'
+        $femme = $entityManager->getRepository(CategorieMerchandising::class)->findBy([
+            'title' => 'Merchandising Femme'
         ]);
 
-        $homme = $entityManager->getRepository(Categorie::class)->findBy([
-            'title' => 'Homme'
+        $homme = $entityManager->getRepository(CategorieMerchandising::class)->findBy([
+            'title' => 'Merchandising Homme'
         ]);
 
         $nouveautesFemme = $entityManager->getRepository(Products::class)->findByTwelveVetements($femme);

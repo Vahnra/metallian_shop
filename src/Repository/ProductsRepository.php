@@ -46,7 +46,7 @@ class ProductsRepository extends ServiceEntityRepository
     public function findByTwelveVetements($value): array
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.categorie = :val')
+            ->andWhere('v.categorieMerchandising = :val')
             ->setParameter('val', $value)
             ->leftJoin('v.productsQuantities', 'vqc')
             ->andWhere('vqc.stock IS NOT NULL')
@@ -67,6 +67,42 @@ class ProductsRepository extends ServiceEntityRepository
             ->setParameter('val', $categorie)
             ->andWhere('v.sousCategorie = :val2')
             ->setParameter('val2', $sousCategorie)
+            ->leftJoin('v.productsQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('v.createdAt', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Products[] Returns an array of Products objects
+     */
+    public function findSimilarMerchandisingItem($categorie, $sousCategorie): array
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.categorieMerchandising = :val')
+            ->setParameter('val', $categorie)
+            ->andWhere('v.sousCategorieMerchandising = :val2')
+            ->setParameter('val2', $sousCategorie)
+            ->leftJoin('v.productsQuantities', 'vqc')
+            ->andWhere('vqc.stock IS NOT NULL')
+            ->andWhere('vqc.stock != 0')
+            ->orderBy('v.createdAt', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Products[] Returns an array of Products objects
+     */
+    public function findSimilarCdsItem($categorie): array
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $categorie)
             ->leftJoin('v.productsQuantities', 'vqc')
             ->andWhere('vqc.stock IS NOT NULL')
             ->andWhere('vqc.stock != 0')
@@ -1193,5 +1229,23 @@ class ProductsRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findStats($value): array
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.categorie = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findStatsMerch($value): array
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.categorieMerchandising = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
     }
 }

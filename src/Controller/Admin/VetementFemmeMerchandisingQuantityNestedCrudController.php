@@ -65,8 +65,7 @@ class VetementFemmeMerchandisingQuantityNestedCrudController extends AbstractCru
         ]);
         yield MoneyField::new('products.price', 'Prix')->hideOnForm()->setCurrency('EUR');
         yield MoneyField::new('discount', 'Prix soldé')->setColumns(3)->setCurrency('EUR');
-
-        yield FormField::addPanel('Photos');
+        
         yield CollectionField::new('products.images', 'Images')->setTemplatePath('admin\field\images\images.html.twig')->onlyOnDetail();
         
     }

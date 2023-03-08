@@ -10,7 +10,7 @@
 				</div>
 				<div class="col-12">Quantité:
 					{{cartProduct.quantity}}</div>
-				<div class="col-12">{{cartProduct.price/100}}
+				<div class="col-12">{{ ((cartProduct.price)/100) | number_format(2) }}
 					€</div>
 
 			</div>

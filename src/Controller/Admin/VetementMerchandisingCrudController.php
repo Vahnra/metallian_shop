@@ -65,7 +65,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         yield TextField::new('artist', 'Groupe');
         yield TextField::new('title', 'Nom de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
-        yield AssociationField::new('material', 'Matière de l\'article');
+        yield TextField::new('materials', 'Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
@@ -105,7 +105,7 @@ class VetementMerchandisingCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Vetement merchandising')
             ->setEntityLabelInPlural('Vetements merchandising')
-            ->setDefaultSort(['title' => 'ASC'])
+            ->setDefaultSort(['artist' => 'ASC'])
         ;
     }
 

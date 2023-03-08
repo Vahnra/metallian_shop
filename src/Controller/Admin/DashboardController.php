@@ -57,6 +57,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use App\Repository\AccessoiresMerchandisingRepository;
+use App\Repository\ProductsRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -66,16 +67,19 @@ class DashboardController extends AbstractDashboardController
     private $userRepository = null;
     private $orderRepository = null;
     private $chartBuilder = null;
+    private $productsRepository = null;
 
     public function __construct(
         ChartBuilderInterface $chartBuilder,
         UserRepository $userRepository,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        ProductsRepository $productsRepository
         )
     {
         $this->userRepository = $userRepository;
         $this->orderRepository = $orderRepository;
         $this->chartBuilder = $chartBuilder;
+        $this->productsRepository= $productsRepository;
     }
 
     #[Route('/admin', name: 'admin')]
@@ -85,7 +89,7 @@ class DashboardController extends AbstractDashboardController
 
         $totalOrders = count($this->orderRepository->findAll());
         
-        $totalArticles = 0;
+        $totalArticles = count($this->productsRepository->findAll());
 
         return $this->render('admin/admin_home_page.html.twig', [
             'usersChart' => $this->usersChart(),
@@ -419,22 +423,26 @@ class DashboardController extends AbstractDashboardController
     {
         $totalArticlesChart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
 
-        // $vetements = count($this->vetementRepository->findAll());
-        // $accessoires = count($this->accessoiresRepository->findAll());
-        // $chaussures = count($this->chaussuresRepository->findAll());
-        // $bijoux = count($this->bijouxRepository->findAll());
-        // $media = count($this->mediaRepository->findAll());
-        // $vetementMerchandising = count($this->vetementMerchandisingRepository->findAll());
-        // $accessoiresMerchandising = count($this->accessoiresMerchandisingRepository->findAll());
+        $vetementsHomme = count($this->productsRepository->findStats(14));
+        $vetementsFemme = count($this->productsRepository->findStats(15));
+        $enfant = count($this->productsRepository->findStats(16));
+        $accessoires = count($this->productsRepository->findStats(17));
+        $chaussures = count($this->productsRepository->findStats(20));
+        $bijoux = count($this->productsRepository->findStats(21));
+        $cds = count($this->productsRepository->findStats(22));
+        $vyniles = count($this->productsRepository->findStats(24));
+        $merchsHomme = count($this->productsRepository->findStatsMerch(4));
+        $merchsFemme = count($this->productsRepository->findStatsMerch(5));
+        
 
         $totalArticlesChart->setData([
-            'labels' => ['Vêtements', 'Accessoires', 'Chaussures', 'Bijoux', 'Médias', 'Vêtements Merch', 'Accessoires Merch'],
+            'labels' => ['Homme', 'Femme', 'Enfant', 'Accessoires', 'Chaussures', 'Bijoux', 'CDs', 'Vyniles', 'Merch Homme', 'Merch Femme'],
             'datasets' => [
                 [
                     'label' => 'Nombres d\'articles',
                     'backgroundColor' => 'rgb(255, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
-                    // 'data' => [$vetements, $accessoires, $chaussures, $bijoux, $media, $vetementMerchandising, $accessoiresMerchandising],
+                    'data' => [$vetementsHomme, $vetementsFemme, $enfant, $accessoires, $chaussures, $bijoux, $cds, $vyniles, $merchsHomme, $merchsFemme],
                 ],
             ],
         ]);

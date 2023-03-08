@@ -101,7 +101,7 @@ class VetementFemmeCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Vêtement')
             ->setEntityLabelInPlural('Vêtements')
-            ->setDefaultSort(['title' => 'ASC'])
+            ->setDefaultSort(['artist' => 'ASC'])
         ;
     }
     

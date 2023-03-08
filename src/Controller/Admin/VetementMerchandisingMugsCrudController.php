@@ -65,8 +65,7 @@ class VetementMerchandisingMugsCrudController extends AbstractCrudController
         yield TextField::new('artist', 'Groupe');
         yield TextField::new('title', 'Nom de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
-        yield AssociationField::new('material', 'Matière de l\'article');
-        yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
+        yield AssociationField::new('material', 'Matière de l\'article');yield TextField::new('materials', 'Matière de l\'article');yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
         yield CollectionField::new('images')->setFormTypeOption('by_reference', false)->setEntryType(ImagesFormType::class)->onlyOnForms();

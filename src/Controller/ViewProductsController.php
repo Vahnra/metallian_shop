@@ -158,14 +158,20 @@ class ViewProductsController extends AbstractController
                 $cartProduct->setSize($choosedSize);
             }
             
-            if ($products->getCategorie()->getTitle() !== "CDs" && $products->getCategorie()->getTitle() !== "Vyniles") {
+            if ($products->getCategorie() != null) {
+                if ($products->getCategorie()->getTitle() !== "CDs" && $products->getCategorie()->getTitle() !== "Vyniles") {
 
-                if ($products->getSousCategorie() != null) {
-                    $cartProduct->setSubCategory($products->getSousCategorie());
-                } else {
-                    $cartProduct->setSubCategory($products->getSousCategorieMerchandising());
+                    if ($products->getSousCategorie() != null) {
+                        $cartProduct->setSubCategory($products->getSousCategorie());
+                    } else {
+                        $cartProduct->setSubCategory($products->getSousCategorieMerchandising());
+                    }
                 }
-            }         
+            }
+
+            if ($products->getCategorieMerchandising()) {
+                $cartProduct->setSubCategory($products->getSousCategorieMerchandising());
+            }
 
             $sku = $entityManager->getRepository(ProductsQuantities::class)->findOneBy([
                 'products' => $products->getId(), 
@@ -205,9 +211,25 @@ class ViewProductsController extends AbstractController
 
         $categorie = $products->getCategorie();
 
+        if ($categorie == null) {
+            $categorie = $products->getCategorieMerchandising();
+        }
+
         $sousCategorie = $products->getSousCategorie();
 
+        if ($sousCategorie == null) {
+            $sousCategorie = $products->getSousCategorieMerchandising();
+        }
+
         $similarItm = $entityManager->getRepository(Products::class)->findSimilarItem($categorie, $sousCategorie);
+
+        if ($similarItm == null) {
+            $similarItm = $entityManager->getRepository(Products::class)->findSimilarMerchandisingItem($categorie, $sousCategorie);
+        }
+
+        if ($similarItm == null) {
+            $similarItm = $entityManager->getRepository(Products::class)->findSimilarCdsItem($categorie);
+        }
 
         $userFavorites = $entityManager->getRepository(FavoriteProduct::class)->findBy(['user' => $this->getUser(), 'products' => $products]);
 

@@ -92,7 +92,7 @@
 															</form> 
 														</div>
 														<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-															<h4 class="mb-0 fw-bold">{{ cartProduct.price/100 * cartProduct.quantity }} €</h4>
+															<h4 class="mb-0 fw-bold">{{ (((cartProduct.price)/100) * cartProduct.quantity) | number_format(2)  }} €</h4>
 														</div>
 														<div class="col-md-1 col-lg-1 col-xl-1 text-end">
 															<a href="{{ path('delete_product', {'id': cartProduct.id }) }}" class="text-muted">
@@ -123,7 +123,7 @@
 
 											<div class="d-flex justify-content-between mb-4">
 												<h5 class="">Produits {{ numberOfItem }} </h5>
-												<h5>{{ totalPrice/100 }} €</h5>
+												<h5>{{ (totalPrice/100) | number_format(2) }} €</h5>
 											</div>
 
 											{# <h5 class=" mb-3">Livraison</h5>
@@ -139,7 +139,7 @@
 
 											<div class="d-flex justify-content-between mb-5">
 												<h5 class="text-uppercase">Total</h5>
-												<h5>{{ totalPrice/100 }} €</h5>
+												<h5>{{ (totalPrice/100 ) | number_format(2) }} €</h5>
 											</div>
 
 											{% if app.user is not empty %}	

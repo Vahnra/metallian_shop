@@ -65,7 +65,7 @@ class VetementFemmeMerchandisingPatchesCrudController extends AbstractCrudContro
         yield TextField::new('artist', 'Groupe');
         yield TextField::new('title', 'Nom de l\'article');
         yield TextEditorField::new('longDescription', 'Description complète');
-        yield AssociationField::new('material', 'Matière de l\'article');
+        yield TextField::new('materials', 'Matière de l\'article');
         yield MoneyField::new('price', 'Prix')->setCurrency('EUR');
 
         yield FormField::addPanel('Photos de l\'article');
